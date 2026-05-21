@@ -7,9 +7,9 @@ import {
   Info, BarChart2, Newspaper, UserCheck, MessageCircle, Target,
   ChevronDown, X, Menu, Globe, Building2, Scale, FileText, Send, Lock, Shield
 } from "lucide-react";
-import hero from "@/assets/hero.jpg";
+import hero from '@/assets/hero.png';
 import causeEdu from "@/assets/cause-education.jpg";
-import causeMed from "@/assets/cause-medical.jpg";
+import causeMed from "@/assets/cause-medical.png";
 import causeWomen from "@/assets/cause-women.jpg";
 import thEnv from "@/assets/thematic-environment.jpg";
 import thEnt from "@/assets/thematic-entrepreneur.jpg";
@@ -200,15 +200,14 @@ function Header() {
     <>
       {/* Dimming Page Backdrop Overlay */}
       <div
-        className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-250 ease-out pointer-events-none ${
-          hasDropdown ? "opacity-100 pointer-events-auto" : "opacity-0"
-        }`}
+        className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-250 ease-out pointer-events-none ${hasDropdown ? "opacity-100 pointer-events-auto" : "opacity-0"
+          }`}
         onClick={() => setActiveMenu(null)}
       />
 
       <header className="bg-white sticky top-0 z-50 border-b border-gray-100 shadow-sm transition-all duration-200">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          
+
           {/* Left Group: Logo */}
           <a href="#" className="flex items-center gap-2 shrink-0">
             <Leaf className="w-6 h-6 text-[#0d2b1a] shrink-0" />
@@ -238,9 +237,8 @@ function Header() {
                     {item}
                     {hasMega && (
                       <ChevronDown
-                        className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                          isActive ? "rotate-180 text-[#0d2b1a]" : "text-gray-400"
-                        }`}
+                        className={`w-3.5 h-3.5 transition-transform duration-200 ${isActive ? "rotate-180 text-[#0d2b1a]" : "text-gray-400"
+                          }`}
                       />
                     )}
                     {/* Orange sliding underline */}
@@ -282,7 +280,7 @@ function Header() {
                 <div className="text-brand-orange uppercase text-xs tracking-widest font-bold mb-4">
                   {activeMenu}
                 </div>
-                
+
                 {/* Columns grid */}
                 <div
                   className="grid gap-8"
@@ -300,7 +298,7 @@ function Header() {
                           return (
                             <a
                               key={subItem}
-                              href="#"
+                              href={activeMenu === "About Us" && subItem === "Overview" ? "/about" : "#"}
                               className="flex items-center gap-2 text-gray-700 hover:text-[#0d2b1a] text-sm hover:translate-x-1 transition-all duration-200"
                               style={{
                                 transitionDelay: `${globalIndex * 30}ms`,
@@ -357,7 +355,7 @@ function Header() {
             onClick={() => setMobileOpen(false)}
             aria-hidden="true"
           />
-          
+
           {/* Left slide drawer */}
           <div
             className="fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-white z-50 shadow-2xl overflow-y-auto mobile-drawer lg:hidden flex flex-col"
@@ -469,7 +467,7 @@ function HeroSection() {
         />
         {/* Modern dark/green gradient overlay for rich premium feel and high text contrast */}
         <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/80 to-transparent" />
-        
+
         <div className="relative max-w-7xl mx-auto px-4 py-16 w-full z-10">
           <div className="max-w-3xl text-white">
             {/* Tagline Badge */}
@@ -787,7 +785,7 @@ function Footer({ onOpenModal }: { onOpenModal: (type: 'volunteer' | 'partner' |
       {/* Zone A — Main Footer */}
       <div className="bg-[#0d2b1a] text-white py-14 px-4 md:px-10">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
-          
+
           {/* Column 1 — Organization Identity */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
@@ -951,7 +949,7 @@ function Footer({ onOpenModal }: { onOpenModal: (type: 'volunteer' | 'partner' |
       {/* Zone B — Trust Sub-Strip */}
       <div className="bg-[#f9f9f6] text-slate-800 py-10 px-4 md:px-10 border-t border-gray-100">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-          
+
           {/* Left — Stay Connected */}
           <div className="flex gap-4 items-start">
             <div className="w-12 h-12 rounded-full bg-[#0d2b1a] text-white flex items-center justify-center shrink-0">
