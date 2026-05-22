@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutVision2047RouteImport } from './routes/about_/vision-2047'
+import { Route as AboutObjectiveAndVisionRouteImport } from './routes/about_/objective-and-vision'
 import { Route as ProgramsHealthcareIndexRouteImport } from './routes/programs/healthcare/index'
 import { Route as ProgramsHealthcareWellnessCentresRouteImport } from './routes/programs/healthcare/wellness-centres'
 import { Route as ProgramsHealthcareRuralAmbulanceRouteImport } from './routes/programs/healthcare/rural-ambulance'
@@ -29,6 +31,16 @@ const AboutRoute = AboutRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutVision2047Route = AboutVision2047RouteImport.update({
+  id: '/about_/vision-2047',
+  path: '/about/vision-2047',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutObjectiveAndVisionRoute = AboutObjectiveAndVisionRouteImport.update({
+  id: '/about_/objective-and-vision',
+  path: '/about/objective-and-vision',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProgramsHealthcareIndexRoute = ProgramsHealthcareIndexRouteImport.update({
@@ -88,6 +100,8 @@ const ProgramsHealthcareCervicalCancerRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/about/objective-and-vision': typeof AboutObjectiveAndVisionRoute
+  '/about/vision-2047': typeof AboutVision2047Route
   '/programs/healthcare/cervical-cancer': typeof ProgramsHealthcareCervicalCancerRoute
   '/programs/healthcare/critical-life-support': typeof ProgramsHealthcareCriticalLifeSupportRoute
   '/programs/healthcare/diabetes-prevention': typeof ProgramsHealthcareDiabetesPreventionRoute
@@ -101,6 +115,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/about/objective-and-vision': typeof AboutObjectiveAndVisionRoute
+  '/about/vision-2047': typeof AboutVision2047Route
   '/programs/healthcare/cervical-cancer': typeof ProgramsHealthcareCervicalCancerRoute
   '/programs/healthcare/critical-life-support': typeof ProgramsHealthcareCriticalLifeSupportRoute
   '/programs/healthcare/diabetes-prevention': typeof ProgramsHealthcareDiabetesPreventionRoute
@@ -115,6 +131,8 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/about_/objective-and-vision': typeof AboutObjectiveAndVisionRoute
+  '/about_/vision-2047': typeof AboutVision2047Route
   '/programs/healthcare/cervical-cancer': typeof ProgramsHealthcareCervicalCancerRoute
   '/programs/healthcare/critical-life-support': typeof ProgramsHealthcareCriticalLifeSupportRoute
   '/programs/healthcare/diabetes-prevention': typeof ProgramsHealthcareDiabetesPreventionRoute
@@ -130,6 +148,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/about/objective-and-vision'
+    | '/about/vision-2047'
     | '/programs/healthcare/cervical-cancer'
     | '/programs/healthcare/critical-life-support'
     | '/programs/healthcare/diabetes-prevention'
@@ -143,6 +163,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/about/objective-and-vision'
+    | '/about/vision-2047'
     | '/programs/healthcare/cervical-cancer'
     | '/programs/healthcare/critical-life-support'
     | '/programs/healthcare/diabetes-prevention'
@@ -156,6 +178,8 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/about_/objective-and-vision'
+    | '/about_/vision-2047'
     | '/programs/healthcare/cervical-cancer'
     | '/programs/healthcare/critical-life-support'
     | '/programs/healthcare/diabetes-prevention'
@@ -170,6 +194,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AboutObjectiveAndVisionRoute: typeof AboutObjectiveAndVisionRoute
+  AboutVision2047Route: typeof AboutVision2047Route
   ProgramsHealthcareCervicalCancerRoute: typeof ProgramsHealthcareCervicalCancerRoute
   ProgramsHealthcareCriticalLifeSupportRoute: typeof ProgramsHealthcareCriticalLifeSupportRoute
   ProgramsHealthcareDiabetesPreventionRoute: typeof ProgramsHealthcareDiabetesPreventionRoute
@@ -195,6 +221,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about_/vision-2047': {
+      id: '/about_/vision-2047'
+      path: '/about/vision-2047'
+      fullPath: '/about/vision-2047'
+      preLoaderRoute: typeof AboutVision2047RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about_/objective-and-vision': {
+      id: '/about_/objective-and-vision'
+      path: '/about/objective-and-vision'
+      fullPath: '/about/objective-and-vision'
+      preLoaderRoute: typeof AboutObjectiveAndVisionRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/programs/healthcare/': {
@@ -266,6 +306,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AboutObjectiveAndVisionRoute: AboutObjectiveAndVisionRoute,
+  AboutVision2047Route: AboutVision2047Route,
   ProgramsHealthcareCervicalCancerRoute: ProgramsHealthcareCervicalCancerRoute,
   ProgramsHealthcareCriticalLifeSupportRoute:
     ProgramsHealthcareCriticalLifeSupportRoute,
