@@ -73,7 +73,7 @@ export default function TheoryOfChange() {
       </div>
 
       {/* Mobile scroll */}
-      <div className="md:hidden overflow-x-auto flex gap-4 pb-4">
+      <div className="md:hidden overflow-x-auto flex gap-4 pb-4 w-full max-w-full">
         {STEPS.map((step, i) => (
           <div key={step.label} className="flex items-center">
             <StepCard {...step} />

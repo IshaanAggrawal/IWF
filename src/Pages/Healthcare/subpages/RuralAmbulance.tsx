@@ -277,7 +277,7 @@ function OverviewSection() {
         {/* Challenge cards — desktop grid / scrollable on mobile */}
         <ScrollReveal stagger={0.07}>
           {/* Mobile: horizontal scroll ticker */}
-          <div className="flex gap-4 overflow-x-auto pb-2 sm:hidden scrollbar-hide snap-x snap-mandatory">
+          <div className="flex gap-4 overflow-x-auto pb-2 sm:hidden scrollbar-hide snap-x snap-mandatory w-full max-w-full">
             {CHALLENGES.map(({ icon: Icon, text }, i) => (
               <div
                 key={i}

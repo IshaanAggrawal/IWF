@@ -150,8 +150,8 @@ function NotificationTicker() {
 function UtilityBar() {
   return (
     <div className="bg-brand-green text-white text-xs">
-      <div className="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-5">
+      <div className="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-3 sm:gap-2">
+        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-4 gap-y-1.5 w-full sm:w-auto">
           <a href="tel:+919801812625" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
             <Phone className="w-3.5 h-3.5" /> +91-9801812625
           </a>
@@ -162,8 +162,8 @@ function UtilityBar() {
             <Briefcase className="w-3.5 h-3.5" /> Careers
           </a>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="mr-2 opacity-80">Follow Us:</span>
+        <div className="flex items-center justify-center gap-2 w-full sm:w-auto mt-1 sm:mt-0">
+          <span className="mr-1 opacity-80">Follow Us:</span>
           {[Facebook, Twitter, Instagram, Youtube, Linkedin].map((Icon, i) => (
             <a key={i} href="#" className="w-6 h-6 rounded-full bg-white/15 hover:bg-white/30 flex items-center justify-center transition-colors">
               <Icon className="w-3 h-3" />
@@ -211,10 +211,10 @@ function Header() {
 
           {/* Left Group: Logo */}
           <a href="#" className="flex items-center gap-2 shrink-0">
-            <Leaf className="w-6 h-6 text-[#0d2b1a] shrink-0" />
+            <Leaf className="w-5 h-5 md:w-6 md:h-6 text-[#0d2b1a] shrink-0" />
             <div className="flex flex-col leading-none">
-              <span className="font-extrabold text-[#0d2b1a] text-xl tracking-wide">IWF</span>
-              <span className="font-semibold text-[8px] text-gray-500 tracking-wider">ISLAH WELFARE FOUNDATION</span>
+              <span className="font-extrabold text-[#0d2b1a] text-lg md:text-xl tracking-wide">IWF</span>
+              <span className="font-semibold text-[7px] md:text-[8px] text-gray-500 tracking-wider">ISLAH WELFARE FOUNDATION</span>
             </div>
           </a>
 
@@ -259,16 +259,16 @@ function Header() {
           </nav>
 
           {/* Right Group: Donate Button & Mobile Hamburger */}
-          <div className="flex items-center gap-3 shrink-0">
-            <button className="bg-brand-orange hover:bg-orange-600 text-white font-bold text-sm px-5 py-2.5 rounded-md shadow-md transition-colors uppercase tracking-wide cursor-pointer">
+          <div className="flex items-center gap-2 md:gap-3 shrink-0">
+            <button className="bg-brand-orange hover:bg-orange-600 text-white font-bold text-xs md:text-sm px-3 py-2 md:px-5 md:py-2.5 rounded-md shadow-md transition-colors uppercase tracking-wide cursor-pointer">
               DONATE NOW
             </button>
             <button
-              className="lg:hidden p-2 text-gray-600 hover:text-[#0d2b1a] transition-colors cursor-pointer"
+              className="lg:hidden p-1.5 md:p-2 text-gray-600 hover:text-[#0d2b1a] transition-colors cursor-pointer"
               onClick={() => setMobileOpen(true)}
               aria-label="Open navigation menu"
             >
-              <Menu className="w-6 h-6" />
+              <Menu className="w-5 h-5 md:w-6 md:h-6" />
             </button>
           </div>
 
@@ -1041,7 +1041,7 @@ function Footer({ onOpenModal }: { onOpenModal: (type: 'volunteer' | 'partner' |
           </div>
 
           {/* Right — Quote Block */}
-          <div className="border-l border-gray-200 pl-6 flex flex-col justify-center">
+          <div className="border-t lg:border-t-0 lg:border-l border-gray-200 pt-6 lg:pt-0 lg:pl-6 flex flex-col justify-center mt-4 lg:mt-0">
             <span className="text-[#0d2b1a] text-5xl font-serif leading-none block h-5">“</span>
             <p className="text-[#0d2b1a] font-medium text-sm italic leading-relaxed mt-2">
               Alone we can do so little, together we can do so much.
