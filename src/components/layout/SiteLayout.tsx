@@ -1,13 +1,31 @@
-import { useState, useRef, useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { FormEvent, MouseEvent } from "react";
 import { useRouterState } from "@tanstack/react-router";
 import {
-  Phone, Mail, Facebook, Twitter, Instagram, Youtube, Linkedin,
-  Briefcase, Leaf, ChevronDown, X, Menu, Globe, Building2, Scale,
-  Heart, ShieldCheck, UserCheck, Lock, MapPin, BarChart2, Award,
-  Info,
+  Award,
+  BarChart2,
+  Briefcase,
+  Building2,
+  ChevronDown,
+  Facebook,
+  Globe,
+  Heart,
+  Instagram,
+  Leaf,
+  Linkedin,
+  Lock,
+  Mail,
+  MapPin,
+  Menu,
+  Phone,
+  Scale,
+  ShieldCheck,
+  Twitter,
+  UserCheck,
+  X,
+  Youtube,
 } from "lucide-react";
-
-// ─── Mega Nav Data ────────────────────────────────────────────────────────────
+import { CONTACT_DETAILS } from "@/content/siteContent";
 
 export const NAV_ITEMS = [
   "Home",
@@ -54,11 +72,11 @@ export const MEGA_DATA: Record<string, MegaSection> = {
       "Agriculture & Rural Livelihood",
     ],
   },
-  "Programs": {
+  Programs: {
     cols: 1,
-    items: ["View All Programs →"],
+    items: ["View All Programs"],
   },
-  "Impact": {
+  Impact: {
     cols: 2,
     items: [
       "Our Impact",
@@ -71,14 +89,7 @@ export const MEGA_DATA: Record<string, MegaSection> = {
   },
   "Media & Updates": {
     cols: 2,
-    items: [
-      "News & Events",
-      "Latest Updates",
-      "Newsletters",
-      "Publications",
-      "Press Release",
-      "Gallery",
-    ],
+    items: ["News & Events", "Latest Updates", "Newsletters", "Publications", "Press Release", "Gallery"],
   },
   "Get Involved": {
     cols: 2,
@@ -93,11 +104,28 @@ export const MEGA_DATA: Record<string, MegaSection> = {
   },
 };
 
-// ─── NotificationTicker ────────────────────────────────────────────────────────
+function getTopNavHref(item: string) {
+  if (item === "Home") return "/";
+  if (item === "About Us") return "/about";
+  if (item === "What We Do") return "/#focus-areas";
+  if (item === "Programs") return "/programs/healthcare";
+  return "#";
+}
+
+function getMegaHref(menu: string, item: string) {
+  if (menu === "About Us" && item === "Overview") return "/about";
+  if (menu === "What We Do" && item === "Education") return "/programs/education";
+  if (menu === "What We Do" && item === "Health Care") return "/programs/healthcare";
+  if (menu === "What We Do" && item === "Skills Development") return "/programs/skills-development";
+  if (menu === "What We Do" && item === "Women Empowerment") return "/programs/women-empowerment";
+  if (menu === "Programs" && item === "View All Programs") return "/programs/healthcare";
+  if (menu === "Get Involved" && item === "Careers & Opportunities") return "#careers";
+  return "#";
+}
 
 export function NotificationTicker() {
   const marqueeText =
-    "Notification for change in Reg. • Islah Welfare Foundation • Registration Address updated to Bathiya, Darbhanga, Bihar • Join our mission today! • ";
+    "Notification for change in Reg. | Islah Welfare Foundation | Registration Address updated to Bathiya, Darbhanga, Bihar | Join our mission today | ";
   const duplicatedText = Array(4).fill(marqueeText).join(" ");
 
   return (
@@ -114,18 +142,16 @@ export function NotificationTicker() {
   );
 }
 
-// ─── UtilityBar ───────────────────────────────────────────────────────────────
-
 export function UtilityBar() {
   return (
     <div className="bg-brand-green text-white text-xs">
       <div className="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-3 sm:gap-2">
         <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-4 gap-y-1.5 w-full sm:w-auto">
           <a href="tel:+919801812625" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
-            <Phone className="w-3.5 h-3.5" /> +91-9801812625
+            <Phone className="w-3.5 h-3.5" /> {CONTACT_DETAILS.phone}
           </a>
-          <a href="mailto:info@iwfindia.org" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
-            <Mail className="w-3.5 h-3.5" /> info@iwfindia.org
+          <a href={`mailto:${CONTACT_DETAILS.email}`} className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
+            <Mail className="w-3.5 h-3.5" /> {CONTACT_DETAILS.email}
           </a>
           <a href="#careers" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity font-semibold">
             <Briefcase className="w-3.5 h-3.5" /> Careers
@@ -134,7 +160,12 @@ export function UtilityBar() {
         <div className="flex items-center justify-center gap-2 w-full sm:w-auto mt-1 sm:mt-0">
           <span className="mr-1 opacity-80">Follow Us:</span>
           {[Facebook, Twitter, Instagram, Youtube, Linkedin].map((Icon, i) => (
-            <a key={i} href="#" className="w-6 h-6 rounded-full bg-white/15 hover:bg-white/30 flex items-center justify-center transition-colors">
+            <a
+              key={i}
+              href="#"
+              className="w-6 h-6 rounded-full bg-white/15 hover:bg-white/30 flex items-center justify-center transition-colors"
+              aria-label="Social media profile"
+            >
               <Icon className="w-3 h-3" />
             </a>
           ))}
@@ -144,16 +175,12 @@ export function UtilityBar() {
   );
 }
 
-// ─── Header ───────────────────────────────────────────────────────────────────
-
 export function Header() {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const isAboutActive = pathname.startsWith("/about");
 
   const openMenu = useCallback((name: string) => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
@@ -161,7 +188,7 @@ export function Header() {
   }, []);
 
   const scheduleClose = useCallback(() => {
-    closeTimer.current = setTimeout(() => setActiveMenu(null), 200);
+    closeTimer.current = setTimeout(() => setActiveMenu(null), 180);
   }, []);
 
   const cancelClose = useCallback(() => {
@@ -170,36 +197,50 @@ export function Header() {
 
   const hasDropdown = activeMenu && MEGA_DATA[activeMenu];
 
+  const isRouteActive = (item: string) =>
+    (item === "Home" && pathname === "/") ||
+    (item === "About Us" && pathname.startsWith("/about")) ||
+    ((item === "What We Do" || item === "Programs") && pathname.startsWith("/programs"));
+
+  const getHeaderHref = (item: string) => {
+    if (item === "What We Do" && pathname === "/") return "#focus-areas";
+    return getTopNavHref(item);
+  };
+
+  const handleHeaderClick = (item: string, event: MouseEvent<HTMLAnchorElement>) => {
+    if (item !== "What We Do" || pathname !== "/") return;
+    event.preventDefault();
+    setActiveMenu(null);
+    document.getElementById("focus-areas")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
   return (
     <>
-      {/* Dimming backdrop */}
       <div
         className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-250 ease-out pointer-events-none ${
           hasDropdown ? "opacity-100 pointer-events-auto" : "opacity-0"
         }`}
         onClick={() => setActiveMenu(null)}
       />
-
       <header className="bg-white sticky top-0 z-50 border-b border-gray-100 shadow-sm transition-all duration-200">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-
-          {/* Logo */}
           <a href="/" className="flex items-center gap-2 shrink-0">
             <Leaf className="w-5 h-5 md:w-6 md:h-6 text-[#0d2b1a] shrink-0" />
             <div className="flex flex-col leading-none">
               <span className="font-extrabold text-[#0d2b1a] text-lg md:text-xl tracking-wide">IWF</span>
-              <span className="font-semibold text-[7px] md:text-[8px] text-gray-500 tracking-wider">ISLAH WELFARE FOUNDATION</span>
+              <span className="font-semibold text-[7px] md:text-[8px] text-gray-500 tracking-wider">
+                ISLAH WELFARE FOUNDATION
+              </span>
             </div>
           </a>
 
-          {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-8" aria-label="Main navigation">
             {NAV_ITEMS.map((item) => {
               const hasMega = !!MEGA_DATA[item];
-              const isDropdownOpen = activeMenu === item;
-              const isRouteActive =
-                (item === "About Us" && isAboutActive) ||
-                (item === "Home" && pathname === "/");
+              const isOpen = activeMenu === item;
               return (
                 <div
                   key={item}
@@ -208,25 +249,20 @@ export function Header() {
                   onMouseLeave={hasMega ? scheduleClose : undefined}
                 >
                   <a
-                    href={
-                      item === "Home"
-                        ? "/"
-                        : item === "About Us"
-                        ? "/about"
-                        : item === "Programs"
-                        ? "/programs/healthcare"
-                        : "#"
-                    }
+                    href={getHeaderHref(item)}
                     className={`relative flex items-center gap-1 font-medium text-sm transition-colors py-1 group ${
-                      isRouteActive ? "text-brand-green font-semibold" : "text-gray-700 hover:text-[#0d2b1a]"
+                      isRouteActive(item) ? "text-brand-green font-semibold" : "text-gray-700 hover:text-[#0d2b1a]"
                     }`}
-                    onClick={() => !hasMega && setActiveMenu(null)}
+                    onClick={(event) => {
+                      handleHeaderClick(item, event);
+                      if (!hasMega) setActiveMenu(null);
+                    }}
                   >
                     {item}
                     {hasMega && (
                       <ChevronDown
                         className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                          isDropdownOpen ? "rotate-180 text-[#0d2b1a]" : "text-gray-400"
+                          isOpen ? "rotate-180 text-[#0d2b1a]" : "text-gray-400"
                         }`}
                       />
                     )}
@@ -237,11 +273,13 @@ export function Header() {
             })}
           </nav>
 
-          {/* Right: Donate + Hamburger */}
           <div className="flex items-center gap-2 md:gap-3 shrink-0">
-            <button className="bg-brand-orange hover:bg-orange-600 text-white font-bold text-xs md:text-sm px-3 py-2 md:px-5 md:py-2.5 rounded-md shadow-md transition-colors uppercase tracking-wide cursor-pointer">
+            <a
+              href="#"
+              className="bg-brand-orange hover:bg-orange-600 text-white font-bold text-xs md:text-sm px-3 py-2 md:px-5 md:py-2.5 rounded-md shadow-md transition-colors uppercase tracking-wide"
+            >
               DONATE NOW
-            </button>
+            </a>
             <button
               className="lg:hidden p-1.5 md:p-2 text-gray-600 hover:text-[#0d2b1a] transition-colors cursor-pointer"
               onClick={() => setMobileOpen(true)}
@@ -251,73 +289,55 @@ export function Header() {
             </button>
           </div>
 
-          {/* Mega dropdown */}
           {activeMenu && MEGA_DATA[activeMenu] && (
             <div
               className="absolute left-0 right-0 top-full bg-white shadow-2xl z-50 border-t-2 border-brand-orange py-8 px-16 flex gap-10"
-              style={{
-                clipPath: activeMenu ? "inset(0 0 0% 0)" : "inset(0 0 100% 0)",
-                transition: "clip-path 280ms cubic-bezier(0.16, 1, 0.3, 1)",
-              }}
               onMouseEnter={cancelClose}
               onMouseLeave={scheduleClose}
             >
               <div className="flex-1">
-                <div className="text-brand-orange uppercase text-xs tracking-widest font-bold mb-4">{activeMenu}</div>
+                <div className="text-brand-orange uppercase text-xs tracking-widest font-bold mb-4">
+                  {activeMenu}
+                </div>
                 <div
                   className="grid gap-8"
                   style={{ gridTemplateColumns: `repeat(${MEGA_DATA[activeMenu].cols}, minmax(0, 1fr))` }}
                 >
                   {Array.from({ length: MEGA_DATA[activeMenu].cols }).map((_, colIndex) => {
                     const items = MEGA_DATA[activeMenu].items;
-                    const colsCount = MEGA_DATA[activeMenu].cols;
-                    const itemsPerCol = Math.ceil(items.length / colsCount);
-                    const colItems = items.slice(colIndex * itemsPerCol, (colIndex + 1) * itemsPerCol);
+                    const itemsPerCol = Math.ceil(items.length / MEGA_DATA[activeMenu].cols);
                     return (
                       <div key={colIndex} className="flex flex-col gap-3">
-                        {colItems.map((subItem, itemIndex) => {
-                          const globalIndex = colIndex * itemsPerCol + itemIndex;
-                          return (
-                            <a
-                              key={subItem}
-                              href={
-                                activeMenu === "About Us" && subItem === "Overview"
-                                  ? "/about"
-                                  : activeMenu === "What We Do" && subItem === "Health Care"
-                                  ? "/programs/healthcare"
-                                  : activeMenu === "Programs" && subItem === "View All Programs →"
-                                  ? "/programs/healthcare"
-                                  : "#"
-                              }
-                              className="flex items-center gap-2 text-gray-700 hover:text-[#0d2b1a] text-sm hover:translate-x-1 transition-all duration-200"
-                              style={{ transitionDelay: `${globalIndex * 30}ms` }}
-                              onClick={() => setActiveMenu(null)}
-                            >
-                              <span className="text-brand-orange text-sm font-semibold">→</span>
-                              {subItem}
-                            </a>
-                          );
-                        })}
+                        {items.slice(colIndex * itemsPerCol, (colIndex + 1) * itemsPerCol).map((subItem) => (
+                          <a
+                            key={subItem}
+                            href={getMegaHref(activeMenu, subItem)}
+                            className="flex items-center gap-2 text-gray-700 hover:text-[#0d2b1a] text-sm hover:translate-x-1 transition-all duration-200"
+                            onClick={() => setActiveMenu(null)}
+                          >
+                            <span className="text-brand-orange text-sm font-semibold">-&gt;</span>
+                            {subItem}
+                          </a>
+                        ))}
                       </div>
                     );
                   })}
                 </div>
               </div>
-
               {(activeMenu === "About Us" || activeMenu === "What We Do" || activeMenu === "Get Involved") && (
-                <div className="w-72 shrink-0 border-l border-gray-100 pl-8 flex flex-col justify-between">
-                  <div className="bg-[#f9fdf9] border border-green-100/50 rounded-lg p-5 flex flex-col gap-3">
+                <div className="w-72 shrink-0 border-l border-gray-100 pl-8">
+                  <div className="bg-[#f9fdf9] border border-green-100/50 rounded-md p-5 flex flex-col gap-3">
                     <div className="w-10 h-10 rounded-full bg-brand-green/10 flex items-center justify-center text-brand-green">
                       <Leaf className="w-5 h-5" />
                     </div>
-                    <div className="font-bold text-[#0d2b1a] text-sm leading-snug">Planting Seeds of Hope and Change</div>
-                    <div className="text-xs text-gray-600 leading-normal">10,000+ lives impacted since 2019. Join us in bringing sustainable growth.</div>
-                    <a
-                      href="#"
-                      className="text-brand-orange text-xs font-bold hover:underline inline-flex items-center gap-1"
-                      onClick={() => setActiveMenu(null)}
-                    >
-                      Learn More →
+                    <div className="font-bold text-[#0d2b1a] text-sm leading-snug">
+                      Planting Seeds of Hope and Change
+                    </div>
+                    <div className="text-xs text-gray-600 leading-normal">
+                      Join IWF in building education, healthcare and livelihood pathways for underserved communities.
+                    </div>
+                    <a href="/about" className="text-brand-orange text-xs font-bold hover:underline inline-flex items-center gap-1">
+                      Learn More -&gt;
                     </a>
                   </div>
                 </div>
@@ -327,19 +347,10 @@ export function Header() {
         </div>
       </header>
 
-      {/* Mobile Drawer */}
       {mobileOpen && (
         <>
-          <div
-            className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-            onClick={() => setMobileOpen(false)}
-            aria-hidden="true"
-          />
-          <div
-            className="fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-white z-50 shadow-2xl overflow-y-auto mobile-drawer lg:hidden flex flex-col"
-            role="dialog"
-            aria-label="Mobile navigation"
-          >
+          <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setMobileOpen(false)} aria-hidden="true" />
+          <div className="fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-white z-50 shadow-2xl overflow-y-auto mobile-drawer lg:hidden flex flex-col">
             <div className="flex items-center justify-between p-4 bg-[#0d2b1a] shrink-0 text-white">
               <div className="flex items-center gap-2.5">
                 <Leaf className="w-6 h-6 text-brand-green fill-brand-green/20" />
@@ -348,16 +359,11 @@ export function Header() {
                   <span className="font-semibold text-[8px] text-white/70 tracking-wider">ISLAH WELFARE FOUNDATION</span>
                 </div>
               </div>
-              <button
-                onClick={() => setMobileOpen(false)}
-                className="p-1.5 text-white/80 hover:text-white transition-colors rounded cursor-pointer"
-                aria-label="Close navigation menu"
-              >
+              <button onClick={() => setMobileOpen(false)} className="p-1.5 text-white/80 hover:text-white rounded cursor-pointer" aria-label="Close navigation menu">
                 <X className="w-5 h-5" />
               </button>
             </div>
-
-            <nav className="flex-1 py-2" aria-label="Mobile navigation items">
+            <nav className="flex-1 py-2" aria-label="Mobile navigation">
               {NAV_ITEMS.map((item) => {
                 const hasMega = !!MEGA_DATA[item];
                 const isExpanded = mobileExpanded === item;
@@ -365,17 +371,14 @@ export function Header() {
                   <div key={item} className="border-b border-slate-100 last:border-0">
                     <div className="flex items-center">
                       <a
-                        href={
-                          item === "Home"
-                            ? "/"
-                            : item === "About Us"
-                            ? "/about"
-                            : item === "Programs"
-                            ? "/programs/healthcare"
-                            : "#"
-                        }
+                        href={getHeaderHref(item)}
                         className="flex-1 px-5 py-3.5 text-sm font-semibold text-slate-800 hover:text-brand-green transition-colors"
-                        onClick={() => {
+                        onClick={(event) => {
+                          handleHeaderClick(item, event);
+                          if (event.defaultPrevented) {
+                            setMobileOpen(false);
+                            return;
+                          }
                           if (!hasMega) setMobileOpen(false);
                           else setMobileExpanded(isExpanded ? null : item);
                         }}
@@ -388,9 +391,7 @@ export function Header() {
                           className="px-4 py-3.5 text-slate-400 hover:text-brand-green transition-colors cursor-pointer"
                           aria-label={`${isExpanded ? "Collapse" : "Expand"} ${item}`}
                         >
-                          <ChevronDown
-                            className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? "rotate-180 text-brand-green" : ""}`}
-                          />
+                          <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? "rotate-180 text-brand-green" : ""}`} />
                         </button>
                       )}
                     </div>
@@ -399,19 +400,11 @@ export function Header() {
                         {MEGA_DATA[item].items.map((sub) => (
                           <a
                             key={sub}
-                            href={
-                              item === "About Us" && sub === "Overview"
-                                ? "/about"
-                                : item === "What We Do" && sub === "Health Care"
-                                ? "/programs/healthcare"
-                                : item === "Programs" && sub === "View All Programs →"
-                                ? "/programs/healthcare"
-                                : "#"
-                            }
+                            href={getMegaHref(item, sub)}
                             className="flex items-center gap-2 px-4 py-2 text-sm text-slate-600 hover:text-brand-green hover:bg-white transition-all"
                             onClick={() => setMobileOpen(false)}
                           >
-                            <span className="text-brand-orange text-xs">→</span>
+                            <span className="text-brand-orange text-xs">-&gt;</span>
                             {sub}
                           </a>
                         ))}
@@ -421,14 +414,14 @@ export function Header() {
                 );
               })}
             </nav>
-
             <div className="p-4 border-t border-slate-100 shrink-0">
-              <button
+              <a
+                href="#"
                 onClick={() => setMobileOpen(false)}
-                className="w-full bg-brand-orange hover:bg-orange-600 text-white font-bold py-3 rounded transition-colors uppercase tracking-wide text-sm cursor-pointer"
+                className="block text-center w-full bg-brand-orange hover:bg-orange-600 text-white font-bold py-3 rounded transition-colors uppercase tracking-wide text-sm"
               >
                 DONATE NOW
-              </button>
+              </a>
             </div>
           </div>
         </>
@@ -437,16 +430,22 @@ export function Header() {
   );
 }
 
-// ─── Footer ───────────────────────────────────────────────────────────────────
+type RoleType = "volunteer" | "partner" | "sponsor" | "mentor" | "employee";
 
-export function Footer({ onOpenModal }: { onOpenModal: (type: "volunteer" | "partner" | "sponsor" | "mentor" | "employee") => void }) {
+export function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void }) {
+  const quickLinks = [
+    ["About Us", "/about"],
+    ["Education", "/programs/education"],
+    ["Healthcare", "/programs/healthcare"],
+    ["Skills Development", "/programs/skills-development"],
+    ["Women Empowerment", "/programs/women-empowerment"],
+    ["Get In Touch", "#"],
+  ];
+
   return (
     <footer className="w-full">
-      {/* Zone A — Main Footer */}
       <div className="bg-[#0d2b1a] text-white py-14 px-4 md:px-10">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
-
-          {/* Col 1 — Identity */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <Leaf className="w-8 h-8 text-brand-green fill-brand-green/20" />
@@ -457,14 +456,13 @@ export function Footer({ onOpenModal }: { onOpenModal: (type: "volunteer" | "par
             </div>
             <div className="text-brand-orange font-medium text-sm">Care | Empower | Uplift</div>
             <p className="text-white/70 text-sm leading-relaxed">
-              Islah Welfare Foundation is committed to empowering underprivileged communities through education, skill development, healthcare and social welfare initiatives for a better tomorrow.
+              Islah Welfare Foundation empowers underprivileged communities through education, healthcare, women empowerment, skill development and social welfare initiatives.
             </p>
-            <hr className="border-white/20" />
             <div>
-              <span className="block text-xs font-bold tracking-widest text-white/60 uppercase mb-2">FOLLOW US</span>
+              <span className="block text-xs font-bold tracking-widest text-white/60 uppercase mb-2">Follow Us</span>
               <div className="flex gap-2">
                 {[Facebook, Instagram, Youtube, Linkedin, Twitter].map((Icon, i) => (
-                  <a key={i} href="#" className="w-7 h-7 rounded-full bg-white/10 hover:bg-brand-orange flex items-center justify-center text-white transition-all duration-200">
+                  <a key={i} href="#" className="w-7 h-7 rounded-full bg-white/10 hover:bg-brand-orange flex items-center justify-center text-white transition-all duration-200" aria-label="Social media profile">
                     <Icon className="w-3.5 h-3.5" />
                   </a>
                 ))}
@@ -472,147 +470,182 @@ export function Footer({ onOpenModal }: { onOpenModal: (type: "volunteer" | "par
             </div>
           </div>
 
-          {/* Col 2 — Quick Links */}
           <div className="space-y-4">
             <h4 className="flex items-center gap-2 text-white font-semibold text-sm uppercase border-l-2 border-brand-orange pl-2 tracking-wide">
-              <Info className="w-4 h-4 text-brand-orange" /> QUICK LINKS
+              <Leaf className="w-4 h-4 text-brand-orange" /> Quick Links
             </h4>
             <ul className="space-y-2.5">
-              {["About Us", "What We Do", "Our Programs", "Impact Stories", "Media Center", "Careers", "Get In Touch"].map((link) => (
-                <li key={link}>
-                  <a href="#" className="inline-flex items-center text-white/75 text-sm hover:text-brand-orange hover:translate-x-1 transition-all duration-200">
-                    <span className="text-brand-orange text-xs mr-2">►</span>{link}
+              {quickLinks.map(([label, href]) => (
+                <li key={label}>
+                  <a href={href} className="inline-flex items-center text-white/75 text-sm hover:text-brand-orange hover:translate-x-1 transition-all duration-200">
+                    <span className="text-brand-orange text-xs mr-2">-&gt;</span>
+                    {label}
                   </a>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Col 3 — Management */}
           <div className="space-y-4">
             <h4 className="flex items-center gap-2 text-white font-semibold text-sm uppercase border-l-2 border-brand-orange pl-2 tracking-wide">
-              <Building2 className="w-4 h-4 text-brand-orange" /> MANAGEMENT
+              <Building2 className="w-4 h-4 text-brand-orange" /> Get Involved
             </h4>
             <ul className="space-y-2.5">
-              {["Board of Trustees", "Executive Body", "Advisory Board", "Policies & Documents", "Annual Reports"].map((link) => (
-                <li key={link}>
-                  <a href="#" className="inline-flex items-center text-white/75 text-sm hover:text-brand-orange hover:translate-x-1 transition-all duration-200">
-                    <span className="text-brand-orange text-xs mr-2">►</span>{link}
+              {[
+                ["Volunteer With Us", "volunteer"],
+                ["Partner With Us", "partner"],
+                ["Sponsor a Programme", "sponsor"],
+                ["Become a Mentor", "mentor"],
+                ["Careers & Opportunities", "employee"],
+              ].map(([label, type]) => (
+                <li key={label}>
+                  <button
+                    onClick={() => onOpenModal(type as RoleType)}
+                    className="inline-flex items-center text-left text-white/75 text-sm hover:text-brand-orange hover:translate-x-1 transition-all duration-200 cursor-pointer"
+                  >
+                    <span className="text-brand-orange text-xs mr-2">-&gt;</span>
+                    {label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="space-y-4">
+            <h4 className="flex items-center gap-2 text-white font-semibold text-sm uppercase border-l-2 border-brand-orange pl-2 tracking-wide">
+              <Scale className="w-4 h-4 text-brand-orange" /> Legal
+            </h4>
+            <ul className="space-y-2.5">
+              {[
+                ["Privacy Policy", "/privacy-policy"],
+                ["Refund Policy", "/refund-policy"],
+                ["Terms & Conditions", "/terms-and-conditions"],
+                ["Certificates", "#"],
+                ["12A & 80G", "#"],
+              ].map(([label, href]) => (
+                <li key={label}>
+                  <a href={href} className="inline-flex items-center text-white/75 text-sm hover:text-brand-orange hover:translate-x-1 transition-all duration-200">
+                    <span className="text-brand-orange text-xs mr-2">-&gt;</span>
+                    {label}
                   </a>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Col 4 — Legal */}
           <div className="space-y-4">
             <h4 className="flex items-center gap-2 text-white font-semibold text-sm uppercase border-l-2 border-brand-orange pl-2 tracking-wide">
-              <Scale className="w-4 h-4 text-brand-orange" /> LEGAL
-            </h4>
-            <ul className="space-y-2.5">
-              {["Certificates", "FCRA", "12A & 80G", "Privacy Policy", "Terms & Conditions", "Refund Policy"].map((link) => (
-                <li key={link}>
-                  <a href="#" className="inline-flex items-center text-white/75 text-sm hover:text-brand-orange hover:translate-x-1 transition-all duration-200">
-                    <span className="text-brand-orange text-xs mr-2">►</span>{link}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Col 5 — Contact */}
-          <div className="space-y-4">
-            <h4 className="flex items-center gap-2 text-white font-semibold text-sm uppercase border-l-2 border-brand-orange pl-2 tracking-wide">
-              <Phone className="w-4 h-4 text-brand-orange" /> CONTACT US
+              <Phone className="w-4 h-4 text-brand-orange" /> Contact Us
             </h4>
             <div className="space-y-3 text-white/80 text-sm">
-              <div className="flex gap-2 items-start"><MapPin className="w-4 h-4 mt-0.5 text-brand-orange shrink-0" /><span>Bathiya, Via- Putai Manigachhi, Darbhanga, Bihar – 847423, India</span></div>
-              <div className="flex gap-2 items-center"><Phone className="w-4 h-4 text-brand-orange shrink-0" /><span>+91 9801812625</span></div>
-              <div className="flex gap-2 items-center"><Mail className="w-4 h-4 text-brand-orange shrink-0" /><span>info@iwfindia.org</span></div>
-              <div className="flex gap-2 items-center"><Globe className="w-4 h-4 text-brand-orange shrink-0" /><span>www.islahwelfarefoundation.org</span></div>
+              <div className="flex gap-2 items-start">
+                <MapPin className="w-4 h-4 mt-0.5 text-brand-orange shrink-0" />
+                <span>{CONTACT_DETAILS.address}</span>
+              </div>
+              <div className="flex gap-2 items-center">
+                <Phone className="w-4 h-4 text-brand-orange shrink-0" />
+                <span>{CONTACT_DETAILS.phone}</span>
+              </div>
+              <div className="flex gap-2 items-center">
+                <Mail className="w-4 h-4 text-brand-orange shrink-0" />
+                <span>{CONTACT_DETAILS.email}</span>
+              </div>
+              <div className="flex gap-2 items-center">
+                <Globe className="w-4 h-4 text-brand-orange shrink-0" />
+                <span>www.islahwelfarefoundation.org</span>
+              </div>
             </div>
             <button
               onClick={() => onOpenModal("sponsor")}
-              className="w-full mt-5 bg-[#f97316] hover:bg-orange-600 text-white font-bold py-3 rounded-md flex items-center justify-center gap-2 transition-all duration-200 hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] cursor-pointer"
+              className="w-full mt-5 bg-[#f97316] hover:bg-orange-600 text-white font-bold py-3 rounded-md flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer"
             >
               <Heart className="w-4 h-4 fill-white" /> DONATE NOW
             </button>
-            <div className="text-xs italic text-white/50 text-center mt-2">"Your support can change lives"</div>
           </div>
         </div>
       </div>
 
-      {/* Zone B — Trust Sub-Strip */}
       <div className="bg-[#f9f9f6] text-slate-800 py-10 px-4 md:px-10 border-t border-gray-100">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
           <div className="flex gap-4 items-start">
-            <div className="w-12 h-12 rounded-full bg-[#0d2b1a] text-white flex items-center justify-center shrink-0"><Mail className="w-6 h-6 text-white" /></div>
+            <div className="w-12 h-12 rounded-full bg-[#0d2b1a] text-white flex items-center justify-center shrink-0">
+              <Mail className="w-6 h-6 text-white" />
+            </div>
             <div className="flex-1">
-              <h5 className="font-bold text-[#0d2b1a] text-base leading-tight">STAY CONNECTED</h5>
-              <p className="text-gray-600 text-sm mt-1">Subscribe to our newsletter and stay updated with our latest activities and impact.</p>
+              <h5 className="font-bold text-[#0d2b1a] text-base leading-tight">Stay Connected</h5>
+              <p className="text-gray-600 text-sm mt-1">
+                Subscribe to updates about IWF activities, campaigns and impact.
+              </p>
               <form onSubmit={(e) => e.preventDefault()} className="flex items-center mt-3 shadow-sm rounded-md overflow-hidden border border-gray-200">
-                <input type="email" placeholder="Enter your email" required className="flex-1 bg-white px-4 py-2 text-sm text-slate-800 placeholder-slate-400 focus:outline-none border-0" />
-                <button type="submit" className="bg-[#0d2b1a] hover:bg-brand-green text-white text-xs font-semibold px-5 py-2.5 transition-colors uppercase shrink-0 cursor-pointer">SUBSCRIBE</button>
+                <input type="email" placeholder="Enter your email" required className="flex-1 bg-white px-4 py-2 text-sm text-slate-800 placeholder-slate-400 focus:outline-none border-0 min-w-0" />
+                <button type="submit" className="bg-[#0d2b1a] hover:bg-brand-green text-white text-xs font-semibold px-5 py-2.5 transition-colors uppercase shrink-0 cursor-pointer">
+                  Subscribe
+                </button>
               </form>
             </div>
           </div>
           <div className="text-center">
-            <h5 className="font-bold text-[#0d2b1a] text-xs uppercase tracking-wide mb-6">WE ARE A TRUSTED ORGANIZATION</h5>
+            <h5 className="font-bold text-[#0d2b1a] text-xs uppercase tracking-wide mb-6">Trusted Organisation</h5>
             <div className="grid grid-cols-4 gap-2">
               {[
-                { label: "Registered Trust", Icon: () => <Award className="w-5 h-5 text-[#0d2b1a]" /> },
-                { label: "12A & 80G Certified", Icon: () => <span className="text-[9px] font-black tracking-tighter text-[#0d2b1a]">12A 80G</span> },
-                { label: "Impact Driven", Icon: () => <BarChart2 className="w-5 h-5 text-[#0d2b1a]" /> },
-                { label: "Secure & Transparent", Icon: () => <Lock className="w-5 h-5 text-[#0d2b1a]" /> },
-              ].map((badge, i) => (
-                <div key={i} className="flex flex-col items-center">
-                  <div className="w-10 h-10 rounded-full border-2 border-[#0d2b1a] bg-white flex items-center justify-center"><badge.Icon /></div>
-                  <span className="text-[#0d2b1a] font-semibold text-[9px] text-center mt-2 leading-tight">{badge.label}</span>
+                { label: "Registered Trust", Icon: Award },
+                { label: "12A & 80G", Icon: ShieldCheck },
+                { label: "Impact Driven", Icon: BarChart2 },
+                { label: "Transparent", Icon: Lock },
+              ].map(({ label, Icon }) => (
+                <div key={label} className="flex flex-col items-center">
+                  <div className="w-10 h-10 rounded-full border-2 border-[#0d2b1a] bg-white flex items-center justify-center">
+                    <Icon className="w-5 h-5 text-[#0d2b1a]" />
+                  </div>
+                  <span className="text-[#0d2b1a] font-semibold text-[9px] text-center mt-2 leading-tight">
+                    {label}
+                  </span>
                 </div>
               ))}
             </div>
           </div>
-          <div className="border-t lg:border-t-0 lg:border-l border-gray-200 pt-6 lg:pt-0 lg:pl-6 flex flex-col justify-center mt-4 lg:mt-0">
-            <span className="text-[#0d2b1a] text-5xl font-serif leading-none block h-5">"</span>
-            <p className="text-[#0d2b1a] font-medium text-sm italic leading-relaxed mt-2">Alone we can do so little, together we can do so much.</p>
-            <span className="text-xs font-semibold text-[#0d2b1a] mt-2 block">– Helen Keller</span>
+          <div className="border-t lg:border-t-0 lg:border-l border-gray-200 pt-6 lg:pt-0 lg:pl-6">
+            <p className="text-[#0d2b1a] font-medium text-sm italic leading-relaxed">
+              "Alone we can do so little, together we can do so much."
+            </p>
+            <span className="text-xs font-semibold text-[#0d2b1a] mt-2 block">- Helen Keller</span>
           </div>
         </div>
       </div>
 
-      {/* Zone C — Values Strip */}
       <div className="bg-[#0d2b1a] text-white py-6 px-4 md:px-10 border-t border-white/10">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 items-center">
           {[
-            { title: "Transparency", desc: "We are open and honest in all our actions.", Icon: ShieldCheck },
-            { title: "Accountability", desc: "We take responsibility for our commitments.", Icon: UserCheck },
-            { title: "Integrity", desc: "We operate with strong moral principles.", Icon: Scale },
-            { title: "Compassion", desc: "We care for people and the communities we serve.", Icon: Heart },
-          ].map((val, i) => (
-            <div key={i} className="flex items-start gap-3">
-              <val.Icon className="w-5 h-5 text-brand-green mt-0.5 shrink-0" />
+            { title: "Transparency", desc: "Open and honest in every action.", Icon: ShieldCheck },
+            { title: "Accountability", desc: "Responsible for every commitment.", Icon: UserCheck },
+            { title: "Integrity", desc: "Guided by strong ethical principles.", Icon: Scale },
+            { title: "Compassion", desc: "Sensitive to the needs of others.", Icon: Heart },
+          ].map(({ title, desc, Icon }) => (
+            <div key={title} className="flex items-start gap-3">
+              <Icon className="w-5 h-5 text-brand-green mt-0.5 shrink-0" />
               <div>
-                <h6 className="font-bold text-white text-sm">{val.title}</h6>
-                <p className="text-white/65 text-xs mt-0.5">{val.desc}</p>
+                <h6 className="font-bold text-white text-sm">{title}</h6>
+                <p className="text-white/65 text-xs mt-0.5">{desc}</p>
               </div>
             </div>
           ))}
-          <div className="relative p-4 rounded bg-black/10 border border-white/5 flex items-center justify-end">
-            <p className="text-white/80 font-serif italic text-sm text-right">"Together, we build a better tomorrow"</p>
+          <div className="p-4 rounded bg-black/10 border border-white/5 flex items-center justify-end">
+            <p className="text-white/80 font-serif italic text-sm text-right">
+              "Together, we build a better tomorrow"
+            </p>
           </div>
         </div>
       </div>
 
-      {/* Zone D — Copyright */}
       <div className="bg-[#091f12] py-4 px-4 md:px-10">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 text-xs text-white/60">
-          <div>© 2026 Islah Welfare Foundation. All Rights Reserved.</div>
-          <div className="flex gap-4">
-            <a href="#" className="hover:text-brand-orange transition-colors">Privacy Policy</a>
+          <div>(c) 2026 Islah Welfare Foundation. All Rights Reserved.</div>
+          <div className="flex flex-wrap gap-3">
+            <a href="/privacy-policy" className="hover:text-brand-orange transition-colors">Privacy Policy</a>
             <span>|</span>
-            <a href="#" className="hover:text-brand-orange transition-colors">Terms &amp; Conditions</a>
+            <a href="/refund-policy" className="hover:text-brand-orange transition-colors">Refund Policy</a>
             <span>|</span>
-            <a href="#" className="hover:text-brand-orange transition-colors">Refund Policy</a>
+            <a href="/terms-and-conditions" className="hover:text-brand-orange transition-colors">Terms & Conditions</a>
           </div>
         </div>
       </div>
@@ -620,39 +653,39 @@ export function Footer({ onOpenModal }: { onOpenModal: (type: "volunteer" | "par
   );
 }
 
-// ─── RoleFormModal ────────────────────────────────────────────────────────────
-
 export interface RoleFormModalProps {
-  type: "volunteer" | "partner" | "sponsor" | "mentor" | "employee" | null;
+  type: RoleType | null;
   onClose: () => void;
 }
 
 export function RoleFormModal({ type, onClose }: RoleFormModalProps) {
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    setSubmitted(false);
+  }, [type]);
+
   if (!type) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
+  const titleMap: Record<RoleType, string> = {
+    volunteer: "Apply to Volunteer",
+    partner: "Become a Partner",
+    sponsor: "Become a Sponsor",
+    mentor: "Become a Mentor",
+    employee: "Apply for Employment",
   };
 
-  const getTitle = () => {
-    switch (type) {
-      case "volunteer": return "Apply to Volunteer";
-      case "partner": return "Become a Partner";
-      case "sponsor": return "Become a Sponsor";
-      case "mentor": return "Become a Mentor";
-      case "employee": return "Apply for Employment";
-      default: return "Online Form";
-    }
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setSubmitted(true);
   };
 
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
       <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-slate-100 flex flex-col">
         <div className="flex items-center justify-between px-6 py-4 bg-brand-green text-white sticky top-0 z-10">
-          <h3 className="text-lg font-bold tracking-wide uppercase">{getTitle()}</h3>
-          <button onClick={onClose} className="p-1 text-white/80 hover:text-white transition-colors" aria-label="Close form">
+          <h3 className="text-lg font-bold tracking-wide uppercase">{titleMap[type]}</h3>
+          <button onClick={onClose} className="p-1 text-white/80 hover:text-white transition-colors cursor-pointer" aria-label="Close form">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -662,14 +695,17 @@ export function RoleFormModal({ type, onClose }: RoleFormModalProps) {
               <div className="w-16 h-16 bg-brand-green/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Heart className="w-8 h-8 text-brand-green" />
               </div>
-              <h4 className="text-xl font-bold text-slate-800 mb-2">Thank You for Your Submission!</h4>
-              <p className="text-sm text-slate-600 max-w-md mx-auto">We have received your application. Our team will review the details and get back to you within 3-5 business days.</p>
-              <button onClick={onClose} className="mt-6 bg-brand-green hover:bg-brand-green-dark text-white font-bold px-6 py-2.5 rounded transition">Close Window</button>
+              <h4 className="text-xl font-bold text-slate-800 mb-2">Thank You for Your Submission</h4>
+              <p className="text-sm text-slate-600 max-w-md mx-auto">
+                We have received your details. The backend will be connected later; this frontend confirmation is ready for demo.
+              </p>
+              <button onClick={onClose} className="mt-6 bg-brand-green hover:bg-brand-green-dark text-white font-bold px-6 py-2.5 rounded transition cursor-pointer">
+                Close Window
+              </button>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Common fields for all roles */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold text-slate-600 mb-1">Full Name *</label>
                   <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
@@ -679,7 +715,7 @@ export function RoleFormModal({ type, onClose }: RoleFormModalProps) {
                   <input required type="email" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold text-slate-600 mb-1">Contact Number *</label>
                   <input required type="tel" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
@@ -715,18 +751,22 @@ export function RoleFormModal({ type, onClose }: RoleFormModalProps) {
                 </div>
               )}
               {type === "employee" && (
-                <div>
+                <div id="careers">
                   <label className="block text-xs font-semibold text-slate-600 mb-1">Post Applied For *</label>
                   <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" placeholder="e.g. Program Manager, Field Officer" />
                 </div>
               )}
               <div>
-                <label className="block text-xs font-semibold text-slate-600 mb-1">Message (optional)</label>
-                <textarea rows={3} className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none resize-none" placeholder="Tell us more about yourself or your interest…" />
+                <label className="block text-xs font-semibold text-slate-600 mb-1">Message</label>
+                <textarea rows={3} className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none resize-none" placeholder="Tell us more about your interest" />
               </div>
               <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
-                <button type="button" onClick={onClose} className="px-5 py-2 text-sm font-semibold text-slate-500 hover:text-slate-700 transition-colors">Cancel</button>
-                <button type="submit" className="bg-brand-green hover:bg-brand-green-dark text-white font-bold px-6 py-2 rounded transition-colors text-sm shadow-md">Submit Application</button>
+                <button type="button" onClick={onClose} className="px-5 py-2 text-sm font-semibold text-slate-500 hover:text-slate-700 transition-colors cursor-pointer">
+                  Cancel
+                </button>
+                <button type="submit" className="bg-brand-green hover:bg-brand-green-dark text-white font-bold px-6 py-2 rounded transition-colors text-sm shadow-md cursor-pointer">
+                  Submit Application
+                </button>
               </div>
             </form>
           )}

@@ -9,8 +9,14 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TermsAndConditionsRouteImport } from './routes/terms-and-conditions'
+import { Route as RefundPolicyRouteImport } from './routes/refund-policy'
+import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProgramsWomenEmpowermentRouteImport } from './routes/programs/women-empowerment'
+import { Route as ProgramsSkillsDevelopmentRouteImport } from './routes/programs/skills-development'
+import { Route as ProgramsEducationRouteImport } from './routes/programs/education'
 import { Route as ProgramsHealthcareIndexRouteImport } from './routes/programs/healthcare/index'
 import { Route as ProgramsHealthcareWellnessCentresRouteImport } from './routes/programs/healthcare/wellness-centres'
 import { Route as ProgramsHealthcareRuralAmbulanceRouteImport } from './routes/programs/healthcare/rural-ambulance'
@@ -21,6 +27,21 @@ import { Route as ProgramsHealthcareDiabetesPreventionRouteImport } from './rout
 import { Route as ProgramsHealthcareCriticalLifeSupportRouteImport } from './routes/programs/healthcare/critical-life-support'
 import { Route as ProgramsHealthcareCervicalCancerRouteImport } from './routes/programs/healthcare/cervical-cancer'
 
+const TermsAndConditionsRoute = TermsAndConditionsRouteImport.update({
+  id: '/terms-and-conditions',
+  path: '/terms-and-conditions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RefundPolicyRoute = RefundPolicyRouteImport.update({
+  id: '/refund-policy',
+  path: '/refund-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -29,6 +50,23 @@ const AboutRoute = AboutRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProgramsWomenEmpowermentRoute =
+  ProgramsWomenEmpowermentRouteImport.update({
+    id: '/programs/women-empowerment',
+    path: '/programs/women-empowerment',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ProgramsSkillsDevelopmentRoute =
+  ProgramsSkillsDevelopmentRouteImport.update({
+    id: '/programs/skills-development',
+    path: '/programs/skills-development',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ProgramsEducationRoute = ProgramsEducationRouteImport.update({
+  id: '/programs/education',
+  path: '/programs/education',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProgramsHealthcareIndexRoute = ProgramsHealthcareIndexRouteImport.update({
@@ -88,6 +126,12 @@ const ProgramsHealthcareCervicalCancerRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/refund-policy': typeof RefundPolicyRoute
+  '/terms-and-conditions': typeof TermsAndConditionsRoute
+  '/programs/education': typeof ProgramsEducationRoute
+  '/programs/skills-development': typeof ProgramsSkillsDevelopmentRoute
+  '/programs/women-empowerment': typeof ProgramsWomenEmpowermentRoute
   '/programs/healthcare/cervical-cancer': typeof ProgramsHealthcareCervicalCancerRoute
   '/programs/healthcare/critical-life-support': typeof ProgramsHealthcareCriticalLifeSupportRoute
   '/programs/healthcare/diabetes-prevention': typeof ProgramsHealthcareDiabetesPreventionRoute
@@ -101,6 +145,12 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/refund-policy': typeof RefundPolicyRoute
+  '/terms-and-conditions': typeof TermsAndConditionsRoute
+  '/programs/education': typeof ProgramsEducationRoute
+  '/programs/skills-development': typeof ProgramsSkillsDevelopmentRoute
+  '/programs/women-empowerment': typeof ProgramsWomenEmpowermentRoute
   '/programs/healthcare/cervical-cancer': typeof ProgramsHealthcareCervicalCancerRoute
   '/programs/healthcare/critical-life-support': typeof ProgramsHealthcareCriticalLifeSupportRoute
   '/programs/healthcare/diabetes-prevention': typeof ProgramsHealthcareDiabetesPreventionRoute
@@ -115,6 +165,12 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/refund-policy': typeof RefundPolicyRoute
+  '/terms-and-conditions': typeof TermsAndConditionsRoute
+  '/programs/education': typeof ProgramsEducationRoute
+  '/programs/skills-development': typeof ProgramsSkillsDevelopmentRoute
+  '/programs/women-empowerment': typeof ProgramsWomenEmpowermentRoute
   '/programs/healthcare/cervical-cancer': typeof ProgramsHealthcareCervicalCancerRoute
   '/programs/healthcare/critical-life-support': typeof ProgramsHealthcareCriticalLifeSupportRoute
   '/programs/healthcare/diabetes-prevention': typeof ProgramsHealthcareDiabetesPreventionRoute
@@ -130,6 +186,12 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/privacy-policy'
+    | '/refund-policy'
+    | '/terms-and-conditions'
+    | '/programs/education'
+    | '/programs/skills-development'
+    | '/programs/women-empowerment'
     | '/programs/healthcare/cervical-cancer'
     | '/programs/healthcare/critical-life-support'
     | '/programs/healthcare/diabetes-prevention'
@@ -143,6 +205,12 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/privacy-policy'
+    | '/refund-policy'
+    | '/terms-and-conditions'
+    | '/programs/education'
+    | '/programs/skills-development'
+    | '/programs/women-empowerment'
     | '/programs/healthcare/cervical-cancer'
     | '/programs/healthcare/critical-life-support'
     | '/programs/healthcare/diabetes-prevention'
@@ -156,6 +224,12 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/privacy-policy'
+    | '/refund-policy'
+    | '/terms-and-conditions'
+    | '/programs/education'
+    | '/programs/skills-development'
+    | '/programs/women-empowerment'
     | '/programs/healthcare/cervical-cancer'
     | '/programs/healthcare/critical-life-support'
     | '/programs/healthcare/diabetes-prevention'
@@ -170,6 +244,12 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
+  RefundPolicyRoute: typeof RefundPolicyRoute
+  TermsAndConditionsRoute: typeof TermsAndConditionsRoute
+  ProgramsEducationRoute: typeof ProgramsEducationRoute
+  ProgramsSkillsDevelopmentRoute: typeof ProgramsSkillsDevelopmentRoute
+  ProgramsWomenEmpowermentRoute: typeof ProgramsWomenEmpowermentRoute
   ProgramsHealthcareCervicalCancerRoute: typeof ProgramsHealthcareCervicalCancerRoute
   ProgramsHealthcareCriticalLifeSupportRoute: typeof ProgramsHealthcareCriticalLifeSupportRoute
   ProgramsHealthcareDiabetesPreventionRoute: typeof ProgramsHealthcareDiabetesPreventionRoute
@@ -183,6 +263,27 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/terms-and-conditions': {
+      id: '/terms-and-conditions'
+      path: '/terms-and-conditions'
+      fullPath: '/terms-and-conditions'
+      preLoaderRoute: typeof TermsAndConditionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/refund-policy': {
+      id: '/refund-policy'
+      path: '/refund-policy'
+      fullPath: '/refund-policy'
+      preLoaderRoute: typeof RefundPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -195,6 +296,27 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/programs/women-empowerment': {
+      id: '/programs/women-empowerment'
+      path: '/programs/women-empowerment'
+      fullPath: '/programs/women-empowerment'
+      preLoaderRoute: typeof ProgramsWomenEmpowermentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/programs/skills-development': {
+      id: '/programs/skills-development'
+      path: '/programs/skills-development'
+      fullPath: '/programs/skills-development'
+      preLoaderRoute: typeof ProgramsSkillsDevelopmentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/programs/education': {
+      id: '/programs/education'
+      path: '/programs/education'
+      fullPath: '/programs/education'
+      preLoaderRoute: typeof ProgramsEducationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/programs/healthcare/': {
@@ -266,6 +388,12 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
+  RefundPolicyRoute: RefundPolicyRoute,
+  TermsAndConditionsRoute: TermsAndConditionsRoute,
+  ProgramsEducationRoute: ProgramsEducationRoute,
+  ProgramsSkillsDevelopmentRoute: ProgramsSkillsDevelopmentRoute,
+  ProgramsWomenEmpowermentRoute: ProgramsWomenEmpowermentRoute,
   ProgramsHealthcareCervicalCancerRoute: ProgramsHealthcareCervicalCancerRoute,
   ProgramsHealthcareCriticalLifeSupportRoute:
     ProgramsHealthcareCriticalLifeSupportRoute,
