@@ -308,17 +308,33 @@ export function Header() {
                     const itemsPerCol = Math.ceil(items.length / MEGA_DATA[activeMenu].cols);
                     return (
                       <div key={colIndex} className="flex flex-col gap-3">
-                        {items.slice(colIndex * itemsPerCol, (colIndex + 1) * itemsPerCol).map((subItem) => (
-                          <a
-                            key={subItem}
-                            href={getMegaHref(activeMenu, subItem)}
-                            className="flex items-center gap-2 text-gray-700 hover:text-[#0d2b1a] text-sm hover:translate-x-1 transition-all duration-200"
-                            onClick={() => setActiveMenu(null)}
-                          >
-                            <span className="text-brand-orange text-sm font-semibold">-&gt;</span>
-                            {subItem}
-                          </a>
-                        ))}
+                        {colItems.map((subItem, itemIndex) => {
+                          const globalIndex = colIndex * itemsPerCol + itemIndex;
+                          return (
+                            <a
+                              key={subItem}
+                              href={
+                                activeMenu === "About Us" && subItem === "Overview"
+                                  ? "/about"
+                                  : activeMenu === "About Us" && subItem === "Our Objective & Vision"
+                                  ? "/about/objective-and-vision"
+                                  : activeMenu === "About Us" && subItem === "Vision 2047"
+                                  ? "/about/vision-2047"
+                                  : activeMenu === "What We Do" && subItem === "Health Care"
+                                  ? "/programs/healthcare"
+                                  : activeMenu === "Programs" && subItem === "View All Programs →"
+                                  ? "/programs/healthcare"
+                                  : "#"
+                              }
+                              className="flex items-center gap-2 text-gray-700 hover:text-[#0d2b1a] text-sm hover:translate-x-1 transition-all duration-200"
+                              style={{ transitionDelay: `${globalIndex * 30}ms` }}
+                              onClick={() => setActiveMenu(null)}
+                            >
+                              <span className="text-brand-orange text-sm font-semibold">→</span>
+                              {subItem}
+                            </a>
+                          );
+                        })}
                       </div>
                     );
                   })}
@@ -400,7 +416,19 @@ export function Header() {
                         {MEGA_DATA[item].items.map((sub) => (
                           <a
                             key={sub}
-                            href={getMegaHref(item, sub)}
+                            href={
+                              item === "About Us" && sub === "Overview"
+                                ? "/about"
+                                : item === "About Us" && sub === "Our Objective & Vision"
+                                ? "/about/objective-and-vision"
+                                : item === "About Us" && sub === "Vision 2047"
+                                ? "/about/vision-2047"
+                                : item === "What We Do" && sub === "Health Care"
+                                ? "/programs/healthcare"
+                                : item === "Programs" && sub === "View All Programs →"
+                                ? "/programs/healthcare"
+                                : "#"
+                            }
                             className="flex items-center gap-2 px-4 py-2 text-sm text-slate-600 hover:text-brand-green hover:bg-white transition-all"
                             onClick={() => setMobileOpen(false)}
                           >
