@@ -306,6 +306,7 @@ export function Header() {
                   {Array.from({ length: MEGA_DATA[activeMenu].cols }).map((_, colIndex) => {
                     const items = MEGA_DATA[activeMenu].items;
                     const itemsPerCol = Math.ceil(items.length / MEGA_DATA[activeMenu].cols);
+                    const colItems = items.slice(colIndex * itemsPerCol, (colIndex + 1) * itemsPerCol);
                     return (
                       <div key={colIndex} className="flex flex-col gap-3">
                         {colItems.map((subItem, itemIndex) => {
@@ -322,6 +323,12 @@ export function Header() {
                                   ? "/about/vision-2047"
                                   : activeMenu === "What We Do" && subItem === "Health Care"
                                   ? "/programs/healthcare"
+                                  : activeMenu === "What We Do" && subItem === "Education"
+                                  ? "/programs/education"
+                                  : activeMenu === "What We Do" && subItem === "Skills Development"
+                                  ? "/programs/skills-development"
+                                  : activeMenu === "What We Do" && subItem === "Women Empowerment"
+                                  ? "/programs/women-empowerment"
                                   : activeMenu === "Programs" && subItem === "View All Programs →"
                                   ? "/programs/healthcare"
                                   : "#"
@@ -425,6 +432,12 @@ export function Header() {
                                 ? "/about/vision-2047"
                                 : item === "What We Do" && sub === "Health Care"
                                 ? "/programs/healthcare"
+                                : item === "What We Do" && sub === "Education"
+                                ? "/programs/education"
+                                : item === "What We Do" && sub === "Skills Development"
+                                ? "/programs/skills-development"
+                                : item === "What We Do" && sub === "Women Empowerment"
+                                ? "/programs/women-empowerment"
                                 : item === "Programs" && sub === "View All Programs →"
                                 ? "/programs/healthcare"
                                 : "#"

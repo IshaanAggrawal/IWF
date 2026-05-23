@@ -236,12 +236,25 @@ function Header() {
                         ? "/"
                         : item === "About Us"
                         ? "/about"
+                        : item === "What We Do"
+                        ? "#focus-areas"
                         : item === "Programs"
                         ? "/programs/healthcare"
                         : "#"
                     }
                     className="relative flex items-center gap-1 text-gray-700 hover:text-[#0d2b1a] font-medium text-sm transition-colors py-1 group"
-                    onClick={() => !hasMega && setActiveMenu(null)}
+                    onClick={(event) => {
+                      if (item === "What We Do") {
+                        event.preventDefault();
+                        setActiveMenu(null);
+                        document.getElementById("focus-areas")?.scrollIntoView({
+                          behavior: "smooth",
+                          block: "start",
+                        });
+                      } else if (!hasMega) {
+                        setActiveMenu(null);
+                      }
+                    }}
                   >
                     {item}
                     {hasMega && (
@@ -316,6 +329,12 @@ function Header() {
                                   ? "/about/vision-2047"
                                   : activeMenu === "What We Do" && subItem === "Health Care"
                                   ? "/programs/healthcare"
+                                  : activeMenu === "What We Do" && subItem === "Education"
+                                  ? "/programs/education"
+                                  : activeMenu === "What We Do" && subItem === "Skills Development"
+                                  ? "/programs/skills-development"
+                                  : activeMenu === "What We Do" && subItem === "Women Empowerment"
+                                  ? "/programs/women-empowerment"
                                   : activeMenu === "Programs" && subItem === "View All Programs →"
                                   ? "/programs/healthcare"
                                   : "#"
@@ -415,13 +434,22 @@ function Header() {
                             ? "/"
                             : item === "About Us"
                             ? "/about"
+                            : item === "What We Do"
+                            ? "#focus-areas"
                             : item === "Programs"
                             ? "/programs/healthcare"
                             : "#"
                         }
                         className="flex-1 px-5 py-3.5 text-sm font-semibold text-slate-800 hover:text-brand-green transition-colors"
-                        onClick={() => {
-                          if (!hasMega) {
+                        onClick={(event) => {
+                          if (item === "What We Do") {
+                            event.preventDefault();
+                            setMobileOpen(false);
+                            document.getElementById("focus-areas")?.scrollIntoView({
+                              behavior: "smooth",
+                              block: "start",
+                            });
+                          } else if (!hasMega) {
                             setMobileOpen(false);
                           } else {
                             setMobileExpanded(isExpanded ? null : item);
@@ -458,6 +486,12 @@ function Header() {
                                 ? "/about/vision-2047"
                                 : item === "What We Do" && sub === "Health Care"
                                 ? "/programs/healthcare"
+                                : item === "What We Do" && sub === "Education"
+                                ? "/programs/education"
+                                : item === "What We Do" && sub === "Skills Development"
+                                ? "/programs/skills-development"
+                                : item === "What We Do" && sub === "Women Empowerment"
+                                ? "/programs/women-empowerment"
                                 : item === "Programs" && sub === "View All Programs →"
                                 ? "/programs/healthcare"
                                 : "#"
@@ -504,7 +538,7 @@ function HeroSection() {
           alt="Empowering kids in rural India"
           width={1600}
           height={900}
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover"
         />
         {/* Modern dark/green gradient overlay for rich premium feel and high text contrast */}
         <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/80 to-transparent" />
@@ -639,17 +673,17 @@ function FeaturedCauses() {
 
 function WhatWeDo() {
   return (
-    <section className="py-12 bg-slate-50">
+    <section id="focus-areas" className="py-12 bg-slate-50 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4">
         <ScrollReveal><SectionTitle>What We Do</SectionTitle></ScrollReveal>
         <ScrollReveal stagger={0.07}>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {[
-            { icon: GraduationCap, l: "Education", s: "Learning Centres & Scholarships", route: "#" },
+            { icon: GraduationCap, l: "Education", s: "Learning Centres & Scholarships", route: "/programs/education" },
             { icon: HeartPulse, l: "Healthcare", s: "Free camps, care & awareness", route: "/programs/healthcare" },
-            { icon: Users, l: "Women Empowerment", s: "SHGs, skills & financial literacy", route: "#" },
+            { icon: Users, l: "Women Empowerment", s: "SHGs, skills & financial literacy", route: "/programs/women-empowerment" },
             { icon: Sprout, l: "Rural Development", s: "Infrastructure & livelihoods", route: "#" },
-            { icon: Wrench, l: "Skill Development", s: "Vocational & entrepreneurship", route: "#" },
+            { icon: Wrench, l: "Skill Development", s: "Vocational & entrepreneurship", route: "/programs/skills-development" },
             { icon: Leaf, l: "Environment", s: "Plantation & sustainability", route: "#" },
           ].map(({ icon: Icon, l, s, route }) => (
             <a key={l} href={route} className="bg-white rounded-md p-5 text-center shadow-sm border border-slate-100 hover:shadow-md transition block">
@@ -675,9 +709,9 @@ function ProgramsAndThematic() {
           <SectionTitle>Our Programs</SectionTitle>
           <div className="grid sm:grid-cols-2 gap-4">
             {[
-              { icon: BookOpen, title: "Education Support", desc: "We run Community Learning Centres and 'Shiksha Na Ruke' scholarships to keep underprivileged children in school, providing materials and academic support.", route: "#" },
+              { icon: BookOpen, title: "Education Support", desc: "We run Community Learning Centres and 'Shiksha Na Ruke' scholarships to keep underprivileged children in school, providing materials and academic support.", route: "/programs/education" },
               { icon: HeartPulse, title: "Healthcare Camps", desc: "Through 'Health Cannot Wait', we organise free medical check-up camps, distribute medicines, and spread awareness on health, hygiene, and nutrition.", route: "/programs/healthcare" },
-              { icon: Users, title: "Women Empowerment", desc: "We form Self-Help Groups (SHGs), provide vocational training, promote financial literacy, and support leadership development for rural women.", route: "#" },
+              { icon: Users, title: "Women Empowerment", desc: "We form Self-Help Groups (SHGs), provide vocational training, promote financial literacy, and support leadership development for rural women.", route: "/programs/women-empowerment" },
               { icon: Sprout, title: "Rural Development", desc: "We work on sanitation, safe housing, clean water access, and community infrastructure under our 'Model Village' initiative for self-reliant communities.", route: "#" },
             ].map((p) => (
               <div key={p.title} className="bg-white rounded-md p-5 border border-slate-100 shadow-sm">

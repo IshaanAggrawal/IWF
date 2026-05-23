@@ -122,12 +122,12 @@ function SectionTitle({ label, title, subtitle }: { label: string; title: string
 
 function HeroSection() {
   return (
-    <section className="relative min-h-[380px] flex items-center overflow-hidden">
+    <section className="relative min-h-[430px] flex items-center overflow-hidden">
       {/* Background Image */}
       <img
         src={menstrualHygiene}
         alt="Menstrual Hygiene Support Programme"
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 h-full w-full object-cover"
       />
       {/* Modern dark/green gradient overlay for rich premium feel and high text contrast */}
       <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/80 to-transparent" />

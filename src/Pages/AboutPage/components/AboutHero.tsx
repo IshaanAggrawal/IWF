@@ -3,12 +3,10 @@ import heroBg from "@/assets/hero-about.png";
 
 export default function AboutHero() {
   return (
-    <section className="relative min-h-[420px] md:min-h-[500px] overflow-hidden flex flex-col">
+    <section className="relative min-h-[430px] flex flex-col justify-between overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0">
-        <img src={heroBg} alt="About IWF" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/75 to-slate-900/40" />
-      </div>
+      <img src={heroBg} alt="About IWF" className="absolute inset-0 h-full w-full object-cover" />
+      <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/75 to-slate-900/40" />
 
       {/* Content */}
       <div className="relative flex-1 flex items-center max-w-7xl mx-auto px-4 py-16 w-full z-10">

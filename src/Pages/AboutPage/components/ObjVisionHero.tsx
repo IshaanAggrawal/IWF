@@ -5,18 +5,10 @@ import img from "@/assets/thematic-women-2.png"
 
 export default function ObjVisionHero() {
   return (
-    <section className="relative w-full min-h-[420px] md:min-h-[500px] flex flex-col justify-between">
+    <section className="relative w-full min-h-[430px] flex flex-col justify-between overflow-hidden">
       {/* Background Image & Gradient */}
-      <div
-        className="absolute inset-0 bg-slate-900" // Fallback color
-        style={{
-          backgroundImage: `url(${img})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center"
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/90 via-slate-900/75 to-slate-900/40"></div>
-      </div>
+      <img src={img} alt="Our Objectives & Vision" className="absolute inset-0 h-full w-full object-cover" />
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-900/90 via-slate-900/75 to-slate-900/40" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 w-full flex-1 flex flex-col justify-center py-12 md:py-20">
         <div className="inline-flex items-center gap-2 bg-brand-green/20 border border-brand-green/30 px-3.5 py-1.5 rounded-full mb-6 w-max">

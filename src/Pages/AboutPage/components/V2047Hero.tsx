@@ -4,18 +4,10 @@ import v2047HeroBg from "@/assets/vision2047/hero.png";
 
 export default function V2047Hero() {
   return (
-    <section className="relative w-full min-h-[480px] md:min-h-[560px] flex flex-col justify-between overflow-hidden">
+    <section className="relative w-full min-h-[430px] flex flex-col justify-between overflow-hidden">
       {/* Background Image & Gradient */}
-      <div
-        className="absolute inset-0 bg-slate-900" // Fallback color
-        style={{
-          backgroundImage: `url(${v2047HeroBg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center"
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0d2b1a]/95 via-slate-900/80 to-transparent"></div>
-      </div>
+      <img src={v2047HeroBg} alt="Vision 2047" className="absolute inset-0 h-full w-full object-cover" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0d2b1a]/95 via-slate-900/80 to-transparent" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 w-full flex-1 flex flex-col justify-center py-12 md:py-20">
         <div className="inline-flex items-center gap-2 bg-brand-green/20 border border-brand-green/30 px-3.5 py-1.5 rounded-full mb-6 w-max">
