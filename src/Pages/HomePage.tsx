@@ -24,6 +24,7 @@ import g5 from "@/assets/gallery-5.jpg";
 import g6 from "@/assets/gallery-6.jpg";
 import footerBg from "@/assets/footer-bg.jpg";
 import { CardContainer, CardBody, CardItem } from "@/components/ui/3d-card";
+import { RoleFormModal, type RoleType } from "@/components/forms/RoleFormModal";
 
 // ─── Mega Nav Data ────────────────────────────────────────────────────────────
 
@@ -791,7 +792,7 @@ function EventsAndGallery() {
   );
 }
 
-function GetInvolved({ onOpenModal }: { onOpenModal: (type: 'volunteer' | 'partner' | 'sponsor' | 'mentor' | 'employee') => void }) {
+function GetInvolved({ onOpenModal }: { onOpenModal: (type: RoleType) => void }) {
   return (
     <section className="py-12">
       <div className="max-w-7xl mx-auto px-4">
@@ -860,7 +861,7 @@ function ExploreIWF() {
   );
 }
 
-function Footer({ onOpenModal }: { onOpenModal: (type: 'volunteer' | 'partner' | 'sponsor' | 'mentor' | 'employee') => void }) {
+function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void }) {
   return (
     <footer className="w-full">
       {/* Zone A — Main Footer */}
@@ -1143,367 +1144,12 @@ function Footer({ onOpenModal }: { onOpenModal: (type: 'volunteer' | 'partner' |
   );
 }
 
-// ─── Modal form Component ───────────────────────────────────────────────────
-
-interface RoleFormModalProps {
-  type: 'volunteer' | 'partner' | 'sponsor' | 'mentor' | 'employee' | null;
-  onClose: () => void;
-}
-
-function RoleFormModal({ type, onClose }: RoleFormModalProps) {
-  const [submitted, setSubmitted] = useState(false);
-  if (!type) return null;
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-  };
-
-  const getTitle = () => {
-    switch (type) {
-      case "volunteer": return "Apply to Volunteer";
-      case "partner": return "Become a Partner";
-      case "sponsor": return "Become a Sponsor";
-      case "mentor": return "Become a Mentor";
-      case "employee": return "Apply for Employment";
-      default: return "Online Form";
-    }
-  };
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-all duration-300">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-slate-100 flex flex-col">
-        {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 bg-brand-green text-white sticky top-0 z-10">
-          <h3 className="text-lg font-bold tracking-wide uppercase">{getTitle()}</h3>
-          <button onClick={onClose} className="p-1 text-white/80 hover:text-white transition-colors" aria-label="Close form">
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-
-        {/* Content */}
-        <div className="p-6 overflow-y-auto">
-          {submitted ? (
-            <div className="text-center py-8">
-              <div className="w-16 h-16 bg-brand-green/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Heart className="w-8 h-8 text-brand-green" />
-              </div>
-              <h4 className="text-xl font-bold text-slate-800 mb-2">Thank You for Your Submission!</h4>
-              <p className="text-sm text-slate-600 max-w-md mx-auto">
-                We have received your application. Our team will review the details and get back to you within 3-5 business days.
-              </p>
-              <button onClick={onClose} className="mt-6 bg-brand-green hover:bg-brand-green-dark text-white font-bold px-6 py-2.5 rounded transition">
-                Close Window
-              </button>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {type === "volunteer" && (
-                <>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">First Name *</label>
-                      <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Last Name *</label>
-                      <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-3 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Age *</label>
-                      <input required type="number" min="1" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Gender *</label>
-                      <select required className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none bg-white">
-                        <option value="">Select</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Marital Status</label>
-                      <select className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none bg-white">
-                        <option value="">Select</option>
-                        <option value="Single">Single</option>
-                        <option value="Married">Married</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Email *</label>
-                      <input required type="email" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Contact Number *</label>
-                      <input required type="tel" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-600 mb-1">Address *</label>
-                    <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                  </div>
-                  <div className="grid grid-cols-3 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">City *</label>
-                      <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">State *</label>
-                      <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Pin Code *</label>
-                      <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Academic Qualification (Highest) *</label>
-                      <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" placeholder="e.g. Graduate, HSC" />
-                    </div>
-                    <div className="grid grid-cols-2 gap-2">
-                      <div>
-                        <label className="block text-xs font-semibold text-slate-600 mb-1">Exp (Years)</label>
-                        <input type="number" min="0" defaultValue="0" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                      </div>
-                      <div>
-                        <label className="block text-xs font-semibold text-slate-600 mb-1">Exp (Months)</label>
-                        <input type="number" min="0" max="11" defaultValue="0" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-600 mb-1">Message (if any)</label>
-                    <textarea rows={3} className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none resize-none" placeholder="Why do you want to volunteer with us?"></textarea>
-                  </div>
-                </>
-              )}
-
-              {type === "partner" && (
-                <>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Organization Name *</label>
-                      <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Organization Type *</label>
-                      <select required className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none bg-white">
-                        <option value="">Select</option>
-                        <option value="Corporate/CSR">Corporate & CSR Foundation</option>
-                        <option value="NGO">NGO & Non-Profit Organization</option>
-                        <option value="Educational">Educational Institution</option>
-                        <option value="Social Enterprise">Social Enterprise & Development Agency</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Contact Person Name *</label>
-                      <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Designation *</label>
-                      <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Email ID *</label>
-                      <input required type="email" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Mobile Number *</label>
-                      <input required type="tel" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-600 mb-1">Address *</label>
-                    <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-600 mb-1">Partnership Proposal / Message *</label>
-                    <textarea required rows={4} className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none resize-none" placeholder="Describe how your organization would like to partner with IWF..."></textarea>
-                  </div>
-                </>
-              )}
-
-              {type === "sponsor" && (
-                <>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Sponsor Name / Org Name *</label>
-                      <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Sponsor Category *</label>
-                      <select required className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none bg-white">
-                        <option value="">Select</option>
-                        <option value="Individual">Individual Sponsor</option>
-                        <option value="Corporate">Corporate / Business House</option>
-                        <option value="Startup">Startup & Emerging Brand</option>
-                        <option value="CSR Foundation">CSR Foundation</option>
-                        <option value="Educational">Educational Institution</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Contact Person Name *</label>
-                      <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Programme to Sponsor *</label>
-                      <select required className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none bg-white">
-                        <option value="">Select</option>
-                        <option value="Education Support">Education Support Programs</option>
-                        <option value="Healthcare Camps">Healthcare Initiatives & Camps</option>
-                        <option value="Women Empowerment">Women Empowerment Initiatives</option>
-                        <option value="Rural Development">Community & Rural Development</option>
-                        <option value="Skill Livelihood">Skill Development & Livelihood</option>
-                        <option value="Environment">Environmental & Sustainability Drives</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Email ID *</label>
-                      <input required type="email" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Mobile Number *</label>
-                      <input required type="tel" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-600 mb-1">Sponsorship Details / Custom Request</label>
-                    <textarea rows={4} className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none resize-none" placeholder="Provide any details regarding your sponsorship amount or target region..."></textarea>
-                  </div>
-                </>
-              )}
-
-              {type === "mentor" && (
-                <>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Full Name *</label>
-                      <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Current Profession *</label>
-                      <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" placeholder="e.g. Teacher, Engineer, Entrepreneur" />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Area of Expertise *</label>
-                      <select required className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none bg-white">
-                        <option value="">Select</option>
-                        <option value="Academic">Academic Guidance</option>
-                        <option value="Career Counselling">Career Counselling</option>
-                        <option value="Skill Development">Skill Development</option>
-                        <option value="Entrepreneurship">Entrepreneurship Development</option>
-                        <option value="Technology">Technology & Digital Skills</option>
-                        <option value="Other">Other Expertise</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Mentorship Mode *</label>
-                      <select required className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none bg-white">
-                        <option value="">Select</option>
-                        <option value="Online">Online Sessions</option>
-                        <option value="Offline">Offline Workshops</option>
-                        <option value="Both">Both Modes</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Email ID *</label>
-                      <input required type="email" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Contact Number *</label>
-                      <input required type="tel" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-600 mb-1">Brief Bio / Mentorship Plan *</label>
-                    <textarea required rows={4} className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none resize-none" placeholder="Share a brief overview of your background and how you would like to guide youth..."></textarea>
-                  </div>
-                </>
-              )}
-
-              {type === "employee" && (
-                <>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Post Applied For *</label>
-                      <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" placeholder="e.g. Program Manager, Field Officer" />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Full Name *</label>
-                      <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Mobile Number *</label>
-                      <input required type="tel" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Email ID *</label>
-                      <input required type="email" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Highest Qualification *</label>
-                      <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1">Total Experience *</label>
-                      <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" placeholder="e.g. 3 Years, Fresh Graduate" />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-600 mb-1">Upload Resume *</label>
-                    <input required type="file" className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-green/10 file:text-brand-green hover:file:bg-brand-green/20" />
-                  </div>
-                  <div className="flex items-center gap-2 pt-2">
-                    <input required type="checkbox" id="confirmDetails" className="w-4 h-4 text-brand-green focus:ring-brand-green border-slate-300 rounded" />
-                    <label htmlFor="confirmDetails" className="text-xs text-slate-600 cursor-pointer">I confirm that all details provided are correct and valid *</label>
-                  </div>
-                </>
-              )}
-
-              <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
-                <button type="button" onClick={onClose} className="px-5 py-2 text-sm font-semibold text-slate-500 hover:text-slate-700 transition-colors">
-                  Cancel
-                </button>
-                <button type="submit" className="bg-brand-green hover:bg-brand-green-dark text-white font-bold px-6 py-2 rounded transition-colors text-sm shadow-md">
-                  Submit Application
-                </button>
-              </div>
-            </form>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // ─── Main Export ──────────────────────────────────────────────────────────────
 
 export default function HomePage() {
-  const [activeModal, setActiveModal] = useState<'volunteer' | 'partner' | 'sponsor' | 'mentor' | 'employee' | null>(null);
+  const [activeModal, setActiveModal] = useState<RoleType | null>(null);
 
-  const handleOpenModal = (type: 'volunteer' | 'partner' | 'sponsor' | 'mentor' | 'employee') => {
+  const handleOpenModal = (type: RoleType) => {
     setActiveModal(type);
   };
 
@@ -1517,8 +1163,8 @@ export default function HomePage() {
       <WhatWeDo />
       <ProgramsAndThematic />
       <EventsAndGallery />
-      <GetInvolved onOpenModal={handleOpenModal} />
       <ExploreIWF />
+      <GetInvolved onOpenModal={handleOpenModal} />
       <Footer onOpenModal={handleOpenModal} />
 
       {/* Unified Role Forms Modal */}
