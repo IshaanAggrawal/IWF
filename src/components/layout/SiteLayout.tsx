@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import type { FormEvent, MouseEvent } from "react";
+import { useCallback, useRef, useState } from "react";
+import type { MouseEvent } from "react";
 import { useRouterState } from "@tanstack/react-router";
 import {
   Award,
@@ -26,6 +26,9 @@ import {
   Youtube,
 } from "lucide-react";
 import { CONTACT_DETAILS } from "@/content/siteContent";
+import type { RoleType } from "@/components/forms/RoleFormModal";
+
+export { RoleFormModal } from "@/components/forms/RoleFormModal";
 
 export const NAV_ITEMS = [
   "Home",
@@ -465,8 +468,6 @@ export function Header() {
   );
 }
 
-type RoleType = "volunteer" | "partner" | "sponsor" | "mentor" | "employee";
-
 export function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void }) {
   const quickLinks = [
     ["About Us", "/about"],
@@ -685,128 +686,5 @@ export function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void 
         </div>
       </div>
     </footer>
-  );
-}
-
-export interface RoleFormModalProps {
-  type: RoleType | null;
-  onClose: () => void;
-}
-
-export function RoleFormModal({ type, onClose }: RoleFormModalProps) {
-  const [submitted, setSubmitted] = useState(false);
-
-  useEffect(() => {
-    setSubmitted(false);
-  }, [type]);
-
-  if (!type) return null;
-
-  const titleMap: Record<RoleType, string> = {
-    volunteer: "Apply to Volunteer",
-    partner: "Become a Partner",
-    sponsor: "Become a Sponsor",
-    mentor: "Become a Mentor",
-    employee: "Apply for Employment",
-  };
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setSubmitted(true);
-  };
-
-  return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-slate-100 flex flex-col">
-        <div className="flex items-center justify-between px-6 py-4 bg-brand-green text-white sticky top-0 z-10">
-          <h3 className="text-lg font-bold tracking-wide uppercase">{titleMap[type]}</h3>
-          <button onClick={onClose} className="p-1 text-white/80 hover:text-white transition-colors cursor-pointer" aria-label="Close form">
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-        <div className="p-6 overflow-y-auto">
-          {submitted ? (
-            <div className="text-center py-8">
-              <div className="w-16 h-16 bg-brand-green/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Heart className="w-8 h-8 text-brand-green" />
-              </div>
-              <h4 className="text-xl font-bold text-slate-800 mb-2">Thank You for Your Submission</h4>
-              <p className="text-sm text-slate-600 max-w-md mx-auto">
-                We have received your details. The backend will be connected later; this frontend confirmation is ready for demo.
-              </p>
-              <button onClick={onClose} className="mt-6 bg-brand-green hover:bg-brand-green-dark text-white font-bold px-6 py-2.5 rounded transition cursor-pointer">
-                Close Window
-              </button>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-600 mb-1">Full Name *</label>
-                  <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-600 mb-1">Email *</label>
-                  <input required type="email" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                </div>
-              </div>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-600 mb-1">Contact Number *</label>
-                  <input required type="tel" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-600 mb-1">City *</label>
-                  <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                </div>
-              </div>
-              {type === "partner" && (
-                <div>
-                  <label className="block text-xs font-semibold text-slate-600 mb-1">Organization Name *</label>
-                  <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" />
-                </div>
-              )}
-              {type === "sponsor" && (
-                <div>
-                  <label className="block text-xs font-semibold text-slate-600 mb-1">Programme to Sponsor *</label>
-                  <select required className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none bg-white">
-                    <option value="">Select</option>
-                    <option>Education Support Programs</option>
-                    <option>Healthcare Initiatives & Camps</option>
-                    <option>Women Empowerment Initiatives</option>
-                    <option>Community & Rural Development</option>
-                    <option>Skill Development & Livelihood</option>
-                  </select>
-                </div>
-              )}
-              {type === "mentor" && (
-                <div>
-                  <label className="block text-xs font-semibold text-slate-600 mb-1">Area of Expertise *</label>
-                  <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" placeholder="e.g. Education, Healthcare, Technology" />
-                </div>
-              )}
-              {type === "employee" && (
-                <div id="careers">
-                  <label className="block text-xs font-semibold text-slate-600 mb-1">Post Applied For *</label>
-                  <input required type="text" className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none" placeholder="e.g. Program Manager, Field Officer" />
-                </div>
-              )}
-              <div>
-                <label className="block text-xs font-semibold text-slate-600 mb-1">Message</label>
-                <textarea rows={3} className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-brand-green focus:outline-none resize-none" placeholder="Tell us more about your interest" />
-              </div>
-              <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
-                <button type="button" onClick={onClose} className="px-5 py-2 text-sm font-semibold text-slate-500 hover:text-slate-700 transition-colors cursor-pointer">
-                  Cancel
-                </button>
-                <button type="submit" className="bg-brand-green hover:bg-brand-green-dark text-white font-bold px-6 py-2 rounded transition-colors text-sm shadow-md cursor-pointer">
-                  Submit Application
-                </button>
-              </div>
-            </form>
-          )}
-        </div>
-      </div>
-    </div>
   );
 }
