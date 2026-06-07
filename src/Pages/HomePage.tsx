@@ -25,6 +25,8 @@ import g6 from "@/assets/gallery-6.jpg";
 import footerBg from "@/assets/footer-bg.jpg";
 import { CardContainer, CardBody, CardItem } from "@/components/ui/3d-card";
 import { RoleFormModal, type RoleType } from "@/components/forms/RoleFormModal";
+import { PatientCard } from "@/components/healthcare/PatientCard";
+import { URGENT_PATIENTS } from "@/content/patients";
 
 // ─── Mega Nav Data ────────────────────────────────────────────────────────────
 
@@ -615,6 +617,45 @@ function HeroSection() {
   );
 }
 
+function UrgentPatientsSection() {
+  return (
+    <section className="py-16 bg-white">
+      <div className="max-w-7xl mx-auto px-4">
+        <ScrollReveal>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-brand-orange mb-2">
+                Critical Life & Emergency Support
+              </p>
+              <h2 className="text-xl md:text-2xl font-black text-[#0d2b1a] uppercase tracking-wide">
+                Patients Needing Urgent Support
+              </h2>
+              <div className="h-1 w-12 bg-[#f97316] rounded-full mt-1.5" />
+              <p className="text-sm text-slate-600 mt-3 max-w-2xl">
+                Your support can help critically ill patients receive timely treatment and
+                life-saving care when every second counts.
+              </p>
+            </div>
+            <a
+              href="/programs/healthcare/critical-life-support"
+              className="inline-flex items-center gap-1 text-sm font-bold text-brand-green hover:text-[#0d2b1a] transition-colors shrink-0"
+            >
+              View All Patients <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+        </ScrollReveal>
+        <ScrollReveal stagger={0.08}>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {URGENT_PATIENTS.map((patient) => (
+              <PatientCard key={patient.id} {...patient} />
+            ))}
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
+
 function FeaturedCauses() {
   return (
     <section className="py-16">
@@ -623,9 +664,9 @@ function FeaturedCauses() {
         <ScrollReveal stagger={0.1}>
         <div className="grid md:grid-cols-3 gap-6">
           {[
-            { img: causeEdu, icon: BookOpen, title: "Child Education", desc: "Through our 'Shiksha Na Ruke' campaign, we fund school fees, learning materials, and scholarships to keep every child in school and out of child labour.", raised: "1,65,240", pct: 75 },
-            { img: causeMed, icon: Stethoscope, title: "Medical Help", desc: "Our 'Health Cannot Wait' initiative funds free health camps, medicines, emergency treatment, and health awareness drives in underserved rural communities.", raised: "2,12,880", pct: 48 },
-            { img: causeWomen, icon: Users, title: "Women Empowerment", desc: "The 'She Can Fly' & 'Swabhiman' campaigns train women in vocational skills, promote Self-Help Groups, and build financial independence for lasting change.", raised: "1,48,720", pct: 60 },
+            { img: causeEdu, icon: BookOpen, title: "Child Education", desc: "Through our 'Shiksha Na Ruke' campaign, we fund school fees, learning materials, and scholarships to keep every child in school and out of child labour." },
+            { img: causeMed, icon: Stethoscope, title: "Medical Help", desc: "Our 'Health Cannot Wait' initiative funds free health camps, medicines, emergency treatment, and health awareness drives in underserved rural communities." },
+            { img: causeWomen, icon: Users, title: "Women Empowerment", desc: "The 'She Can Fly' & 'Swabhiman' campaigns train women in vocational skills, promote Self-Help Groups, and build financial independence for lasting change." },
           ].map((c) => (
             <CardContainer key={c.title} className="inter-var w-full">
               <CardBody className="bg-white relative group/card hover:shadow-2xl hover:shadow-emerald-500/[0.1] border-black/[0.1] w-full h-auto rounded-xl p-6 border flex flex-col justify-between">
@@ -644,15 +685,6 @@ function FeaturedCauses() {
                   </CardItem>
                 </div>
                 <div>
-                  <div className="mt-6">
-                    <div className="flex justify-between text-xs font-semibold text-slate-700 mb-1">
-                      <span>₹ {c.raised} Raised</span>
-                      <span>{c.pct}%</span>
-                    </div>
-                    <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
-                      <div className="h-full bg-brand-green" style={{ width: `${c.pct}%` }} />
-                    </div>
-                  </div>
                   <div className="flex justify-between items-center mt-6">
                     <CardItem translateZ={20} as="button" className="px-4 py-2 rounded-xl text-xs font-normal text-slate-500 hover:text-black cursor-pointer">
                       Read More →
@@ -1160,6 +1192,7 @@ export default function HomePage() {
       <Header />
       <HeroSection />
       <FeaturedCauses />
+      <UrgentPatientsSection />
       <WhatWeDo />
       <ProgramsAndThematic />
       <EventsAndGallery />

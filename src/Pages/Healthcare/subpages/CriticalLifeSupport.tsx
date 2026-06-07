@@ -24,10 +24,21 @@ import {
   Clock,
   ShieldCheck,
   HandHeart,
+  Building2,
+  IndianRupee,
+  Wallet,
+  Building,
+  Ambulance,
+  Heart,
+  Share2,
+  ClipboardList,
+  Shield,
+  Calendar,
 } from "lucide-react";
 import ScrollReveal from "@/components/healthcare/ScrollReveal";
+import { PatientCard } from "@/components/healthcare/PatientCard";
+import { URGENT_PATIENTS } from "@/content/patients";
 import criticalLifeSupportImg from "@/assets/critical_life_support.png";
-import programsHero from "@/assets/programs-hero.jpg";
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -117,52 +128,258 @@ function SectionTitle({ label, title, subtitle }: { label: string; title: string
 
 // ─── Sections ─────────────────────────────────────────────────────────────────
 
-function HeroSection() {
+function RedesignHeroSection() {
+  const stats = [
+    { icon: HeartPulse, value: "624+", label: "Patients Supported" },
+    { icon: Building2, value: "48+", label: "Partner Hospitals" },
+    { icon: IndianRupee, value: "₹1.85 Cr+", label: "Support Provided" },
+    { icon: ShieldCheck, value: "100%", label: "For Patient Support" },
+  ];
+
   return (
-    <section className="relative min-h-[430px] flex items-center overflow-hidden">
-      {/* Background Image */}
-      <img
-        src={programsHero}
-        alt="Critical Life Support"
-        className="absolute inset-0 h-full w-full object-cover"
-      />
-      {/* Modern dark/green gradient overlay for rich premium feel and high text contrast */}
-      <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/80 to-transparent" />
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 py-16 w-full">
-        {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-xs text-white/60 mb-6 font-medium">
-          <Link to="/" className="hover:text-white transition-colors flex items-center gap-1">
-            <Home className="w-3 h-3" /> Home
-          </Link>
-          <ChevronRight className="w-3 h-3" />
-          <Link to="/programs/healthcare" className="hover:text-white transition-colors">Healthcare</Link>
-          <ChevronRight className="w-3 h-3" />
-          <span className="text-white/80">Critical Life & Emergency Support</span>
-        </nav>
-
-        {/* Back link */}
-        <Link
-          to="/programs/healthcare"
-          className="inline-flex items-center gap-2 text-xs font-semibold text-white/70 hover:text-white border border-white/20 hover:border-white/40 px-3 py-1.5 rounded transition-all mb-8 hover:-translate-x-0.5"
-        >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          All Healthcare Programmes
+    <section className="bg-white pt-8 pb-0 px-6 lg:px-16">
+      <nav className="flex items-center gap-2 text-xs text-gray-500 mb-6 font-medium max-w-7xl mx-auto">
+        <Link to="/" className="hover:text-[#0d2b1a] transition-colors flex items-center gap-1">
+          <Home className="w-3 h-3" /> Home
         </Link>
+        <ChevronRight className="w-3 h-3" />
+        <Link to="/programs/healthcare" className="hover:text-[#0d2b1a] transition-colors">
+          Healthcare
+        </Link>
+        <ChevronRight className="w-3 h-3" />
+        <span className="text-gray-700">Critical Life & Emergency Support</span>
+      </nav>
 
-        {/* Badge */}
-        <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 px-3.5 py-1.5 rounded-full mb-6 ml-4">
-          <span className="text-xs font-bold tracking-widest uppercase text-white/90">Programme 01</span>
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[38%_37%_25%] gap-6 items-stretch">
+        <div className="flex flex-col justify-center pr-0 lg:pr-6">
+          <h1 className="text-4xl lg:text-5xl font-black leading-tight">
+            <span className="text-[#0d2b1a]">CRITICAL LIFE &</span>
+            <br />
+            <span className="text-[#f97316]">EMERGENCY SUPPORT</span>
+            <br />
+            <span className="text-[#0d2b1a]">INITIATIVE</span>
+          </h1>
+          <p className="mt-4 text-sm italic text-gray-700 font-medium before:content-['\201C'] after:content-['\201D']">
+            Har Pal Anmol Hai—when every second counts, we stand to save lives.
+          </p>
+          <p className="mt-3 text-sm text-gray-600 leading-relaxed max-w-sm">
+            We provide immediate financial support to underprivileged patients admitted to
+            hospitals in critical condition. Your support can save a life.
+          </p>
         </div>
 
-        <h1 className="text-4xl md:text-5xl font-extrabold text-white leading-tight tracking-tight mb-4">
-          Critical Life &amp; Emergency<br />Support Initiative
-        </h1>
+        <div className="overflow-hidden min-h-[280px] lg:min-h-[360px]">
+          {/* Image ref: doctor treating patient with oxygen mask, ICU setting */}
+          <img
+            src={criticalLifeSupportImg}
+            alt="Critical life and emergency hospital support"
+            className="w-full h-full min-h-[280px] lg:min-h-[360px] object-cover rounded-tl-2xl rounded-tr-2xl"
+          />
+        </div>
 
-        <p className="text-base md:text-lg text-white/75 max-w-2xl leading-relaxed italic">
-          "Har Pal Anmol Hai — when every second counts,{" "}
-          <span className="text-white not-italic font-semibold">we stand to save lives.</span>"
-        </p>
+        <div className="bg-white border border-gray-100 rounded-2xl shadow-lg p-5 flex flex-col gap-4">
+          <div>
+            <p className="text-base font-bold text-[#0d2b1a]">Every Second Matters</p>
+            <p className="text-xs text-gray-500 mt-0.5">Timely Support. Better Care. Saved Lives.</p>
+          </div>
+          <div className="grid grid-cols-2 gap-3 mt-2">
+            {stats.map(({ icon: Icon, value, label }) => (
+              <div
+                key={label}
+                className="flex flex-col items-center gap-1 p-3 rounded-xl bg-orange-50"
+              >
+                <Icon className="w-5 h-5 text-[#f97316]" />
+                <span className="text-lg font-black text-[#0d2b1a]">{value}</span>
+                <span className="text-[10px] text-gray-500 text-center leading-tight">{label}</span>
+              </div>
+            ))}
+          </div>
+          <button
+            type="button"
+            className="w-full bg-[#f97316] hover:bg-orange-600 text-white font-bold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all duration-200 active:scale-95 mt-3 cursor-pointer"
+          >
+            <Heart className="w-4 h-4 fill-white" />
+            SUPPORT A PATIENT NOW
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FeatureStripSection() {
+  const features = [
+    { icon: Clock, label: "Timely Intervention" },
+    { icon: Wallet, label: "Financial Assistance" },
+    { icon: Building, label: "Hospital & ICU Support" },
+    { icon: Ambulance, label: "Emergency Care" },
+    { icon: Users, label: "Saving Lives Together" },
+  ];
+
+  return (
+    <section className="bg-gray-50 border-t border-b border-gray-100 py-5 px-6 lg:px-16">
+      <div className="max-w-7xl mx-auto flex flex-col xl:flex-row items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center justify-center gap-4 xl:gap-8 flex-1">
+          {features.map(({ icon: Icon, label }, i) => (
+            <div key={label} className="flex items-center gap-4 xl:gap-8">
+              <div className="flex flex-col items-center gap-1.5">
+                <Icon className="w-[22px] h-[22px] text-[#0d2b1a]" />
+                <span className="text-[11px] text-gray-600 font-medium text-center leading-tight max-w-[88px]">
+                  {label}
+                </span>
+              </div>
+              {i < features.length - 1 && <div className="hidden sm:block w-px h-8 bg-gray-200" />}
+            </div>
+          ))}
+        </div>
+        <div className="bg-[#0d2b1a] rounded-xl px-5 py-3 flex flex-col sm:flex-row items-center gap-4 shrink-0 w-full xl:w-auto">
+          <div className="flex items-center gap-3">
+            <ShieldCheck className="w-5 h-5 text-white shrink-0" />
+            <div>
+              <p className="text-white font-bold text-sm">100% Transparent Support</p>
+              <p className="text-white/60 text-xs">Your donation reaches the patient directly.</p>
+            </div>
+          </div>
+          <button
+            type="button"
+            className="border border-white/40 text-white text-xs font-semibold px-4 py-2 rounded-lg hover:bg-white/10 transition-colors whitespace-nowrap cursor-pointer"
+          >
+            HOW WE WORK →
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PatientCardsSection() {
+  const sidebarReasons = [
+    {
+      icon: HeartPulse,
+      bg: "bg-red-50",
+      iconColor: "text-red-500",
+      text: "Many poor patients in critical condition cannot afford life-saving treatment.",
+    },
+    {
+      icon: HandHeart,
+      bg: "bg-green-50",
+      iconColor: "text-green-600",
+      text: "Your support helps them receive timely medical care and emergency support.",
+    },
+    {
+      icon: Shield,
+      bg: "bg-blue-50",
+      iconColor: "text-blue-500",
+      text: "Together, we can save more lives and bring hope to families.",
+    },
+  ];
+
+  return (
+    <section className="bg-white py-10 px-6 lg:px-16">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 items-start">
+        <div className="flex-1 w-full">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+            <div>
+              <h2 className="text-xl font-black text-[#0d2b1a] uppercase tracking-wide">
+                Patients Needing Urgent Support
+              </h2>
+              <div className="h-1 w-12 bg-[#f97316] rounded-full mt-1.5" />
+            </div>
+            <select
+              className="text-xs border border-gray-200 rounded-lg px-3 py-2 text-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-200 w-full sm:w-auto"
+              defaultValue="most-urgent"
+            >
+              <option value="most-urgent">Sort by: Most Urgent</option>
+              <option value="highest-need">Sort by: Highest Need</option>
+              <option value="recently-added">Sort by: Recently Added</option>
+            </select>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {URGENT_PATIENTS.map((patient) => (
+              <PatientCard key={patient.id} {...patient} />
+            ))}
+          </div>
+        </div>
+
+        <aside className="w-full lg:w-72 shrink-0 lg:sticky lg:top-24">
+          <h3 className="text-sm font-black text-[#0d2b1a] uppercase tracking-wide mb-5">
+            Why Your Support Matters
+          </h3>
+          <div className="flex flex-col gap-4">
+            {sidebarReasons.map(({ icon: Icon, bg, iconColor, text }) => (
+              <div key={text} className="flex items-start gap-3">
+                <div className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 ${bg}`}>
+                  <Icon className={`w-4 h-4 ${iconColor}`} />
+                </div>
+                <p className="text-xs text-gray-600 leading-relaxed">{text}</p>
+              </div>
+            ))}
+          </div>
+          <div className="h-px bg-gray-100 my-5" />
+          <div className="bg-orange-50 rounded-2xl p-4 relative">
+            <span className="text-[#f97316] text-5xl font-serif leading-none absolute -top-1 left-3">
+              &ldquo;
+            </span>
+            <p className="text-xs text-gray-700 italic leading-relaxed pt-4">
+              A small contribution from you can bring someone back to life.
+              Please support. Every second counts.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </section>
+  );
+}
+
+function BottomCTABanner() {
+  return (
+    <section className="bg-gray-50 border-t border-gray-100 py-6 px-6 lg:px-16">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-6">
+        <div className="flex items-center gap-4">
+          <div className="bg-green-100 p-2.5 rounded-xl shrink-0">
+            <ClipboardList className="w-9 h-9 text-[#0d2b1a]" />
+          </div>
+          <div>
+            <p className="font-bold text-sm text-[#0d2b1a]">
+              You can be the reason for someone&apos;s second chance at life.
+            </p>
+            <p className="text-xs text-gray-500 mt-0.5">
+              Join our mission to support critically ill patients in their most difficult moments.
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center gap-3 flex-wrap justify-center lg:justify-end">
+          <button
+            type="button"
+            className="bg-[#f97316] hover:bg-orange-600 text-white font-bold text-xs py-3 px-5 rounded-xl flex items-center gap-2 transition-colors active:scale-95 cursor-pointer"
+          >
+            <Heart className="w-4 h-4 fill-white" />
+            <div className="text-left">
+              <div>DONATE NOW</div>
+              <div className="text-[10px] font-normal opacity-80">Support a Patient</div>
+            </div>
+          </button>
+          <button
+            type="button"
+            className="border border-gray-300 hover:border-gray-400 text-gray-700 font-bold text-xs py-3 px-5 rounded-xl flex items-center gap-2 transition-colors bg-white active:scale-95 cursor-pointer"
+          >
+            <Share2 className="w-4 h-4 text-gray-500" />
+            <div className="text-left">
+              <div>SHARE NOW</div>
+              <div className="text-[10px] font-normal text-gray-400">Spread Hope</div>
+            </div>
+          </button>
+          <button
+            type="button"
+            className="border border-gray-300 hover:border-gray-400 text-gray-700 font-bold text-xs py-3 px-5 rounded-xl flex items-center gap-2 transition-colors bg-white active:scale-95 cursor-pointer"
+          >
+            <Calendar className="w-4 h-4 text-gray-500" />
+            <div className="text-left">
+              <div>BECOME A MONTHLY DONOR</div>
+              <div className="text-[10px] font-normal text-gray-400">Support Regularly</div>
+            </div>
+          </button>
+        </div>
       </div>
     </section>
   );
@@ -430,7 +647,10 @@ export default function CriticalLifeSupport() {
       <UtilityBar />
       <Header />
       <main>
-        <HeroSection />
+        <RedesignHeroSection />
+        <FeatureStripSection />
+        <PatientCardsSection />
+        <BottomCTABanner />
         <OverviewSection />
         <ObjectiveSection />
         <SupportAreasSection />
