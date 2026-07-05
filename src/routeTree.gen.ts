@@ -12,6 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsAndConditionsRouteImport } from './routes/terms-and-conditions'
 import { Route as RefundPolicyRouteImport } from './routes/refund-policy'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
+import { Route as NewsAndEventsRouteImport } from './routes/news-and-events'
+import { Route as MembershipRouteImport } from './routes/membership'
+import { Route as DonateRouteImport } from './routes/donate'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProgramsWomenEmpowermentRouteImport } from './routes/programs/women-empowerment'
@@ -19,6 +23,9 @@ import { Route as ProgramsSkillsDevelopmentRouteImport } from './routes/programs
 import { Route as ProgramsEducationRouteImport } from './routes/programs/education'
 import { Route as AboutVision2047RouteImport } from './routes/about_/vision-2047'
 import { Route as AboutObjectiveAndVisionRouteImport } from './routes/about_/objective-and-vision'
+import { Route as AboutLegalStatusRouteImport } from './routes/about_/legal-status'
+import { Route as AboutLeadershipRouteImport } from './routes/about_/leadership'
+import { Route as AboutGovernanceRouteImport } from './routes/about_/governance'
 import { Route as ProgramsHealthcareIndexRouteImport } from './routes/programs/healthcare/index'
 import { Route as ProgramsHealthcareWellnessCentresRouteImport } from './routes/programs/healthcare/wellness-centres'
 import { Route as ProgramsHealthcareRuralAmbulanceRouteImport } from './routes/programs/healthcare/rural-ambulance'
@@ -42,6 +49,26 @@ const RefundPolicyRoute = RefundPolicyRouteImport.update({
 const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
   id: '/privacy-policy',
   path: '/privacy-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewsAndEventsRoute = NewsAndEventsRouteImport.update({
+  id: '/news-and-events',
+  path: '/news-and-events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MembershipRoute = MembershipRouteImport.update({
+  id: '/membership',
+  path: '/membership',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DonateRoute = DonateRouteImport.update({
+  id: '/donate',
+  path: '/donate',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -79,6 +106,21 @@ const AboutVision2047Route = AboutVision2047RouteImport.update({
 const AboutObjectiveAndVisionRoute = AboutObjectiveAndVisionRouteImport.update({
   id: '/about_/objective-and-vision',
   path: '/about/objective-and-vision',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutLegalStatusRoute = AboutLegalStatusRouteImport.update({
+  id: '/about_/legal-status',
+  path: '/about/legal-status',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutLeadershipRoute = AboutLeadershipRouteImport.update({
+  id: '/about_/leadership',
+  path: '/about/leadership',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutGovernanceRoute = AboutGovernanceRouteImport.update({
+  id: '/about_/governance',
+  path: '/about/governance',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProgramsHealthcareIndexRoute = ProgramsHealthcareIndexRouteImport.update({
@@ -138,9 +180,16 @@ const ProgramsHealthcareCervicalCancerRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/donate': typeof DonateRoute
+  '/membership': typeof MembershipRoute
+  '/news-and-events': typeof NewsAndEventsRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/refund-policy': typeof RefundPolicyRoute
   '/terms-and-conditions': typeof TermsAndConditionsRoute
+  '/about/governance': typeof AboutGovernanceRoute
+  '/about/leadership': typeof AboutLeadershipRoute
+  '/about/legal-status': typeof AboutLegalStatusRoute
   '/about/objective-and-vision': typeof AboutObjectiveAndVisionRoute
   '/about/vision-2047': typeof AboutVision2047Route
   '/programs/education': typeof ProgramsEducationRoute
@@ -159,9 +208,16 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/donate': typeof DonateRoute
+  '/membership': typeof MembershipRoute
+  '/news-and-events': typeof NewsAndEventsRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/refund-policy': typeof RefundPolicyRoute
   '/terms-and-conditions': typeof TermsAndConditionsRoute
+  '/about/governance': typeof AboutGovernanceRoute
+  '/about/leadership': typeof AboutLeadershipRoute
+  '/about/legal-status': typeof AboutLegalStatusRoute
   '/about/objective-and-vision': typeof AboutObjectiveAndVisionRoute
   '/about/vision-2047': typeof AboutVision2047Route
   '/programs/education': typeof ProgramsEducationRoute
@@ -181,9 +237,16 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/donate': typeof DonateRoute
+  '/membership': typeof MembershipRoute
+  '/news-and-events': typeof NewsAndEventsRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/refund-policy': typeof RefundPolicyRoute
   '/terms-and-conditions': typeof TermsAndConditionsRoute
+  '/about_/governance': typeof AboutGovernanceRoute
+  '/about_/leadership': typeof AboutLeadershipRoute
+  '/about_/legal-status': typeof AboutLegalStatusRoute
   '/about_/objective-and-vision': typeof AboutObjectiveAndVisionRoute
   '/about_/vision-2047': typeof AboutVision2047Route
   '/programs/education': typeof ProgramsEducationRoute
@@ -204,9 +267,16 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/contact'
+    | '/donate'
+    | '/membership'
+    | '/news-and-events'
     | '/privacy-policy'
     | '/refund-policy'
     | '/terms-and-conditions'
+    | '/about/governance'
+    | '/about/leadership'
+    | '/about/legal-status'
     | '/about/objective-and-vision'
     | '/about/vision-2047'
     | '/programs/education'
@@ -225,9 +295,16 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/contact'
+    | '/donate'
+    | '/membership'
+    | '/news-and-events'
     | '/privacy-policy'
     | '/refund-policy'
     | '/terms-and-conditions'
+    | '/about/governance'
+    | '/about/leadership'
+    | '/about/legal-status'
     | '/about/objective-and-vision'
     | '/about/vision-2047'
     | '/programs/education'
@@ -246,9 +323,16 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/contact'
+    | '/donate'
+    | '/membership'
+    | '/news-and-events'
     | '/privacy-policy'
     | '/refund-policy'
     | '/terms-and-conditions'
+    | '/about_/governance'
+    | '/about_/leadership'
+    | '/about_/legal-status'
     | '/about_/objective-and-vision'
     | '/about_/vision-2047'
     | '/programs/education'
@@ -268,9 +352,16 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  ContactRoute: typeof ContactRoute
+  DonateRoute: typeof DonateRoute
+  MembershipRoute: typeof MembershipRoute
+  NewsAndEventsRoute: typeof NewsAndEventsRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   RefundPolicyRoute: typeof RefundPolicyRoute
   TermsAndConditionsRoute: typeof TermsAndConditionsRoute
+  AboutGovernanceRoute: typeof AboutGovernanceRoute
+  AboutLeadershipRoute: typeof AboutLeadershipRoute
+  AboutLegalStatusRoute: typeof AboutLegalStatusRoute
   AboutObjectiveAndVisionRoute: typeof AboutObjectiveAndVisionRoute
   AboutVision2047Route: typeof AboutVision2047Route
   ProgramsEducationRoute: typeof ProgramsEducationRoute
@@ -308,6 +399,34 @@ declare module '@tanstack/react-router' {
       path: '/privacy-policy'
       fullPath: '/privacy-policy'
       preLoaderRoute: typeof PrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/news-and-events': {
+      id: '/news-and-events'
+      path: '/news-and-events'
+      fullPath: '/news-and-events'
+      preLoaderRoute: typeof NewsAndEventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/membership': {
+      id: '/membership'
+      path: '/membership'
+      fullPath: '/membership'
+      preLoaderRoute: typeof MembershipRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/donate': {
+      id: '/donate'
+      path: '/donate'
+      fullPath: '/donate'
+      preLoaderRoute: typeof DonateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -357,6 +476,27 @@ declare module '@tanstack/react-router' {
       path: '/about/objective-and-vision'
       fullPath: '/about/objective-and-vision'
       preLoaderRoute: typeof AboutObjectiveAndVisionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about_/legal-status': {
+      id: '/about_/legal-status'
+      path: '/about/legal-status'
+      fullPath: '/about/legal-status'
+      preLoaderRoute: typeof AboutLegalStatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about_/leadership': {
+      id: '/about_/leadership'
+      path: '/about/leadership'
+      fullPath: '/about/leadership'
+      preLoaderRoute: typeof AboutLeadershipRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about_/governance': {
+      id: '/about_/governance'
+      path: '/about/governance'
+      fullPath: '/about/governance'
+      preLoaderRoute: typeof AboutGovernanceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/programs/healthcare/': {
@@ -428,9 +568,16 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ContactRoute: ContactRoute,
+  DonateRoute: DonateRoute,
+  MembershipRoute: MembershipRoute,
+  NewsAndEventsRoute: NewsAndEventsRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   RefundPolicyRoute: RefundPolicyRoute,
   TermsAndConditionsRoute: TermsAndConditionsRoute,
+  AboutGovernanceRoute: AboutGovernanceRoute,
+  AboutLeadershipRoute: AboutLeadershipRoute,
+  AboutLegalStatusRoute: AboutLegalStatusRoute,
   AboutObjectiveAndVisionRoute: AboutObjectiveAndVisionRoute,
   AboutVision2047Route: AboutVision2047Route,
   ProgramsEducationRoute: ProgramsEducationRoute,
