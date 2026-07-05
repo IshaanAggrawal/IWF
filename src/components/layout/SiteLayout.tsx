@@ -112,19 +112,53 @@ function getTopNavHref(item: string) {
   if (item === "About Us") return "/about";
   if (item === "What We Do") return "/#focus-areas";
   if (item === "Programs") return "/programs/healthcare";
+  if (item === "Impact") return "/#impact-stats";
+  if (item === "Media & Updates") return "/news-and-events";
+  if (item === "Get Involved") return "/#get-involved";
+  if (item === "Contact Us") return "/contact";
   return "#";
 }
 
 function getMegaHref(menu: string, item: string) {
+  // About Us
   if (menu === "About Us" && item === "Overview") return "/about";
+  if (menu === "About Us" && item === "Our Objective & Vision") return "/about/objective-and-vision";
+  if (menu === "About Us" && item === "Vision 2047") return "/about/vision-2047";
+  if (menu === "About Us" && item === "Leadership & Management") return "/about/leadership";
+  if (menu === "About Us" && item === "Governance & Transparency") return "/about/governance";
+  if (menu === "About Us" && item === "Legal Status & Registration") return "/about/legal-status";
+  if (menu === "About Us" && item === "Members & Supporters") return "/membership";
+  if (menu === "About Us" && item === "Membership Policy") return "/membership#status";
+  if (menu === "About Us" && item === "Partners & Donors") return "/about/partners";
+  // What We Do
   if (menu === "What We Do" && item === "Education") return "/programs/education";
   if (menu === "What We Do" && item === "Health Care") return "/programs/healthcare";
   if (menu === "What We Do" && item === "Skills Development") return "/programs/skills-development";
   if (menu === "What We Do" && item === "Women Empowerment") return "/programs/women-empowerment";
+  // Programs
   if (menu === "Programs" && item === "View All Programs") return "/programs/healthcare";
+  // Media & Updates
+  if (menu === "Media & Updates" && item === "News & Events") return "/news-and-events";
+  if (menu === "Media & Updates" && item === "Latest Updates") return "/news-and-events";
+  if (menu === "Media & Updates" && item === "Gallery") return "/gallery";
+  if (menu === "Media & Updates" && item === "Publications") return "/news-and-events";
+  if (menu === "Media & Updates" && item === "Press Releases") return "/news-and-events";
+  if (menu === "Media & Updates" && item === "Annual Reports") return "/news-and-events";
+  if (menu === "Media & Updates" && item === "Success Stories") return "/news-and-events";
+  if (menu === "Media & Updates" && item === "Newsletters") return "/news-and-events";
+  // Get Involved
   if (menu === "Get Involved" && item === "Careers & Opportunities") return "#careers";
+  if (menu === "Get Involved" && item === "Donate & Support") return "/donate";
+  if (menu === "Get Involved" && item === "Volunteer With Us") return "/#get-involved";
+  if (menu === "Get Involved" && item === "Partner With Us") return "/#get-involved";
+  if (menu === "Get Involved" && item === "Sponsor a Programme") return "/#get-involved";
+  if (menu === "Get Involved" && item === "Become a Mentor") return "/#get-involved";
+  if (menu === "Get Involved" && item === "Become a Member") return "/membership";
+  // Contact
+  if (item === "Contact Us") return "/contact";
   return "#";
 }
+
 
 export function NotificationTicker() {
   const marqueeText =
@@ -278,7 +312,7 @@ export function Header() {
 
           <div className="flex items-center gap-2 md:gap-3 shrink-0">
             <a
-              href="#"
+              href="/donate"
               className="bg-brand-orange hover:bg-orange-600 text-white font-bold text-xs md:text-sm px-3 py-2 md:px-5 md:py-2.5 rounded-md shadow-md transition-colors uppercase tracking-wide"
             >
               DONATE NOW
@@ -433,6 +467,18 @@ export function Header() {
                                 ? "/about/objective-and-vision"
                                 : item === "About Us" && sub === "Vision 2047"
                                 ? "/about/vision-2047"
+                                : item === "About Us" && sub === "Leadership & Management"
+                                ? "/about/leadership"
+                                : item === "About Us" && sub === "Governance & Transparency"
+                                ? "/about/governance"
+                                : item === "About Us" && sub === "Legal Status & Registration"
+                                ? "/about/legal-status"
+                                : item === "About Us" && sub === "Members & Supporters"
+                                ? "/membership"
+                                : item === "About Us" && sub === "Our Partners & Donors"
+                                ? "/about/legal-status"
+                                : item === "About Us" && sub === "Membership Policy"
+                                ? "/membership#status"
                                 : item === "What We Do" && sub === "Health Care"
                                 ? "/programs/healthcare"
                                 : item === "What We Do" && sub === "Education"
@@ -441,8 +487,24 @@ export function Header() {
                                 ? "/programs/skills-development"
                                 : item === "What We Do" && sub === "Women Empowerment"
                                 ? "/programs/women-empowerment"
-                                : item === "Programs" && sub === "View All Programs →"
+                                : item === "What We Do"
                                 ? "/programs/healthcare"
+                                : item === "Programs" && sub === "View All Programs"
+                                ? "/programs/healthcare"
+                                : item === "Impact"
+                                ? "/#impact-stats"
+                                : item === "Media & Updates" && sub === "News & Events"
+                                ? "/news-and-events"
+                                : item === "Media & Updates" && sub === "Gallery"
+                                ? "/news-and-events"
+                                : item === "Media & Updates" && sub === "Press Release"
+                                ? "/news-and-events"
+                                : item === "Media & Updates"
+                                ? "/news-and-events"
+                                : item === "Get Involved" && sub === "Donate & Support"
+                                ? "/donate"
+                                : item === "Get Involved"
+                                ? "/#get-involved"
                                 : "#"
                             }
                             className="flex items-center gap-2 px-4 py-2 text-sm text-slate-600 hover:text-brand-green hover:bg-white transition-all"
@@ -460,7 +522,7 @@ export function Header() {
             </nav>
             <div className="p-4 border-t border-slate-100 shrink-0">
               <a
-                href="#"
+                href="/donate"
                 onClick={() => setMobileOpen(false)}
                 className="block text-center w-full bg-brand-orange hover:bg-orange-600 text-white font-bold py-3 rounded transition-colors uppercase tracking-wide text-sm"
               >
@@ -481,7 +543,10 @@ export function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void 
     ["Healthcare", "/programs/healthcare"],
     ["Skills Development", "/programs/skills-development"],
     ["Women Empowerment", "/programs/women-empowerment"],
-    ["Get In Touch", "#"],
+    ["Get In Touch", "/contact"],
+    ["Donate", "/donate"],
+    ["Membership", "/membership"],
+    ["News & Events", "/news-and-events"],
   ];
 
   return (
@@ -562,8 +627,8 @@ export function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void 
                 ["Privacy Policy", "/privacy-policy"],
                 ["Refund Policy", "/refund-policy"],
                 ["Terms & Conditions", "/terms-and-conditions"],
-                ["Certificates", "#"],
-                ["12A & 80G", "#"],
+                ["Certificates", "/about/legal-status"],
+                ["12A & 80G", "/about/legal-status"],
               ].map(([label, href]) => (
                 <li key={label}>
                   <a href={href} className="inline-flex items-center text-white/75 text-sm hover:text-brand-orange hover:translate-x-1 transition-all duration-200">
@@ -597,12 +662,12 @@ export function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void 
                 <span>www.islahwelfarefoundation.org</span>
               </div>
             </div>
-            <button
-              onClick={() => onOpenModal("sponsor")}
-              className="w-full mt-5 bg-[#f97316] hover:bg-orange-600 text-white font-bold py-3 rounded-md flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer"
+            <a
+              href="/donate"
+              className="w-full mt-5 bg-[#f97316] hover:bg-orange-600 text-white font-bold py-3 rounded-md flex items-center justify-center gap-2 transition-all duration-200"
             >
               <Heart className="w-4 h-4 fill-white" /> DONATE NOW
-            </button>
+            </a>
           </div>
         </div>
       </div>
