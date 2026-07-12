@@ -1,7 +1,9 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useSearch } from "@tanstack/react-router";
+import { URGENT_PATIENTS } from "@/content/patients";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Heart,
@@ -985,16 +987,34 @@ export default function DonatePage() {
   const [activeModal, setActiveModal] = useState<RoleType | null>(null);
   const formRef = useRef<HTMLDivElement>(null);
 
+  // Read patient context from URL search params (e.g. ?patientId=mohammed-salim&amount=64000)
+  const search = useSearch({ strict: false }) as { patientId?: string; amount?: string };
+  const contextPatient = search.patientId
+    ? URGENT_PATIENTS.find((p) => p.slug === search.patientId)
+    : null;
+  const contextAmount = search.amount ? parseInt(search.amount, 10) : undefined;
+
   const form = useForm<DonorFormData>({
     resolver: zodResolver(donorSchema),
     defaultValues: {
       citizenship: undefined,
       paymentMode: "online",
-      financialType: "",
+      financialType: contextPatient ? "Health Care" : "",
+      amount: contextAmount,
       consent: false,
     },
     mode: "onSubmit",
   });
+
+  // Sync pre-filled values when navigating from a patient profile
+  useEffect(() => {
+    if (contextPatient) {
+      form.setValue("financialType", "Health Care");
+    }
+    if (contextAmount) {
+      form.setValue("amount", contextAmount);
+    }
+  }, [contextPatient, contextAmount]);
 
   const scrollToForm = () => {
     formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1024,11 +1044,43 @@ export default function DonatePage() {
               Islah Welfare Foundation
             </p>
             <h1 className="text-4xl md:text-5xl font-extrabold leading-tight mb-4">
-              Make a Difference Today
+              {contextPatient
+                ? `Support ${contextPatient.name}`
+                : "Make a Difference Today"}
             </h1>
             <p className="text-white/75 max-w-2xl leading-relaxed text-base">
-              Your donation reaches the last mile — funding healthcare, education, women empowerment, and emergency support for rural communities across India.
+              {contextPatient
+                ? `You're donating for ${contextPatient.name} (${contextPatient.disease}). Your contribution goes directly to their treatment at ${contextPatient.hospital}.`
+                : "Your donation reaches the last mile — funding healthcare, education, women empowerment, and emergency support for rural communities across India."}
             </p>
+
+            {/* Patient mini-card when arriving from a profile */}
+            {contextPatient && (
+              <div className="mt-6 bg-white/10 border border-white/20 rounded-2xl p-4 flex items-center gap-4 max-w-xl">
+                <img
+                  src={contextPatient.image}
+                  alt={contextPatient.name}
+                  className="w-14 h-14 rounded-xl object-cover shrink-0"
+                />
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded uppercase">
+                      URGENT
+                    </span>
+                    <span className="text-white/60 text-xs">{contextPatient.verificationId}</span>
+                  </div>
+                  <p className="text-white font-bold text-sm truncate">{contextPatient.name}</p>
+                  <p className="text-white/70 text-xs truncate">{contextPatient.disease}</p>
+                </div>
+                <div className="text-right shrink-0">
+                  <p className="text-[#f97316] font-black text-lg">
+                    ₹{(contextPatient.neededAmount - contextPatient.raisedAmount).toLocaleString("en-IN")}
+                  </p>
+                  <p className="text-white/50 text-[10px]">still needed</p>
+                </div>
+              </div>
+            )}
+
             <div className="flex flex-wrap gap-4 mt-6">
               {[
                 { icon: Shield, text: "80G Tax Exemption" },
