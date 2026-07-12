@@ -21,6 +21,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProgramsWomenEmpowermentRouteImport } from './routes/programs/women-empowerment'
 import { Route as ProgramsSkillsDevelopmentRouteImport } from './routes/programs/skills-development'
 import { Route as ProgramsEducationRouteImport } from './routes/programs/education'
+import { Route as PatientsPatientSlugRouteImport } from './routes/patients/$patientSlug'
 import { Route as AboutVision2047RouteImport } from './routes/about_/vision-2047'
 import { Route as AboutObjectiveAndVisionRouteImport } from './routes/about_/objective-and-vision'
 import { Route as AboutLegalStatusRouteImport } from './routes/about_/legal-status'
@@ -96,6 +97,11 @@ const ProgramsSkillsDevelopmentRoute =
 const ProgramsEducationRoute = ProgramsEducationRouteImport.update({
   id: '/programs/education',
   path: '/programs/education',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PatientsPatientSlugRoute = PatientsPatientSlugRouteImport.update({
+  id: '/patients/$patientSlug',
+  path: '/patients/$patientSlug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutVision2047Route = AboutVision2047RouteImport.update({
@@ -192,6 +198,7 @@ export interface FileRoutesByFullPath {
   '/about/legal-status': typeof AboutLegalStatusRoute
   '/about/objective-and-vision': typeof AboutObjectiveAndVisionRoute
   '/about/vision-2047': typeof AboutVision2047Route
+  '/patients/$patientSlug': typeof PatientsPatientSlugRoute
   '/programs/education': typeof ProgramsEducationRoute
   '/programs/skills-development': typeof ProgramsSkillsDevelopmentRoute
   '/programs/women-empowerment': typeof ProgramsWomenEmpowermentRoute
@@ -220,6 +227,7 @@ export interface FileRoutesByTo {
   '/about/legal-status': typeof AboutLegalStatusRoute
   '/about/objective-and-vision': typeof AboutObjectiveAndVisionRoute
   '/about/vision-2047': typeof AboutVision2047Route
+  '/patients/$patientSlug': typeof PatientsPatientSlugRoute
   '/programs/education': typeof ProgramsEducationRoute
   '/programs/skills-development': typeof ProgramsSkillsDevelopmentRoute
   '/programs/women-empowerment': typeof ProgramsWomenEmpowermentRoute
@@ -249,6 +257,7 @@ export interface FileRoutesById {
   '/about_/legal-status': typeof AboutLegalStatusRoute
   '/about_/objective-and-vision': typeof AboutObjectiveAndVisionRoute
   '/about_/vision-2047': typeof AboutVision2047Route
+  '/patients/$patientSlug': typeof PatientsPatientSlugRoute
   '/programs/education': typeof ProgramsEducationRoute
   '/programs/skills-development': typeof ProgramsSkillsDevelopmentRoute
   '/programs/women-empowerment': typeof ProgramsWomenEmpowermentRoute
@@ -279,6 +288,7 @@ export interface FileRouteTypes {
     | '/about/legal-status'
     | '/about/objective-and-vision'
     | '/about/vision-2047'
+    | '/patients/$patientSlug'
     | '/programs/education'
     | '/programs/skills-development'
     | '/programs/women-empowerment'
@@ -307,6 +317,7 @@ export interface FileRouteTypes {
     | '/about/legal-status'
     | '/about/objective-and-vision'
     | '/about/vision-2047'
+    | '/patients/$patientSlug'
     | '/programs/education'
     | '/programs/skills-development'
     | '/programs/women-empowerment'
@@ -335,6 +346,7 @@ export interface FileRouteTypes {
     | '/about_/legal-status'
     | '/about_/objective-and-vision'
     | '/about_/vision-2047'
+    | '/patients/$patientSlug'
     | '/programs/education'
     | '/programs/skills-development'
     | '/programs/women-empowerment'
@@ -364,6 +376,7 @@ export interface RootRouteChildren {
   AboutLegalStatusRoute: typeof AboutLegalStatusRoute
   AboutObjectiveAndVisionRoute: typeof AboutObjectiveAndVisionRoute
   AboutVision2047Route: typeof AboutVision2047Route
+  PatientsPatientSlugRoute: typeof PatientsPatientSlugRoute
   ProgramsEducationRoute: typeof ProgramsEducationRoute
   ProgramsSkillsDevelopmentRoute: typeof ProgramsSkillsDevelopmentRoute
   ProgramsWomenEmpowermentRoute: typeof ProgramsWomenEmpowermentRoute
@@ -462,6 +475,13 @@ declare module '@tanstack/react-router' {
       path: '/programs/education'
       fullPath: '/programs/education'
       preLoaderRoute: typeof ProgramsEducationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/patients/$patientSlug': {
+      id: '/patients/$patientSlug'
+      path: '/patients/$patientSlug'
+      fullPath: '/patients/$patientSlug'
+      preLoaderRoute: typeof PatientsPatientSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about_/vision-2047': {
@@ -580,6 +600,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutLegalStatusRoute: AboutLegalStatusRoute,
   AboutObjectiveAndVisionRoute: AboutObjectiveAndVisionRoute,
   AboutVision2047Route: AboutVision2047Route,
+  PatientsPatientSlugRoute: PatientsPatientSlugRoute,
   ProgramsEducationRoute: ProgramsEducationRoute,
   ProgramsSkillsDevelopmentRoute: ProgramsSkillsDevelopmentRoute,
   ProgramsWomenEmpowermentRoute: ProgramsWomenEmpowermentRoute,

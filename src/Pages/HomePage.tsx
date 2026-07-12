@@ -1586,10 +1586,10 @@ export default function HomePage() {
       <UtilityBar />
       <Header />
       <HeroSection />
+      <UrgentPatientsSection />
       <ImpactStats />
       <FeaturedCauses />
       <CampaignsSection />
-      <UrgentPatientsSection />
       <WhatWeDo />
       <ProgramsAndThematic />
       <NewsUpdates />

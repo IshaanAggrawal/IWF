@@ -194,13 +194,14 @@ function RedesignHeroSection() {
               </div>
             ))}
           </div>
-          <button
-            type="button"
-            className="w-full bg-[#f97316] hover:bg-orange-600 text-white font-bold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all duration-200 active:scale-95 mt-3 cursor-pointer"
+          <Link
+            to="/donate"
+            search={{ patientId: undefined, amount: undefined }}
+            className="w-full bg-[#f97316] hover:bg-orange-600 text-white font-bold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all duration-200 active:scale-95 mt-3"
           >
             <Heart className="w-4 h-4 fill-white" />
             SUPPORT A PATIENT NOW
-          </button>
+          </Link>
         </div>
       </div>
     </section>
@@ -240,12 +241,12 @@ function FeatureStripSection() {
               <p className="text-white/60 text-xs">Your donation reaches the patient directly.</p>
             </div>
           </div>
-          <button
-            type="button"
+          <a
+            href="#how-we-work"
             className="border border-white/40 text-white text-xs font-semibold px-4 py-2 rounded-lg hover:bg-white/10 transition-colors whitespace-nowrap cursor-pointer"
           >
             HOW WE WORK →
-          </button>
+          </a>
         </div>
       </div>
     </section>
@@ -349,16 +350,16 @@ function BottomCTABanner() {
           </div>
         </div>
         <div className="flex items-center gap-3 flex-wrap justify-center lg:justify-end">
-          <button
-            type="button"
-            className="bg-[#f97316] hover:bg-orange-600 text-white font-bold text-xs py-3 px-5 rounded-xl flex items-center gap-2 transition-colors active:scale-95 cursor-pointer"
+          <Link
+            to="/donate"
+            className="bg-[#f97316] hover:bg-orange-600 text-white font-bold text-xs py-3 px-5 rounded-xl flex items-center gap-2 transition-colors active:scale-95"
           >
             <Heart className="w-4 h-4 fill-white" />
             <div className="text-left">
               <div>DONATE NOW</div>
               <div className="text-[10px] font-normal opacity-80">Support a Patient</div>
             </div>
-          </button>
+          </Link>
           <button
             type="button"
             className="border border-gray-300 hover:border-gray-400 text-gray-700 font-bold text-xs py-3 px-5 rounded-xl flex items-center gap-2 transition-colors bg-white active:scale-95 cursor-pointer"
@@ -369,16 +370,16 @@ function BottomCTABanner() {
               <div className="text-[10px] font-normal text-gray-400">Spread Hope</div>
             </div>
           </button>
-          <button
-            type="button"
-            className="border border-gray-300 hover:border-gray-400 text-gray-700 font-bold text-xs py-3 px-5 rounded-xl flex items-center gap-2 transition-colors bg-white active:scale-95 cursor-pointer"
+          <Link
+            to="/membership"
+            className="border border-gray-300 hover:border-gray-400 text-gray-700 font-bold text-xs py-3 px-5 rounded-xl flex items-center gap-2 transition-colors bg-white active:scale-95"
           >
             <Calendar className="w-4 h-4 text-gray-500" />
             <div className="text-left">
               <div>BECOME A MONTHLY DONOR</div>
               <div className="text-[10px] font-normal text-gray-400">Support Regularly</div>
             </div>
-          </button>
+          </Link>
         </div>
       </div>
     </section>
