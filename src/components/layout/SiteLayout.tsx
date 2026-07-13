@@ -29,6 +29,7 @@ import { CONTACT_DETAILS } from "@/content/siteContent";
 import type { RoleType } from "@/components/forms/RoleFormModal";
 
 export { RoleFormModal } from "@/components/forms/RoleFormModal";
+import { TranslateButton } from "@/components/TranslateButton";
 
 export const NAV_ITEMS = [
   "Home",
@@ -230,6 +231,7 @@ export function UtilityBar() {
               <Icon className="w-3 h-3 text-white" />
             </a>
           ))}
+          <TranslateButton />
         </div>
       </div>
     </div>

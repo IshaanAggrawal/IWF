@@ -29,6 +29,7 @@ import { CardContainer, CardBody, CardItem } from "@/components/ui/3d-card";
 import { RoleFormModal, type RoleType } from "@/components/forms/RoleFormModal";
 import { PatientCard } from "@/components/healthcare/PatientCard";
 import { URGENT_PATIENTS } from "@/content/patients";
+import { TranslateButton } from "@/components/TranslateButton";
 
 // ─── Mega Nav Data ────────────────────────────────────────────────────────────
 
@@ -205,6 +206,7 @@ function UtilityBar() {
               <Icon className="w-3 h-3 text-white" />
             </a>
           ))}
+          <TranslateButton />
         </div>
       </div>
     </div>
