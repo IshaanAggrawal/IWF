@@ -778,19 +778,15 @@ function Step3Payment({ form, onNext, onBack }: { form: ReturnType<typeof useFor
   const disclaimerAccepted = watch("disclaimerAccepted");
 
   const handleNext = async () => {
-    const valid = await trigger(["paymentMode", "paymentDate"]);
-    if (!valid) return;
-    if (!disclaimerAccepted) {
-      setShowDisclaimer(true);
-    } else {
+    const valid = await trigger(["paymentMode", "paymentDate", "disclaimerAccepted"]);
+    if (valid) {
       onNext();
     }
   };
 
   const handleDisclaimerAccept = () => {
-    setValue("disclaimerAccepted", true);
+    setValue("disclaimerAccepted", true, { shouldValidate: true });
     setShowDisclaimer(false);
-    onNext();
   };
 
   return (
@@ -873,15 +869,31 @@ function Step3Payment({ form, onNext, onBack }: { form: ReturnType<typeof useFor
           </div>
         )}
 
-        {/* Disclaimer notice */}
-        <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-xl p-3">
-          <AlertCircle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-          <p className="text-xs text-amber-700 leading-relaxed">
-            {disclaimerAccepted
-              ? <span className="text-brand-green font-semibold">✓ Disclaimer accepted. You may proceed to review.</span>
-              : <>You will be asked to review and accept the <strong>membership disclaimer</strong> before proceeding to the next step.</>
-            }
-          </p>
+        {/* Disclaimer Checkbox & Button */}
+        <div className="p-4 rounded-xl border border-slate-200 bg-slate-50 space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold text-slate-700">Membership Disclaimer</span>
+            <button
+              type="button"
+              onClick={() => setShowDisclaimer(true)}
+              className="text-xs font-extrabold text-brand-green hover:text-brand-green-dark underline flex items-center gap-1"
+            >
+              <FileText className="w-3.5 h-3.5" /> Read Disclaimer
+            </button>
+          </div>
+          <div className="flex items-start gap-2.5">
+            <input
+              id="disclaimer-checkbox"
+              type="checkbox"
+              checked={!!disclaimerAccepted}
+              onChange={(e) => setValue("disclaimerAccepted", e.target.checked, { shouldValidate: true })}
+              className="mt-0.5 h-4 w-4 rounded border-slate-300 text-brand-green focus:ring-brand-green"
+            />
+            <label htmlFor="disclaimer-checkbox" className="text-xs text-slate-600 leading-relaxed cursor-pointer select-none">
+              I have read and agree to the mandatory <span className="font-semibold text-slate-800">Membership Disclaimer</span>. <span className="text-red-500">*</span>
+            </label>
+          </div>
+          <FieldError msg={errors.disclaimerAccepted?.message} />
         </div>
       </div>
 
@@ -1568,6 +1580,7 @@ function RegistrationSection() {
 
 function MembershipHero() {
   const [showComparison, setShowComparison] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const allFeatures = [
     "Digital Membership ID Card",
@@ -1590,6 +1603,8 @@ function MembershipHero() {
 
   return (
     <section className="bg-[#0d2b1a] text-white py-14 relative overflow-hidden">
+      {showModal && <MembershipComparisonModal onClose={() => setShowModal(false)} />}
+
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-0 right-0 w-96 h-96 bg-brand-orange rounded-full -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-brand-green rounded-full translate-y-1/2 -translate-x-1/2" />
@@ -1625,10 +1640,19 @@ function MembershipHero() {
           </div>
 
           {/* Right: Compact Comparison Card */}
-          <div className="bg-white/8 backdrop-blur-sm border border-white/15 rounded-2xl overflow-hidden">
+          <div className="bg-white/8 backdrop-blur-sm border border-white/15 rounded-2xl overflow-hidden shadow-2xl">
             {/* Tier header */}
-            <div className="grid grid-cols-4 border-b border-white/10">
-              <div className="px-3 py-3 text-xs font-bold text-white/50 uppercase tracking-wider">Benefit</div>
+            <div className="grid grid-cols-4 border-b border-white/10 items-center">
+              <div className="px-3 py-2 text-xs font-bold text-white/50 uppercase tracking-wider flex flex-col gap-1">
+                <span>Benefit</span>
+                <button
+                  type="button"
+                  onClick={() => setShowModal(true)}
+                  className="text-[10px] font-extrabold text-brand-orange hover:text-brand-orange-dark hover:underline text-left flex items-center gap-0.5"
+                >
+                  🔍 View Bigger
+                </button>
+              </div>
               {(["Blue", "Yellow", "Green"] as MemberCategory[]).map((cat) => {
                 const cfg = CATEGORY_CONFIG[cat];
                 return (
@@ -1642,25 +1666,30 @@ function MembershipHero() {
             </div>
 
             {/* Feature rows - compact, show only first 8 */}
-            <div className="divide-y divide-white/5">
-              {allFeatures.slice(0, showComparison ? allFeatures.length : 8).map((feature) => (
-                <div key={feature} className="grid grid-cols-4 items-center">
-                  <div className="px-3 py-2 text-[10px] text-white/70 font-medium leading-tight">{feature.replace(" (Optional)", "")}{feature.includes("Optional") && <span className="text-white/40 ml-0.5">(Opt)</span>}</div>
-                  {(["Blue", "Yellow", "Green"] as MemberCategory[]).map((cat) => {
-                    const included = CATEGORY_CONFIG[cat].features.some(f => f.replace(" (Optional)", "") === feature.replace(" (Optional)", ""));
-                    return (
-                      <div key={cat} className="py-2 flex items-center justify-center border-l border-white/5">
-                        {included
-                          ? <div className="w-4 h-4 rounded-full flex items-center justify-center" style={{ backgroundColor: `${CATEGORY_CONFIG[cat].color}30` }}>
-                              <Check className="w-2.5 h-2.5" style={{ color: CATEGORY_CONFIG[cat].color === "#15803D" ? "#4ade80" : CATEGORY_CONFIG[cat].color === "#1D4ED8" ? "#93c5fd" : "#fbbf24" }} />
-                            </div>
-                          : <span className="text-white/15 text-xs">—</span>
-                        }
-                      </div>
-                    );
-                  })}
-                </div>
-              ))}
+            <div className="divide-y divide-white/5 bg-white/[0.02]">
+              {allFeatures.slice(0, showComparison ? allFeatures.length : 8).map((feature) => {
+                const isOptionalRow = feature.toLowerCase().includes("member recognition");
+                return (
+                  <div key={feature} className="grid grid-cols-4 items-center">
+                    <div className="px-3 py-2 text-[10px] text-white/70 font-medium leading-tight">{feature.replace(" (Optional)", "")}{feature.includes("Optional") && <span className="text-white/40 ml-0.5">(Opt)</span>}</div>
+                    {(["Blue", "Yellow", "Green"] as MemberCategory[]).map((cat) => {
+                      const included = CATEGORY_CONFIG[cat].features.some(f => f.replace(" (Optional)", "") === feature.replace(" (Optional)", ""));
+                      return (
+                        <div key={cat} className="py-2 flex items-center justify-center border-l border-white/5 text-center">
+                          {isOptionalRow
+                            ? <span className="text-[9px] font-bold text-white/75 bg-white/10 px-1 py-0.5 rounded border border-white/10">Optional</span>
+                            : included
+                              ? <div className="w-4 h-4 rounded-full flex items-center justify-center" style={{ backgroundColor: `${CATEGORY_CONFIG[cat].color}30` }}>
+                                  <Check className="w-2.5 h-2.5" style={{ color: CATEGORY_CONFIG[cat].color === "#15803D" ? "#4ade80" : CATEGORY_CONFIG[cat].color === "#1D4ED8" ? "#93c5fd" : "#fbbf24" }} />
+                                </div>
+                              : <span className="text-white/15 text-xs">—</span>
+                          }
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
             </div>
 
             {/* Show more / Join footer */}
@@ -1673,7 +1702,7 @@ function MembershipHero() {
                 {showComparison ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                 {showComparison ? "Show less" : `+${allFeatures.length - 8} more benefits`}
               </button>
-              <a href="#register" className="inline-flex items-center gap-1.5 bg-brand-orange text-white text-[10px] font-bold px-3 py-1.5 rounded-lg hover:bg-brand-orange-dark transition">
+              <a href="#register" className="inline-flex items-center gap-1.5 bg-brand-orange text-white text-[10px] font-bold px-3 py-1.5 rounded-lg hover:bg-brand-orange-dark transition shadow-md">
                 Join Now <ArrowRight className="w-2.5 h-2.5" />
               </a>
             </div>
@@ -1751,9 +1780,9 @@ function MemberSpotlight() {
   );
 }
 
-// ─── Membership Benefits (Comparison) ────────────────────────────────────────
+// ─── Membership Benefits Modal ────────────────────────────────────────────────
 
-function MembershipComparison() {
+function MembershipComparisonModal({ onClose }: { onClose: () => void }) {
   const allFeatures = [
     "Digital Membership ID Card",
     "Annual membership certificate",
@@ -1774,67 +1803,98 @@ function MembershipComparison() {
   ];
 
   return (
-    <section className="py-14 bg-white">
-      <div className="max-w-5xl mx-auto px-4">
-        <div className="text-center mb-10">
-          <p className="text-xs font-bold uppercase tracking-widest text-brand-orange mb-2">Compare Plans</p>
-          <h2 className="text-2xl md:text-3xl font-extrabold text-brand-green-dark">Full Membership Benefits</h2>
-          <p className="text-slate-500 text-sm mt-2">Complete breakdown of what each tier includes.</p>
-        </div>
-        <div className="overflow-x-auto rounded-2xl border border-slate-100 shadow-sm">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-slate-100">
-                <th className="px-4 py-3.5 text-left text-xs font-bold text-slate-500 uppercase tracking-wider w-64">Feature</th>
-                {(["Blue", "Yellow", "Green"] as MemberCategory[]).map((cat) => {
-                  const cfg = CATEGORY_CONFIG[cat];
-                  return (
-                    <th key={cat} className="px-4 py-3.5 text-center" style={{ backgroundColor: `${cfg.color}08` }}>
-                      <div className="flex flex-col items-center gap-1">
-                        <cfg.icon className="w-5 h-5" style={{ color: cfg.color }} />
-                        <span className="text-sm font-extrabold" style={{ color: cfg.color }}>{cat}</span>
-                        <span className="text-xs text-slate-500">₹{cfg.amount.toLocaleString("en-IN")}/yr</span>
-                      </div>
-                    </th>
-                  );
-                })}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-50">
-              {allFeatures.map((feature, i) => (
-                <tr key={feature} className={i % 2 === 0 ? "bg-slate-50/50" : "bg-white"}>
-                  <td className="px-4 py-2.5 text-xs text-slate-700 font-medium">{feature}</td>
-                  {(["Blue", "Yellow", "Green"] as MemberCategory[]).map((cat) => {
-                    const included = CATEGORY_CONFIG[cat].features.some(f => f.replace(" (Optional)", "") === feature.replace(" (Optional)", ""));
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+        onClick={onClose}
+      >
+        <motion.div
+          initial={{ scale: 0.95, y: 15 }}
+          animate={{ scale: 1, y: 0 }}
+          exit={{ scale: 0.95, y: 15 }}
+          className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full overflow-hidden flex flex-col max-h-[90vh]"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Header */}
+          <div className="bg-[#0d2b1a] px-6 py-4 flex items-center justify-between text-white border-b border-white/10 shrink-0">
+            <div>
+              <h3 className="font-extrabold text-lg">Compare Membership Plans</h3>
+              <p className="text-white/60 text-xs mt-0.5">Choose the tier that matches your commitment</p>
+            </div>
+            <button
+              onClick={onClose}
+              className="text-white/70 hover:text-white bg-white/10 hover:bg-white/20 p-2 rounded-xl transition"
+            >
+              <XCircle className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Table Container */}
+          <div className="overflow-y-auto p-6">
+            <div className="overflow-x-auto rounded-xl border border-slate-100 shadow-sm">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-slate-100 bg-slate-50/50">
+                    <th className="px-5 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider w-64">Feature</th>
+                    {(["Blue", "Yellow", "Green"] as MemberCategory[]).map((cat) => {
+                      const cfg = CATEGORY_CONFIG[cat];
+                      return (
+                        <th key={cat} className="px-5 py-4 text-center" style={{ backgroundColor: `${cfg.color}08` }}>
+                          <div className="flex flex-col items-center gap-1">
+                            <cfg.icon className="w-5 h-5" style={{ color: cfg.color }} />
+                            <span className="text-sm font-extrabold" style={{ color: cfg.color }}>{cat}</span>
+                            <span className="text-xs text-slate-500">₹{cfg.amount.toLocaleString("en-IN")}/yr</span>
+                          </div>
+                        </th>
+                      );
+                    })}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-50">
+                  {allFeatures.map((feature, i) => {
+                    const isOptionalRow = feature.toLowerCase().includes("member recognition");
                     return (
-                      <td key={cat} className="px-4 py-2.5 text-center" style={{ backgroundColor: included ? `${CATEGORY_CONFIG[cat].color}08` : "transparent" }}>
-                        {included
-                          ? <Check className="w-4 h-4 mx-auto" style={{ color: CATEGORY_CONFIG[cat].color }} />
-                          : <span className="text-slate-200 text-lg">—</span>
-                        }
-                      </td>
+                      <tr key={feature} className={i % 2 === 0 ? "bg-slate-50/20" : "bg-white"}>
+                        <td className="px-5 py-3 text-xs text-slate-700 font-semibold">{feature}</td>
+                        {(["Blue", "Yellow", "Green"] as MemberCategory[]).map((cat) => {
+                          const included = CATEGORY_CONFIG[cat].features.some(f => f.replace(" (Optional)", "") === feature.replace(" (Optional)", ""));
+                          return (
+                            <td key={cat} className="px-5 py-3 text-center" style={{ backgroundColor: included ? `${CATEGORY_CONFIG[cat].color}08` : "transparent" }}>
+                              {isOptionalRow
+                                ? <span className="inline-block px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-[10px] font-bold border border-slate-200">Optional</span>
+                                : included
+                                  ? <Check className="w-4 h-4 mx-auto" style={{ color: CATEGORY_CONFIG[cat].color }} />
+                                  : <span className="text-slate-200 text-lg">—</span>
+                              }
+                            </td>
+                          );
+                        })}
+                      </tr>
                     );
                   })}
-                </tr>
-              ))}
-              <tr className="border-t border-slate-200">
-                <td className="px-4 py-4 text-xs font-bold text-slate-700">Annual Fee</td>
-                {(["Blue", "Yellow", "Green"] as MemberCategory[]).map((cat) => {
-                  const cfg = CATEGORY_CONFIG[cat];
-                  return (
-                    <td key={cat} className="px-4 py-4 text-center">
-                      <a href="#register" className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold text-white transition hover:scale-[1.02]" style={{ backgroundColor: cfg.color }}>
-                        Join ₹{cfg.amount.toLocaleString("en-IN")} <ArrowRight className="w-3 h-3" />
-                      </a>
-                    </td>
-                  );
-                })}
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
+                  <tr className="border-t border-slate-200 bg-slate-50/20">
+                    <td className="px-5 py-4 text-xs font-bold text-slate-700">Annual Fee</td>
+                    {(["Blue", "Yellow", "Green"] as MemberCategory[]).map((cat) => {
+                      const cfg = CATEGORY_CONFIG[cat];
+                      return (
+                        <td key={cat} className="px-5 py-4 text-center">
+                          <a href="#register" onClick={onClose} className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold text-white transition hover:scale-[1.02] shadow-sm" style={{ backgroundColor: cfg.color }}>
+                            Join ₹{cfg.amount.toLocaleString("en-IN")} <ArrowRight className="w-3 h-3" />
+                          </a>
+                        </td>
+                      );
+                    })}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
   );
 }
 
@@ -1852,7 +1912,6 @@ export default function MembershipPage() {
       <main>
         <MembershipHero />
         <MemberSpotlight />
-        <MembershipComparison />
         <RegistrationSection />
         <MemberStatusCheck />
         <AdminDashboard />
@@ -1863,3 +1922,4 @@ export default function MembershipPage() {
     </div>
   );
 }
+
