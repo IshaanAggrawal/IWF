@@ -242,7 +242,7 @@ function Header() {
         onClick={() => setActiveMenu(null)}
       />
 
-      <header className="bg-white sticky top-0 z-50 border-b border-gray-100 shadow-sm transition-all duration-200">
+      <header className="bg-white border-b border-gray-100 shadow-sm transition-all duration-200">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
 
           {/* Left Group: Logo */}
@@ -736,6 +736,9 @@ function UrgentPatientsSection() {
               <h2 className="text-xl md:text-2xl font-black text-[#0d2b1a] uppercase tracking-wide">
                 Patients Needing Urgent Support
               </h2>
+              <p className="text-base font-bold text-[#f97316] mt-1" style={{ fontFamily: "'Noto Sans Devanagari', sans-serif" }}>
+                हर पल अनमोल है
+              </p>
               <div className="h-1 w-12 bg-[#f97316] rounded-full mt-1.5" />
               <p className="text-sm text-slate-600 mt-3 max-w-2xl">
                 Your support can help critically ill patients receive timely treatment and
@@ -763,45 +766,38 @@ function UrgentPatientsSection() {
 }
 
 function FeaturedCauses() {
+  const causes = [
+    { img: causeEdu, icon: BookOpen, title: "Child Education", desc: "Scholarships, school kits & learning centres keeping every child in school under 'Shiksha Na Ruke'.", route: "/programs/education" },
+    { img: causeMed, icon: Stethoscope, title: "Medical Help", desc: "Free health camps, medicines & emergency treatment under 'Health Cannot Wait'.", route: "/programs/healthcare" },
+    { img: causeWomen, icon: Users, title: "Women Empowerment", desc: "SHGs, vocational training & financial literacy through 'She Can Fly' & 'Swabhiman'.", route: "/programs/women-empowerment" },
+    { img: thAgr, icon: Sprout, title: "Rural Development", desc: "Safe housing, sanitation & clean water under our 'Model Village' initiative.", route: "#" },
+    { img: thEnt, icon: Wrench, title: "Skill Development", desc: "Vocational & entrepreneurship training for sustainable livelihoods in rural India.", route: "/programs/skills-development" },
+  ];
+
   return (
-    <section className="py-16">
+    <section className="py-12 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4">
         <ScrollReveal><SectionTitle>Featured Causes</SectionTitle></ScrollReveal>
-        <ScrollReveal stagger={0.1}>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { img: causeEdu, icon: BookOpen, title: "Child Education", desc: "Through our 'Shiksha Na Ruke' campaign, we fund school fees, learning materials, and scholarships to keep every child in school and out of child labour." },
-              { img: causeMed, icon: Stethoscope, title: "Medical Help", desc: "Our 'Health Cannot Wait' initiative funds free health camps, medicines, emergency treatment, and health awareness drives in underserved rural communities." },
-              { img: causeWomen, icon: Users, title: "Women Empowerment", desc: "The 'She Can Fly' & 'Swabhiman' campaigns train women in vocational skills, promote Self-Help Groups, and build financial independence for lasting change." },
-            ].map((c) => (
-              <CardContainer key={c.title} className="inter-var w-full">
-                <CardBody className="bg-white relative group/card hover:shadow-2xl hover:shadow-emerald-500/[0.1] border-black/[0.1] w-full h-auto rounded-xl p-6 border flex flex-col justify-between">
-                  <div>
-                    <CardItem translateZ="50" className="text-xl font-bold text-[#0d2b1a] mb-1">
-                      {c.title}
-                    </CardItem>
-                    <CardItem translateZ="60" as="p" className="text-slate-600 text-sm max-w-sm mt-2 mb-4">
-                      {c.desc}
-                    </CardItem>
-                    <CardItem translateZ="100" className="w-full mt-4 h-44 relative">
-                      <img src={c.img} alt={c.title} className="h-44 w-full object-cover rounded-xl group-hover/card:shadow-xl" />
-                      <div className="absolute top-3 left-3 w-10 h-10 rounded-full bg-white shadow flex items-center justify-center">
-                        <c.icon className="w-5 h-5 text-brand-green" />
-                      </div>
-                    </CardItem>
+        <ScrollReveal stagger={0.08}>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            {causes.map((c) => (
+              <div key={c.title} className="bg-white rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 overflow-hidden flex flex-col">
+                <div className="relative h-32 w-full">
+                  <img src={c.img} alt={c.title} className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                  <div className="absolute bottom-2 left-2 w-7 h-7 rounded-full bg-white shadow flex items-center justify-center">
+                    <c.icon className="w-3.5 h-3.5 text-brand-green" />
                   </div>
-                  <div>
-                    <div className="flex justify-between items-center mt-6">
-                      <CardItem translateZ={20} as="button" className="px-4 py-2 rounded-xl text-xs font-normal text-slate-500 hover:text-black cursor-pointer">
-                        Read More →
-                      </CardItem>
-                      <CardItem translateZ={20} as="a" href="/donate" className="px-4 py-2 rounded-xl bg-[#f97316] text-white text-xs font-bold hover:bg-orange-600 cursor-pointer">
-                        Donate Now
-                      </CardItem>
-                    </div>
+                </div>
+                <div className="p-3 flex flex-col flex-1">
+                  <h3 className="font-bold text-sm text-[#0d2b1a] mb-1">{c.title}</h3>
+                  <p className="text-[11px] text-slate-500 leading-snug flex-1">{c.desc}</p>
+                  <div className="flex items-center justify-between mt-3">
+                    <a href={c.route} className="text-[11px] font-semibold text-brand-green hover:opacity-80">Learn More →</a>
+                    <a href="/donate" className="text-[10px] font-bold bg-[#f97316] text-white px-2.5 py-1 rounded-lg hover:bg-orange-600 transition-colors">Donate</a>
                   </div>
-                </CardBody>
-              </CardContainer>
+                </div>
+              </div>
             ))}
           </div>
         </ScrollReveal>
@@ -809,6 +805,7 @@ function FeaturedCauses() {
     </section>
   );
 }
+
 
 function WhatWeDo() {
   return (
@@ -1558,15 +1555,18 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-white font-sans text-foreground">
-      <NotificationTicker />
-      <UtilityBar />
-      <Header />
+      {/* Sticky site header block — ticker + utility bar + navbar all stick together */}
+      <div className="sticky top-0 z-50">
+        <NotificationTicker />
+        <UtilityBar />
+        <Header />
+      </div>
       <HeroSection />
       <UrgentPatientsSection />
+      <WhatWeDo />
       <ImpactStats />
       <FeaturedCauses />
       <CampaignsSection />
-      <WhatWeDo />
       <ProgramsAndThematic />
       <NewsUpdates />
       <EventsAndGallery />
