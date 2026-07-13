@@ -242,7 +242,7 @@ function Header() {
         onClick={() => setActiveMenu(null)}
       />
 
-      <header className="bg-white border-b border-gray-100 shadow-sm transition-all duration-200">
+      <header className="bg-white sticky top-0 z-50 border-b border-gray-100 shadow-sm transition-all duration-200">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
 
           {/* Left Group: Logo */}
@@ -1555,12 +1555,9 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-white font-sans text-foreground">
-      {/* Sticky site header block — ticker + utility bar + navbar all stick together */}
-      <div className="sticky top-0 z-50">
-        <NotificationTicker />
-        <UtilityBar />
-        <Header />
-      </div>
+      <NotificationTicker />
+      <UtilityBar />
+      <Header />
       <HeroSection />
       <UrgentPatientsSection />
       <WhatWeDo />

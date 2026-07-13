@@ -21,24 +21,35 @@ interface PageTransitionProps {
 export default function PageTransition({ children }: PageTransitionProps) {
   const location = useLocation();
   const [isVisible, setIsVisible] = useState(false);
+  const [animationDone, setAnimationDone] = useState(false);
   const prevPathRef = useRef<string | null>(null);
 
   useEffect(() => {
     const currentPath = location.pathname;
 
     if (prevPathRef.current !== null && prevPathRef.current !== currentPath) {
-      // Route changed — quick fade-out then fade-in
       setIsVisible(false);
+      setAnimationDone(false);
       const timer = setTimeout(() => {
         setIsVisible(true);
         window.scrollTo({ top: 0, behavior: "instant" });
+        const doneTimer = setTimeout(() => {
+          setAnimationDone(true);
+        }, 300);
+        return () => clearTimeout(doneTimer);
       }, 150);
       prevPathRef.current = currentPath;
       return () => clearTimeout(timer);
     }
 
     // Initial mount
-    const timer = setTimeout(() => setIsVisible(true), 10);
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+      const doneTimer = setTimeout(() => {
+        setAnimationDone(true);
+      }, 300);
+      return () => clearTimeout(doneTimer);
+    }, 10);
     prevPathRef.current = currentPath;
     return () => clearTimeout(timer);
   }, [location.pathname]);
@@ -47,9 +58,9 @@ export default function PageTransition({ children }: PageTransitionProps) {
     <div
       style={{
         opacity: isVisible ? 1 : 0,
-        transform: isVisible ? "translateY(0)" : "translateY(6px)",
-        transition: "opacity 0.28s cubic-bezier(0.16,1,0.3,1), transform 0.28s cubic-bezier(0.16,1,0.3,1)",
-        willChange: "opacity, transform",
+        transform: animationDone ? "none" : (isVisible ? "translateY(0)" : "translateY(6px)"),
+        transition: animationDone ? "opacity 0.28s cubic-bezier(0.16,1,0.3,1)" : "opacity 0.28s cubic-bezier(0.16,1,0.3,1), transform 0.28s cubic-bezier(0.16,1,0.3,1)",
+        willChange: animationDone ? "auto" : "opacity, transform",
       }}
     >
       {children}
