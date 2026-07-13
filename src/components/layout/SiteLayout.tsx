@@ -29,6 +29,7 @@ import { CONTACT_DETAILS } from "@/content/siteContent";
 import type { RoleType } from "@/components/forms/RoleFormModal";
 
 export { RoleFormModal } from "@/components/forms/RoleFormModal";
+import { TranslateButton } from "@/components/TranslateButton";
 
 export const NAV_ITEMS = [
   "Home",
@@ -255,15 +256,7 @@ export function UtilityBar({ lang = "en", setLang }: UtilityBarProps) {
           </div>
 
           {/* Hindi Translate Pill - Stacked below socials */}
-          {setLang && (
-            <button
-              onClick={() => setLang(lang === "en" ? "hi" : "en")}
-              className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/30 bg-white/10 hover:bg-white/20 text-white font-bold text-[10px] transition duration-150 cursor-pointer shadow-sm"
-            >
-              <Globe className="w-3.5 h-3.5 text-brand-orange" />
-              <span>{isHi ? "English" : "हिंदी"}</span>
-            </button>
-          )}
+          <TranslateButton />
         </div>
       </div>
     </div>
