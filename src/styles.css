@@ -72,7 +72,7 @@
 :root {
   --radius: 0.5rem;
   --background: oklch(1 0 0);
-  --foreground: oklch(0.2 0.02 150);
+  --foreground: oklch(0.05 0.01 150);
   --brand-green: oklch(0.42 0.11 145);
   --brand-green-dark: oklch(0.32 0.09 145);
   --brand-green-darker: oklch(0.22 0.06 145);
@@ -81,9 +81,9 @@
   --brand-red: oklch(0.6 0.22 25);
   --brand-blue: oklch(0.5 0.15 250);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
+  --card-foreground: oklch(0.05 0.01 150);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
+  --popover-foreground: oklch(0.05 0.01 150);
   --primary: oklch(0.42 0.11 145);
   --primary-foreground: oklch(0.984 0.003 247.858);
   --secondary: oklch(0.968 0.007 247.896);
