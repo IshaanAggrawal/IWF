@@ -301,7 +301,7 @@ function StorySection({ patient }: { patient: Patient }) {
               Questions about this case? Our team is here.
             </p>
             <a
-              href="tel:+919801812625"
+              href="tel:+919811861633"
               className="text-sm font-bold text-[#f97316] hover:underline"
             >
               +91 98018 12625
@@ -381,9 +381,8 @@ function VerificationSection({ patient }: { patient: Patient }) {
                   className="flex items-center gap-3 p-2.5 rounded-xl bg-gray-50 border border-gray-100"
                 >
                   <div
-                    className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${
-                      doc.verified ? "bg-green-100" : "bg-gray-200"
-                    }`}
+                    className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${doc.verified ? "bg-green-100" : "bg-gray-200"
+                      }`}
                   >
                     {doc.verified ? (
                       <CheckCircle2 className="w-3.5 h-3.5 text-green-600" />

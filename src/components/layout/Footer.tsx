@@ -49,7 +49,7 @@ export function Footer() {
           <h4 className="font-bold mb-3 text-sm flex items-center gap-2"><span className="w-1.5 h-4 bg-brand-orange" /> CONTACT US</h4>
           <ul className="space-y-3 text-sm text-white/85">
             <li className="flex gap-2"><MapPin className="w-4 h-4 mt-0.5 shrink-0 text-brand-orange" /> Bathiya, Via- Putai Manigachhi, Darbhanga, Bihar – 847423, India</li>
-            <li className="flex gap-2"><Phone className="w-4 h-4 mt-0.5 shrink-0 text-brand-orange" /> +91 9801812625 &nbsp;|&nbsp; +91 6272 288697</li>
+            <li className="flex gap-2"><Phone className="w-4 h-4 mt-0.5 shrink-0 text-brand-orange" /> +91 9811861633 &nbsp;|&nbsp; +91 6272 288697</li>
             <li className="flex gap-2"><Mail className="w-4 h-4 mt-0.5 shrink-0 text-brand-orange" /> info@iwfindia.org</li>
           </ul>
           <button className="mt-5 w-full bg-brand-orange hover:bg-brand-orange-dark text-white font-semibold py-3 rounded flex items-center justify-center gap-2">

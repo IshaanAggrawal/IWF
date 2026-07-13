@@ -161,18 +161,33 @@ function getMegaHref(menu: string, item: string) {
 
 
 export function NotificationTicker() {
-  const marqueeText =
-    "Notification for change in Reg. | Islah Welfare Foundation | Registration Address updated to Bathiya, Darbhanga, Bihar | Join our mission today | ";
-  const duplicatedText = Array(4).fill(marqueeText).join(" ");
+  const items = [
+    { text: "Notification for change in Registration", href: "/about/legal-status" },
+    { text: "Islah Welfare Foundation — Official Website", href: "/" },
+    { text: "Registration address updated to Bathiya, Darbhanga, Bihar", href: "/about" },
+    { text: "Join our mission — volunteer, donate or partner with us", href: "/#get-involved" },
+    { text: "Free Health Camp — Bathiya, Darbhanga | June 25", href: "/news-and-events" },
+    { text: "Annual Scholarship Distribution — Muzaffarpur | July 15", href: "/news-and-events" },
+  ];
+  const loopItems = [...items, ...items];
 
   return (
-    <div className="bg-brand-orange text-white text-[11px] font-semibold py-1.5 overflow-hidden flex items-center relative select-none border-b border-brand-orange-dark shadow-sm">
-      <div className="bg-red-600 text-[9px] uppercase px-1.5 py-0.5 rounded font-black tracking-wider shadow z-10 shrink-0 ml-4 mr-3 animate-pulse">
+    <div className="bg-brand-orange text-white py-2 overflow-hidden flex items-center relative select-none border-b border-brand-orange-dark shadow-sm group">
+      <div className="bg-red-600 text-[10px] uppercase px-2 py-0.5 rounded font-black tracking-wider shadow z-10 shrink-0 ml-4 mr-4 animate-pulse">
         NEW
       </div>
       <div className="flex-1 overflow-hidden relative w-full">
-        <div className="inline-block whitespace-nowrap animate-marquee">
-          <span>{duplicatedText}</span>
+        <div className="flex whitespace-nowrap animate-marquee group-hover:[animation-play-state:paused]">
+          {loopItems.map((item, i) => (
+            <a
+              key={i}
+              href={item.href}
+              className="inline-flex items-center gap-3 hover:underline underline-offset-2 text-white"
+            >
+              <span className="text-[13px] font-bold tracking-wide px-3">{item.text}</span>
+              <span className="text-white/50 text-base px-1">◆</span>
+            </a>
+          ))}
         </div>
       </div>
     </div>
@@ -184,7 +199,7 @@ export function UtilityBar() {
     <div className="bg-brand-green text-white text-xs">
       <div className="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-3 sm:gap-2">
         <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-4 gap-y-1.5 w-full sm:w-auto">
-          <a href="tel:+919801812625" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
+          <a href="tel:+919811861633" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
             <Phone className="w-3.5 h-3.5" /> {CONTACT_DETAILS.phone}
           </a>
           <a href={`mailto:${CONTACT_DETAILS.email}`} className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
@@ -196,14 +211,23 @@ export function UtilityBar() {
         </div>
         <div className="flex items-center justify-center gap-2 w-full sm:w-auto mt-1 sm:mt-0">
           <span className="mr-1 opacity-80">Follow Us:</span>
-          {[Facebook, Twitter, Instagram, Youtube, Linkedin].map((Icon, i) => (
+          {[
+            { Icon: Facebook, color: "#1877F2", label: "Facebook", href: "https://facebook.com" },
+            { Icon: Twitter, color: "#1DA1F2", label: "Twitter/X", href: "https://twitter.com" },
+            { Icon: Instagram, color: "#E1306C", label: "Instagram", href: "https://instagram.com" },
+            { Icon: Youtube, color: "#FF0000", label: "YouTube", href: "https://youtube.com" },
+            { Icon: Linkedin, color: "#0A66C2", label: "LinkedIn", href: "https://linkedin.com" },
+          ].map(({ Icon, color, label, href }) => (
             <a
-              key={i}
-              href="#"
-              className="w-6 h-6 rounded-full bg-white/15 hover:bg-white/30 flex items-center justify-center transition-colors"
-              aria-label="Social media profile"
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-6 h-6 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 hover:shadow-lg"
+              style={{ backgroundColor: color }}
+              aria-label={label}
             >
-              <Icon className="w-3 h-3" />
+              <Icon className="w-3 h-3 text-white" />
             </a>
           ))}
         </div>
@@ -257,9 +281,8 @@ export function Header() {
   return (
     <>
       <div
-        className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-250 ease-out pointer-events-none ${
-          hasDropdown ? "opacity-100 pointer-events-auto" : "opacity-0"
-        }`}
+        className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-250 ease-out pointer-events-none ${hasDropdown ? "opacity-100 pointer-events-auto" : "opacity-0"
+          }`}
         onClick={() => setActiveMenu(null)}
       />
       <header className="bg-white sticky top-0 z-50 border-b border-gray-100 shadow-sm transition-all duration-200">
@@ -287,9 +310,8 @@ export function Header() {
                 >
                   <a
                     href={getHeaderHref(item)}
-                    className={`relative flex items-center gap-1 font-medium text-sm transition-colors py-1 group ${
-                      isRouteActive(item) ? "text-brand-green font-semibold" : "text-gray-700 hover:text-[#0d2b1a]"
-                    }`}
+                    className={`relative flex items-center gap-1 font-medium text-sm transition-colors py-1 group ${isRouteActive(item) ? "text-brand-green font-semibold" : "text-gray-700 hover:text-[#0d2b1a]"
+                      }`}
                     onClick={(event) => {
                       handleHeaderClick(item, event);
                       if (!hasMega) setActiveMenu(null);
@@ -298,9 +320,8 @@ export function Header() {
                     {item}
                     {hasMega && (
                       <ChevronDown
-                        className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                          isOpen ? "rotate-180 text-[#0d2b1a]" : "text-gray-400"
-                        }`}
+                        className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpen ? "rotate-180 text-[#0d2b1a]" : "text-gray-400"
+                          }`}
                       />
                     )}
                     <span className="absolute bottom-0 left-0 w-full h-[2px] bg-brand-orange scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-200 ease-out" />
@@ -355,20 +376,20 @@ export function Header() {
                                 activeMenu === "About Us" && subItem === "Overview"
                                   ? "/about"
                                   : activeMenu === "About Us" && subItem === "Our Objective & Vision"
-                                  ? "/about/objective-and-vision"
-                                  : activeMenu === "About Us" && subItem === "Vision 2047"
-                                  ? "/about/vision-2047"
-                                  : activeMenu === "What We Do" && subItem === "Education"
-                                    ? "/programs/education"
-                                    : activeMenu === "What We Do" && subItem === "Health Care"
-                                      ? "/programs/healthcare"
-                                      : activeMenu === "What We Do" && subItem === "Skills Development"
-                                        ? "/programs/skills-development"
-                                        : activeMenu === "What We Do" && subItem === "Women Empowerment"
-                                          ? "/programs/women-empowerment"
-                                  : activeMenu === "Programs" && subItem === "View All Programs →"
-                                  ? "/programs/healthcare"
-                                  : "#"
+                                    ? "/about/objective-and-vision"
+                                    : activeMenu === "About Us" && subItem === "Vision 2047"
+                                      ? "/about/vision-2047"
+                                      : activeMenu === "What We Do" && subItem === "Education"
+                                        ? "/programs/education"
+                                        : activeMenu === "What We Do" && subItem === "Health Care"
+                                          ? "/programs/healthcare"
+                                          : activeMenu === "What We Do" && subItem === "Skills Development"
+                                            ? "/programs/skills-development"
+                                            : activeMenu === "What We Do" && subItem === "Women Empowerment"
+                                              ? "/programs/women-empowerment"
+                                              : activeMenu === "Programs" && subItem === "View All Programs →"
+                                                ? "/programs/healthcare"
+                                                : "#"
                               }
                               className="flex items-center gap-2 text-gray-700 hover:text-[#0d2b1a] text-sm hover:translate-x-1 transition-all duration-200"
                               style={{ transitionDelay: `${globalIndex * 30}ms` }}
@@ -464,48 +485,48 @@ export function Header() {
                               item === "About Us" && sub === "Overview"
                                 ? "/about"
                                 : item === "About Us" && sub === "Our Objective & Vision"
-                                ? "/about/objective-and-vision"
-                                : item === "About Us" && sub === "Vision 2047"
-                                ? "/about/vision-2047"
-                                : item === "About Us" && sub === "Leadership & Management"
-                                ? "/about/leadership"
-                                : item === "About Us" && sub === "Governance & Transparency"
-                                ? "/about/governance"
-                                : item === "About Us" && sub === "Legal Status & Registration"
-                                ? "/about/legal-status"
-                                : item === "About Us" && sub === "Members & Supporters"
-                                ? "/membership"
-                                : item === "About Us" && sub === "Our Partners & Donors"
-                                ? "/about/legal-status"
-                                : item === "About Us" && sub === "Membership Policy"
-                                ? "/membership#status"
-                                : item === "What We Do" && sub === "Health Care"
-                                ? "/programs/healthcare"
-                                : item === "What We Do" && sub === "Education"
-                                ? "/programs/education"
-                                : item === "What We Do" && sub === "Skills Development"
-                                ? "/programs/skills-development"
-                                : item === "What We Do" && sub === "Women Empowerment"
-                                ? "/programs/women-empowerment"
-                                : item === "What We Do"
-                                ? "/programs/healthcare"
-                                : item === "Programs" && sub === "View All Programs"
-                                ? "/programs/healthcare"
-                                : item === "Impact"
-                                ? "/#impact-stats"
-                                : item === "Media & Updates" && sub === "News & Events"
-                                ? "/news-and-events"
-                                : item === "Media & Updates" && sub === "Gallery"
-                                ? "/news-and-events"
-                                : item === "Media & Updates" && sub === "Press Release"
-                                ? "/news-and-events"
-                                : item === "Media & Updates"
-                                ? "/news-and-events"
-                                : item === "Get Involved" && sub === "Donate & Support"
-                                ? "/donate"
-                                : item === "Get Involved"
-                                ? "/#get-involved"
-                                : "#"
+                                  ? "/about/objective-and-vision"
+                                  : item === "About Us" && sub === "Vision 2047"
+                                    ? "/about/vision-2047"
+                                    : item === "About Us" && sub === "Leadership & Management"
+                                      ? "/about/leadership"
+                                      : item === "About Us" && sub === "Governance & Transparency"
+                                        ? "/about/governance"
+                                        : item === "About Us" && sub === "Legal Status & Registration"
+                                          ? "/about/legal-status"
+                                          : item === "About Us" && sub === "Members & Supporters"
+                                            ? "/membership"
+                                            : item === "About Us" && sub === "Our Partners & Donors"
+                                              ? "/about/legal-status"
+                                              : item === "About Us" && sub === "Membership Policy"
+                                                ? "/membership#status"
+                                                : item === "What We Do" && sub === "Health Care"
+                                                  ? "/programs/healthcare"
+                                                  : item === "What We Do" && sub === "Education"
+                                                    ? "/programs/education"
+                                                    : item === "What We Do" && sub === "Skills Development"
+                                                      ? "/programs/skills-development"
+                                                      : item === "What We Do" && sub === "Women Empowerment"
+                                                        ? "/programs/women-empowerment"
+                                                        : item === "What We Do"
+                                                          ? "/programs/healthcare"
+                                                          : item === "Programs" && sub === "View All Programs"
+                                                            ? "/programs/healthcare"
+                                                            : item === "Impact"
+                                                              ? "/#impact-stats"
+                                                              : item === "Media & Updates" && sub === "News & Events"
+                                                                ? "/news-and-events"
+                                                                : item === "Media & Updates" && sub === "Gallery"
+                                                                  ? "/news-and-events"
+                                                                  : item === "Media & Updates" && sub === "Press Release"
+                                                                    ? "/news-and-events"
+                                                                    : item === "Media & Updates"
+                                                                      ? "/news-and-events"
+                                                                      : item === "Get Involved" && sub === "Donate & Support"
+                                                                        ? "/donate"
+                                                                        : item === "Get Involved"
+                                                                          ? "/#get-involved"
+                                                                          : "#"
                             }
                             className="flex items-center gap-2 px-4 py-2 text-sm text-slate-600 hover:text-brand-green hover:bg-white transition-all"
                             onClick={() => setMobileOpen(false)}
