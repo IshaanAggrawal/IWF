@@ -135,17 +135,34 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 // ─── Page Sections ────────────────────────────────────────────────────────────
 
 function NotificationTicker() {
-  const marqueeText = "Notification for change in Reg. • Islah Welfare Foundation • Registration Address updated to Bathiya, Darbhanga, Bihar • Join our mission today! • ";
-  const duplicatedText = Array(4).fill(marqueeText).join(" ");
+  const items = [
+    { text: "Notification for change in Registration", href: "/about/legal-status" },
+    { text: "Islah Welfare Foundation — Official Website", href: "/" },
+    { text: "Registration address updated to Bathiya, Darbhanga, Bihar", href: "/about" },
+    { text: "Join our mission — volunteer, donate or partner with us", href: "/#get-involved" },
+    { text: "Free Health Camp — Bathiya, Darbhanga | June 25", href: "/news-and-events" },
+    { text: "Annual Scholarship Distribution — Muzaffarpur | July 15", href: "/news-and-events" },
+  ];
+  // Duplicate for seamless loop
+  const loopItems = [...items, ...items];
 
   return (
-    <div className="bg-brand-orange text-white text-[11px] font-semibold py-1.5 overflow-hidden flex items-center relative select-none border-b border-brand-orange-dark shadow-sm">
-      <div className="bg-red-600 text-[9px] uppercase px-1.5 py-0.5 rounded font-black tracking-wider shadow z-10 shrink-0 ml-4 mr-3 animate-pulse">
+    <div className="bg-brand-orange text-white py-2 overflow-hidden flex items-center relative select-none border-b border-brand-orange-dark shadow-sm group">
+      <div className="bg-red-600 text-[10px] uppercase px-2 py-0.5 rounded font-black tracking-wider shadow z-10 shrink-0 ml-4 mr-4 animate-pulse">
         NEW
       </div>
       <div className="flex-1 overflow-hidden relative w-full">
-        <div className="inline-block whitespace-nowrap animate-marquee">
-          <span>{duplicatedText}</span>
+        <div className="flex whitespace-nowrap animate-marquee group-hover:[animation-play-state:paused]">
+          {loopItems.map((item, i) => (
+            <a
+              key={i}
+              href={item.href}
+              className="inline-flex items-center gap-3 hover:underline underline-offset-2 text-white"
+            >
+              <span className="text-[13px] font-bold tracking-wide px-3">{item.text}</span>
+              <span className="text-white/50 text-base px-1">◆</span>
+            </a>
+          ))}
         </div>
       </div>
     </div>
@@ -157,8 +174,8 @@ function UtilityBar() {
     <div className="bg-brand-green text-white text-xs">
       <div className="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-3 sm:gap-2">
         <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-4 gap-y-1.5 w-full sm:w-auto">
-          <a href="tel:+919801812625" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
-            <Phone className="w-3.5 h-3.5" /> +91-9801812625
+          <a href="tel:+919811861633" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
+            <Phone className="w-3.5 h-3.5" /> +91-9811861633
           </a>
           <a href="mailto:info@iwfindia.org" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
             <Mail className="w-3.5 h-3.5" /> info@iwfindia.org
@@ -169,9 +186,23 @@ function UtilityBar() {
         </div>
         <div className="flex items-center justify-center gap-2 w-full sm:w-auto mt-1 sm:mt-0">
           <span className="mr-1 opacity-80">Follow Us:</span>
-          {[Facebook, Twitter, Instagram, Youtube, Linkedin].map((Icon, i) => (
-            <a key={i} href="#" className="w-6 h-6 rounded-full bg-white/15 hover:bg-white/30 flex items-center justify-center transition-colors">
-              <Icon className="w-3 h-3" />
+          {[
+            { Icon: Facebook, color: "#1877F2", label: "Facebook", href: "https://facebook.com" },
+            { Icon: Twitter, color: "#1DA1F2", label: "Twitter/X", href: "https://twitter.com" },
+            { Icon: Instagram, color: "#E1306C", label: "Instagram", href: "https://instagram.com" },
+            { Icon: Youtube, color: "#FF0000", label: "YouTube", href: "https://youtube.com" },
+            { Icon: Linkedin, color: "#0A66C2", label: "LinkedIn", href: "https://linkedin.com" },
+          ].map(({ Icon, color, label, href }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-6 h-6 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 hover:shadow-lg"
+              style={{ backgroundColor: color }}
+              aria-label={label}
+            >
+              <Icon className="w-3 h-3 text-white" />
             </a>
           ))}
         </div>
@@ -240,20 +271,20 @@ function Header() {
                       item === "Home"
                         ? "/"
                         : item === "About Us"
-                        ? "/about"
-                        : item === "What We Do"
-                        ? "#focus-areas"
-                        : item === "Programs"
-                        ? "/programs/healthcare"
-                        : item === "Impact"
-                        ? "/#impact-stats"
-                        : item === "Media & Updates"
-                        ? "/news-and-events"
-                        : item === "Get Involved"
-                        ? "/#get-involved"
-                        : item === "Contact Us"
-                        ? "/contact"
-                        : "#"
+                          ? "/about"
+                          : item === "What We Do"
+                            ? "#focus-areas"
+                            : item === "Programs"
+                              ? "/programs/healthcare"
+                              : item === "Impact"
+                                ? "/#impact-stats"
+                                : item === "Media & Updates"
+                                  ? "/news-and-events"
+                                  : item === "Get Involved"
+                                    ? "/#get-involved"
+                                    : item === "Contact Us"
+                                      ? "/contact"
+                                      : "#"
                     }
                     className="relative flex items-center gap-1 text-gray-700 hover:text-[#0d2b1a] font-medium text-sm transition-colors py-1 group"
                     onClick={(event) => {
@@ -337,50 +368,50 @@ function Header() {
                                 activeMenu === "About Us" && subItem === "Overview"
                                   ? "/about"
                                   : activeMenu === "About Us" && subItem === "Our Objective & Vision"
-                                  ? "/about/objective-and-vision"
-                                  : activeMenu === "About Us" && subItem === "Vision 2047"
-                                  ? "/about/vision-2047"
-                                  : activeMenu === "About Us" && subItem === "Leadership & Management"
-                                  ? "/about/leadership"
-                                  : activeMenu === "About Us" && subItem === "Governance & Transparency"
-                                  ? "/about/governance"
-                                  : activeMenu === "About Us" && subItem === "Legal Status & Registration"
-                                  ? "/about/legal-status"
-                                  : activeMenu === "About Us" && subItem === "Members & Supporters"
-                                  ? "/membership"
-                                  : activeMenu === "About Us" && subItem === "Our Partners & Donors"
-                                  ? "/about/legal-status"
-                                  : activeMenu === "About Us" && subItem === "Membership Policy"
-                                  ? "/membership#status"
-                                  : activeMenu === "What We Do" && subItem === "Health Care"
-                                  ? "/programs/healthcare"
-                                  : activeMenu === "What We Do" && subItem === "Education"
-                                  ? "/programs/education"
-                                  : activeMenu === "What We Do" && subItem === "Skills Development"
-                                  ? "/programs/skills-development"
-                                  : activeMenu === "What We Do" && subItem === "Women Empowerment"
-                                  ? "/programs/women-empowerment"
-                                  : activeMenu === "What We Do"
-                                  ? "/programs/healthcare"
-                                  : activeMenu === "Programs" && subItem === "View All Programs →"
-                                  ? "/programs/healthcare"
-                                  : activeMenu === "Impact"
-                                  ? "/#impact-stats"
-                                  : activeMenu === "Media & Updates" && subItem === "News & Events"
-                                  ? "/news-and-events"
-                                  : activeMenu === "Media & Updates" && subItem === "Latest Updates"
-                                  ? "/news-and-events"
-                                  : activeMenu === "Media & Updates" && subItem === "Gallery"
-                                  ? "/news-and-events"
-                                  : activeMenu === "Media & Updates" && subItem === "Press Release"
-                                  ? "/news-and-events"
-                                  : activeMenu === "Media & Updates"
-                                  ? "/news-and-events"
-                                  : activeMenu === "Get Involved" && subItem === "Donate & Support"
-                                  ? "/donate"
-                                  : activeMenu === "Get Involved"
-                                  ? "/#get-involved"
-                                  : "#"
+                                    ? "/about/objective-and-vision"
+                                    : activeMenu === "About Us" && subItem === "Vision 2047"
+                                      ? "/about/vision-2047"
+                                      : activeMenu === "About Us" && subItem === "Leadership & Management"
+                                        ? "/about/leadership"
+                                        : activeMenu === "About Us" && subItem === "Governance & Transparency"
+                                          ? "/about/governance"
+                                          : activeMenu === "About Us" && subItem === "Legal Status & Registration"
+                                            ? "/about/legal-status"
+                                            : activeMenu === "About Us" && subItem === "Members & Supporters"
+                                              ? "/membership"
+                                              : activeMenu === "About Us" && subItem === "Our Partners & Donors"
+                                                ? "/about/legal-status"
+                                                : activeMenu === "About Us" && subItem === "Membership Policy"
+                                                  ? "/membership#status"
+                                                  : activeMenu === "What We Do" && subItem === "Health Care"
+                                                    ? "/programs/healthcare"
+                                                    : activeMenu === "What We Do" && subItem === "Education"
+                                                      ? "/programs/education"
+                                                      : activeMenu === "What We Do" && subItem === "Skills Development"
+                                                        ? "/programs/skills-development"
+                                                        : activeMenu === "What We Do" && subItem === "Women Empowerment"
+                                                          ? "/programs/women-empowerment"
+                                                          : activeMenu === "What We Do"
+                                                            ? "/programs/healthcare"
+                                                            : activeMenu === "Programs" && subItem === "View All Programs →"
+                                                              ? "/programs/healthcare"
+                                                              : activeMenu === "Impact"
+                                                                ? "/#impact-stats"
+                                                                : activeMenu === "Media & Updates" && subItem === "News & Events"
+                                                                  ? "/news-and-events"
+                                                                  : activeMenu === "Media & Updates" && subItem === "Latest Updates"
+                                                                    ? "/news-and-events"
+                                                                    : activeMenu === "Media & Updates" && subItem === "Gallery"
+                                                                      ? "/news-and-events"
+                                                                      : activeMenu === "Media & Updates" && subItem === "Press Release"
+                                                                        ? "/news-and-events"
+                                                                        : activeMenu === "Media & Updates"
+                                                                          ? "/news-and-events"
+                                                                          : activeMenu === "Get Involved" && subItem === "Donate & Support"
+                                                                            ? "/donate"
+                                                                            : activeMenu === "Get Involved"
+                                                                              ? "/#get-involved"
+                                                                              : "#"
                               }
                               className="flex items-center gap-2 text-gray-700 hover:text-[#0d2b1a] text-sm hover:translate-x-1 transition-all duration-200"
                               style={{
@@ -476,20 +507,20 @@ function Header() {
                           item === "Home"
                             ? "/"
                             : item === "About Us"
-                            ? "/about"
-                            : item === "What We Do"
-                            ? "#focus-areas"
-                            : item === "Programs"
-                            ? "/programs/healthcare"
-                            : item === "Impact"
-                            ? "/#impact-stats"
-                            : item === "Media & Updates"
-                            ? "/news-and-events"
-                            : item === "Get Involved"
-                            ? "/#get-involved"
-                            : item === "Contact Us"
-                            ? "/contact"
-                            : "#"
+                              ? "/about"
+                              : item === "What We Do"
+                                ? "#focus-areas"
+                                : item === "Programs"
+                                  ? "/programs/healthcare"
+                                  : item === "Impact"
+                                    ? "/#impact-stats"
+                                    : item === "Media & Updates"
+                                      ? "/news-and-events"
+                                      : item === "Get Involved"
+                                        ? "/#get-involved"
+                                        : item === "Contact Us"
+                                          ? "/contact"
+                                          : "#"
                         }
                         className="flex-1 px-5 py-3.5 text-sm font-semibold text-slate-800 hover:text-brand-green transition-colors"
                         onClick={(event) => {
@@ -529,51 +560,51 @@ function Header() {
                           <a
                             key={sub}
                             href={
-                                item === "About Us" && sub === "Overview"
-                                  ? "/about"
-                                  : item === "About Us" && sub === "Our Objective & Vision"
+                              item === "About Us" && sub === "Overview"
+                                ? "/about"
+                                : item === "About Us" && sub === "Our Objective & Vision"
                                   ? "/about/objective-and-vision"
                                   : item === "About Us" && sub === "Vision 2047"
-                                  ? "/about/vision-2047"
-                                  : item === "About Us" && sub === "Leadership & Management"
-                                  ? "/about/leadership"
-                                  : item === "About Us" && sub === "Governance & Transparency"
-                                  ? "/about/governance"
-                                  : item === "About Us" && sub === "Legal Status & Registration"
-                                  ? "/about/legal-status"
-                                  : item === "About Us" && sub === "Members & Supporters"
-                                  ? "/membership"
-                                  : item === "About Us" && sub === "Our Partners & Donors"
-                                  ? "/about/legal-status"
-                                  : item === "About Us" && sub === "Membership Policy"
-                                  ? "/membership#status"
-                                  : item === "What We Do" && sub === "Health Care"
-                                  ? "/programs/healthcare"
-                                  : item === "What We Do" && sub === "Education"
-                                  ? "/programs/education"
-                                  : item === "What We Do" && sub === "Skills Development"
-                                  ? "/programs/skills-development"
-                                  : item === "What We Do" && sub === "Women Empowerment"
-                                  ? "/programs/women-empowerment"
-                                  : item === "What We Do"
-                                  ? "/programs/healthcare"
-                                  : item === "Programs" && sub === "View All Programs →"
-                                  ? "/programs/healthcare"
-                                  : item === "Impact"
-                                  ? "/#impact-stats"
-                                  : item === "Media & Updates" && sub === "News & Events"
-                                  ? "/news-and-events"
-                                  : item === "Media & Updates" && sub === "Gallery"
-                                  ? "/news-and-events"
-                                  : item === "Media & Updates" && sub === "Press Release"
-                                  ? "/news-and-events"
-                                  : item === "Media & Updates"
-                                  ? "/news-and-events"
-                                  : item === "Get Involved" && sub === "Donate & Support"
-                                  ? "/donate"
-                                  : item === "Get Involved"
-                                  ? "/#get-involved"
-                                  : "#"
+                                    ? "/about/vision-2047"
+                                    : item === "About Us" && sub === "Leadership & Management"
+                                      ? "/about/leadership"
+                                      : item === "About Us" && sub === "Governance & Transparency"
+                                        ? "/about/governance"
+                                        : item === "About Us" && sub === "Legal Status & Registration"
+                                          ? "/about/legal-status"
+                                          : item === "About Us" && sub === "Members & Supporters"
+                                            ? "/membership"
+                                            : item === "About Us" && sub === "Our Partners & Donors"
+                                              ? "/about/legal-status"
+                                              : item === "About Us" && sub === "Membership Policy"
+                                                ? "/membership#status"
+                                                : item === "What We Do" && sub === "Health Care"
+                                                  ? "/programs/healthcare"
+                                                  : item === "What We Do" && sub === "Education"
+                                                    ? "/programs/education"
+                                                    : item === "What We Do" && sub === "Skills Development"
+                                                      ? "/programs/skills-development"
+                                                      : item === "What We Do" && sub === "Women Empowerment"
+                                                        ? "/programs/women-empowerment"
+                                                        : item === "What We Do"
+                                                          ? "/programs/healthcare"
+                                                          : item === "Programs" && sub === "View All Programs →"
+                                                            ? "/programs/healthcare"
+                                                            : item === "Impact"
+                                                              ? "/#impact-stats"
+                                                              : item === "Media & Updates" && sub === "News & Events"
+                                                                ? "/news-and-events"
+                                                                : item === "Media & Updates" && sub === "Gallery"
+                                                                  ? "/news-and-events"
+                                                                  : item === "Media & Updates" && sub === "Press Release"
+                                                                    ? "/news-and-events"
+                                                                    : item === "Media & Updates"
+                                                                      ? "/news-and-events"
+                                                                      : item === "Get Involved" && sub === "Donate & Support"
+                                                                        ? "/donate"
+                                                                        : item === "Get Involved"
+                                                                          ? "/#get-involved"
+                                                                          : "#"
                             }
                             className="flex items-center gap-2 px-4 py-2 text-sm text-slate-600 hover:text-brand-green hover:bg-white transition-all"
                             onClick={() => setMobileOpen(false)}
@@ -737,42 +768,42 @@ function FeaturedCauses() {
       <div className="max-w-7xl mx-auto px-4">
         <ScrollReveal><SectionTitle>Featured Causes</SectionTitle></ScrollReveal>
         <ScrollReveal stagger={0.1}>
-        <div className="grid md:grid-cols-3 gap-6">
-          {[
-            { img: causeEdu, icon: BookOpen, title: "Child Education", desc: "Through our 'Shiksha Na Ruke' campaign, we fund school fees, learning materials, and scholarships to keep every child in school and out of child labour." },
-            { img: causeMed, icon: Stethoscope, title: "Medical Help", desc: "Our 'Health Cannot Wait' initiative funds free health camps, medicines, emergency treatment, and health awareness drives in underserved rural communities." },
-            { img: causeWomen, icon: Users, title: "Women Empowerment", desc: "The 'She Can Fly' & 'Swabhiman' campaigns train women in vocational skills, promote Self-Help Groups, and build financial independence for lasting change." },
-          ].map((c) => (
-            <CardContainer key={c.title} className="inter-var w-full">
-              <CardBody className="bg-white relative group/card hover:shadow-2xl hover:shadow-emerald-500/[0.1] border-black/[0.1] w-full h-auto rounded-xl p-6 border flex flex-col justify-between">
-                <div>
-                  <CardItem translateZ="50" className="text-xl font-bold text-[#0d2b1a] mb-1">
-                    {c.title}
-                  </CardItem>
-                  <CardItem translateZ="60" as="p" className="text-slate-600 text-sm max-w-sm mt-2 mb-4">
-                    {c.desc}
-                  </CardItem>
-                  <CardItem translateZ="100" className="w-full mt-4 h-44 relative">
-                    <img src={c.img} alt={c.title} className="h-44 w-full object-cover rounded-xl group-hover/card:shadow-xl" />
-                    <div className="absolute top-3 left-3 w-10 h-10 rounded-full bg-white shadow flex items-center justify-center">
-                      <c.icon className="w-5 h-5 text-brand-green" />
-                    </div>
-                  </CardItem>
-                </div>
-                <div>
-                  <div className="flex justify-between items-center mt-6">
-                    <CardItem translateZ={20} as="button" className="px-4 py-2 rounded-xl text-xs font-normal text-slate-500 hover:text-black cursor-pointer">
-                      Read More →
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { img: causeEdu, icon: BookOpen, title: "Child Education", desc: "Through our 'Shiksha Na Ruke' campaign, we fund school fees, learning materials, and scholarships to keep every child in school and out of child labour." },
+              { img: causeMed, icon: Stethoscope, title: "Medical Help", desc: "Our 'Health Cannot Wait' initiative funds free health camps, medicines, emergency treatment, and health awareness drives in underserved rural communities." },
+              { img: causeWomen, icon: Users, title: "Women Empowerment", desc: "The 'She Can Fly' & 'Swabhiman' campaigns train women in vocational skills, promote Self-Help Groups, and build financial independence for lasting change." },
+            ].map((c) => (
+              <CardContainer key={c.title} className="inter-var w-full">
+                <CardBody className="bg-white relative group/card hover:shadow-2xl hover:shadow-emerald-500/[0.1] border-black/[0.1] w-full h-auto rounded-xl p-6 border flex flex-col justify-between">
+                  <div>
+                    <CardItem translateZ="50" className="text-xl font-bold text-[#0d2b1a] mb-1">
+                      {c.title}
                     </CardItem>
-                    <CardItem translateZ={20} as="a" href="/donate" className="px-4 py-2 rounded-xl bg-[#f97316] text-white text-xs font-bold hover:bg-orange-600 cursor-pointer">
-                      Donate Now
+                    <CardItem translateZ="60" as="p" className="text-slate-600 text-sm max-w-sm mt-2 mb-4">
+                      {c.desc}
+                    </CardItem>
+                    <CardItem translateZ="100" className="w-full mt-4 h-44 relative">
+                      <img src={c.img} alt={c.title} className="h-44 w-full object-cover rounded-xl group-hover/card:shadow-xl" />
+                      <div className="absolute top-3 left-3 w-10 h-10 rounded-full bg-white shadow flex items-center justify-center">
+                        <c.icon className="w-5 h-5 text-brand-green" />
+                      </div>
                     </CardItem>
                   </div>
-                </div>
-              </CardBody>
-            </CardContainer>
-          ))}
-        </div>
+                  <div>
+                    <div className="flex justify-between items-center mt-6">
+                      <CardItem translateZ={20} as="button" className="px-4 py-2 rounded-xl text-xs font-normal text-slate-500 hover:text-black cursor-pointer">
+                        Read More →
+                      </CardItem>
+                      <CardItem translateZ={20} as="a" href="/donate" className="px-4 py-2 rounded-xl bg-[#f97316] text-white text-xs font-bold hover:bg-orange-600 cursor-pointer">
+                        Donate Now
+                      </CardItem>
+                    </div>
+                  </div>
+                </CardBody>
+              </CardContainer>
+            ))}
+          </div>
         </ScrollReveal>
       </div>
     </section>
@@ -785,24 +816,24 @@ function WhatWeDo() {
       <div className="max-w-7xl mx-auto px-4">
         <ScrollReveal><SectionTitle>What We Do</SectionTitle></ScrollReveal>
         <ScrollReveal stagger={0.07}>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {[
-            { icon: GraduationCap, l: "Education", s: "Learning Centres & Scholarships", route: "/programs/education" },
-            { icon: HeartPulse, l: "Healthcare", s: "Free camps, care & awareness", route: "/programs/healthcare" },
-            { icon: Users, l: "Women Empowerment", s: "SHGs, skills & financial literacy", route: "/programs/women-empowerment" },
-            { icon: Sprout, l: "Rural Development", s: "Infrastructure & livelihoods", route: "#" },
-            { icon: Wrench, l: "Skill Development", s: "Vocational & entrepreneurship", route: "/programs/skills-development" },
-            { icon: Leaf, l: "Environment", s: "Plantation & sustainability", route: "#" },
-          ].map(({ icon: Icon, l, s, route }) => (
-            <a key={l} href={route} className="bg-white rounded-md p-5 text-center shadow-sm border border-slate-100 hover:shadow-md transition block">
-              <div className="w-12 h-12 mx-auto rounded-full bg-brand-green/10 flex items-center justify-center mb-3">
-                <Icon className="w-6 h-6 text-brand-green" />
-              </div>
-              <div className="text-xs font-semibold text-slate-700">{l}</div>
-              <div className="text-[10px] text-slate-500 mt-1">{s}</div>
-            </a>
-          ))}
-        </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {[
+              { icon: GraduationCap, l: "Education", s: "Learning Centres & Scholarships", route: "/programs/education" },
+              { icon: HeartPulse, l: "Healthcare", s: "Free camps, care & awareness", route: "/programs/healthcare" },
+              { icon: Users, l: "Women Empowerment", s: "SHGs, skills & financial literacy", route: "/programs/women-empowerment" },
+              { icon: Sprout, l: "Rural Development", s: "Infrastructure & livelihoods", route: "#" },
+              { icon: Wrench, l: "Skill Development", s: "Vocational & entrepreneurship", route: "/programs/skills-development" },
+              { icon: Leaf, l: "Environment", s: "Plantation & sustainability", route: "#" },
+            ].map(({ icon: Icon, l, s, route }) => (
+              <a key={l} href={route} className="bg-white rounded-md p-5 text-center shadow-sm border border-slate-100 hover:shadow-md transition block">
+                <div className="w-12 h-12 mx-auto rounded-full bg-brand-green/10 flex items-center justify-center mb-3">
+                  <Icon className="w-6 h-6 text-brand-green" />
+                </div>
+                <div className="text-xs font-semibold text-slate-700">{l}</div>
+                <div className="text-[10px] text-slate-500 mt-1">{s}</div>
+              </a>
+            ))}
+          </div>
         </ScrollReveal>
       </div>
     </section>
@@ -812,44 +843,24 @@ function WhatWeDo() {
 function ProgramsAndThematic() {
   return (
     <section className="py-16">
-      <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-10">
-        <div>
-          <SectionTitle>Our Programs</SectionTitle>
-          <div className="grid sm:grid-cols-2 gap-4">
-            {[
-              { icon: BookOpen, title: "Education Support", desc: "We run Community Learning Centres and 'Shiksha Na Ruke' scholarships to keep underprivileged children in school, providing materials and academic support.", route: "/programs/education" },
-              { icon: HeartPulse, title: "Healthcare Camps", desc: "Through 'Health Cannot Wait', we organise free medical check-up camps, distribute medicines, and spread awareness on health, hygiene, and nutrition.", route: "/programs/healthcare" },
-              { icon: Users, title: "Women Empowerment", desc: "We form Self-Help Groups (SHGs), provide vocational training, promote financial literacy, and support leadership development for rural women.", route: "/programs/women-empowerment" },
-              { icon: Sprout, title: "Rural Development", desc: "We work on sanitation, safe housing, clean water access, and community infrastructure under our 'Model Village' initiative for self-reliant communities.", route: "#" },
-            ].map((p) => (
-              <div key={p.title} className="bg-white rounded-md p-5 border border-slate-100 shadow-sm">
-                <div className="w-10 h-10 rounded-md bg-brand-orange/15 flex items-center justify-center mb-3">
-                  <p.icon className="w-5 h-5 text-brand-orange" />
-                </div>
-                <h3 className="font-bold text-sm mb-1">{p.title}</h3>
-                <p className="text-xs text-slate-600 mb-2">{p.desc}</p>
-                <a href={p.route} className="text-xs font-semibold text-brand-green inline-flex items-center gap-1">Read More <ArrowRight className="w-3 h-3" /></a>
+      <div className="max-w-7xl mx-auto px-4">
+        <SectionTitle>Our Programs</SectionTitle>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            { icon: BookOpen, title: "Education Support", desc: "We run Community Learning Centres and 'Shiksha Na Ruke' scholarships to keep underprivileged children in school, providing materials and academic support.", route: "/programs/education" },
+            { icon: HeartPulse, title: "Healthcare Camps", desc: "Through 'Health Cannot Wait', we organise free medical check-up camps, distribute medicines, and spread awareness on health, hygiene, and nutrition.", route: "/programs/healthcare" },
+            { icon: Users, title: "Women Empowerment", desc: "We form Self-Help Groups (SHGs), provide vocational training, promote financial literacy, and support leadership development for rural women.", route: "/programs/women-empowerment" },
+            { icon: Sprout, title: "Rural Development", desc: "We work on sanitation, safe housing, clean water access, and community infrastructure under our 'Model Village' initiative for self-reliant communities.", route: "#" },
+          ].map((p) => (
+            <div key={p.title} className="bg-white rounded-md p-5 border border-slate-100 shadow-sm hover:shadow-md transition">
+              <div className="w-10 h-10 rounded-md bg-brand-orange/15 flex items-center justify-center mb-3">
+                <p.icon className="w-5 h-5 text-brand-orange" />
               </div>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <SectionTitle>Major Thematic Areas</SectionTitle>
-          <div className="grid grid-cols-2 gap-4">
-            {[
-              { img: thEnv, l: "Environment Conservation" },
-              { img: thEnt, l: "Entrepreneurship & Skills" },
-              { img: thWom, l: "Women Empowerment" },
-              { img: thAgr, l: "Agriculture Support" },
-            ].map((t) => (
-              <div key={t.l} className="relative h-40 rounded-md overflow-hidden group">
-                <img src={t.img} alt={t.l} loading="lazy" width={800} height={600} className="w-full h-full object-cover group-hover:scale-105 transition" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                <div className="absolute bottom-2 left-3 right-3 text-white font-semibold text-sm">{t.l}</div>
-              </div>
-            ))}
-          </div>
+              <h3 className="font-bold text-sm mb-1">{p.title}</h3>
+              <p className="text-xs text-slate-600 mb-2">{p.desc}</p>
+              <a href={p.route} className="text-xs font-semibold text-brand-green inline-flex items-center gap-1">Read More <ArrowRight className="w-3 h-3" /></a>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -943,25 +954,25 @@ function ExploreIWF() {
         <ScrollReveal><SectionTitle>Explore IWF</SectionTitle></ScrollReveal>
         <p className="text-center text-slate-600 text-sm max-w-2xl mx-auto mb-10">Discover the full breadth of our work — from governance and programs to impact and opportunities to join us.</p>
         <ScrollReveal stagger={0.08}>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[
-            { icon: Info, page: "About Us", summary: "IWF is a public charitable trust dedicated to the socio-economic development of India's most vulnerable communities. Guided by 'Vision 2047', we are building an equitable, self-reliant India where every individual has access to education, healthcare, and a dignified livelihood.", route: "/about" },
-            { icon: Target, page: "Programs", summary: "IWF runs structured programmes across Education, Healthcare, Women Empowerment, Skill Development, Rural Development, Environment & Sustainability, Entrepreneurship, and Relief & Rehabilitation.", route: "/programs/healthcare" },
-            { icon: BarChart2, page: "Impact", summary: "IWF has touched 5,000+ lives, conducted 100+ health camps, and supported 2,000+ students across rural India. We document every outcome through success stories, annual reports, and a live impact statistics dashboard.", route: "#" },
-            { icon: Newspaper, page: "Media & Updates", summary: "Stay informed with the latest news, events, newsletters, press releases, and publications from IWF's field teams. Our gallery captures real moments of transformation from the communities we serve.", route: "#" },
-            { icon: UserCheck, page: "Get Involved", summary: "Whether as a Volunteer, Partner, Sponsor, Mentor, or Employee — IWF welcomes everyone who wants to contribute. Our doors are open to individuals, corporates, and institutions.", route: "#" },
-            { icon: MessageCircle, page: "Contact Us", summary: "Reach IWF at our registered office in Bathiya, Darbhanga (Bihar) or connect with us in Patna, Delhi, or Meerut. Write to info@iwfindia.org or call +91 9801812625.", route: "#" },
-          ].map((item) => (
-            <div key={item.page} className="bg-white rounded-md p-5 border border-slate-100 shadow-sm hover:shadow-md transition">
-              <div className="w-10 h-10 rounded-md bg-brand-orange/15 flex items-center justify-center mb-3">
-                <item.icon className="w-5 h-5 text-brand-orange" />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { icon: Info, page: "About Us", summary: "IWF is a public charitable trust dedicated to the socio-economic development of India's most vulnerable communities. Guided by 'Vision 2047', we are building an equitable, self-reliant India where every individual has access to education, healthcare, and a dignified livelihood.", route: "/about" },
+              { icon: Target, page: "Programs", summary: "IWF runs structured programmes across Education, Healthcare, Women Empowerment, Skill Development, Rural Development, Environment & Sustainability, Entrepreneurship, and Relief & Rehabilitation.", route: "/programs/healthcare" },
+              { icon: BarChart2, page: "Impact", summary: "IWF has touched 5,000+ lives, conducted 100+ health camps, and supported 2,000+ students across rural India. We document every outcome through success stories, annual reports, and a live impact statistics dashboard.", route: "#" },
+              { icon: Newspaper, page: "Media & Updates", summary: "Stay informed with the latest news, events, newsletters, press releases, and publications from IWF's field teams. Our gallery captures real moments of transformation from the communities we serve.", route: "#" },
+              { icon: UserCheck, page: "Get Involved", summary: "Whether as a Volunteer, Partner, Sponsor, Mentor, or Employee — IWF welcomes everyone who wants to contribute. Our doors are open to individuals, corporates, and institutions.", route: "#" },
+              { icon: MessageCircle, page: "Contact Us", summary: "Reach IWF at our registered office in Bathiya, Darbhanga (Bihar) or connect with us in Patna, Delhi, or Meerut. Write to info@iwfindia.org or call +91 9811861633.", route: "#" },
+            ].map((item) => (
+              <div key={item.page} className="bg-white rounded-md p-5 border border-slate-100 shadow-sm hover:shadow-md transition">
+                <div className="w-10 h-10 rounded-md bg-brand-orange/15 flex items-center justify-center mb-3">
+                  <item.icon className="w-5 h-5 text-brand-orange" />
+                </div>
+                <h3 className="font-bold text-sm mb-2 text-brand-green-dark">{item.page}</h3>
+                <p className="text-xs text-slate-600 leading-relaxed mb-3">{item.summary}</p>
+                <a href={item.route} className="text-xs font-semibold text-brand-green inline-flex items-center gap-1 hover:opacity-80 transition">Learn More <ArrowRight className="w-3 h-3" /></a>
               </div>
-              <h3 className="font-bold text-sm mb-2 text-brand-green-dark">{item.page}</h3>
-              <p className="text-xs text-slate-600 leading-relaxed mb-3">{item.summary}</p>
-              <a href={item.route} className="text-xs font-semibold text-brand-green inline-flex items-center gap-1 hover:opacity-80 transition">Learn More <ArrowRight className="w-3 h-3" /></a>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
         </ScrollReveal>
       </div>
     </section>
@@ -1110,7 +1121,7 @@ function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void }) {
               </div>
               <div className="flex gap-2 items-center">
                 <Phone className="w-4 h-4 text-brand-orange shrink-0" />
-                <span>+91 9801812625</span>
+                <span>+91 9811861633</span>
               </div>
               <div className="flex gap-2 items-center">
                 <Mail className="w-4 h-4 text-brand-orange shrink-0" />
@@ -1270,12 +1281,12 @@ function useCountUp(target: number, duration: number, active: boolean) {
 }
 
 const IMPACT_STATS = [
-  { icon: Users,        value: 5000,  suffix: "+",  label: "Lives Touched",        color: "#15803d" },
-  { icon: HeartPulse,   value: 100,   suffix: "+",  label: "Health Camps",          color: "#ea580c" },
-  { icon: BookOpen,     value: 2000,  suffix: "+",  label: "Students Supported",   color: "#1D4ED8" },
-  { icon: MapPin,       value: 50,    suffix: "+",  label: "Villages Reached",     color: "#D97706" },
-  { icon: Activity,     value: 12,    suffix: "",   label: "Active Programs",      color: "#7C3AED" },
-  { icon: Award,        value: 8,     suffix: "",   label: "Years of Service",     color: "#DB2777" },
+  { icon: Users, value: 5000, suffix: "+", label: "Lives Touched", color: "#15803d" },
+  { icon: HeartPulse, value: 100, suffix: "+", label: "Health Camps", color: "#ea580c" },
+  { icon: BookOpen, value: 2000, suffix: "+", label: "Students Supported", color: "#1D4ED8" },
+  { icon: MapPin, value: 50, suffix: "+", label: "Villages Reached", color: "#D97706" },
+  { icon: Activity, value: 12, suffix: "", label: "Active Programs", color: "#7C3AED" },
+  { icon: Award, value: 8, suffix: "", label: "Years of Service", color: "#DB2777" },
 ];
 
 function StatCard({ stat, visible }: { stat: typeof IMPACT_STATS[0]; visible: boolean }) {
@@ -1283,14 +1294,14 @@ function StatCard({ stat, visible }: { stat: typeof IMPACT_STATS[0]; visible: bo
   const Icon = stat.icon;
   return (
     <ScrollReveal>
-      <div className="text-center p-5 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all hover:scale-[1.03] group">
-        <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ backgroundColor: `${stat.color}25` }}>
-          <Icon className="w-6 h-6" style={{ color: stat.color }} />
+      <div className="text-center p-4 rounded-xl bg-white border border-blue-100 shadow-sm hover:shadow-md transition-all hover:scale-[1.02] group">
+        <div className="w-10 h-10 rounded-lg flex items-center justify-center mx-auto mb-2" style={{ backgroundColor: `${stat.color}18` }}>
+          <Icon className="w-5 h-5" style={{ color: stat.color }} />
         </div>
-        <div className="text-3xl font-extrabold text-white mb-1">
+        <div className="text-2xl font-extrabold text-[#0d2b1a] mb-0.5">
           {count.toLocaleString("en-IN")}{stat.suffix}
         </div>
-        <div className="text-xs font-semibold text-white/60">{stat.label}</div>
+        <div className="text-[10px] font-semibold text-slate-500">{stat.label}</div>
       </div>
     </ScrollReveal>
   );
@@ -1310,53 +1321,18 @@ function ImpactStats() {
   }, []);
 
   return (
-    <section ref={ref} className="py-16 bg-[#0d2b1a] relative overflow-hidden">
-      {/* Background texture */}
-      <div className="absolute inset-0 opacity-5">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <div key={i} className="absolute rounded-full bg-white"
-            style={{ width: `${40 + (i * 17) % 60}px`, height: `${40 + (i * 17) % 60}px`, top: `${(i * 23) % 100}%`, left: `${(i * 37) % 100}%` }} />
-        ))}
-      </div>
+    <section ref={ref} id="impact-stats" className="py-8 bg-blue-50/60 border-y border-blue-100">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="text-center mb-6">
+          <p className="text-xs font-bold uppercase tracking-widest text-brand-orange mb-1">Our Impact</p>
+          <h2 className="text-xl md:text-2xl font-extrabold text-[#0d2b1a]">Numbers That Speak</h2>
+        </div>
 
-      <div className="max-w-7xl mx-auto px-4 relative z-10">
-        <ScrollReveal>
-          <div className="text-center mb-12">
-            <p className="text-xs font-bold uppercase tracking-widest text-brand-orange mb-3">Our Impact</p>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-white">Numbers That Speak</h2>
-            <p className="text-white/60 text-sm mt-2 max-w-xl mx-auto">Every number represents a life changed, a family supported, and a community uplifted.</p>
-          </div>
-        </ScrollReveal>
-
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
           {IMPACT_STATS.map((stat) => (
             <StatCard key={stat.label} stat={stat} visible={visible} />
           ))}
         </div>
-
-        {/* Visual bar progress */}
-        <ScrollReveal>
-          <div className="mt-12 grid sm:grid-cols-3 gap-6">
-            {[
-              { label: "Healthcare Coverage", pct: 78, color: "#ea580c" },
-              { label: "Education Reach", pct: 65, color: "#1D4ED8" },
-              { label: "Women Empowerment", pct: 52, color: "#DB2777" },
-            ].map(({ label, pct, color }) => (
-              <div key={label}>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-semibold text-white/70">{label}</span>
-                  <span className="text-xs font-bold text-white">{pct}%</span>
-                </div>
-                <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                  <div
-                    className="h-full rounded-full transition-all duration-[2s] ease-out"
-                    style={{ width: visible ? `${pct}%` : "0%", backgroundColor: color }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </ScrollReveal>
       </div>
     </section>
   );

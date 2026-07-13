@@ -9,22 +9,22 @@ import ScrollReveal from "@/components/healthcare/ScrollReveal";
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
 const BOARD_OF_TRUSTEES = [
-  { sno: 1, name: "Md. Imteyazullah", designation: "Chairman", qualification: "Graduate", district: "Darbhanga", state: "Bihar", mobile: "9801812625", email: "chairman@iwfindia.org" },
-  { sno: 2, name: "Md. Azizullah", designation: "Treasurer", qualification: "Graduate", district: "Darbhanga", state: "Bihar", mobile: "9801812625", email: "treasurer@iwfindia.org" },
-  { sno: 3, name: "Md. Jamshed Alam", designation: "Secretary", qualification: "Graduate", district: "Darbhanga", state: "Bihar", mobile: "9801812625", email: "secretary@iwfindia.org" },
-  { sno: 4, name: "Md. Asghar Imam", designation: "Member", qualification: "Post Graduate", district: "Muzaffarpur", state: "Bihar", mobile: "9801812625", email: "info@iwfindia.org" },
-  { sno: 5, name: "Md. Mustafa", designation: "Member", qualification: "Graduate", district: "Sitamarhi", state: "Bihar", mobile: "9801812625", email: "info@iwfindia.org" },
-  { sno: 6, name: "Mohd. Minhaj", designation: "Member", qualification: "Graduate", district: "Darbhanga", state: "Bihar", mobile: "9801812625", email: "info@iwfindia.org" },
-  { sno: 7, name: "Md. Niyaz Ahmad", designation: "Member", qualification: "Graduate", district: "Vaishali", state: "Bihar", mobile: "9801812625", email: "info@iwfindia.org" },
+  { sno: 1, name: "Md. Imteyazullah", designation: "Chairman", qualification: "Graduate", district: "Darbhanga", state: "Bihar", mobile: "9811861633", email: "chairman@iwfindia.org" },
+  { sno: 2, name: "Md. Azizullah", designation: "Treasurer", qualification: "Graduate", district: "Darbhanga", state: "Bihar", mobile: "9811861633", email: "treasurer@iwfindia.org" },
+  { sno: 3, name: "Md. Jamshed Alam", designation: "Secretary", qualification: "Graduate", district: "Darbhanga", state: "Bihar", mobile: "9811861633", email: "secretary@iwfindia.org" },
+  { sno: 4, name: "Md. Asghar Imam", designation: "Member", qualification: "Post Graduate", district: "Muzaffarpur", state: "Bihar", mobile: "9811861633", email: "info@iwfindia.org" },
+  { sno: 5, name: "Md. Mustafa", designation: "Member", qualification: "Graduate", district: "Sitamarhi", state: "Bihar", mobile: "9811861633", email: "info@iwfindia.org" },
+  { sno: 6, name: "Mohd. Minhaj", designation: "Member", qualification: "Graduate", district: "Darbhanga", state: "Bihar", mobile: "9811861633", email: "info@iwfindia.org" },
+  { sno: 7, name: "Md. Niyaz Ahmad", designation: "Member", qualification: "Graduate", district: "Vaishali", state: "Bihar", mobile: "9811861633", email: "info@iwfindia.org" },
 ];
 
 const EXECUTIVE_BODY = [
-  { sno: 1, name: "Dr. Nasera Firdausi", designation: "Chief Executive Officer (CEO)", qualification: "PhD", district: "Patna", state: "Bihar", mobile: "9801812625", email: "ceo@iwfindia.org" },
-  { sno: 2, name: "Md. Shahid Raza", designation: "Chief Program Officer (CPO)", qualification: "Post Graduate", district: "Darbhanga", state: "Bihar", mobile: "9801812625", email: "programs@iwfindia.org" },
-  { sno: 3, name: "Ms. Farida Khatoon", designation: "Program Manager — Healthcare", qualification: "MBBS", district: "Muzaffarpur", state: "Bihar", mobile: "9801812625", email: "health@iwfindia.org" },
-  { sno: 4, name: "Mr. Rajeev Tiwari", designation: "Program Manager — Education", qualification: "M.Ed", district: "Patna", state: "Bihar", mobile: "9801812625", email: "education@iwfindia.org" },
-  { sno: 5, name: "Ms. Anita Kumari", designation: "Program Manager — Women Empowerment", qualification: "MSW", district: "Gaya", state: "Bihar", mobile: "9801812625", email: "women@iwfindia.org" },
-  { sno: 6, name: "Mr. Suresh Paswan", designation: "Finance & Accounts Officer", qualification: "CA", district: "Patna", state: "Bihar", mobile: "9801812625", email: "finance@iwfindia.org" },
+  { sno: 1, name: "Dr. Nasera Firdausi", designation: "Chief Executive Officer (CEO)", qualification: "PhD", district: "Patna", state: "Bihar", mobile: "9811861633", email: "ceo@iwfindia.org" },
+  { sno: 2, name: "Md. Shahid Raza", designation: "Chief Program Officer (CPO)", qualification: "Post Graduate", district: "Darbhanga", state: "Bihar", mobile: "9811861633", email: "programs@iwfindia.org" },
+  { sno: 3, name: "Ms. Farida Khatoon", designation: "Program Manager — Healthcare", qualification: "MBBS", district: "Muzaffarpur", state: "Bihar", mobile: "9811861633", email: "health@iwfindia.org" },
+  { sno: 4, name: "Mr. Rajeev Tiwari", designation: "Program Manager — Education", qualification: "M.Ed", district: "Patna", state: "Bihar", mobile: "9811861633", email: "education@iwfindia.org" },
+  { sno: 5, name: "Ms. Anita Kumari", designation: "Program Manager — Women Empowerment", qualification: "MSW", district: "Gaya", state: "Bihar", mobile: "9811861633", email: "women@iwfindia.org" },
+  { sno: 6, name: "Mr. Suresh Paswan", designation: "Finance & Accounts Officer", qualification: "CA", district: "Patna", state: "Bihar", mobile: "9811861633", email: "finance@iwfindia.org" },
 ];
 
 const ADVISORY_BODY = [

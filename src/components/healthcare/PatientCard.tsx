@@ -115,7 +115,7 @@ export function PatientCard({
           className="mt-auto w-full bg-[#0d2b1a] hover:bg-[#1a4a2e] text-white font-bold text-xs py-2.5 rounded-xl flex items-center justify-center gap-2 transition-colors duration-200 active:scale-95"
         >
           <Eye className="w-3.5 h-3.5" />
-          VIEW PROFILE
+          VIEW MORE
         </Link>
       </div>
     </article>

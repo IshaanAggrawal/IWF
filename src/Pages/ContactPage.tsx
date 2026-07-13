@@ -20,7 +20,7 @@ const OFFICES = [
     badgeColor: "#15803d",
     badgeBg: "#F0FDF4",
     address: "Bathiya, Via-Putai Manigachhi, Darbhanga, Bihar – 847423",
-    phone: "+91 9801812625",
+    phone: "+91 9811861633",
     email: "info@iwfindia.org",
     timing: "Mon–Sat: 9:00 AM – 5:00 PM",
     icon: Building2,
@@ -31,7 +31,7 @@ const OFFICES = [
     badgeColor: "#1D4ED8",
     badgeBg: "#EFF6FF",
     address: "Patna, Bihar – Contact for exact address",
-    phone: "+91 9801812625",
+    phone: "+91 9811861633",
     email: "info@iwfindia.org",
     timing: "Mon–Fri: 10:00 AM – 4:00 PM",
     icon: Building2,
@@ -42,7 +42,7 @@ const OFFICES = [
     badgeColor: "#D97706",
     badgeBg: "#FFFBEB",
     address: "New Delhi – Contact for exact address",
-    phone: "+91 9801812625",
+    phone: "+91 9811861633",
     email: "info@iwfindia.org",
     timing: "Mon–Fri: 10:00 AM – 4:00 PM",
     icon: Building2,
@@ -53,7 +53,7 @@ const OFFICES = [
     badgeColor: "#7C3AED",
     badgeBg: "#F5F3FF",
     address: "Meerut, Uttar Pradesh – Contact for exact address",
-    phone: "+91 9801812625",
+    phone: "+91 9811861633",
     email: "info@iwfindia.org",
     timing: "Mon–Fri: 10:00 AM – 4:00 PM",
     icon: Building2,
@@ -67,7 +67,7 @@ const CONTACT_PERSONS = [
     initials: "MI",
     color: "#15803d",
     bg: "#F0FDF4",
-    phone: "+91 9801812625",
+    phone: "+91 9811861633",
     email: "chairman@iwfindia.org",
     desc: "Visionary leader guiding IWF's mission since inception.",
   },
@@ -77,7 +77,7 @@ const CONTACT_PERSONS = [
     initials: "MA",
     color: "#D97706",
     bg: "#FFFBEB",
-    phone: "+91 9801812625",
+    phone: "+91 9811861633",
     email: "treasurer@iwfindia.org",
     desc: "Oversees all financial operations and fund management.",
   },
@@ -87,7 +87,7 @@ const CONTACT_PERSONS = [
     initials: "NF",
     color: "#DB2777",
     bg: "#FDF2F8",
-    phone: "+91 9801812625",
+    phone: "+91 9811861633",
     email: "ceo@iwfindia.org",
     desc: "Leads program execution, partnerships, and field operations.",
   },
@@ -285,8 +285,8 @@ export default function ContactPage() {
               Reach us at our offices across Bihar, Delhi, and Uttar Pradesh — or write to us and we'll respond within 24–48 hours.
             </p>
             <div className="flex flex-wrap gap-5 mt-8">
-              <a href="tel:+919801812625" className="flex items-center gap-2 text-white/90 hover:text-white text-sm font-semibold">
-                <Phone className="w-4 h-4 text-brand-orange" /> +91 9801812625
+              <a href="tel:+919811861633" className="flex items-center gap-2 text-white/90 hover:text-white text-sm font-semibold">
+                <Phone className="w-4 h-4 text-brand-orange" /> +91 9811861633
               </a>
               <a href="mailto:info@iwfindia.org" className="flex items-center gap-2 text-white/90 hover:text-white text-sm font-semibold">
                 <Mail className="w-4 h-4 text-brand-orange" /> info@iwfindia.org
@@ -383,7 +383,7 @@ export default function ContactPage() {
                 <h3 className="font-bold text-brand-green-dark text-sm mb-4 uppercase tracking-wide">Quick Contact</h3>
                 <div className="space-y-3">
                   {[
-                    { icon: Phone, label: "Phone", value: "+91 9801812625", href: "tel:+919801812625" },
+                    { icon: Phone, label: "Phone", value: "+91 9811861633", href: "tel:+919811861633" },
                     { icon: Mail, label: "Email", value: "info@iwfindia.org", href: "mailto:info@iwfindia.org" },
                     { icon: Globe, label: "Website", value: "iwfindia.org", href: "#" },
                   ].map(({ icon: Icon, label, value, href }) => (

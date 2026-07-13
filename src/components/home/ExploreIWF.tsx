@@ -37,7 +37,7 @@ export function ExploreIWF() {
             {
               icon: MessageCircle,
               page: "Contact Us",
-              summary: "Reach IWF at our registered office in Bathiya, Darbhanga (Bihar) or connect with us in Patna, Delhi, or Meerut. Write to info@iwfindia.org or call +91 9801812625. We would love to hear your ideas, feedback, or offer of support.",
+              summary: "Reach IWF at our registered office in Bathiya, Darbhanga (Bihar) or connect with us in Patna, Delhi, or Meerut. Write to info@iwfindia.org or call +91 9811861633. We would love to hear your ideas, feedback, or offer of support.",
             },
           ].map((item) => (
             <div key={item.page} className="bg-white rounded-md p-5 border border-slate-100 shadow-sm hover:shadow-md transition">

@@ -159,7 +159,7 @@ function generateReceiptPDF(data) {
     "<div class=hdr><div class=logo>IWF</div>" +
     "<div><div class=hdr-name>ISLAH WELFARE FOUNDATION</div>" +
     "<div class=hdr-sub>Planting Seeds of Hope and Change - Bathiya, Darbhanga, Bihar - 847423</div>" +
-    "<div class=hdr-sub>info@iwfindia.org - +91-9801812625 - iwfindia.org</div></div></div>" +
+    "<div class=hdr-sub>info@iwfindia.org - +91-9811861633 - iwfindia.org</div></div></div>" +
     "<div class=title-bar><span>OFFICIAL DONATION RECEIPT</span></div>" +
     "<div class=meta><span><strong>Receipt No.:</strong> " + data.receiptNo + "</span><span><strong>Date:</strong> " + data.date + "</span></div>" +
     "<div class='sec sec-g'><div class=sec-title>Donor Information</div>" +
@@ -182,11 +182,11 @@ function generateReceiptPDF(data) {
     "<div class=decl>We hereby acknowledge receiving the above-mentioned donation for charitable purposes.<br>All donations are utilized transparently and effectively.</div>" +
     "<div class=sigs><div class=sig><div class=sig-line></div><div class=sig-name>Authorized Signatory</div><div class=sig-org>Islah Welfare Foundation</div></div>" +
     "<div class=sig><div class=sig-line></div><div class=sig-name>Donor Signature</div></div></div>" +
-    "<div class=ftr>Islah Welfare Foundation (Reg.) | Bathiya, Darbhanga, Bihar - 847423 | info@iwfindia.org | +91-9801812625</div>" +
+    "<div class=ftr>Islah Welfare Foundation (Reg.) | Bathiya, Darbhanga, Bihar - 847423 | info@iwfindia.org | +91-9811861633</div>" +
     "</div></body></html>";
 
   const w = window.open("", "_blank");
-  if (w) { w.document.open("text/html;charset=utf-8","replace"); w.document.write(html); w.document.close(); }
+  if (w) { w.document.open("text/html;charset=utf-8", "replace"); w.document.write(html); w.document.close(); }
 }
 
 // --- Donor Card Generator ---
@@ -230,11 +230,11 @@ function generateDonorCardPDF(data) {
     "<div><div class=det-lbl>Receipt No.</div><div class=det-val>" + data.receiptNo + "</div></div>" +
     "<div><div class=det-lbl>Date</div><div class=det-val>" + data.date + "</div></div>" +
     "</div>" +
-    "<div class=foot>iwfindia.org - info@iwfindia.org - +91-9801812625</div>" +
+    "<div class=foot>iwfindia.org - info@iwfindia.org - +91-9811861633</div>" +
     "</div></body></html>";
 
   const w = window.open("", "_blank");
-  if (w) { w.document.open("text/html;charset=utf-8","replace"); w.document.write(html); w.document.close(); }
+  if (w) { w.document.open("text/html;charset=utf-8", "replace"); w.document.write(html); w.document.close(); }
 }
 
 function generateReceiptNo() {
@@ -263,20 +263,18 @@ function StepIndicator({ step, total }: { step: number; total: number }) {
           <div key={s} className="flex items-center">
             <div className="flex flex-col items-center">
               <div
-                className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
-                  isDone
+                className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${isDone
                     ? "bg-brand-green text-white shadow-lg shadow-brand-green/30"
                     : isActive
                       ? "bg-brand-orange text-white shadow-lg shadow-brand-orange/30 scale-110"
                       : "bg-slate-100 text-slate-400"
-                }`}
+                  }`}
               >
                 {isDone ? <Check className="w-4 h-4" /> : s}
               </div>
               <span
-                className={`text-[10px] mt-1 font-semibold tracking-wide whitespace-nowrap ${
-                  isActive ? "text-brand-orange" : isDone ? "text-brand-green" : "text-slate-400"
-                }`}
+                className={`text-[10px] mt-1 font-semibold tracking-wide whitespace-nowrap ${isActive ? "text-brand-orange" : isDone ? "text-brand-green" : "text-slate-400"
+                  }`}
               >
                 {label}
               </span>
@@ -365,11 +363,10 @@ function Step1DonorInfo({
                 key={val}
                 type="button"
                 onClick={() => setValue("citizenship", val, { shouldValidate: true })}
-                className={`h-12 rounded-lg border-2 font-semibold text-sm transition-all ${
-                  citizenship === val
+                className={`h-12 rounded-lg border-2 font-semibold text-sm transition-all ${citizenship === val
                     ? "border-brand-green bg-brand-green/5 text-brand-green shadow-sm"
                     : "border-slate-200 text-slate-500 hover:border-slate-300"
-                }`}
+                  }`}
               >
                 {val === "indian" ? "Indian National" : "Foreign National"}
               </button>
@@ -498,11 +495,10 @@ function Step2DonationDetails({
                 key={val}
                 type="button"
                 onClick={() => handlePreset(val)}
-                className={`py-2.5 rounded-lg text-sm font-bold border-2 transition-all ${
-                  amount === val && !customAmount
+                className={`py-2.5 rounded-lg text-sm font-bold border-2 transition-all ${amount === val && !customAmount
                     ? "border-brand-orange bg-brand-orange text-white shadow-md shadow-brand-orange/30"
                     : "border-slate-200 text-slate-600 hover:border-brand-orange/40 hover:bg-orange-50"
-                }`}
+                  }`}
               >
                 Rs. {val >= 1000 ? `${val / 1000}K` : val}
               </button>
@@ -510,11 +506,10 @@ function Step2DonationDetails({
             <button
               type="button"
               onClick={() => { setCustomAmount(true); setValue("amount", 0 as unknown as number); }}
-              className={`py-2.5 col-span-3 sm:col-span-5 rounded-lg text-sm font-bold border-2 transition-all ${
-                customAmount
+              className={`py-2.5 col-span-3 sm:col-span-5 rounded-lg text-sm font-bold border-2 transition-all ${customAmount
                   ? "border-brand-green bg-brand-green/5 text-brand-green"
                   : "border-dashed border-slate-300 text-slate-500 hover:border-brand-green/40"
-              }`}
+                }`}
             >
               Custom Amount
             </button>
@@ -635,11 +630,10 @@ function Step3Payment({
             key={val}
             type="button"
             onClick={() => setValue("paymentMode", val)}
-            className={`flex flex-col items-center gap-1.5 py-4 px-2 rounded-xl border-2 transition-all text-center ${
-              paymentMode === val
+            className={`flex flex-col items-center gap-1.5 py-4 px-2 rounded-xl border-2 transition-all text-center ${paymentMode === val
                 ? "border-brand-green bg-brand-green/5 shadow-sm"
                 : "border-slate-200 hover:border-slate-300"
-            }`}
+              }`}
           >
             <Icon className={`w-5 h-5 ${paymentMode === val ? "text-brand-green" : "text-slate-400"}`} />
             <span className={`text-xs font-bold leading-tight ${paymentMode === val ? "text-brand-green" : "text-slate-600"}`}>{label}</span>
@@ -1190,8 +1184,8 @@ export default function DonatePage() {
               <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-4">
                 <p className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Questions? Contact Us</p>
                 <div className="space-y-1.5">
-                  <a href="tel:+919801812625" className="flex items-center gap-2 text-xs text-brand-green font-semibold hover:underline">
-                    <Phone className="w-3.5 h-3.5" /> +91 9801812625
+                  <a href="tel:+919811861633" className="flex items-center gap-2 text-xs text-brand-green font-semibold hover:underline">
+                    <Phone className="w-3.5 h-3.5" /> +91 9811861633
                   </a>
                   <a href="mailto:info@iwfindia.org" className="flex items-center gap-2 text-xs text-brand-green font-semibold hover:underline">
                     <Mail className="w-3.5 h-3.5" /> info@iwfindia.org

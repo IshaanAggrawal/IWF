@@ -222,7 +222,7 @@ async function generateMembershipCard(data: {
   doc.setFontSize(4.5);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(255, 255, 255);
-  doc.text("iwfindia.org  |  info@iwfindia.org  |  +91 9801812625", 43, 53, { align: "center" });
+  doc.text("iwfindia.org  |  info@iwfindia.org  |  +91 9811861633", 43, 53, { align: "center" });
 
   // Use base64 data URI — most reliable cross-browser download with proper filename
   const dataUri = doc.output("datauristring");
@@ -259,7 +259,7 @@ async function generateMembershipReceipt(data: {
   doc.setFontSize(8);
   doc.setFont("helvetica", "normal");
   doc.text('"Planting Seeds of Hope and Change"', 105, 22, { align: "center" });
-  doc.text("Bathiya, Darbhanga, Bihar - 847423 | info@iwfindia.org | +91 9801812625", 105, 28, { align: "center" });
+  doc.text("Bathiya, Darbhanga, Bihar - 847423 | info@iwfindia.org | +91 9811861633", 105, 28, { align: "center" });
 
   // Title bar
   doc.setFillColor(...orange);
@@ -359,7 +359,7 @@ async function generateMembershipReceipt(data: {
   doc.setFontSize(7);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(255, 255, 255);
-  doc.text("Islah Welfare Foundation (Reg.) | Bathiya, Darbhanga, Bihar - 847423 | info@iwfindia.org | +91 9801812625", 105, 293, { align: "center" });
+  doc.text("Islah Welfare Foundation (Reg.) | Bathiya, Darbhanga, Bihar - 847423 | info@iwfindia.org | +91 9811861633", 105, 293, { align: "center" });
 
   // Use base64 data URI — most reliable cross-browser download with proper filename
   const dataUri = doc.output("datauristring");
@@ -1360,8 +1360,8 @@ function RegistrationSection() {
           <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-4">
             <p className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Need Help?</p>
             <div className="space-y-1.5">
-              <a href="tel:+919801812625" className="flex items-center gap-2 text-xs text-brand-green font-semibold hover:underline">
-                <Phone className="w-3.5 h-3.5" /> +91 9801812625
+              <a href="tel:+919811861633" className="flex items-center gap-2 text-xs text-brand-green font-semibold hover:underline">
+                <Phone className="w-3.5 h-3.5" /> +91 9811861633
               </a>
               <a href="mailto:info@iwfindia.org" className="flex items-center gap-2 text-xs text-brand-green font-semibold hover:underline">
                 <Mail className="w-3.5 h-3.5" /> info@iwfindia.org
