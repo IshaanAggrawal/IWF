@@ -48,7 +48,7 @@ const CATEGORY_CONFIG: Record<MemberCategory, {
       "Annual membership certificate",
       "Access to IWF events & updates",
       "Newsletter subscription",
-      "Member recognition on website (optional)",
+      "Member recognition on website (Optional)",
     ],
     icon: Shield,
   },
@@ -61,7 +61,11 @@ const CATEGORY_CONFIG: Record<MemberCategory, {
     border: "#FDE68A",
     badge: "bg-amber-100 text-amber-700 border-amber-200",
     features: [
-      "All Blue benefits",
+      "Digital Membership ID Card",
+      "Annual membership certificate",
+      "Access to IWF events & updates",
+      "Newsletter subscription",
+      "Member recognition on website (Optional)",
       "Priority event invitations",
       "Quarterly impact reports",
       "Access to member dashboard",
@@ -79,7 +83,16 @@ const CATEGORY_CONFIG: Record<MemberCategory, {
     border: "#BBF7D0",
     badge: "bg-green-100 text-green-700 border-green-200",
     features: [
-      "All Yellow benefits",
+      "Digital Membership ID Card",
+      "Annual membership certificate",
+      "Access to IWF events & updates",
+      "Newsletter subscription",
+      "Member recognition on website (Optional)",
+      "Priority event invitations",
+      "Quarterly impact reports",
+      "Access to member dashboard",
+      "Direct engagement with IWF programs",
+      "Special appreciation mention",
       "Direct access to program teams",
       "Annual recognition dinner invitation",
       "Co-branding on project materials",
@@ -91,15 +104,41 @@ const CATEGORY_CONFIG: Record<MemberCategory, {
   },
 };
 
-const DISTRICTS_BIHAR = [
-  "Araria", "Arwal", "Aurangabad", "Banka", "Begusarai", "Bhagalpur",
-  "Bhojpur", "Buxar", "Darbhanga", "East Champaran", "Gaya", "Gopalganj",
-  "Jamui", "Jehanabad", "Kaimur", "Katihar", "Khagaria", "Kishanganj",
-  "Lakhisarai", "Madhepura", "Madhubani", "Munger", "Muzaffarpur",
-  "Nalanda", "Nawada", "Patna", "Purnia", "Rohtas", "Saharsa",
-  "Samastipur", "Saran", "Sheikhpura", "Sheohar", "Sitamarhi",
-  "Siwan", "Supaul", "Vaishali", "West Champaran",
+const WORLD_COUNTRIES = [
+  "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda",
+  "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain",
+  "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
+  "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria",
+  "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada",
+  "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros",
+  "Congo (Brazzaville)", "Congo (DRC)", "Costa Rica", "Croatia", "Cuba", "Cyprus",
+  "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic",
+  "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia",
+  "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia",
+  "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea",
+  "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India",
+  "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan",
+  "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Laos",
+  "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania",
+  "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta",
+  "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova",
+  "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar",
+  "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger",
+  "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan",
+  "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru",
+  "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda",
+  "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines",
+  "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal",
+  "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia",
+  "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan",
+  "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria",
+  "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga",
+  "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda",
+  "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay",
+  "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen",
+  "Zambia", "Zimbabwe",
 ];
+
 
 // ─── Mock Member Data for Admin View ─────────────────────────────────────────
 
@@ -380,16 +419,18 @@ const memberSchema = z.object({
   mobile: z.string().trim().min(10, "Valid mobile number required"),
   email: z.string().trim().email("Valid email required"),
   address: z.string().trim().min(5, "Address is required"),
-  district: z.string().min(1, "Please select a district"),
-  state: z.string().trim().min(2, "State is required"),
+  country: z.string().min(1, "Please select a country"),
+  state: z.string().trim().min(2, "State / Province is required"),
   category: z.enum(["Blue", "Yellow", "Green"], { required_error: "Select a membership category" }),
   paymentMode: z.enum(["Cash", "UPI", "Bank Transfer", "Online"]),
   transactionId: z.string().trim().optional(),
   paymentDate: z.string().min(1, "Payment date is required"),
-  consent: z.boolean().optional(),
+  consentDisplay: z.enum(["yes", "no"], { required_error: "Please select Yes or No" }),
+  disclaimerAccepted: z.boolean().refine((v) => v === true, { message: "You must accept the disclaimer to proceed" }),
 });
 
 type MemberFormData = z.infer<typeof memberSchema>;
+
 
 // ─── Shared UI ────────────────────────────────────────────────────────────────
 
@@ -526,17 +567,48 @@ function Step1Category({ form, onNext }: { form: ReturnType<typeof useForm<Membe
 // ─── Step 2: Personal Info ────────────────────────────────────────────────────
 
 function Step2PersonalInfo({ form, onNext, onBack }: { form: ReturnType<typeof useForm<MemberFormData>>; onNext: () => void; onBack: () => void }) {
-  const { register, formState: { errors }, trigger } = form;
+  const { register, watch, setValue, formState: { errors }, trigger } = form;
+  const consentDisplay = watch("consentDisplay");
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
 
   const handleNext = async () => {
-    const valid = await trigger(["fullName", "mobile", "email", "address", "district", "state"]);
+    const valid = await trigger(["fullName", "mobile", "email", "address", "country", "state", "consentDisplay"]);
     if (valid) onNext();
+  };
+
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (ev) => setPhotoPreview(ev.target?.result as string);
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
     <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.3 }}>
       <h3 className="text-lg font-bold text-brand-green-dark mb-6">Personal Information</h3>
       <div className="space-y-4">
+        {/* Photograph Upload */}
+        <div>
+          <InputLabel>Photograph</InputLabel>
+          <div className="flex items-center gap-4">
+            <div className="w-16 h-16 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50 flex items-center justify-center overflow-hidden shrink-0">
+              {photoPreview
+                ? <img src={photoPreview} alt="Preview" className="w-full h-full object-cover" />
+                : <span className="text-slate-300 text-2xl">📷</span>
+              }
+            </div>
+            <div className="flex-1">
+              <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 bg-white text-xs font-semibold text-slate-600 hover:border-brand-green hover:text-brand-green transition-colors">
+                <span>Upload Photo</span>
+                <input type="file" accept="image/*" className="hidden" onChange={handlePhotoChange} />
+              </label>
+              <p className="text-xs text-slate-400 mt-1.5">JPG, PNG or WEBP. Max 2MB. Passport size recommended.</p>
+            </div>
+          </div>
+        </div>
+
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
             <InputLabel required>Full Name</InputLabel>
@@ -570,26 +642,44 @@ function Step2PersonalInfo({ form, onNext, onBack }: { form: ReturnType<typeof u
 
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
-            <InputLabel required>District</InputLabel>
-            <select {...register("district")} defaultValue="" className={inputCls}>
-              <option value="" disabled>Select district…</option>
-              {DISTRICTS_BIHAR.map((d) => <option key={d} value={d}>{d}</option>)}
-              <option value="Other">Other</option>
+            <InputLabel required>Country</InputLabel>
+            <select {...register("country")} defaultValue="" className={inputCls}>
+              <option value="" disabled>Select country…</option>
+              {WORLD_COUNTRIES.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
-            <FieldError msg={errors.district?.message} />
+            <FieldError msg={errors.country?.message} />
           </div>
           <div>
-            <InputLabel required>State</InputLabel>
-            <input {...register("state")} placeholder="Bihar" defaultValue="Bihar" className={inputCls} />
+            <InputLabel required>State / Province</InputLabel>
+            <input {...register("state")} placeholder="e.g. Bihar, Karnataka…" className={inputCls} />
             <FieldError msg={errors.state?.message} />
           </div>
         </div>
 
-        <div className="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
-          <input id="mem-consent" type="checkbox" {...register("consent")} className="mt-0.5 h-4 w-4 rounded border-slate-300 text-brand-green" />
-          <label htmlFor="mem-consent" className="text-xs text-slate-600 cursor-pointer leading-relaxed">
-            I consent to my name being displayed in the Members & Supporters section on the IWF website (optional).
-          </label>
+        {/* Website Display Consent – Yes/No buttons */}
+        <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+          <p className="text-xs font-semibold text-slate-700 mb-3">
+            Do you consent to your name being displayed in the <span className="text-brand-green">Members & Supporters</span> section on the IWF website? <span className="text-slate-400 font-normal">(Your choice)</span>
+          </p>
+          <div className="flex gap-3">
+            {(["yes", "no"] as const).map((val) => (
+              <button
+                key={val}
+                type="button"
+                onClick={() => setValue("consentDisplay", val, { shouldValidate: true })}
+                className={`flex-1 py-2.5 rounded-xl border-2 text-sm font-bold transition-all ${
+                  consentDisplay === val
+                    ? val === "yes"
+                      ? "border-brand-green bg-brand-green text-white"
+                      : "border-slate-400 bg-slate-700 text-white"
+                    : "border-slate-200 bg-white text-slate-600 hover:border-slate-300"
+                }`}
+              >
+                {val === "yes" ? "✓ Yes, display my name" : "✗ No, keep me private"}
+              </button>
+            ))}
+          </div>
+          <FieldError msg={errors.consentDisplay?.message} />
         </div>
       </div>
 
@@ -605,6 +695,78 @@ function Step2PersonalInfo({ form, onNext, onBack }: { form: ReturnType<typeof u
   );
 }
 
+
+
+// ─── Disclaimer Modal ─────────────────────────────────────────────────────────
+
+function DisclaimerModal({ onAccept, onClose }: { onAccept: () => void; onClose: () => void }) {
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-50 flex items-center justify-center p-4"
+        style={{ background: "rgba(0,0,0,0.55)" }}
+        onClick={onClose}
+      >
+        <motion.div
+          initial={{ scale: 0.92, opacity: 0, y: 24 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          exit={{ scale: 0.92, opacity: 0, y: 24 }}
+          transition={{ type: "spring", stiffness: 260, damping: 22 }}
+          className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Header */}
+          <div className="bg-gradient-to-r from-brand-green to-brand-green-dark px-6 py-4 flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
+              <FileText className="w-4 h-4 text-white" />
+            </div>
+            <div>
+              <h3 className="text-white font-bold text-sm">Membership Disclaimer</h3>
+              <p className="text-white/70 text-xs">Please read carefully before proceeding</p>
+            </div>
+          </div>
+
+          {/* Body */}
+          <div className="p-6 max-h-80 overflow-y-auto space-y-3 text-xs text-slate-700 leading-relaxed">
+            <p className="font-bold text-slate-800">By proceeding with the membership registration, you acknowledge and agree to the following:</p>
+            <ol className="space-y-2 list-decimal list-inside">
+              <li><strong>Annual Renewal:</strong> Membership is valid for one year from the date of joining and must be renewed annually upon payment of the applicable fee.</li>
+              <li><strong>Non-transferable:</strong> The membership is personal and cannot be transferred to another individual.</li>
+              <li><strong>One Membership Per Individual:</strong> Each individual may hold only one active membership category at a time.</li>
+              <li><strong>Refund Policy:</strong> A 14-day refund window applies from the date of registration. After this period, no refund shall be issued.</li>
+              <li><strong>Accuracy of Information:</strong> You confirm that all information submitted in this form is accurate and truthful. Any false information may result in cancellation of membership without refund.</li>
+              <li><strong>Data Usage:</strong> Your personal information will be used solely for membership management, communication, and organizational reporting. It will not be shared with third parties without consent.</li>
+              <li><strong>IWF Constitution:</strong> Your membership is governed by the Islah Welfare Foundation's constitution and applicable policies, which may be amended from time to time.</li>
+              <li><strong>No Guarantee of Benefit:</strong> Membership benefits are subject to availability and IWF's operational capacity. IWF reserves the right to modify or discontinue specific benefits with prior notice.</li>
+              <li><strong>Conduct:</strong> Members are expected to uphold the values and mission of IWF. Membership may be revoked if a member acts contrary to the organization's principles.</li>
+            </ol>
+            <p className="text-slate-500 pt-2 border-t border-slate-100">If you have questions, please contact <a href="mailto:info@iwfindia.org" className="text-brand-green underline">info@iwfindia.org</a> before registering.</p>
+          </div>
+
+          {/* Footer */}
+          <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex gap-3">
+            <button
+              onClick={onClose}
+              className="flex-1 py-2.5 rounded-xl border-2 border-slate-200 text-sm font-semibold text-slate-600 hover:border-slate-300 transition"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={onAccept}
+              className="flex-1 py-2.5 rounded-xl bg-brand-green text-white text-sm font-bold hover:bg-brand-green-dark transition shadow-md"
+            >
+              ✓ I Accept & Proceed
+            </button>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
 // ─── Step 3: Payment ──────────────────────────────────────────────────────────
 
 function Step3Payment({ form, onNext, onBack }: { form: ReturnType<typeof useForm<MemberFormData>>; onNext: () => void; onBack: () => void }) {
@@ -612,14 +774,25 @@ function Step3Payment({ form, onNext, onBack }: { form: ReturnType<typeof useFor
   const paymentMode = watch("paymentMode");
   const category = watch("category");
   const cfg = category ? CATEGORY_CONFIG[category] : null;
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
+  const disclaimerAccepted = watch("disclaimerAccepted");
 
   const handleNext = async () => {
-    const valid = await trigger(["paymentMode", "paymentDate"]);
-    if (valid) onNext();
+    const valid = await trigger(["paymentMode", "paymentDate", "disclaimerAccepted"]);
+    if (valid) {
+      onNext();
+    }
+  };
+
+  const handleDisclaimerAccept = () => {
+    setValue("disclaimerAccepted", true, { shouldValidate: true });
+    setShowDisclaimer(false);
   };
 
   return (
     <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.3 }}>
+      {showDisclaimer && <DisclaimerModal onAccept={handleDisclaimerAccept} onClose={() => setShowDisclaimer(false)} />}
+
       <h3 className="text-lg font-bold text-brand-green-dark mb-2">Payment Details</h3>
       {cfg && (
         <div className="flex items-center gap-3 mb-6 p-3 rounded-xl border" style={{ backgroundColor: cfg.bg, borderColor: cfg.border }}>
@@ -695,6 +868,33 @@ function Step3Payment({ form, onNext, onBack }: { form: ReturnType<typeof useFor
             ))}
           </div>
         )}
+
+        {/* Disclaimer Checkbox & Button */}
+        <div className="p-4 rounded-xl border border-slate-200 bg-slate-50 space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold text-slate-700">Membership Disclaimer</span>
+            <button
+              type="button"
+              onClick={() => setShowDisclaimer(true)}
+              className="text-xs font-extrabold text-brand-green hover:text-brand-green-dark underline flex items-center gap-1"
+            >
+              <FileText className="w-3.5 h-3.5" /> Read Disclaimer
+            </button>
+          </div>
+          <div className="flex items-start gap-2.5">
+            <input
+              id="disclaimer-checkbox"
+              type="checkbox"
+              checked={!!disclaimerAccepted}
+              onChange={(e) => setValue("disclaimerAccepted", e.target.checked, { shouldValidate: true })}
+              className="mt-0.5 h-4 w-4 rounded border-slate-300 text-brand-green focus:ring-brand-green"
+            />
+            <label htmlFor="disclaimer-checkbox" className="text-xs text-slate-600 leading-relaxed cursor-pointer select-none">
+              I have read and agree to the mandatory <span className="font-semibold text-slate-800">Membership Disclaimer</span>. <span className="text-red-500">*</span>
+            </label>
+          </div>
+          <FieldError msg={errors.disclaimerAccepted?.message} />
+        </div>
       </div>
 
       <div className="mt-8 flex items-center justify-between">
@@ -708,6 +908,7 @@ function Step3Payment({ form, onNext, onBack }: { form: ReturnType<typeof useFor
     </motion.div>
   );
 }
+
 
 // ─── Step 4: Confirm ──────────────────────────────────────────────────────────
 
@@ -726,7 +927,7 @@ function Step4Confirm({
     ["Father/Mother Name", data.fatherName || "—"],
     ["Mobile", data.mobile],
     ["Email", data.email],
-    ["District, State", `${data.district}, ${data.state}`],
+    ["Country, State", `${data.country}, ${data.state}`],
     ["Member ID (auto)", memberId],
     ["Category", `${data.category} Membership`],
     ["Annual Fee", `₹${cfg.amount.toLocaleString("en-IN")}`],
@@ -734,6 +935,7 @@ function Step4Confirm({
     ["Valid Till", formatDisplayDate(validTill)],
     ["Payment Mode", data.paymentMode],
     ["Transaction ID", data.transactionId || "Cash"],
+    ["Website Display", data.consentDisplay === "yes" ? "Yes — name visible" : "No — private"],
   ];
 
   return (
@@ -1247,7 +1449,7 @@ function RegistrationSection() {
 
   const form = useForm<MemberFormData>({
     resolver: zodResolver(memberSchema),
-    defaultValues: { paymentMode: "UPI", consent: false, state: "Bihar", district: "" },
+    defaultValues: { paymentMode: "UPI", state: "", country: "", disclaimerAccepted: false },
     mode: "onSubmit",
   });
 
@@ -1374,58 +1576,24 @@ function RegistrationSection() {
   );
 }
 
-// ─── Membership Hero ──────────────────────────────────────────────────────────
+// ─── Membership Hero (2-col with compact comparison card) ────────────────────
 
 function MembershipHero() {
-  return (
-    <section className="bg-[#0d2b1a] text-white py-16 relative overflow-hidden">
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-brand-orange rounded-full -translate-y-1/2 translate-x-1/2" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-brand-green rounded-full translate-y-1/2 -translate-x-1/2" />
-      </div>
-      <div className="max-w-5xl mx-auto px-4 relative z-10">
-        <p className="text-xs font-bold uppercase tracking-widest text-brand-orange mb-3">Islah Welfare Foundation</p>
-        <h1 className="text-4xl md:text-5xl font-extrabold leading-tight mb-4">Join IWF as a Member</h1>
-        <p className="text-white/75 max-w-2xl leading-relaxed text-base mb-6">
-          Become part of India's growing movement for equitable development. Your membership directly supports education, healthcare, and livelihood programs across rural communities.
-        </p>
-        <div className="flex flex-wrap gap-3">
-          {(["Blue", "Yellow", "Green"] as MemberCategory[]).map((cat) => {
-            const cfg = CATEGORY_CONFIG[cat];
-            return (
-              <div key={cat} className="flex items-center gap-2 bg-white/10 rounded-full px-4 py-1.5 text-sm font-semibold">
-                <cfg.icon className="w-3.5 h-3.5 text-brand-orange" />
-                {cat}: ₹{cfg.amount.toLocaleString("en-IN")}/yr
-              </div>
-            );
-          })}
-        </div>
-        <div className="flex gap-4 mt-8">
-          <a href="#register" className="bg-brand-orange hover:bg-brand-orange-dark text-white font-bold px-7 py-3 rounded-lg shadow-lg transition-all hover:scale-[1.02] inline-flex items-center gap-2">
-            <Users className="w-4 h-4" /> Join Now
-          </a>
-          <a href="#status" className="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold px-7 py-3 rounded-lg transition-all hover:scale-[1.02] inline-flex items-center gap-2">
-            <Search className="w-4 h-4" /> Check Status
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-}
+  const [showComparison, setShowComparison] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
-// ─── Membership Benefits (Comparison) ────────────────────────────────────────
-
-function MembershipComparison() {
   const allFeatures = [
     "Digital Membership ID Card",
     "Annual membership certificate",
     "Access to IWF events & updates",
     "Newsletter subscription",
-    "Member recognition on website",
+    "Member recognition on website (Optional)",
     "Priority event invitations",
     "Quarterly impact reports",
     "Access to member dashboard",
     "Direct engagement with IWF programs",
+    "Special appreciation mention",
+    "Direct access to program teams",
     "Annual recognition dinner invitation",
     "Co-branding on project materials",
     "Advisory role on relevant programs",
@@ -1434,66 +1602,299 @@ function MembershipComparison() {
   ];
 
   return (
-    <section className="py-16 bg-white">
-      <div className="max-w-5xl mx-auto px-4">
-        <div className="text-center mb-10">
-          <p className="text-xs font-bold uppercase tracking-widest text-brand-orange mb-2">Compare Plans</p>
-          <h2 className="text-2xl md:text-3xl font-extrabold text-brand-green-dark">Membership Benefits</h2>
-        </div>
-        <div className="overflow-x-auto rounded-2xl border border-slate-100 shadow-sm">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-slate-100">
-                <th className="px-5 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider w-64">Feature</th>
-                {(["Blue", "Yellow", "Green"] as MemberCategory[]).map((cat) => {
-                  const cfg = CATEGORY_CONFIG[cat];
-                  return (
-                    <th key={cat} className="px-5 py-4 text-center" style={{ backgroundColor: `${cfg.color}08` }}>
-                      <div className="flex flex-col items-center gap-1">
-                        <cfg.icon className="w-5 h-5" style={{ color: cfg.color }} />
-                        <span className="text-sm font-extrabold" style={{ color: cfg.color }}>{cat}</span>
-                        <span className="text-xs text-slate-500">₹{cfg.amount.toLocaleString("en-IN")}/yr</span>
-                      </div>
-                    </th>
-                  );
-                })}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-50">
-              {allFeatures.map((feature, i) => (
-                <tr key={feature} className={i % 2 === 0 ? "bg-slate-50/50" : "bg-white"}>
-                  <td className="px-5 py-3 text-xs text-slate-700 font-medium">{feature}</td>
-                  {(["Blue", "Yellow", "Green"] as MemberCategory[]).map((cat) => {
-                    const included = CATEGORY_CONFIG[cat].features.includes(feature);
-                    return (
-                      <td key={cat} className="px-5 py-3 text-center" style={{ backgroundColor: included ? `${CATEGORY_CONFIG[cat].color}08` : "transparent" }}>
-                        {included
-                          ? <Check className="w-4 h-4 mx-auto" style={{ color: CATEGORY_CONFIG[cat].color }} />
-                          : <span className="text-slate-200 text-lg">—</span>
-                        }
-                      </td>
-                    );
-                  })}
-                </tr>
-              ))}
-              <tr className="border-t border-slate-200">
-                <td className="px-5 py-4 text-xs font-bold text-slate-700">Annual Fee</td>
-                {(["Blue", "Yellow", "Green"] as MemberCategory[]).map((cat) => {
-                  const cfg = CATEGORY_CONFIG[cat];
-                  return (
-                    <td key={cat} className="px-5 py-4 text-center">
-                      <a href="#register" className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold text-white transition hover:scale-[1.02]" style={{ backgroundColor: cfg.color }}>
-                        Join ₹{cfg.amount.toLocaleString("en-IN")} <ArrowRight className="w-3 h-3" />
-                      </a>
-                    </td>
-                  );
-                })}
-              </tr>
-            </tbody>
-          </table>
+    <section className="bg-[#0d2b1a] text-white py-14 relative overflow-hidden">
+      {showModal && <MembershipComparisonModal onClose={() => setShowModal(false)} />}
+
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-brand-orange rounded-full -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-brand-green rounded-full translate-y-1/2 -translate-x-1/2" />
+      </div>
+      <div className="max-w-6xl mx-auto px-4 relative z-10">
+        <div className="grid lg:grid-cols-[1fr_400px] gap-10 items-center">
+          {/* Left: Branding + CTAs */}
+          <div>
+            <p className="text-xs font-bold uppercase tracking-widest text-brand-orange mb-3">Islah Welfare Foundation</p>
+            <h1 className="text-4xl md:text-5xl font-extrabold leading-tight mb-4">Join IWF as a Member</h1>
+            <p className="text-white/75 max-w-2xl leading-relaxed text-base mb-6">
+              Become part of India's growing movement for equitable development. Your membership directly supports education, healthcare, and livelihood programs across rural communities.
+            </p>
+            <div className="flex flex-wrap gap-3 mb-8">
+              {(["Blue", "Yellow", "Green"] as MemberCategory[]).map((cat) => {
+                const cfg = CATEGORY_CONFIG[cat];
+                return (
+                  <div key={cat} className="flex items-center gap-2 bg-white/10 rounded-full px-4 py-1.5 text-sm font-semibold">
+                    <cfg.icon className="w-3.5 h-3.5 text-brand-orange" />
+                    {cat}: ₹{cfg.amount.toLocaleString("en-IN")}/yr
+                  </div>
+                );
+              })}
+            </div>
+            <div className="flex gap-4">
+              <a href="#register" className="bg-brand-orange hover:bg-brand-orange-dark text-white font-bold px-7 py-3 rounded-lg shadow-lg transition-all hover:scale-[1.02] inline-flex items-center gap-2">
+                <Users className="w-4 h-4" /> Join Now
+              </a>
+              <a href="#status" className="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold px-7 py-3 rounded-lg transition-all hover:scale-[1.02] inline-flex items-center gap-2">
+                <Search className="w-4 h-4" /> Check Status
+              </a>
+            </div>
+          </div>
+
+          {/* Right: Compact Comparison Card */}
+          <div className="bg-white/8 backdrop-blur-sm border border-white/15 rounded-2xl overflow-hidden shadow-2xl">
+            {/* Tier header */}
+            <div className="grid grid-cols-4 border-b border-white/10 items-center">
+              <div className="px-3 py-2 text-xs font-bold text-white/50 uppercase tracking-wider flex flex-col gap-1">
+                <span>Benefit</span>
+                <button
+                  type="button"
+                  onClick={() => setShowModal(true)}
+                  className="text-[10px] font-extrabold text-brand-orange hover:text-brand-orange-dark hover:underline text-left flex items-center gap-0.5"
+                >
+                  🔍 View Bigger
+                </button>
+              </div>
+              {(["Blue", "Yellow", "Green"] as MemberCategory[]).map((cat) => {
+                const cfg = CATEGORY_CONFIG[cat];
+                return (
+                  <div key={cat} className="px-2 py-3 text-center border-l border-white/10" style={{ backgroundColor: `${cfg.color}25` }}>
+                    <cfg.icon className="w-3.5 h-3.5 mx-auto mb-1" style={{ color: cfg.color === "#15803D" ? "#4ade80" : cfg.color === "#1D4ED8" ? "#93c5fd" : "#fbbf24" }} />
+                    <p className="text-[10px] font-extrabold" style={{ color: cfg.color === "#15803D" ? "#4ade80" : cfg.color === "#1D4ED8" ? "#93c5fd" : "#fbbf24" }}>{cat}</p>
+                    <p className="text-[9px] text-white/50">₹{cfg.amount.toLocaleString("en-IN")}</p>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Feature rows - compact, show only first 8 */}
+            <div className="divide-y divide-white/5 bg-white/[0.02]">
+              {allFeatures.slice(0, showComparison ? allFeatures.length : 8).map((feature) => {
+                const isOptionalRow = feature.toLowerCase().includes("member recognition");
+                return (
+                  <div key={feature} className="grid grid-cols-4 items-center">
+                    <div className="px-3 py-2 text-[10px] text-white/70 font-medium leading-tight">{feature.replace(" (Optional)", "")}{feature.includes("Optional") && <span className="text-white/40 ml-0.5">(Opt)</span>}</div>
+                    {(["Blue", "Yellow", "Green"] as MemberCategory[]).map((cat) => {
+                      const included = CATEGORY_CONFIG[cat].features.some(f => f.replace(" (Optional)", "") === feature.replace(" (Optional)", ""));
+                      return (
+                        <div key={cat} className="py-2 flex items-center justify-center border-l border-white/5 text-center">
+                          {isOptionalRow
+                            ? <span className="text-[9px] font-bold text-white/75 bg-white/10 px-1 py-0.5 rounded border border-white/10">Optional</span>
+                            : included
+                              ? <div className="w-4 h-4 rounded-full flex items-center justify-center" style={{ backgroundColor: `${CATEGORY_CONFIG[cat].color}30` }}>
+                                  <Check className="w-2.5 h-2.5" style={{ color: CATEGORY_CONFIG[cat].color === "#15803D" ? "#4ade80" : CATEGORY_CONFIG[cat].color === "#1D4ED8" ? "#93c5fd" : "#fbbf24" }} />
+                                </div>
+                              : <span className="text-white/15 text-xs">—</span>
+                          }
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Show more / Join footer */}
+            <div className="border-t border-white/10 px-3 py-3 flex items-center justify-between">
+              <button
+                type="button"
+                onClick={() => setShowComparison(!showComparison)}
+                className="flex items-center gap-1.5 text-[10px] font-bold text-white/60 hover:text-white/90 transition-colors"
+              >
+                {showComparison ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                {showComparison ? "Show less" : `+${allFeatures.length - 8} more benefits`}
+              </button>
+              <a href="#register" className="inline-flex items-center gap-1.5 bg-brand-orange text-white text-[10px] font-bold px-3 py-1.5 rounded-lg hover:bg-brand-orange-dark transition shadow-md">
+                Join Now <ArrowRight className="w-2.5 h-2.5" />
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
+  );
+}
+
+// ─── Member Spotlight ─────────────────────────────────────────────────────────
+
+const DUMMY_MEMBERS = [
+  { name: "Mohammad Rashid", city: "Darbhanga, Bihar", tier: "Green" as MemberCategory, initials: "MR", profession: "Teacher", joined: "Jan 2025" },
+  { name: "Fatima Begum", city: "Patna, Bihar", tier: "Yellow" as MemberCategory, initials: "FB", profession: "Healthcare Worker", joined: "Feb 2025" },
+  { name: "Arjun Kumar Singh", city: "Muzaffarpur, Bihar", tier: "Green" as MemberCategory, initials: "AK", profession: "Social Worker", joined: "Mar 2025" },
+  { name: "Nazia Siddiqui", city: "Kolkata, W. Bengal", tier: "Blue" as MemberCategory, initials: "NS", profession: "Student", joined: "Apr 2025" },
+  { name: "Rajesh Verma", city: "Gaya, Bihar", tier: "Yellow" as MemberCategory, initials: "RV", profession: "Entrepreneur", joined: "Apr 2025" },
+  { name: "Aisha Rahman", city: "Hyderabad, Telangana", tier: "Blue" as MemberCategory, initials: "AR", profession: "Engineer", joined: "May 2025" },
+  { name: "Syed Imran Ali", city: "Lucknow, UP", tier: "Green" as MemberCategory, initials: "SI", profession: "Advocate", joined: "Jun 2025" },
+  { name: "Priya Kumari", city: "Ranchi, Jharkhand", tier: "Blue" as MemberCategory, initials: "PK", profession: "Nurse", joined: "Jun 2025" },
+];
+
+function MemberSpotlight() {
+  return (
+    <section className="py-14 bg-gradient-to-br from-slate-50 to-white">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="text-center mb-10">
+          <p className="text-xs font-bold uppercase tracking-widest text-brand-orange mb-2">Our Community</p>
+          <h2 className="text-2xl md:text-3xl font-extrabold text-brand-green-dark">Members Who Make It Possible</h2>
+          <p className="text-slate-500 text-sm mt-2 max-w-xl mx-auto">These members have graciously allowed us to share their profiles. Their contributions fuel real change across communities.</p>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          {DUMMY_MEMBERS.map((member) => {
+            const cfg = CATEGORY_CONFIG[member.tier];
+            return (
+              <motion.div
+                key={member.name}
+                whileHover={{ y: -4, scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow"
+              >
+                {/* Avatar */}
+                <div className="h-2 w-full" style={{ backgroundColor: cfg.color }} />
+                <div className="p-4 text-center">
+                  <div
+                    className="w-14 h-14 rounded-full mx-auto mb-3 flex items-center justify-center text-white font-extrabold text-lg shadow-md"
+                    style={{ background: `linear-gradient(135deg, ${cfg.color}, ${cfg.darkColor})` }}
+                  >
+                    {member.initials}
+                  </div>
+                  <p className="font-bold text-slate-800 text-sm leading-tight">{member.name}</p>
+                  <p className="text-xs text-slate-500 mt-0.5">{member.profession}</p>
+                  <div className="flex items-center justify-center gap-1.5 mt-2">
+                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${cfg.badge}`}>{member.tier} Member</span>
+                  </div>
+                  <p className="text-[10px] text-slate-400 mt-2 flex items-center justify-center gap-1">
+                    <MapPin className="w-2.5 h-2.5" /> {member.city}
+                  </p>
+                  <p className="text-[10px] text-slate-400 mt-0.5 flex items-center justify-center gap-1">
+                    <Calendar className="w-2.5 h-2.5" /> Joined {member.joined}
+                  </p>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        <div className="text-center mt-8">
+          <p className="text-xs text-slate-400">Showing consenting members only · <a href="#register" className="text-brand-green font-semibold hover:underline">Become a member →</a></p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Membership Benefits Modal ────────────────────────────────────────────────
+
+function MembershipComparisonModal({ onClose }: { onClose: () => void }) {
+  const allFeatures = [
+    "Digital Membership ID Card",
+    "Annual membership certificate",
+    "Access to IWF events & updates",
+    "Newsletter subscription",
+    "Member recognition on website (Optional)",
+    "Priority event invitations",
+    "Quarterly impact reports",
+    "Access to member dashboard",
+    "Direct engagement with IWF programs",
+    "Special appreciation mention",
+    "Direct access to program teams",
+    "Annual recognition dinner invitation",
+    "Co-branding on project materials",
+    "Advisory role on relevant programs",
+    "Priority volunteer placement",
+    "Personalized impact report",
+  ];
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+        onClick={onClose}
+      >
+        <motion.div
+          initial={{ scale: 0.95, y: 15 }}
+          animate={{ scale: 1, y: 0 }}
+          exit={{ scale: 0.95, y: 15 }}
+          className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full overflow-hidden flex flex-col max-h-[90vh]"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Header */}
+          <div className="bg-[#0d2b1a] px-6 py-4 flex items-center justify-between text-white border-b border-white/10 shrink-0">
+            <div>
+              <h3 className="font-extrabold text-lg">Compare Membership Plans</h3>
+              <p className="text-white/60 text-xs mt-0.5">Choose the tier that matches your commitment</p>
+            </div>
+            <button
+              onClick={onClose}
+              className="text-white/70 hover:text-white bg-white/10 hover:bg-white/20 p-2 rounded-xl transition"
+            >
+              <XCircle className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Table Container */}
+          <div className="overflow-y-auto p-6">
+            <div className="overflow-x-auto rounded-xl border border-slate-100 shadow-sm">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-slate-100 bg-slate-50/50">
+                    <th className="px-5 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider w-64">Feature</th>
+                    {(["Blue", "Yellow", "Green"] as MemberCategory[]).map((cat) => {
+                      const cfg = CATEGORY_CONFIG[cat];
+                      return (
+                        <th key={cat} className="px-5 py-4 text-center" style={{ backgroundColor: `${cfg.color}08` }}>
+                          <div className="flex flex-col items-center gap-1">
+                            <cfg.icon className="w-5 h-5" style={{ color: cfg.color }} />
+                            <span className="text-sm font-extrabold" style={{ color: cfg.color }}>{cat}</span>
+                            <span className="text-xs text-slate-500">₹{cfg.amount.toLocaleString("en-IN")}/yr</span>
+                          </div>
+                        </th>
+                      );
+                    })}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-50">
+                  {allFeatures.map((feature, i) => {
+                    const isOptionalRow = feature.toLowerCase().includes("member recognition");
+                    return (
+                      <tr key={feature} className={i % 2 === 0 ? "bg-slate-50/20" : "bg-white"}>
+                        <td className="px-5 py-3 text-xs text-slate-700 font-semibold">{feature}</td>
+                        {(["Blue", "Yellow", "Green"] as MemberCategory[]).map((cat) => {
+                          const included = CATEGORY_CONFIG[cat].features.some(f => f.replace(" (Optional)", "") === feature.replace(" (Optional)", ""));
+                          return (
+                            <td key={cat} className="px-5 py-3 text-center" style={{ backgroundColor: included ? `${CATEGORY_CONFIG[cat].color}08` : "transparent" }}>
+                              {isOptionalRow
+                                ? <span className="inline-block px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-[10px] font-bold border border-slate-200">Optional</span>
+                                : included
+                                  ? <Check className="w-4 h-4 mx-auto" style={{ color: CATEGORY_CONFIG[cat].color }} />
+                                  : <span className="text-slate-200 text-lg">—</span>
+                              }
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    );
+                  })}
+                  <tr className="border-t border-slate-200 bg-slate-50/20">
+                    <td className="px-5 py-4 text-xs font-bold text-slate-700">Annual Fee</td>
+                    {(["Blue", "Yellow", "Green"] as MemberCategory[]).map((cat) => {
+                      const cfg = CATEGORY_CONFIG[cat];
+                      return (
+                        <td key={cat} className="px-5 py-4 text-center">
+                          <a href="#register" onClick={onClose} className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold text-white transition hover:scale-[1.02] shadow-sm" style={{ backgroundColor: cfg.color }}>
+                            Join ₹{cfg.amount.toLocaleString("en-IN")} <ArrowRight className="w-3 h-3" />
+                          </a>
+                        </td>
+                      );
+                    })}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
   );
 }
 
@@ -1510,7 +1911,7 @@ export default function MembershipPage() {
 
       <main>
         <MembershipHero />
-        <MembershipComparison />
+        <MemberSpotlight />
         <RegistrationSection />
         <MemberStatusCheck />
         <AdminDashboard />
@@ -1521,3 +1922,4 @@ export default function MembershipPage() {
     </div>
   );
 }
+

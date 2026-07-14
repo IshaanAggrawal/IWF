@@ -195,42 +195,67 @@ export function NotificationTicker() {
   );
 }
 
-export function UtilityBar() {
+interface UtilityBarProps {
+  lang?: "en" | "hi";
+  setLang?: (l: "en" | "hi") => void;
+}
+
+export function UtilityBar({ lang = "en", setLang }: UtilityBarProps) {
+  const isHi = lang === "hi";
   return (
-    <div className="bg-brand-green text-white text-xs">
-      <div className="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-3 sm:gap-2">
-        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-4 gap-y-1.5 w-full sm:w-auto">
-          <a href="tel:+919811861633" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
-            <Phone className="w-3.5 h-3.5" /> {CONTACT_DETAILS.phone}
+    <div className="bg-brand-green text-white py-3.5 border-b border-white/10 select-none">
+      <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8">
+        
+        {/* Left: Contact Info - Stacked Vertically */}
+        <div className="flex flex-col items-center md:items-start gap-1.5 text-xs shrink-0 select-text w-full md:w-auto">
+          <a href="tel:+919811861633" className="flex items-center gap-2 hover:text-white/80 transition-colors font-medium">
+            <Phone className="w-3.5 h-3.5 text-brand-orange shrink-0" />
+            <span>+91-9811861633</span>
           </a>
-          <a href={`mailto:${CONTACT_DETAILS.email}`} className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
-            <Mail className="w-3.5 h-3.5" /> {CONTACT_DETAILS.email}
+          <a href={`mailto:${CONTACT_DETAILS.email}`} className="flex items-center gap-2 hover:text-white/80 transition-colors font-medium">
+            <Mail className="w-3.5 h-3.5 text-brand-orange shrink-0" />
+            <span>{CONTACT_DETAILS.email}</span>
           </a>
-          <a href="#careers" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity font-semibold">
-            <Briefcase className="w-3.5 h-3.5" /> Careers
+          <a href="#careers" className="flex items-center gap-2 hover:text-white/80 transition-colors font-semibold">
+            <Briefcase className="w-3.5 h-3.5 text-brand-orange shrink-0" />
+            <span>Careers</span>
           </a>
         </div>
-        <div className="flex items-center justify-center gap-2 w-full sm:w-auto mt-1 sm:mt-0">
-          <span className="mr-1 opacity-80">Follow Us:</span>
-          {[
-            { Icon: Facebook, color: "#1877F2", label: "Facebook", href: "https://facebook.com" },
-            { Icon: Twitter, color: "#1DA1F2", label: "Twitter/X", href: "https://twitter.com" },
-            { Icon: Instagram, color: "#E1306C", label: "Instagram", href: "https://instagram.com" },
-            { Icon: Youtube, color: "#FF0000", label: "YouTube", href: "https://youtube.com" },
-            { Icon: Linkedin, color: "#0A66C2", label: "LinkedIn", href: "https://linkedin.com" },
-          ].map(({ Icon, color, label, href }) => (
-            <a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-6 h-6 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 hover:shadow-lg"
-              style={{ backgroundColor: color }}
-              aria-label={label}
-            >
-              <Icon className="w-3 h-3 text-white" />
-            </a>
-          ))}
+
+        {/* Center: Big White Organization Name - Enormous and Dominant */}
+        <div className="text-center flex-1 py-2 md:py-0 w-full md:w-auto">
+          <span className="font-black text-lg md:text-3xl tracking-[0.25em] uppercase text-white block select-all drop-shadow-lg leading-tight font-sans">
+            ISLAH WELFARE FOUNDATION
+          </span>
+        </div>
+
+        {/* Right: Social & Translate - Stacked Vertically */}
+        <div className="flex flex-col items-center md:items-end gap-2.5 shrink-0 w-full md:w-auto">
+          {/* Social Icons */}
+          <div className="flex items-center gap-2">
+            <span className="text-[11px] opacity-80 font-medium hidden sm:inline">Follow Us:</span>
+            {[
+              { Icon: Facebook, color: "#1877F2", label: "Facebook", href: "https://facebook.com" },
+              { Icon: Twitter, color: "#1DA1F2", label: "Twitter/X", href: "https://twitter.com" },
+              { Icon: Instagram, color: "#E1306C", label: "Instagram", href: "https://instagram.com" },
+              { Icon: Youtube, color: "#FF0000", label: "YouTube", href: "https://youtube.com" },
+              { Icon: Linkedin, color: "#0A66C2", label: "LinkedIn", href: "https://linkedin.com" },
+            ].map(({ Icon, color, label, href }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-5.5 h-5.5 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+                style={{ backgroundColor: color }}
+                aria-label={label}
+              >
+                <Icon className="w-3.5 h-3.5 text-white" />
+              </a>
+            ))}
+          </div>
+
+          {/* Hindi Translate Pill - Stacked below socials */}
           <TranslateButton />
         </div>
       </div>
@@ -289,14 +314,8 @@ export function Header() {
       />
       <header className="bg-white sticky top-0 z-50 border-b border-gray-100 shadow-sm transition-all duration-200">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <a href="/" className="flex items-center gap-2 shrink-0">
-            <Leaf className="w-5 h-5 md:w-6 md:h-6 text-[#0d2b1a] shrink-0" />
-            <div className="flex flex-col leading-none">
-              <span className="font-extrabold text-[#0d2b1a] text-lg md:text-xl tracking-wide">IWF</span>
-              <span className="font-semibold text-[7px] md:text-[8px] text-gray-500 tracking-wider">
-                ISLAH WELFARE FOUNDATION
-              </span>
-            </div>
+          <a href="/" className="flex items-center gap-2 shrink-0 group" aria-label="IWF Home">
+            <Leaf className="w-8 h-8 text-brand-green group-hover:scale-110 transition-transform shrink-0" />
           </a>
 
           <nav className="hidden lg:flex items-center gap-8" aria-label="Main navigation">
@@ -581,15 +600,15 @@ export function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void 
               <Leaf className="w-8 h-8 text-brand-green fill-brand-green/20" />
               <div className="flex flex-col">
                 <span className="font-extrabold text-2xl tracking-wide text-white leading-none">ISLAH</span>
-                <span className="font-light text-[10px] tracking-widest text-white/80 mt-0.5">WELFARE FOUNDATION</span>
+                <span className="font-light text-[10px] tracking-widest text-white mt-0.5">WELFARE FOUNDATION</span>
               </div>
             </div>
             <div className="text-brand-orange font-medium text-sm">Care | Empower | Uplift</div>
-            <p className="text-white/70 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Islah Welfare Foundation empowers underprivileged communities through education, healthcare, women empowerment, skill development and social welfare initiatives.
             </p>
             <div>
-              <span className="block text-xs font-bold tracking-widest text-white/60 uppercase mb-2">Follow Us</span>
+              <span className="block text-xs font-bold tracking-widest text-white uppercase mb-2">Follow Us</span>
               <div className="flex gap-2">
                 {[Facebook, Instagram, Youtube, Linkedin, Twitter].map((Icon, i) => (
                   <a key={i} href="#" className="w-7 h-7 rounded-full bg-white/10 hover:bg-brand-orange flex items-center justify-center text-white transition-all duration-200" aria-label="Social media profile">
@@ -607,7 +626,7 @@ export function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void 
             <ul className="space-y-2.5">
               {quickLinks.map(([label, href]) => (
                 <li key={label}>
-                  <a href={href} className="inline-flex items-center text-white/75 text-sm hover:text-brand-orange hover:translate-x-1 transition-all duration-200">
+                  <a href={href} className="inline-flex items-center text-white text-sm hover:text-brand-orange hover:translate-x-1 transition-all duration-200">
                     <span className="text-brand-orange text-xs mr-2">-&gt;</span>
                     {label}
                   </a>
@@ -631,7 +650,7 @@ export function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void 
                 <li key={label}>
                   <button
                     onClick={() => onOpenModal(type as RoleType)}
-                    className="inline-flex items-center text-left text-white/75 text-sm hover:text-brand-orange hover:translate-x-1 transition-all duration-200 cursor-pointer"
+                    className="inline-flex items-center text-left text-white text-sm hover:text-brand-orange hover:translate-x-1 transition-all duration-200 cursor-pointer"
                   >
                     <span className="text-brand-orange text-xs mr-2">-&gt;</span>
                     {label}
@@ -654,7 +673,7 @@ export function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void 
                 ["12A & 80G", "/about/legal-status"],
               ].map(([label, href]) => (
                 <li key={label}>
-                  <a href={href} className="inline-flex items-center text-white/75 text-sm hover:text-brand-orange hover:translate-x-1 transition-all duration-200">
+                  <a href={href} className="inline-flex items-center text-white text-sm hover:text-brand-orange hover:translate-x-1 transition-all duration-200">
                     <span className="text-brand-orange text-xs mr-2">-&gt;</span>
                     {label}
                   </a>
@@ -667,7 +686,7 @@ export function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void 
             <h4 className="flex items-center gap-2 text-white font-semibold text-sm uppercase border-l-2 border-brand-orange pl-2 tracking-wide">
               <Phone className="w-4 h-4 text-brand-orange" /> Contact Us
             </h4>
-            <div className="space-y-3 text-white/80 text-sm">
+            <div className="space-y-3 text-white text-sm">
               <div className="flex gap-2 items-start">
                 <MapPin className="w-4 h-4 mt-0.5 text-brand-orange shrink-0" />
                 <span>{CONTACT_DETAILS.address}</span>
@@ -755,12 +774,12 @@ export function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void 
               <Icon className="w-5 h-5 text-brand-green mt-0.5 shrink-0" />
               <div>
                 <h6 className="font-bold text-white text-sm">{title}</h6>
-                <p className="text-white/65 text-xs mt-0.5">{desc}</p>
+                <p className="text-white text-xs mt-0.5">{desc}</p>
               </div>
             </div>
           ))}
           <div className="p-4 rounded bg-black/10 border border-white/5 flex items-center justify-end">
-            <p className="text-white/80 font-serif italic text-sm text-right">
+            <p className="text-white font-serif italic text-sm text-right">
               "Together, we build a better tomorrow"
             </p>
           </div>
@@ -768,7 +787,7 @@ export function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void 
       </div>
 
       <div className="bg-[#091f12] py-4 px-4 md:px-10">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 text-xs text-white/60">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 text-xs text-white">
           <div>(c) 2026 Islah Welfare Foundation. All Rights Reserved.</div>
           <div className="flex flex-wrap gap-3">
             <a href="/privacy-policy" className="hover:text-brand-orange transition-colors">Privacy Policy</a>
