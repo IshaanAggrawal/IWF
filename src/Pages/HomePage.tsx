@@ -30,6 +30,7 @@ import { RoleFormModal, type RoleType } from "@/components/forms/RoleFormModal";
 import { PatientCard } from "@/components/healthcare/PatientCard";
 import { URGENT_PATIENTS } from "@/content/patients";
 import { TranslateButton } from "@/components/TranslateButton";
+import newLogo from "@/assets/new logo.png";
 
 // ─── Mega Nav Data ────────────────────────────────────────────────────────────
 
@@ -349,7 +350,7 @@ function Header({ lang }: HeaderProps) {
 
           {/* Left Group: Logo */}
           <a href="/" className="flex items-center gap-2 shrink-0 group" aria-label="IWF Home">
-            <Leaf className="w-8 h-8 text-brand-green group-hover:scale-110 transition-transform shrink-0" />
+            <img src={newLogo} alt="IWF Logo" className="h-12 md:h-14 w-auto object-contain group-hover:scale-110 transition-transform shrink-0" />
           </a>
 
           {/* Center Group: Nav Links */}
@@ -1157,7 +1158,7 @@ function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void }) {
           {/* Column 1 — Organization Identity */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <Leaf className="w-8 h-8 text-brand-green fill-brand-green/20" />
+              <img src={newLogo} alt="IWF Logo" className="h-14 w-auto object-contain shrink-0" />
               <div className="flex flex-col">
                 <span className="font-extrabold text-2xl tracking-wide text-white leading-none">ISLAH</span>
                 <span className="font-light text-[10px] tracking-widest text-white mt-0.5">WELFARE FOUNDATION</span>

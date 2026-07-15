@@ -30,6 +30,7 @@ import type { RoleType } from "@/components/forms/RoleFormModal";
 
 export { RoleFormModal } from "@/components/forms/RoleFormModal";
 import { TranslateButton } from "@/components/TranslateButton";
+import newLogo from "@/assets/new logo.png";
 
 export const NAV_ITEMS = [
   "Home",
@@ -315,7 +316,7 @@ export function Header() {
       <header className="bg-white sticky top-0 z-50 border-b border-gray-100 shadow-sm transition-all duration-200">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <a href="/" className="flex items-center gap-2 shrink-0 group" aria-label="IWF Home">
-            <Leaf className="w-8 h-8 text-brand-green group-hover:scale-110 transition-transform shrink-0" />
+            <img src={newLogo} alt="IWF Logo" className="h-12 md:h-14 w-auto object-contain group-hover:scale-110 transition-transform shrink-0" />
           </a>
 
           <nav className="hidden lg:flex items-center gap-8" aria-label="Main navigation">
@@ -597,7 +598,7 @@ export function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void 
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <Leaf className="w-8 h-8 text-brand-green fill-brand-green/20" />
+              <img src={newLogo} alt="IWF Logo" className="h-14 w-auto object-contain shrink-0" />
               <div className="flex flex-col">
                 <span className="font-extrabold text-2xl tracking-wide text-white leading-none">ISLAH</span>
                 <span className="font-light text-[10px] tracking-widest text-white mt-0.5">WELFARE FOUNDATION</span>

@@ -1,5 +1,5 @@
-import { Leaf } from "lucide-react";
 import { Link, useLocation } from "@tanstack/react-router";
+import newLogo from "@/assets/new logo.png";
 
 const navItems = [
   { label: "Home", to: "/" },
@@ -17,9 +17,7 @@ export function Header() {
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
         <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
-          <div className="w-12 h-12 rounded-full bg-brand-green text-white flex items-center justify-center font-bold">
-            <Leaf className="w-6 h-6" />
-          </div>
+          <img src={newLogo} alt="IWF Logo" className="w-12 h-12 object-contain" />
           <div className="leading-tight">
             <div className="text-lg font-extrabold text-brand-green">IWF</div>
             <div className="text-[10px] font-semibold text-brand-green-dark tracking-wider">ISLAH WELFARE<br />FOUNDATION</div>
