@@ -1,8 +1,9 @@
 import {
   Facebook, Twitter, Instagram, Youtube, Linkedin,
-  Leaf, MapPin, Phone, Mail, Heart, Award, ShieldCheck, Hand
+  MapPin, Phone, Mail, Heart, Award, ShieldCheck, Hand
 } from "lucide-react";
 import footerBg from "@/assets/footer-bg.jpg";
+import newLogo from "@/assets/new logo.png";
 
 export function Footer() {
   return (
@@ -14,7 +15,7 @@ export function Footer() {
       <div className="relative max-w-7xl mx-auto px-4 py-14 grid md:grid-cols-2 lg:grid-cols-5 gap-8">
         <div className="lg:col-span-1">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 rounded-full bg-white text-brand-green flex items-center justify-center"><Leaf className="w-6 h-6" /></div>
+            <img src={newLogo} alt="IWF Logo" className="w-12 h-12 object-contain" />
             <div className="leading-tight">
               <div className="font-extrabold">ISLAH</div>
               <div className="text-[10px] tracking-wider">WELFARE FOUNDATION</div>
