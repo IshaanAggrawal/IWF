@@ -252,7 +252,7 @@ function UtilityBar({ lang, setLang }: UtilityBarProps) {
   return (
     <div className="bg-brand-green text-white py-3.5 border-b border-white/10 select-none">
       <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8">
-        
+
         {/* Left: Contact Info - Stacked Vertically */}
         <div className="flex flex-col items-center md:items-start gap-1.5 text-xs shrink-0 select-text w-full md:w-auto">
           <a href="tel:+919811861633" className="flex items-center gap-2 hover:text-white/80 transition-colors font-medium">
@@ -771,14 +771,6 @@ function HeroSection() {
 
         <div className="relative max-w-7xl mx-auto px-4 py-16 w-full z-10">
           <div className="max-w-3xl text-white">
-            {/* Tagline Badge */}
-            <div className="inline-flex items-center gap-2 bg-brand-green/20 border border-brand-green/30 px-3.5 py-1.5 rounded-full mb-6 backdrop-blur-sm">
-              <span className="w-2 h-2 rounded-full bg-brand-orange animate-pulse" />
-              <span className="text-xs md:text-sm font-semibold tracking-wide uppercase text-white/95">
-                "Planting Seeds of Hope and Change" — Islah Welfare Foundation (Reg.)
-              </span>
-            </div>
-
             {/* H1 Heading */}
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight text-white mb-6">
               Welcome to <span className="text-brand-orange">Islah Welfare Foundation</span>
@@ -819,18 +811,18 @@ function HeroSection() {
 
       {/* Stats bar */}
       <div className="max-w-7xl mx-auto px-4 -mt-10 relative z-20">
-        <div className="bg-brand-green text-white rounded-md shadow-xl grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-white/20">
+        <div className="bg-sky-50 border border-sky-100/80 text-[#0b1f3b] rounded-xl shadow-lg grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-sky-200/60">
           {[
             { icon: Users, n: "5,000+", l: "Lives Impacted" },
             { icon: HeartPulse, n: "100+", l: "Health Camps" },
             { icon: GraduationCap, n: "2,000+", l: "Students Supported" },
             { icon: Leaf, n: "10,000+", l: "Beneficiaries" },
           ].map(({ icon: Icon, n, l }) => (
-            <div key={l} className="p-5 flex items-center gap-3 justify-center">
-              <Icon className="w-9 h-9 opacity-90" />
+            <div key={l} className="py-3 px-4 flex items-center gap-3 justify-center">
+              <Icon className="w-8 h-8 text-brand-orange shrink-0" />
               <div>
-                <div className="text-2xl font-extrabold">{n}</div>
-                <div className="text-xs opacity-90">{l}</div>
+                <div className="text-xl font-extrabold text-[#0b1f3b] leading-tight">{n}</div>
+                <div className="text-xs font-semibold text-gray-600 mt-0.5 leading-tight">{l}</div>
               </div>
             </div>
           ))}
@@ -1084,7 +1076,7 @@ function EventsAndNoticesSection({ lang }: LanguageProp) {
     <section className="py-16 bg-[#0b1f3b] text-white border-y border-white/5">
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-10 items-stretch">
-          
+
           {/* Left Column: Events & Notices */}
           <div className="flex flex-col">
             <div className="flex items-center justify-between mb-6">
@@ -1093,10 +1085,10 @@ function EventsAndNoticesSection({ lang }: LanguageProp) {
                 {t.eventsNotices}
               </h2>
             </div>
-            
+
             {/* Scroll Container with height exactly matching 3 items (440px) */}
             <div className="relative flex-1 h-[440px] max-h-[440px] overflow-hidden rounded-2xl border border-white/10 bg-[#0b1f3b] shadow-sm p-4">
-              <div 
+              <div
                 className="space-y-4"
                 style={{
                   transform: `translateY(-${noticeIndex * 140}px)`,
@@ -1119,7 +1111,7 @@ function EventsAndNoticesSection({ lang }: LanguageProp) {
               </div>
             </div>
           </div>
- 
+
           {/* Right Column: News & Updates (Vertical Carousel) */}
           <div className="flex flex-col">
             <div className="flex items-center justify-between mb-6">
@@ -1131,17 +1123,16 @@ function EventsAndNoticesSection({ lang }: LanguageProp) {
                 {t.viewAll} →
               </a>
             </div>
- 
+
             {/* Carousel Container showing 1 card with animation transitions */}
             <div className="relative flex-1 h-[440px] max-h-[440px] overflow-hidden rounded-2xl border border-white/10 bg-[#0b1f3b] shadow-sm flex flex-col justify-between">
               {newsList.map((news, idx) => (
                 <div
                   key={idx}
-                  className={`absolute inset-0 p-6 bg-[#0c2445] rounded-2xl flex flex-col justify-between transition-all duration-700 ease-in-out ${
-                    newsIndex === idx 
-                      ? "opacity-100 translate-y-0 pointer-events-auto z-10" 
-                      : "opacity-0 translate-y-4 pointer-events-none z-0"
-                  }`}
+                  className={`absolute inset-0 p-6 bg-[#0c2445] rounded-2xl flex flex-col justify-between transition-all duration-700 ease-in-out ${newsIndex === idx
+                    ? "opacity-100 translate-y-0 pointer-events-auto z-10"
+                    : "opacity-0 translate-y-4 pointer-events-none z-0"
+                    }`}
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
@@ -1157,12 +1148,12 @@ function EventsAndNoticesSection({ lang }: LanguageProp) {
                       {news.excerpt}
                     </p>
                   </div>
-                  
+
                   <div className="pt-4 flex items-center justify-between border-t border-white/5 mt-4">
                     <a href="#" className="text-xs font-bold inline-flex items-center gap-1 hover:underline" style={{ color: news.tagColor }}>
                       {t.readMore} <ArrowRight className="w-3 h-3" />
                     </a>
-                    
+
                     {/* Dots indicator */}
                     <div className="flex gap-1.5">
                       {newsList.map((_, i) => (
@@ -1179,7 +1170,7 @@ function EventsAndNoticesSection({ lang }: LanguageProp) {
               ))}
             </div>
           </div>
- 
+
         </div>
       </div>
     </section>
@@ -1865,10 +1856,10 @@ function GallerySection({ lang }: LanguageProp) {
   return (
     <section className="py-16 bg-white border-y border-slate-100 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4">
-        
+
         {/* Header Title with red/orange dashes and navigation arrows */}
         <div className="flex items-center justify-between mb-10 relative">
-          
+
           {/* Centered Gallery Header in full width parent */}
           <div className="flex-1 flex items-center justify-center gap-3">
             <span className="w-8 h-1 bg-brand-orange rounded-full"></span>
@@ -1883,11 +1874,10 @@ function GallerySection({ lang }: LanguageProp) {
             <button
               onClick={handlePrev}
               disabled={currentIndex === 0}
-              className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all ${
-                currentIndex === 0 
-                  ? "border-slate-200 text-slate-300 cursor-not-allowed" 
-                  : "border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-white"
-              }`}
+              className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all ${currentIndex === 0
+                ? "border-slate-200 text-slate-300 cursor-not-allowed"
+                : "border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-white"
+                }`}
               aria-label="Previous Slide"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -1895,11 +1885,10 @@ function GallerySection({ lang }: LanguageProp) {
             <button
               onClick={handleNext}
               disabled={currentIndex >= maxIndex}
-              className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all ${
-                currentIndex >= maxIndex 
-                  ? "border-slate-200 text-slate-300 cursor-not-allowed" 
-                  : "border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-white"
-              }`}
+              className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all ${currentIndex >= maxIndex
+                ? "border-slate-200 text-slate-300 cursor-not-allowed"
+                : "border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-white"
+                }`}
               aria-label="Next Slide"
             >
               <ArrowRight className="w-4 h-4" />
@@ -1914,15 +1903,15 @@ function GallerySection({ lang }: LanguageProp) {
             style={{ transform: `translateX(-${currentIndex * (100 / (maxIndex === 2 ? 4 : maxIndex === 4 ? 2 : 1))}%` }}
           >
             {items.map((item, idx) => (
-              <div 
-                key={idx} 
+              <div
+                key={idx}
                 className="w-[calc(100%-16px)] shrink-0 sm:w-[calc(50%-12px)] lg:w-[calc(25%-12px)] rounded-2xl overflow-hidden shadow-md border border-slate-100 group relative aspect-[4/3] bg-slate-900 cursor-pointer"
               >
                 {/* Image */}
-                <img 
-                  src={item.src} 
-                  alt={item.title} 
-                  loading="lazy" 
+                <img
+                  src={item.src}
+                  alt={item.title}
+                  loading="lazy"
                   className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
                 />
 
@@ -1952,8 +1941,8 @@ function GallerySection({ lang }: LanguageProp) {
 
         {/* View All link below the carousel */}
         <div className="text-center mt-8">
-          <a 
-            href="/news-and-events" 
+          <a
+            href="/news-and-events"
             className="inline-flex items-center gap-1.5 text-xs font-extrabold text-brand-green hover:text-brand-green-dark hover:underline transition-colors uppercase tracking-wider"
           >
             {lang === "en" ? "View All Media" : "सभी मीडिया देखें"} <ArrowRight className="w-3.5 h-3.5" />
@@ -1988,7 +1977,7 @@ function VideoHeroSection({ lang }: LanguageProp) {
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/70" />
 
       {/* Scroll indicator */}
-      <a 
+      <a
         href="#welcome-hero"
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 animate-bounce group cursor-pointer"
         aria-label="Scroll to welcome section"
