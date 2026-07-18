@@ -768,7 +768,7 @@ function Header({ lang }: HeaderProps) {
 
 function HeroSection() {
   return (
-    <section className="relative">
+    <section id="welcome-hero" className="relative scroll-mt-20">
       <div className="relative min-h-[600px] lg:min-h-[680px] overflow-hidden flex items-center">
         {/* Background Image */}
         <img
@@ -1978,6 +1978,44 @@ function GallerySection({ lang }: LanguageProp) {
 
 // ─── Main Export ──────────────────────────────────────────────────────────────
 
+// ─── Video Hero Section Component ──────────────────────────────────────────
+
+function VideoHeroSection({ lang }: LanguageProp) {
+  const isHi = lang === "hi";
+
+  return (
+    <section className="relative w-full h-[calc(100vh-130px)] min-h-[500px] overflow-hidden flex items-center justify-center select-none bg-slate-950">
+      {/* Loop Background YouTube Video Embed */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+        <iframe
+          src="https://www.youtube.com/embed/0CbFrom3Qkk?autoplay=1&mute=1&loop=1&playlist=0CbFrom3Qkk&controls=0&showinfo=0&rel=0&playsinline=1&enablejsapi=1&iv_load_policy=3&modestbranding=1"
+          className="absolute top-1/2 left-1/2 w-[100vw] h-[56.25vw] min-h-[100vh] min-w-[177.77vh] -translate-x-1/2 -translate-y-1/2 opacity-90"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          title="Background video"
+          frameBorder="0"
+        />
+      </div>
+
+      {/* Dark Gradient Overlay - Subtler since there is no text */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/70" />
+
+      {/* Scroll indicator */}
+      <a 
+        href="#welcome-hero"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 animate-bounce group cursor-pointer"
+        aria-label="Scroll to welcome section"
+      >
+        <span className="text-[10px] uppercase tracking-widest text-white/70 font-bold group-hover:text-white transition-colors">{isHi ? "नीचे स्क्रॉल करें" : "Scroll Down"}</span>
+        <div className="w-6 h-10 rounded-full border-2 border-white/50 flex items-start justify-center p-1.5 group-hover:border-white transition-colors">
+          <div className="w-1.5 h-2.5 bg-brand-orange rounded-full" />
+        </div>
+      </a>
+    </section>
+  );
+}
+
+// ─── Main Export ──────────────────────────────────────────────────────────────
+
 export default function HomePage() {
   const [activeModal, setActiveModal] = useState<RoleType | null>(null);
   const [lang, setLang] = useState<"en" | "hi">("en");
@@ -1990,6 +2028,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-white font-sans text-foreground">
       <NotificationTicker />
       <Header lang={lang} />
+      <VideoHeroSection lang={lang} />
       <HeroSection />
       <UrgentPatientsSection lang={lang} />
       <EventsAndNoticesSection lang={lang} />
