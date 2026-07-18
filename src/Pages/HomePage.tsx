@@ -4,7 +4,7 @@ import {
   Phone, Mail, Facebook, Twitter, Instagram, Youtube, Linkedin,
   GraduationCap, HeartPulse, Users, Sprout, Wrench, Leaf,
   BookOpen, Stethoscope, Hand, MapPin,
-  ArrowRight, Award, ShieldCheck, Heart, HandHeart, Briefcase,
+  ArrowRight, ArrowLeft, Award, ShieldCheck, Heart, HandHeart, Briefcase,
   Info, BarChart2, Newspaper, UserCheck, MessageCircle, Target,
   ChevronDown, X, Menu, Globe, Building2, Scale, FileText, Send, Lock, Shield,
   TrendingUp, Home, Activity, Star, Zap, Leaf as LeafIcon,
@@ -976,48 +976,193 @@ function ProgramsAndThematic({ lang }: LanguageProp) {
   );
 }
 
-function EventsAndGallery({ lang }: LanguageProp) {
+function EventsAndNoticesSection({ lang }: LanguageProp) {
   const t = TRANSLATIONS[lang];
-  const events = [
+  const notices = [
     { d: "25", m: "MAY", title: lang === "en" ? "Free Health Camp — Darbhanga" : "निःशुल्क स्वास्थ्य शिविर — दरभंगा", desc: lang === "en" ? "Free diagnostic consultation and distributing medicines to rural families." : "ग्रामीण परिवारों के लिए निःशुल्क परामर्श, जाँच शिविर और निःशुल्क दवा वितरण।" },
     { d: "05", m: "JUN", title: lang === "en" ? "Environment Day Plantation" : "पर्यावरण दिवस वृक्षारोपण अभियान", desc: lang === "en" ? "Planting saplings and promoting environment awareness in local villages." : "स्थानीय गांवों में वृक्षारोपण और पर्यावरण संरक्षण के प्रति जागरूकता फैलाना।" },
     { d: "15", m: "JUL", title: lang === "en" ? "Shiksha Na Ruke Distribution" : "शिक्षा न रुके छात्रवृत्ति वितरण", desc: lang === "en" ? "Scholarship kits distribution to deserving students under our flagship campaign." : "फ्लैगशिप अभियान के तहत पात्र विद्यार्थियों को छात्रवृत्ति किट का वितरण।" },
+    { d: "10", m: "NOV", title: lang === "en" ? "Winter Relief Blanket Drive" : "शीतकालीन राहत कंबल वितरण अभियान", desc: lang === "en" ? "Distributing warm blankets to shelterless and needy families before peak winter." : "भीषण ठंड से पहले बेघर और जरूरतमंद परिवारों को गर्म कंबल वितरित करना।" },
+    { d: "12", m: "DEC", title: lang === "en" ? "Livelihood Toolkit Distribution" : "आजीविका टूलकिट वितरण कार्यक्रम", desc: lang === "en" ? "Providing sewing machines and tools to local youth and women to support self-employment." : "स्थानीय युवाओं और महिलाओं को स्वरोजगार के लिए सिलाई मशीन और उपकरण प्रदान करना।" },
   ];
+
+  // We will clone the first 3 notices to the end for seamless looping
+  const loopNotices = [...notices, ...notices.slice(0, 3)];
+
+  const [noticeIndex, setNoticeIndex] = useState(0);
+  const [transitionEnabled, setTransitionEnabled] = useState(true);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const tick = () => {
+      setNoticeIndex((prev) => {
+        const next = prev + 1;
+        setTransitionEnabled(true);
+        return next;
+      });
+    };
+
+    const run = () => {
+      timeoutRef.current = setTimeout(() => {
+        tick();
+        run();
+      }, 3500);
+    };
+
+    run();
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
+  // When we reach index 5 (which displays duplicates of 0, 1, 2), snap back to 0 without animation
+  useEffect(() => {
+    if (noticeIndex === 5) {
+      const snapTimer = setTimeout(() => {
+        setTransitionEnabled(false);
+        setNoticeIndex(0);
+      }, 500); // Wait for transition animation (500ms) to complete
+      return () => clearTimeout(snapTimer);
+    }
+  }, [noticeIndex]);
+
+  // For the News column on the right: a vertical carousel showing 1 card at a time.
+  const newsList = LATEST_NEWS.map((news) => {
+    let title = news.title;
+    let excerpt = news.excerpt;
+    let tag = news.tag;
+
+    if (lang === "hi") {
+      if (news.tag === "Health Camp") {
+        tag = "स्वास्थ्य शिविर";
+        title = "दरभंगा के बथिया में निःशुल्क चिकित्सा शिविर का आयोजन — 200+ मरीजों का उपचार";
+        excerpt = "आईडब्ल्यूएफ की स्वास्थ्य टीम ने दरभंगा के बथिया में एक व्यापक निःशुल्क चिकित्सा शिविर का आयोजन किया, जिसमें आसपास के गांवों के 200 से अधिक रोगियों को निःशुल्क परामर्श, दवाएं और जाँच सेवाएं प्रदान की गईं।";
+      } else if (news.tag === "Education") {
+        tag = "शिक्षा";
+        title = "मुजफ्फरपुर में आयोजित वार्षिक छात्रवृत्ति वितरण समारोह";
+        excerpt = "शिक्षा न रुके अभियान के तहत कमजोर परिवारों के 100 मेधावी छात्रों को छात्रवृत्ति प्रदान की गई, जिसमें शैक्षणिक वर्ष के लिए स्कूल की फीस, यूनिफॉर्म और अध्ययन सामग्री शामिल है।";
+      } else if (news.tag === "Women Empowerment") {
+        tag = "महिला सशक्तिकरण";
+        title = "सीतामढ़ी में नया स्वयं सहायता समूह शुरू — 30 महिलाओं ने पंजीकरण कराया";
+        excerpt = "शी कैन फ्लाई अभियान के तहत सीतामढ़ी में 30 महिलाओं के साथ एक नया स्वयं सहायता समूह बनाया गया, जो सिलाई, मोमबत्ती बनाने और खाद्य प्रसंस्करण के व्यावसायिक प्रशिक्षण में नामांकित हैं।";
+      } else if (news.tag === "Annual Report") {
+        tag = "वार्षिक रिपोर्ट";
+        title = "आईडब्ल्यूएफ वार्षिक रिपोर्ट 2024–25 प्रकाशित — 50+ गांवों तक पहुंचा प्रभाव";
+        excerpt = "वार्षिक रिपोर्ट 2024–25 शिक्षा, स्वास्थ्य और आजीविका कार्यक्रमों में आईडब्ल्यूएफ के काम का विवरण प्रस्तुत करती है, जो 50 से अधिक गांवों तक पहुंची और 5,000 से अधिक लाभार्थियों को प्रभावित किया।";
+      }
+    }
+    return { ...news, tag, title, excerpt };
+  });
+
+  const [newsIndex, setNewsIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setNewsIndex((prev) => (prev + 1) % newsList.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [newsList.length]);
 
   return (
     <section className="py-16 bg-slate-50 border-y border-slate-100">
-      <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-10">
-        <div>
-          <SectionTitle>{t.eventsNotices}</SectionTitle>
-          <div className="space-y-3">
-            {events.map((e) => (
-              <div key={e.title} className="bg-white rounded-xl p-4 flex gap-4 items-center border border-slate-200 shadow-sm">
-                <div className="text-center bg-brand-green/10 rounded-lg px-3 py-2 w-16 shrink-0">
-                  <div className="text-xs font-bold text-brand-green">{e.m}</div>
-                  <div className="text-xl font-extrabold text-brand-green-dark">{e.d}</div>
-                </div>
-                <div className="flex-1">
-                  <h4 className="font-extrabold text-sm text-slate-950">{e.title}</h4>
-                  <p className="text-xs text-slate-900 font-semibold leading-relaxed mt-0.5">{e.desc}</p>
-                </div>
-                <a href="#" className="text-xs font-bold text-brand-green hover:text-brand-green-dark whitespace-nowrap">{t.readMore} →</a>
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="grid lg:grid-cols-2 gap-10 items-stretch">
+          
+          {/* Left Column: Events & Notices */}
+          <div className="flex flex-col">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl md:text-2xl font-extrabold text-slate-950 flex items-center gap-2">
+                <span className="w-1.5 h-6 bg-brand-green rounded-full"></span>
+                {t.eventsNotices}
+              </h2>
+            </div>
+            
+            {/* Scroll Container with height exactly matching 3 items (362px) */}
+            <div className="relative flex-1 h-[362px] max-h-[362px] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm p-4">
+              <div 
+                className="space-y-3"
+                style={{
+                  transform: `translateY(-${noticeIndex * 114}px)`,
+                  transition: transitionEnabled ? "transform 500ms cubic-bezier(0.4, 0, 0.2, 1)" : "none",
+                }}
+              >
+                {loopNotices.map((e, i) => (
+                  <div key={i} className="h-[102px] bg-slate-50/50 hover:bg-slate-50 rounded-xl p-4 flex gap-4 items-center border border-slate-100 shadow-sm transition-colors duration-200">
+                    <div className="text-center bg-brand-green/10 rounded-lg px-3 py-1.5 w-16 shrink-0">
+                      <div className="text-[10px] font-bold text-brand-green uppercase">{e.m}</div>
+                      <div className="text-lg font-extrabold text-brand-green-dark leading-none mt-0.5">{e.d}</div>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-extrabold text-xs text-slate-950 truncate">{e.title}</h4>
+                      <p className="text-[11px] text-slate-600 font-medium leading-normal mt-1 line-clamp-2">{e.desc}</p>
+                    </div>
+                    <a href="#" className="text-[11px] font-bold text-brand-green hover:text-brand-green-dark shrink-0 transition-colors">{t.readMore} →</a>
+                  </div>
+                ))}
               </div>
-            ))}
-            <button className="w-full bg-brand-green hover:bg-brand-green-dark text-white font-bold text-xs py-3 rounded-lg transition tracking-wider uppercase">
-              {lang === "en" ? "VIEW ALL EVENTS" : "सभी कार्यक्रम देखें"}
-            </button>
+            </div>
           </div>
-        </div>
 
-        <div>
-          <SectionTitle>{lang === "en" ? "Gallery" : "गैलरी"}</SectionTitle>
-          <div className="grid grid-cols-3 gap-3">
-            {[g1, g2, g3, g4, g5, g6].map((src, i) => (
-              <div key={i} className="aspect-square rounded-xl overflow-hidden border border-slate-100">
-                <img src={src} alt={`Gallery ${i + 1}`} loading="lazy" width={600} height={600} className="w-full h-full object-cover hover:scale-110 transition duration-300" />
-              </div>
-            ))}
+          {/* Right Column: News & Updates (Vertical Carousel) */}
+          <div className="flex flex-col">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl md:text-2xl font-extrabold text-slate-950 flex items-center gap-2">
+                <span className="w-1.5 h-6 bg-brand-orange rounded-full"></span>
+                {t.newsUpdates}
+              </h2>
+              <a href="/news-and-events" className="text-xs font-bold text-brand-green hover:text-brand-green-dark transition-colors">
+                {t.viewAll} →
+              </a>
+            </div>
+
+            {/* Carousel Container showing 1 card with animation transitions */}
+            <div className="relative flex-1 h-[362px] max-h-[362px] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm p-6 flex flex-col justify-between">
+              {newsList.map((news, idx) => (
+                <div
+                  key={idx}
+                  className={`absolute inset-0 p-6 flex flex-col justify-between transition-all duration-700 ease-in-out ${
+                    newsIndex === idx 
+                      ? "opacity-100 translate-y-0 pointer-events-auto" 
+                      : "opacity-0 translate-y-4 pointer-events-none"
+                  }`}
+                >
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ backgroundColor: `${news.tagColor}15`, color: news.tagColor }}>
+                        {news.tag}
+                      </span>
+                      <span className="text-xs text-slate-500 font-semibold">{news.date}</span>
+                    </div>
+                    <h3 className="font-extrabold text-sm md:text-base text-slate-950 leading-snug hover:text-brand-green transition-colors">
+                      {news.title}
+                    </h3>
+                    <p className="text-xs text-slate-600 font-medium leading-relaxed line-clamp-4">
+                      {news.excerpt}
+                    </p>
+                  </div>
+                  
+                  <div className="pt-4 flex items-center justify-between border-t border-slate-100 mt-4">
+                    <a href="#" className="text-xs font-bold inline-flex items-center gap-1 hover:underline" style={{ color: news.tagColor }}>
+                      {t.readMore} <ArrowRight className="w-3 h-3" />
+                    </a>
+                    
+                    {/* Dots indicator */}
+                    <div className="flex gap-1.5">
+                      {newsList.map((_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setNewsIndex(i)}
+                          className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${newsIndex === i ? "w-4 bg-brand-orange" : "bg-slate-200"}`}
+                          aria-label={`Go to slide ${i + 1}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
+
         </div>
       </div>
     </section>
@@ -1661,85 +1806,140 @@ const LATEST_NEWS = [
   },
 ];
 
-function NewsUpdates({ lang }: LanguageProp) {
+function GallerySection({ lang }: LanguageProp) {
   const t = TRANSLATIONS[lang];
-  
-  const newsList = LATEST_NEWS.map((news) => {
-    // Basic translation mappings for the news titles and excerpts
-    let title = news.title;
-    let excerpt = news.excerpt;
-    let tag = news.tag;
+  const items = [
+    { type: "video", src: g1, title: lang === "en" ? "VISION ACADEMIC CITY" : "विज़न एकेडमिक सिटी" },
+    { type: "video", src: g2, title: lang === "en" ? "OPENING CEREMONY" : "उद्घाटन समारोह" },
+    { type: "photo", src: g3, title: lang === "en" ? "HEALTH DIAGNOSTIC CAMP" : "स्वास्थ्य जाँच शिविर" },
+    { type: "photo", src: g4, title: lang === "en" ? "ENVIRONMENT PLANTATION" : "पर्यावरण वृक्षारोपण" },
+    { type: "photo", src: g5, title: lang === "en" ? "SHIKSHA NA RUKE CAMPAIGN" : "शिक्षा न रुके अभियान" },
+    { type: "photo", src: g6, title: lang === "en" ? "VOCATIONAL TRAINING" : "व्यावसायिक प्रशिक्षण कार्यक्रम" },
+  ];
 
-    if (lang === "hi") {
-      if (news.tag === "Health Camp") {
-        tag = "स्वास्थ्य शिविर";
-        title = "दरभंगा के बथिया में निःशुल्क चिकित्सा शिविर का आयोजन — 200+ मरीजों का उपचार";
-        excerpt = "आईडब्ल्यूएफ की स्वास्थ्य टीम ने दरभंगा के बथिया में एक व्यापक निःशुल्क चिकित्सा शिविर का आयोजन किया, जिसमें आसपास के गांवों के 200 से अधिक रोगियों को निःशुल्क परामर्श, दवाएं और जाँच सेवाएं प्रदान की गईं।";
-      } else if (news.tag === "Education") {
-        tag = "शिक्षा";
-        title = "मुजफ्फरपुर में आयोजित वार्षिक छात्रवृत्ति वितरण समारोह";
-        excerpt = "शिक्षा न रुके अभियान के तहत कमजोर परिवारों के 100 मेधावी छात्रों को छात्रवृत्ति प्रदान की गई, जिसमें शैक्षणिक वर्ष के लिए स्कूल की फीस, यूनिफॉर्म और अध्ययन सामग्री शामिल है।";
-      } else if (news.tag === "Women Empowerment") {
-        tag = "महिला सशक्तिकरण";
-        title = "सीतामढ़ी में नया स्वयं सहायता समूह शुरू — 30 महिलाओं ने पंजीकरण कराया";
-        excerpt = "शी कैन फ्लाई अभियान के तहत सीतामढ़ी में 30 महिलाओं के साथ एक नया स्वयं सहायता समूह बनाया गया, जो सिलाई, मोमबत्ती बनाने और खाद्य प्रसंस्करण के व्यावसायिक प्रशिक्षण में नामांकित हैं।";
-      } else if (news.tag === "Annual Report") {
-        tag = "वार्षिक रिपोर्ट";
-        title = "आईडब्ल्यूएफ वार्षिक रिपोर्ट 2024–25 प्रकाशित — 50+ गांवों तक पहुंचा प्रभाव";
-        excerpt = "वार्षिक रिपोर्ट 2024–25 शिक्षा, स्वास्थ्य और आजीविका कार्यक्रमों में आईडब्ल्यूएफ के काम का विवरण प्रस्तुत करती है, जो 50 से अधिक गांवों तक पहुंची और 5,000 से अधिक लाभार्थियों को प्रभावित किया।";
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Responsive scroll bounds
+  const [maxIndex, setMaxIndex] = useState(2);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setMaxIndex(2);
+      } else if (window.innerWidth >= 640) {
+        setMaxIndex(4);
+      } else {
+        setMaxIndex(5);
       }
-    }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-    return { ...news, tag, title, excerpt };
-  });
+  const handlePrev = () => {
+    setCurrentIndex((prev) => Math.max(0, prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => Math.min(maxIndex, prev + 1));
+  };
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-white border-y border-slate-100 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4">
-        <ScrollReveal>
-          <div className="flex items-end justify-between mb-10">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-brand-orange mb-2">{t.latest}</p>
-              <h2 className="text-2xl md:text-3xl font-extrabold text-slate-950">{t.newsUpdates}</h2>
-            </div>
-            <a href="/news-and-events" className="hidden sm:inline-flex items-center gap-2 text-sm font-bold text-brand-green hover:text-brand-green-dark transition-colors">
-              {t.viewAll} <ArrowRight className="w-4 h-4" />
-            </a>
+        
+        {/* Header Title with red/orange dashes and navigation arrows */}
+        <div className="flex items-center justify-between mb-10 relative">
+          
+          {/* Centered Gallery Header in full width parent */}
+          <div className="flex-1 flex items-center justify-center gap-3">
+            <span className="w-8 h-1 bg-brand-orange rounded-full"></span>
+            <h2 className="text-2xl md:text-3xl font-extrabold text-slate-950 tracking-wider uppercase">
+              {lang === "en" ? "Gallery" : "गैलरी"}
+            </h2>
+            <span className="w-8 h-1 bg-brand-orange rounded-full"></span>
           </div>
-        </ScrollReveal>
 
-        <ScrollReveal stagger={0.08}>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {newsList.map((news) => (
-              <article
-                key={news.title}
-                className="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 group flex flex-col overflow-hidden"
+          {/* Navigation controls */}
+          <div className="absolute right-0 flex items-center gap-2">
+            <button
+              onClick={handlePrev}
+              disabled={currentIndex === 0}
+              className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all ${
+                currentIndex === 0 
+                  ? "border-slate-200 text-slate-300 cursor-not-allowed" 
+                  : "border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-white"
+              }`}
+              aria-label="Previous Slide"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </button>
+            <button
+              onClick={handleNext}
+              disabled={currentIndex >= maxIndex}
+              className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all ${
+                currentIndex >= maxIndex 
+                  ? "border-slate-200 text-slate-300 cursor-not-allowed" 
+                  : "border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-white"
+              }`}
+              aria-label="Next Slide"
+            >
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* Carousel Viewport */}
+        <div className="relative w-full overflow-hidden">
+          <div
+            className="flex gap-4 w-full transition-transform duration-500 ease-out"
+            style={{ transform: `translateX(-${currentIndex * (100 / (maxIndex === 2 ? 4 : maxIndex === 4 ? 2 : 1))}%` }}
+          >
+            {items.map((item, idx) => (
+              <div 
+                key={idx} 
+                className="w-[calc(100%-16px)] shrink-0 sm:w-[calc(50%-12px)] lg:w-[calc(25%-12px)] rounded-2xl overflow-hidden shadow-md border border-slate-100 group relative aspect-[4/3] bg-slate-900 cursor-pointer"
               >
-                {/* Thumbnail */}
-                <div className="h-28 flex items-center justify-center text-5xl" style={{ backgroundColor: `${news.tagColor}10` }}>
-                  {news.img}
-                </div>
-                <div className="p-4 flex flex-col flex-1">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ backgroundColor: `${news.tagColor}15`, color: news.tagColor }}>
-                      {news.tag}
-                    </span>
-                    <span className="text-xs text-slate-500 font-semibold">{news.date}</span>
+                {/* Image */}
+                <img 
+                  src={item.src} 
+                  alt={item.title} 
+                  loading="lazy" 
+                  className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                />
+
+                {/* Video Play Button Overlay */}
+                {item.type === "video" && (
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm border border-white/50 flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-white/40 transition-all duration-300">
+                      <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center pl-1 shadow-md">
+                        <svg className="w-5 h-5 text-slate-900 fill-current" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
+                    </div>
                   </div>
-                  <h3 className="font-extrabold text-sm text-slate-950 leading-snug mb-2 group-hover:text-brand-green transition-colors line-clamp-2">{news.title}</h3>
-                  <p className="text-xs text-slate-900 font-semibold leading-relaxed flex-1 line-clamp-2">{news.excerpt}</p>
-                  <a href="#" className="mt-3 text-xs font-bold inline-flex items-center gap-1" style={{ color: news.tagColor }}>
-                    {t.readMore} <ArrowRight className="w-3 h-3" />
-                  </a>
+                )}
+
+                {/* Title Overlay with gradient shadow */}
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 pt-10">
+                  <h4 className="text-white font-extrabold text-xs tracking-wider uppercase group-hover:text-brand-orange transition-colors">
+                    {item.title}
+                  </h4>
                 </div>
-              </article>
+              </div>
             ))}
           </div>
-        </ScrollReveal>
+        </div>
 
-        <div className="sm:hidden text-center mt-6">
-          <a href="/news-and-events" className="inline-flex items-center gap-2 text-sm font-bold text-brand-green hover:text-brand-green-dark">
-            {t.viewAll} <ArrowRight className="w-4 h-4" />
+        {/* View All link below the carousel */}
+        <div className="text-center mt-8">
+          <a 
+            href="/news-and-events" 
+            className="inline-flex items-center gap-1.5 text-xs font-extrabold text-brand-green hover:text-brand-green-dark hover:underline transition-colors uppercase tracking-wider"
+          >
+            {lang === "en" ? "View All Media" : "सभी मीडिया देखें"} <ArrowRight className="w-3.5 h-3.5" />
           </a>
         </div>
       </div>
@@ -1764,13 +1964,13 @@ export default function HomePage() {
       <Header lang={lang} />
       <HeroSection />
       <UrgentPatientsSection lang={lang} />
+      <EventsAndNoticesSection lang={lang} />
       <WhatWeDo lang={lang} />
       <ImpactStats />
       <FeaturedCauses lang={lang} />
       <CampaignsSection />
       <ProgramsAndThematic lang={lang} />
-      <NewsUpdates lang={lang} />
-      <EventsAndGallery lang={lang} />
+      <GallerySection lang={lang} />
       <ExploreIWF lang={lang} />
       <GetInvolved lang={lang} onOpenModal={handleOpenModal} />
       <Footer onOpenModal={handleOpenModal} />
