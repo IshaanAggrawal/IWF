@@ -594,7 +594,79 @@ export function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void 
 
   return (
     <footer className="w-full">
-      <div className="bg-[#0d2b1a] text-white py-14 px-4 md:px-10">
+      <div className="bg-[#f9f9f6] text-slate-800 py-10 px-4 md:px-10 border-t border-gray-100">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+          <div className="flex gap-4 items-start">
+            <div className="w-12 h-12 rounded-full bg-[#0d2b1a] text-white flex items-center justify-center shrink-0">
+              <Mail className="w-6 h-6 text-white" />
+            </div>
+            <div className="flex-1">
+              <h5 className="font-bold text-[#0d2b1a] text-base leading-tight">Stay Connected</h5>
+              <p className="text-gray-600 text-sm mt-1">
+                Subscribe to updates about IWF activities, campaigns and impact.
+              </p>
+              <form onSubmit={(e) => e.preventDefault()} className="flex items-center mt-3 shadow-sm rounded-md overflow-hidden border border-gray-200">
+                <input type="email" placeholder="Enter your email" required className="flex-1 bg-white px-4 py-2 text-sm text-slate-800 placeholder-slate-400 focus:outline-none border-0 min-w-0" />
+                <button type="submit" className="bg-[#0d2b1a] hover:bg-brand-green text-white text-xs font-semibold px-5 py-2.5 transition-colors uppercase shrink-0 cursor-pointer">
+                  Subscribe
+                </button>
+              </form>
+            </div>
+          </div>
+          <div className="text-center">
+            <h5 className="font-bold text-[#0d2b1a] text-xs uppercase tracking-wide mb-6">Trusted Organisation</h5>
+            <div className="grid grid-cols-4 gap-2">
+              {[
+                { label: "Registered Trust", Icon: Award },
+                { label: "12A & 80G", Icon: ShieldCheck },
+                { label: "Impact Driven", Icon: BarChart2 },
+                { label: "Transparent", Icon: Lock },
+              ].map(({ label, Icon }) => (
+                <div key={label} className="flex flex-col items-center">
+                  <div className="w-10 h-10 rounded-full border-2 border-[#0d2b1a] bg-white flex items-center justify-center">
+                    <Icon className="w-5 h-5 text-[#0d2b1a]" />
+                  </div>
+                  <span className="text-[#0d2b1a] font-semibold text-[9px] text-center mt-2 leading-tight">
+                    {label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="border-t lg:border-t-0 lg:border-l border-gray-200 pt-6 lg:pt-0 lg:pl-6">
+            <p className="text-[#0d2b1a] font-medium text-sm italic leading-relaxed">
+              "Alone we can do so little, together we can do so much."
+            </p>
+            <span className="text-xs font-semibold text-[#0d2b1a] mt-2 block">- Helen Keller</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-[#0d2b1a] text-white py-6 px-4 md:px-10 border-t border-white/10">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 items-center">
+          {[
+            { title: "Transparency", desc: "Open and honest in every action.", Icon: ShieldCheck },
+            { title: "Accountability", desc: "Responsible for every commitment.", Icon: UserCheck },
+            { title: "Integrity", desc: "Guided by strong ethical principles.", Icon: Scale },
+            { title: "Compassion", desc: "Sensitive to the needs of others.", Icon: Heart },
+          ].map(({ title, desc, Icon }) => (
+            <div key={title} className="flex items-start gap-3">
+              <Icon className="w-5 h-5 text-brand-green mt-0.5 shrink-0" />
+              <div>
+                <h6 className="font-bold text-white text-sm">{title}</h6>
+                <p className="text-white text-xs mt-0.5">{desc}</p>
+              </div>
+            </div>
+          ))}
+          <div className="p-4 rounded bg-black/10 border border-white/5 flex items-center justify-end">
+            <p className="text-white font-serif italic text-sm text-right">
+              "Together, we build a better tomorrow"
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-[#0d2b1a] text-white py-14 px-4 md:px-10 border-t border-white/10">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           <div className="space-y-4">
             <div className="flex items-center gap-3">
@@ -711,78 +783,6 @@ export function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void 
             >
               <Heart className="w-4 h-4 fill-white" /> DONATE NOW
             </a>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-[#f9f9f6] text-slate-800 py-10 px-4 md:px-10 border-t border-gray-100">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-          <div className="flex gap-4 items-start">
-            <div className="w-12 h-12 rounded-full bg-[#0d2b1a] text-white flex items-center justify-center shrink-0">
-              <Mail className="w-6 h-6 text-white" />
-            </div>
-            <div className="flex-1">
-              <h5 className="font-bold text-[#0d2b1a] text-base leading-tight">Stay Connected</h5>
-              <p className="text-gray-600 text-sm mt-1">
-                Subscribe to updates about IWF activities, campaigns and impact.
-              </p>
-              <form onSubmit={(e) => e.preventDefault()} className="flex items-center mt-3 shadow-sm rounded-md overflow-hidden border border-gray-200">
-                <input type="email" placeholder="Enter your email" required className="flex-1 bg-white px-4 py-2 text-sm text-slate-800 placeholder-slate-400 focus:outline-none border-0 min-w-0" />
-                <button type="submit" className="bg-[#0d2b1a] hover:bg-brand-green text-white text-xs font-semibold px-5 py-2.5 transition-colors uppercase shrink-0 cursor-pointer">
-                  Subscribe
-                </button>
-              </form>
-            </div>
-          </div>
-          <div className="text-center">
-            <h5 className="font-bold text-[#0d2b1a] text-xs uppercase tracking-wide mb-6">Trusted Organisation</h5>
-            <div className="grid grid-cols-4 gap-2">
-              {[
-                { label: "Registered Trust", Icon: Award },
-                { label: "12A & 80G", Icon: ShieldCheck },
-                { label: "Impact Driven", Icon: BarChart2 },
-                { label: "Transparent", Icon: Lock },
-              ].map(({ label, Icon }) => (
-                <div key={label} className="flex flex-col items-center">
-                  <div className="w-10 h-10 rounded-full border-2 border-[#0d2b1a] bg-white flex items-center justify-center">
-                    <Icon className="w-5 h-5 text-[#0d2b1a]" />
-                  </div>
-                  <span className="text-[#0d2b1a] font-semibold text-[9px] text-center mt-2 leading-tight">
-                    {label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="border-t lg:border-t-0 lg:border-l border-gray-200 pt-6 lg:pt-0 lg:pl-6">
-            <p className="text-[#0d2b1a] font-medium text-sm italic leading-relaxed">
-              "Alone we can do so little, together we can do so much."
-            </p>
-            <span className="text-xs font-semibold text-[#0d2b1a] mt-2 block">- Helen Keller</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-[#0d2b1a] text-white py-6 px-4 md:px-10 border-t border-white/10">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 items-center">
-          {[
-            { title: "Transparency", desc: "Open and honest in every action.", Icon: ShieldCheck },
-            { title: "Accountability", desc: "Responsible for every commitment.", Icon: UserCheck },
-            { title: "Integrity", desc: "Guided by strong ethical principles.", Icon: Scale },
-            { title: "Compassion", desc: "Sensitive to the needs of others.", Icon: Heart },
-          ].map(({ title, desc, Icon }) => (
-            <div key={title} className="flex items-start gap-3">
-              <Icon className="w-5 h-5 text-brand-green mt-0.5 shrink-0" />
-              <div>
-                <h6 className="font-bold text-white text-sm">{title}</h6>
-                <p className="text-white text-xs mt-0.5">{desc}</p>
-              </div>
-            </div>
-          ))}
-          <div className="p-4 rounded bg-black/10 border border-white/5 flex items-center justify-end">
-            <p className="text-white font-serif italic text-sm text-right">
-              "Together, we build a better tomorrow"
-            </p>
           </div>
         </div>
       </div>
