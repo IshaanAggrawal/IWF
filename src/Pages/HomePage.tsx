@@ -1982,72 +1982,34 @@ function GallerySection({ lang }: LanguageProp) {
 
 function VideoHeroSection({ lang }: LanguageProp) {
   const isHi = lang === "hi";
-  const title = isHi ? "जीवन को सशक्त बनाना, आशा के बीज बोना" : "Empowering Lives, Planting Seeds of Hope";
-  const desc = isHi 
-    ? "इस्लाह वेलफेयर फाउंडेशन ग्रामीण समुदायों में शिक्षा, स्वास्थ्य सेवा और आजीविका के अवसरों को बढ़ावा देने के लिए काम करता है।" 
-    : "Islah Welfare Foundation works to bring quality education, healthcare, and sustainable livelihood opportunities to rural communities.";
-  const watchText = isHi ? "हमारा प्रभाव देखें" : "Watch Our Impact";
-  const donateText = isHi ? "अभी दान करें" : "Donate Now";
 
   return (
     <section className="relative w-full h-[calc(100vh-130px)] min-h-[500px] overflow-hidden flex items-center justify-center select-none bg-slate-950">
-      {/* Loop Background Video */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover opacity-60 scale-105"
-      >
-        <source 
-          src="https://assets.mixkit.co/videos/preview/mixkit-happy-rural-schoolchildren-running-together-41706-large.mp4" 
-          type="video/mp4" 
+      {/* Loop Background YouTube Video Embed */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+        <iframe
+          src="https://www.youtube.com/embed/0CbFrom3Qkk?autoplay=1&mute=1&loop=1&playlist=0CbFrom3Qkk&controls=0&showinfo=0&rel=0&playsinline=1&enablejsapi=1&iv_load_policy=3&modestbranding=1"
+          className="absolute top-1/2 left-1/2 w-[100vw] h-[56.25vw] min-h-[100vh] min-w-[177.77vh] -translate-x-1/2 -translate-y-1/2 opacity-90"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          title="Background video"
+          frameBorder="0"
         />
-        Your browser does not support the video tag.
-      </video>
-
-      {/* Dark Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80" />
-
-      {/* Content */}
-      <div className="relative max-w-5xl mx-auto px-4 text-center text-white z-10 space-y-6">
-        <ScrollReveal>
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold leading-tight tracking-tight drop-shadow-md">
-            {title}
-          </h1>
-        </ScrollReveal>
-
-        <ScrollReveal delay={0.2}>
-          <p className="text-base sm:text-lg lg:text-xl text-slate-100 font-medium max-w-3xl mx-auto drop-shadow-sm leading-relaxed">
-            {desc}
-          </p>
-        </ScrollReveal>
-
-        <ScrollReveal delay={0.4}>
-          <div className="pt-4 flex flex-wrap justify-center gap-4">
-            <a 
-              href="#welcome-hero" 
-              className="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold px-8 py-3.5 rounded-lg shadow-lg transition-all hover:scale-[1.02] active:scale-95 uppercase tracking-wider text-sm backdrop-blur-sm cursor-pointer"
-            >
-              {watchText}
-            </a>
-            <a 
-              href="/donate" 
-              className="bg-brand-orange hover:bg-brand-orange-dark text-white font-bold px-8 py-3.5 rounded-lg shadow-lg transition-all hover:scale-[1.02] active:scale-95 uppercase tracking-wider text-sm cursor-pointer"
-            >
-              {donateText}
-            </a>
-          </div>
-        </ScrollReveal>
       </div>
+
+      {/* Dark Gradient Overlay - Subtler since there is no text */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/70" />
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 animate-bounce">
-        <span className="text-xs uppercase tracking-widest text-white/50 font-semibold">{isHi ? "नीचे स्क्रॉल करें" : "Scroll Down"}</span>
-        <div className="w-6 h-10 rounded-full border-2 border-white/30 flex items-start justify-center p-1.5">
+      <a 
+        href="#welcome-hero"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 animate-bounce group cursor-pointer"
+        aria-label="Scroll to welcome section"
+      >
+        <span className="text-[10px] uppercase tracking-widest text-white/70 font-bold group-hover:text-white transition-colors">{isHi ? "नीचे स्क्रॉल करें" : "Scroll Down"}</span>
+        <div className="w-6 h-10 rounded-full border-2 border-white/50 flex items-start justify-center p-1.5 group-hover:border-white transition-colors">
           <div className="w-1.5 h-2.5 bg-brand-orange rounded-full" />
         </div>
-      </div>
+      </a>
     </section>
   );
 }
