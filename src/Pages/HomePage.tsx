@@ -221,7 +221,7 @@ function NotificationTicker() {
   const loopItems = [...items, ...items];
 
   return (
-    <div className="bg-brand-orange text-white py-2 overflow-hidden flex items-center relative select-none border-b border-brand-orange-dark shadow-sm group">
+    <div className="bg-[#1b365d] text-white py-2 overflow-hidden flex items-center relative select-none border-b border-[#1b365d]/20 shadow-sm group">
       <div className="bg-red-600 text-[10px] uppercase px-2 py-0.5 rounded font-black tracking-wider shadow z-10 shrink-0 ml-4 mr-4 animate-pulse">
         NEW
       </div>
@@ -345,16 +345,44 @@ function Header({ lang }: HeaderProps) {
         onClick={() => setActiveMenu(null)}
       />
 
-      <header className="bg-white sticky top-0 z-50 border-b border-gray-100 shadow-sm transition-all duration-200">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-
-          {/* Left Group: Logo */}
-          <a href="/" className="flex items-center gap-2 shrink-0 group" aria-label="IWF Home">
-            <img src={newLogo} alt="IWF Logo" className="h-12 md:h-14 w-auto object-contain group-hover:scale-110 transition-transform shrink-0" />
+      {/* White Branding Logo Banner (Scrolls away) */}
+      <div className="bg-white py-4 border-b border-gray-100 relative">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <a href="/" className="flex items-center gap-4 group" aria-label="IWF Home">
+            <img src={newLogo} alt="IWF Logo" className="h-16 md:h-20 w-auto object-contain transition-transform group-hover:scale-105 shrink-0" />
+            <div className="flex flex-col">
+              <span className="text-xl md:text-3xl font-extrabold text-[#0d2b1a] tracking-wide font-sans leading-tight">
+                ISLAH WELFARE FOUNDATION
+              </span>
+              <span className="text-xs md:text-sm font-semibold italic text-brand-orange mt-1.5 leading-none">
+                Planting Seeds of Hope and Change
+              </span>
+              <span className="text-[10px] md:text-xs text-gray-500 font-medium mt-1.5 leading-none">
+                Bathiya, Via- Putai Manigachhi, Darbhanga, Bihar – 847423, India
+              </span>
+            </div>
           </a>
 
-          {/* Center Group: Nav Links */}
-          <nav className="hidden lg:flex items-center gap-8" aria-label="Main navigation">
+          {/* Right stats/trust labels for premium styling */}
+          <div className="hidden md:flex items-center gap-4 text-[10px] font-bold uppercase tracking-wider text-gray-400">
+            <div className="text-right border-r pr-4 border-gray-200">
+              <div className="text-brand-orange">12A & 80G Certified</div>
+              <div>Registered Trust</div>
+            </div>
+            <div>
+              <div className="text-brand-green">FCRA Compliant</div>
+              <div>Govt. Registered</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Dark Themed Menu Navbar (Sticky) */}
+      <header className="bg-[#0d2b1a] text-white sticky top-0 z-50 shadow-md transition-all duration-200 py-1">
+        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between relative">
+
+          {/* Left Group: Nav Links */}
+          <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
             {NAV_ITEMS.map((item, idx) => {
               const hasMega = !!MEGA_DATA[item];
               const isActive = activeMenu === item;
@@ -362,7 +390,7 @@ function Header({ lang }: HeaderProps) {
               return (
                 <div
                   key={item}
-                  className="relative py-2"
+                  className="relative"
                   onMouseEnter={() => hasMega && openMenu(item)}
                   onMouseLeave={hasMega ? scheduleClose : undefined}
                 >
@@ -386,7 +414,7 @@ function Header({ lang }: HeaderProps) {
                                       ? "/contact"
                                       : "#"
                     }
-                    className="relative flex items-center gap-1 text-gray-700 hover:text-[#0d2b1a] font-medium text-sm transition-colors py-1 group"
+                    className="relative flex items-center gap-1.5 text-white/90 hover:text-white hover:bg-white/10 font-semibold text-sm transition-all px-4 py-3 rounded-md group"
                     onClick={(event) => {
                       if (item === "What We Do") {
                         event.preventDefault();
@@ -403,12 +431,12 @@ function Header({ lang }: HeaderProps) {
                     {label}
                     {hasMega && (
                       <ChevronDown
-                        className={`w-3.5 h-3.5 transition-transform duration-200 ${isActive ? "rotate-180 text-[#0d2b1a]" : "text-gray-400"
+                        className={`w-3.5 h-3.5 transition-transform duration-200 ${isActive ? "rotate-180 text-white" : "text-white/60"
                           }`}
                       />
                     )}
-                    {/* Orange sliding underline */}
-                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-brand-orange scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-200 ease-out" />
+                    {/* Sliding underline */}
+                    <span className="absolute bottom-1 left-4 right-4 h-[2px] bg-brand-orange scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-200 ease-out" />
                   </a>
                 </div>
               );
@@ -416,16 +444,17 @@ function Header({ lang }: HeaderProps) {
           </nav>
 
           {/* Right Group: Donate Button & Mobile Hamburger */}
-          <div className="flex items-center gap-2 md:gap-3 shrink-0">
-            <a href="/donate" className="bg-brand-orange hover:bg-orange-600 text-white font-bold text-xs md:text-sm px-3 py-2 md:px-5 md:py-2.5 rounded-md shadow-md transition-colors uppercase tracking-wide">
+          <div className="flex items-center gap-2 md:gap-3 shrink-0 py-1.5 ml-auto lg:ml-0">
+            <TranslateButton className="border-white/20 bg-white/5 hover:bg-white/15 text-xs text-white" />
+            <a href="/donate" className="bg-brand-orange hover:bg-brand-orange-dark text-white font-bold text-xs md:text-sm px-4 py-2 rounded-md shadow-md transition-all hover:scale-105 active:scale-95 uppercase tracking-wide">
               DONATE NOW
             </a>
             <button
-              className="lg:hidden p-1.5 md:p-2 text-gray-600 hover:text-[#0d2b1a] transition-colors cursor-pointer"
+              className="lg:hidden p-2 text-white/80 hover:text-white transition-colors cursor-pointer"
               onClick={() => setMobileOpen(true)}
               aria-label="Open navigation menu"
             >
-              <Menu className="w-5 h-5 md:w-6 md:h-6" />
+              <Menu className="w-6 h-6" />
             </button>
           </div>
 
@@ -1960,7 +1989,6 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-white font-sans text-foreground">
       <NotificationTicker />
-      <UtilityBar lang={lang} setLang={setLang} />
       <Header lang={lang} />
       <HeroSection />
       <UrgentPatientsSection lang={lang} />

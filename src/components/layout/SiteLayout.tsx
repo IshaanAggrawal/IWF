@@ -174,7 +174,7 @@ export function NotificationTicker() {
   const loopItems = [...items, ...items];
 
   return (
-    <div className="bg-brand-orange text-white py-2 overflow-hidden flex items-center relative select-none border-b border-brand-orange-dark shadow-sm group">
+    <div className="bg-[#1b365d] text-white py-2 overflow-hidden flex items-center relative select-none border-b border-[#1b365d]/20 shadow-sm group">
       <div className="bg-red-600 text-[10px] uppercase px-2 py-0.5 rounded font-black tracking-wider shadow z-10 shrink-0 ml-4 mr-4 animate-pulse">
         NEW
       </div>
@@ -202,66 +202,7 @@ interface UtilityBarProps {
 }
 
 export function UtilityBar({ lang = "en", setLang }: UtilityBarProps) {
-  const isHi = lang === "hi";
-  return (
-    <div className="bg-brand-green text-white py-3.5 border-b border-white/10 select-none">
-      <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8">
-        
-        {/* Left: Contact Info - Stacked Vertically */}
-        <div className="flex flex-col items-center md:items-start gap-1.5 text-xs shrink-0 select-text w-full md:w-auto">
-          <a href="tel:+919811861633" className="flex items-center gap-2 hover:text-white/80 transition-colors font-medium">
-            <Phone className="w-3.5 h-3.5 text-brand-orange shrink-0" />
-            <span>+91-9811861633</span>
-          </a>
-          <a href={`mailto:${CONTACT_DETAILS.email}`} className="flex items-center gap-2 hover:text-white/80 transition-colors font-medium">
-            <Mail className="w-3.5 h-3.5 text-brand-orange shrink-0" />
-            <span>{CONTACT_DETAILS.email}</span>
-          </a>
-          <a href="#careers" className="flex items-center gap-2 hover:text-white/80 transition-colors font-semibold">
-            <Briefcase className="w-3.5 h-3.5 text-brand-orange shrink-0" />
-            <span>Careers</span>
-          </a>
-        </div>
-
-        {/* Center: Big White Organization Name - Enormous and Dominant */}
-        <div className="text-center flex-1 py-2 md:py-0 w-full md:w-auto">
-          <span className="font-black text-lg md:text-3xl tracking-[0.25em] uppercase text-white block select-all drop-shadow-lg leading-tight font-sans">
-            ISLAH WELFARE FOUNDATION
-          </span>
-        </div>
-
-        {/* Right: Social & Translate - Stacked Vertically */}
-        <div className="flex flex-col items-center md:items-end gap-2.5 shrink-0 w-full md:w-auto">
-          {/* Social Icons */}
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] opacity-80 font-medium hidden sm:inline">Follow Us:</span>
-            {[
-              { Icon: Facebook, color: "#1877F2", label: "Facebook", href: "https://facebook.com" },
-              { Icon: Twitter, color: "#1DA1F2", label: "Twitter/X", href: "https://twitter.com" },
-              { Icon: Instagram, color: "#E1306C", label: "Instagram", href: "https://instagram.com" },
-              { Icon: Youtube, color: "#FF0000", label: "YouTube", href: "https://youtube.com" },
-              { Icon: Linkedin, color: "#0A66C2", label: "LinkedIn", href: "https://linkedin.com" },
-            ].map(({ Icon, color, label, href }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-5.5 h-5.5 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
-                style={{ backgroundColor: color }}
-                aria-label={label}
-              >
-                <Icon className="w-3.5 h-3.5 text-white" />
-              </a>
-            ))}
-          </div>
-
-          {/* Hindi Translate Pill - Stacked below socials */}
-          <TranslateButton />
-        </div>
-      </div>
-    </div>
-  );
+  return null;
 }
 
 export function Header() {
@@ -313,26 +254,56 @@ export function Header() {
           }`}
         onClick={() => setActiveMenu(null)}
       />
-      <header className="bg-white sticky top-0 z-50 border-b border-gray-100 shadow-sm transition-all duration-200">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <a href="/" className="flex items-center gap-2 shrink-0 group" aria-label="IWF Home">
-            <img src={newLogo} alt="IWF Logo" className="h-12 md:h-14 w-auto object-contain group-hover:scale-110 transition-transform shrink-0" />
+      {/* White Branding Logo Banner (Scrolls away) */}
+      <div className="bg-white py-4 border-b border-gray-100 relative">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <a href="/" className="flex items-center gap-4 group" aria-label="IWF Home">
+            <img src={newLogo} alt="IWF Logo" className="h-16 md:h-20 w-auto object-contain transition-transform group-hover:scale-105 shrink-0" />
+            <div className="flex flex-col">
+              <span className="text-xl md:text-3xl font-extrabold text-[#0d2b1a] tracking-wide font-sans leading-tight">
+                ISLAH WELFARE FOUNDATION
+              </span>
+              <span className="text-xs md:text-sm font-semibold italic text-brand-orange mt-1.5 leading-none">
+                Planting Seeds of Hope and Change
+              </span>
+              <span className="text-[10px] md:text-xs text-gray-500 font-medium mt-1.5 leading-none">
+                Bathiya, Via- Putai Manigachhi, Darbhanga, Bihar – 847423, India
+              </span>
+            </div>
           </a>
 
-          <nav className="hidden lg:flex items-center gap-8" aria-label="Main navigation">
+          {/* Right stats/trust labels for premium styling */}
+          <div className="hidden md:flex items-center gap-4 text-[10px] font-bold uppercase tracking-wider text-gray-400">
+            <div className="text-right border-r pr-4 border-gray-200">
+              <div className="text-brand-orange">12A & 80G Certified</div>
+              <div>Registered Trust</div>
+            </div>
+            <div>
+              <div className="text-brand-green">FCRA Compliant</div>
+              <div>Govt. Registered</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Dark Themed Menu Navbar (Sticky) */}
+      <header className="bg-[#0d2b1a] text-white sticky top-0 z-50 shadow-md transition-all duration-200 py-1">
+        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between relative">
+
+          <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
             {NAV_ITEMS.map((item) => {
               const hasMega = !!MEGA_DATA[item];
               const isOpen = activeMenu === item;
               return (
                 <div
                   key={item}
-                  className="relative py-2"
+                  className="relative"
                   onMouseEnter={() => hasMega && openMenu(item)}
                   onMouseLeave={hasMega ? scheduleClose : undefined}
                 >
                   <a
                     href={getHeaderHref(item)}
-                    className={`relative flex items-center gap-1 font-medium text-sm transition-colors py-1 group ${isRouteActive(item) ? "text-brand-green font-semibold" : "text-gray-700 hover:text-[#0d2b1a]"
+                    className={`relative flex items-center gap-1.5 font-semibold text-sm transition-all px-4 py-3 rounded-md group ${isRouteActive(item) ? "text-white bg-white/10" : "text-white/90 hover:text-white hover:bg-white/10"
                       }`}
                     onClick={(event) => {
                       handleHeaderClick(item, event);
@@ -342,30 +313,31 @@ export function Header() {
                     {item}
                     {hasMega && (
                       <ChevronDown
-                        className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpen ? "rotate-180 text-[#0d2b1a]" : "text-gray-400"
+                        className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpen ? "rotate-180 text-white" : "text-white/60"
                           }`}
                       />
                     )}
-                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-brand-orange scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-200 ease-out" />
+                    <span className="absolute bottom-1 left-4 right-4 h-[2px] bg-brand-orange scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-200 ease-out" />
                   </a>
                 </div>
               );
             })}
           </nav>
 
-          <div className="flex items-center gap-2 md:gap-3 shrink-0">
+          <div className="flex items-center gap-2 md:gap-3 shrink-0 py-1.5 ml-auto lg:ml-0">
+            <TranslateButton className="border-white/20 bg-white/5 hover:bg-white/15 text-xs text-white" />
             <a
               href="/donate"
-              className="bg-brand-orange hover:bg-orange-600 text-white font-bold text-xs md:text-sm px-3 py-2 md:px-5 md:py-2.5 rounded-md shadow-md transition-colors uppercase tracking-wide"
+              className="bg-brand-orange hover:bg-brand-orange-dark text-white font-bold text-xs md:text-sm px-4 py-2 rounded-md shadow-md transition-all hover:scale-105 active:scale-95 uppercase tracking-wide"
             >
               DONATE NOW
             </a>
             <button
-              className="lg:hidden p-1.5 md:p-2 text-gray-600 hover:text-[#0d2b1a] transition-colors cursor-pointer"
+              className="lg:hidden p-2 text-white/80 hover:text-white transition-colors cursor-pointer"
               onClick={() => setMobileOpen(true)}
               aria-label="Open navigation menu"
             >
-              <Menu className="w-5 h-5 md:w-6 md:h-6" />
+              <Menu className="w-6 h-6" />
             </button>
           </div>
 
