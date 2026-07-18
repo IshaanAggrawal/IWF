@@ -1093,21 +1093,21 @@ function EventsAndNoticesSection({ lang }: LanguageProp) {
   }, [newsList.length]);
 
   return (
-    <section className="py-16 bg-slate-50 border-y border-slate-100">
+    <section className="py-16 bg-[#0d2b1a] text-white border-y border-white/5">
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-10 items-stretch">
           
           {/* Left Column: Events & Notices */}
           <div className="flex flex-col">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl md:text-2xl font-extrabold text-slate-950 flex items-center gap-2">
-                <span className="w-1.5 h-6 bg-brand-green rounded-full"></span>
+              <h2 className="text-xl md:text-2xl font-extrabold text-white flex items-center gap-2">
+                <span className="w-1.5 h-6 bg-brand-orange rounded-full"></span>
                 {t.eventsNotices}
               </h2>
             </div>
             
             {/* Scroll Container with height exactly matching 3 items (362px) */}
-            <div className="relative flex-1 h-[362px] max-h-[362px] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm p-4">
+            <div className="relative flex-1 h-[362px] max-h-[362px] overflow-hidden rounded-2xl border border-white/10 bg-[#091f12] shadow-sm p-4">
               <div 
                 className="space-y-3"
                 style={{
@@ -1116,36 +1116,36 @@ function EventsAndNoticesSection({ lang }: LanguageProp) {
                 }}
               >
                 {loopNotices.map((e, i) => (
-                  <div key={i} className="h-[102px] bg-slate-50/50 hover:bg-slate-50 rounded-xl p-4 flex gap-4 items-center border border-slate-100 shadow-sm transition-colors duration-200">
-                    <div className="text-center bg-brand-green/10 rounded-lg px-3 py-1.5 w-16 shrink-0">
-                      <div className="text-[10px] font-bold text-brand-green uppercase">{e.m}</div>
-                      <div className="text-lg font-extrabold text-brand-green-dark leading-none mt-0.5">{e.d}</div>
+                  <div key={i} className="h-[102px] bg-[#0a2315] hover:bg-[#0c2e1b] rounded-xl p-4 flex gap-4 items-center border border-white/5 shadow-sm transition-colors duration-200">
+                    <div className="text-center bg-white/5 rounded-lg px-3 py-1.5 w-16 shrink-0">
+                      <div className="text-[10px] font-bold text-brand-orange uppercase">{e.m}</div>
+                      <div className="text-lg font-extrabold text-white leading-none mt-0.5">{e.d}</div>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-extrabold text-xs text-slate-950 truncate">{e.title}</h4>
-                      <p className="text-[11px] text-slate-600 font-medium leading-normal mt-1 line-clamp-2">{e.desc}</p>
+                      <h4 className="font-extrabold text-xs text-white truncate">{e.title}</h4>
+                      <p className="text-[11px] text-white/70 font-medium leading-normal mt-1 line-clamp-2">{e.desc}</p>
                     </div>
-                    <a href="#" className="text-[11px] font-bold text-brand-green hover:text-brand-green-dark shrink-0 transition-colors">{t.readMore} →</a>
+                    <a href="#" className="text-[11px] font-bold text-brand-orange hover:underline shrink-0 transition-colors">{t.readMore} →</a>
                   </div>
                 ))}
               </div>
             </div>
           </div>
-
+ 
           {/* Right Column: News & Updates (Vertical Carousel) */}
           <div className="flex flex-col">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl md:text-2xl font-extrabold text-slate-950 flex items-center gap-2">
+              <h2 className="text-xl md:text-2xl font-extrabold text-white flex items-center gap-2">
                 <span className="w-1.5 h-6 bg-brand-orange rounded-full"></span>
                 {t.newsUpdates}
               </h2>
-              <a href="/news-and-events" className="text-xs font-bold text-brand-green hover:text-brand-green-dark transition-colors">
+              <a href="/news-and-events" className="text-xs font-bold text-brand-orange hover:underline transition-colors">
                 {t.viewAll} →
               </a>
             </div>
-
+ 
             {/* Carousel Container showing 1 card with animation transitions */}
-            <div className="relative flex-1 h-[362px] max-h-[362px] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm p-6 flex flex-col justify-between">
+            <div className="relative flex-1 h-[362px] max-h-[362px] overflow-hidden rounded-2xl border border-white/10 bg-[#091f12] shadow-sm p-6 flex flex-col justify-between">
               {newsList.map((news, idx) => (
                 <div
                   key={idx}
@@ -1157,20 +1157,20 @@ function EventsAndNoticesSection({ lang }: LanguageProp) {
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ backgroundColor: `${news.tagColor}15`, color: news.tagColor }}>
+                      <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-white/10" style={{ color: news.tagColor }}>
                         {news.tag}
                       </span>
-                      <span className="text-xs text-slate-500 font-semibold">{news.date}</span>
+                      <span className="text-xs text-white/50 font-semibold">{news.date}</span>
                     </div>
-                    <h3 className="font-extrabold text-sm md:text-base text-slate-950 leading-snug hover:text-brand-green transition-colors">
+                    <h3 className="font-extrabold text-sm md:text-base text-white leading-snug hover:text-brand-orange transition-colors">
                       {news.title}
                     </h3>
-                    <p className="text-xs text-slate-600 font-medium leading-relaxed line-clamp-4">
+                    <p className="text-xs text-white/70 font-medium leading-relaxed line-clamp-4">
                       {news.excerpt}
                     </p>
                   </div>
                   
-                  <div className="pt-4 flex items-center justify-between border-t border-slate-100 mt-4">
+                  <div className="pt-4 flex items-center justify-between border-t border-white/5 mt-4">
                     <a href="#" className="text-xs font-bold inline-flex items-center gap-1 hover:underline" style={{ color: news.tagColor }}>
                       {t.readMore} <ArrowRight className="w-3 h-3" />
                     </a>
@@ -1181,7 +1181,7 @@ function EventsAndNoticesSection({ lang }: LanguageProp) {
                         <button
                           key={i}
                           onClick={() => setNewsIndex(i)}
-                          className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${newsIndex === i ? "w-4 bg-brand-orange" : "bg-slate-200"}`}
+                          className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${newsIndex === i ? "w-4 bg-brand-orange" : "bg-white/20"}`}
                           aria-label={`Go to slide ${i + 1}`}
                         />
                       ))}
@@ -1191,7 +1191,7 @@ function EventsAndNoticesSection({ lang }: LanguageProp) {
               ))}
             </div>
           </div>
-
+ 
         </div>
       </div>
     </section>
