@@ -1095,7 +1095,7 @@ function EventsAndNoticesSection({ lang }: LanguageProp) {
             </div>
             
             {/* Scroll Container with height exactly matching 3 items (440px) */}
-            <div className="relative flex-1 h-[440px] max-h-[440px] overflow-hidden rounded-2xl border border-white/10 bg-[#091f12] shadow-sm p-4">
+            <div className="relative flex-1 h-[440px] max-h-[440px] overflow-hidden rounded-2xl border border-white/10 bg-[#0b1f3b] shadow-sm p-4">
               <div 
                 className="space-y-4"
                 style={{
@@ -1104,7 +1104,7 @@ function EventsAndNoticesSection({ lang }: LanguageProp) {
                 }}
               >
                 {loopNotices.map((e, i) => (
-                  <div key={i} className="h-[124px] bg-[#0a2315] hover:bg-[#0c2e1b] rounded-xl p-5 flex gap-5 items-center border border-white/5 shadow-sm transition-colors duration-200">
+                  <div key={i} className="h-[124px] bg-[#0c2445] hover:bg-[#112d54] rounded-xl p-5 flex gap-5 items-center border border-white/5 shadow-sm transition-colors duration-200">
                     <div className="text-center bg-white/5 rounded-lg px-4 py-2 w-20 shrink-0">
                       <div className="text-xs font-bold text-brand-orange uppercase">{e.m}</div>
                       <div className="text-2xl font-extrabold text-white leading-none mt-1">{e.d}</div>
@@ -1133,14 +1133,14 @@ function EventsAndNoticesSection({ lang }: LanguageProp) {
             </div>
  
             {/* Carousel Container showing 1 card with animation transitions */}
-            <div className="relative flex-1 h-[440px] max-h-[440px] overflow-hidden rounded-2xl border border-white/10 bg-[#091f12] shadow-sm p-6 flex flex-col justify-between">
+            <div className="relative flex-1 h-[440px] max-h-[440px] overflow-hidden rounded-2xl border border-white/10 bg-[#0b1f3b] shadow-sm flex flex-col justify-between">
               {newsList.map((news, idx) => (
                 <div
                   key={idx}
-                  className={`absolute inset-0 p-6 flex flex-col justify-between transition-all duration-700 ease-in-out ${
+                  className={`absolute inset-0 p-6 bg-[#0c2445] rounded-2xl flex flex-col justify-between transition-all duration-700 ease-in-out ${
                     newsIndex === idx 
-                      ? "opacity-100 translate-y-0 pointer-events-auto" 
-                      : "opacity-0 translate-y-4 pointer-events-none"
+                      ? "opacity-100 translate-y-0 pointer-events-auto z-10" 
+                      : "opacity-0 translate-y-4 pointer-events-none z-0"
                   }`}
                 >
                   <div className="space-y-4">
