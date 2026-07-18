@@ -139,11 +139,11 @@ function RedesignHeroSection() {
   return (
     <section className="bg-white pt-8 pb-0 px-6 lg:px-16">
       <nav className="flex items-center gap-2 text-xs text-gray-500 mb-6 font-medium max-w-7xl mx-auto">
-        <Link to="/" className="hover:text-[#0d2b1a] transition-colors flex items-center gap-1">
+        <Link to="/" className="hover:text-[#0b1f3b] transition-colors flex items-center gap-1">
           <Home className="w-3 h-3" /> Home
         </Link>
         <ChevronRight className="w-3 h-3" />
-        <Link to="/programs/healthcare" className="hover:text-[#0d2b1a] transition-colors">
+        <Link to="/programs/healthcare" className="hover:text-[#0b1f3b] transition-colors">
           Healthcare
         </Link>
         <ChevronRight className="w-3 h-3" />
@@ -153,11 +153,11 @@ function RedesignHeroSection() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[38%_37%_25%] gap-6 items-stretch">
         <div className="flex flex-col justify-center pr-0 lg:pr-6">
           <h1 className="text-4xl lg:text-5xl font-black leading-tight">
-            <span className="text-[#0d2b1a]">CRITICAL LIFE &</span>
+            <span className="text-[#0b1f3b]">CRITICAL LIFE &</span>
             <br />
             <span className="text-[#f97316]">EMERGENCY SUPPORT</span>
             <br />
-            <span className="text-[#0d2b1a]">INITIATIVE</span>
+            <span className="text-[#0b1f3b]">INITIATIVE</span>
           </h1>
           <p className="mt-4 text-sm italic text-gray-700 font-medium before:content-['\201C'] after:content-['\201D']">
             Har Pal Anmol Hai—when every second counts, we stand to save lives.
@@ -179,7 +179,7 @@ function RedesignHeroSection() {
 
         <div className="bg-white border border-gray-100 rounded-2xl shadow-lg p-5 flex flex-col gap-4">
           <div>
-            <p className="text-base font-bold text-[#0d2b1a]">Every Second Matters</p>
+            <p className="text-base font-bold text-[#0b1f3b]">Every Second Matters</p>
             <p className="text-xs text-gray-500 mt-0.5">Timely Support. Better Care. Saved Lives.</p>
           </div>
           <div className="grid grid-cols-2 gap-3 mt-2">
@@ -189,7 +189,7 @@ function RedesignHeroSection() {
                 className="flex flex-col items-center gap-1 p-3 rounded-xl bg-orange-50"
               >
                 <Icon className="w-5 h-5 text-[#f97316]" />
-                <span className="text-lg font-black text-[#0d2b1a]">{value}</span>
+                <span className="text-lg font-black text-[#0b1f3b]">{value}</span>
                 <span className="text-[10px] text-gray-500 text-center leading-tight">{label}</span>
               </div>
             ))}
@@ -224,7 +224,7 @@ function FeatureStripSection() {
           {features.map(({ icon: Icon, label }, i) => (
             <div key={label} className="flex items-center gap-4 xl:gap-8">
               <div className="flex flex-col items-center gap-1.5">
-                <Icon className="w-[22px] h-[22px] text-[#0d2b1a]" />
+                <Icon className="w-[22px] h-[22px] text-[#0b1f3b]" />
                 <span className="text-[11px] text-gray-600 font-medium text-center leading-tight max-w-[88px]">
                   {label}
                 </span>
@@ -233,7 +233,7 @@ function FeatureStripSection() {
             </div>
           ))}
         </div>
-        <div className="bg-[#0d2b1a] rounded-xl px-5 py-3 flex flex-col sm:flex-row items-center gap-4 shrink-0 w-full xl:w-auto">
+        <div className="bg-[#0b1f3b] rounded-xl px-5 py-3 flex flex-col sm:flex-row items-center gap-4 shrink-0 w-full xl:w-auto">
           <div className="flex items-center gap-3">
             <ShieldCheck className="w-5 h-5 text-white shrink-0" />
             <div>
@@ -281,7 +281,7 @@ function PatientCardsSection() {
         <div className="flex-1 w-full">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
             <div>
-              <h2 className="text-xl font-black text-[#0d2b1a] uppercase tracking-wide">
+              <h2 className="text-xl font-black text-[#0b1f3b] uppercase tracking-wide">
                 Patients Needing Urgent Support
               </h2>
               <div className="h-1 w-12 bg-[#f97316] rounded-full mt-1.5" />
@@ -303,7 +303,7 @@ function PatientCardsSection() {
         </div>
 
         <aside className="w-full lg:w-72 shrink-0 lg:sticky lg:top-24">
-          <h3 className="text-sm font-black text-[#0d2b1a] uppercase tracking-wide mb-5">
+          <h3 className="text-sm font-black text-[#0b1f3b] uppercase tracking-wide mb-5">
             Why Your Support Matters
           </h3>
           <div className="flex flex-col gap-4">
@@ -338,10 +338,10 @@ function BottomCTABanner() {
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-4">
           <div className="bg-green-100 p-2.5 rounded-xl shrink-0">
-            <ClipboardList className="w-9 h-9 text-[#0d2b1a]" />
+            <ClipboardList className="w-9 h-9 text-[#0b1f3b]" />
           </div>
           <div>
-            <p className="font-bold text-sm text-[#0d2b1a]">
+            <p className="font-bold text-sm text-[#0b1f3b]">
               You can be the reason for someone&apos;s second chance at life.
             </p>
             <p className="text-xs text-gray-500 mt-0.5">
@@ -442,7 +442,7 @@ function OverviewSection() {
             {STRUGGLE_POINTS.map(({ icon: Icon, text }, i) => (
               <div
                 key={i}
-                className="group flex items-start gap-4 p-5 rounded-md bg-[#0d2b1a] hover:bg-white border border-brand-green/10 hover:border-brand-green/30 shadow-sm hover:shadow-md transition-all duration-300"
+                className="group flex items-start gap-4 p-5 rounded-md bg-[#0b1f3b] hover:bg-white border border-brand-green/10 hover:border-brand-green/30 shadow-sm hover:shadow-md transition-all duration-300"
               >
                 <div className="shrink-0 w-9 h-9 rounded-md bg-white/15 group-hover:bg-brand-green/10 flex items-center justify-center transition-colors">
                   <Icon className="w-4.5 h-4.5 text-white group-hover:text-brand-green transition-colors" />
@@ -510,7 +510,7 @@ function SupportAreasSection() {
               return (
                 <div
                   key={area.num}
-                  className="group bg-[#0d2b1a] hover:bg-white rounded-md p-6 border border-brand-green/10 hover:border-brand-green/30 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col"
+                  className="group bg-[#0b1f3b] hover:bg-white rounded-md p-6 border border-brand-green/10 hover:border-brand-green/30 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col"
                 >
                   <div className="flex items-center gap-3 mb-5">
                     <div className="w-10 h-10 rounded-md bg-white/15 group-hover:bg-brand-orange/15 flex items-center justify-center transition-colors">
@@ -582,7 +582,7 @@ function ImpactSection() {
             {IMPACT_OUTCOMES.map(({ icon: Icon, text }, i) => (
               <div
                 key={i}
-                className="group bg-[#0d2b1a] hover:bg-white rounded-md p-5 border border-brand-green/10 hover:border-brand-green/20 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 flex flex-col items-center text-center"
+                className="group bg-[#0b1f3b] hover:bg-white rounded-md p-5 border border-brand-green/10 hover:border-brand-green/20 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 flex flex-col items-center text-center"
               >
                 <div className="w-10 h-10 rounded-full bg-white/15 group-hover:bg-brand-green/10 flex items-center justify-center mb-3 transition-colors">
                   <Icon className="w-4.5 h-4.5 text-white group-hover:text-brand-green transition-colors" />

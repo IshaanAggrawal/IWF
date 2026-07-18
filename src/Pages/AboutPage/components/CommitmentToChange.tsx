@@ -32,7 +32,7 @@ export default function CommitmentToChange() {
           backgroundPosition: "center"
         }}
       >
-        <div className="absolute inset-0 bg-[#0d2b1a]/90"></div>
+        <div className="absolute inset-0 bg-[#0b1f3b]/90"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 relative z-10">

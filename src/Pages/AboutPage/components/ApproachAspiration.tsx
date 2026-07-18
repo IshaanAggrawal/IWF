@@ -18,7 +18,7 @@ export default function ApproachAspiration() {
           <div>
             <div className="flex items-center gap-2 mb-5">
               <Leaf className="text-brand-green w-5 h-5 shrink-0" />
-              <h3 className="text-[#0d2b1a] font-bold text-lg uppercase tracking-wide">Our Approach</h3>
+              <h3 className="text-[#0b1f3b] font-bold text-lg uppercase tracking-wide">Our Approach</h3>
             </div>
 
             <p className="text-sm text-slate-600 mb-4 leading-relaxed">
@@ -44,7 +44,7 @@ export default function ApproachAspiration() {
           <div>
             <div className="flex items-center gap-2 mb-5">
               <Sparkles className="text-brand-orange w-5 h-5 shrink-0" />
-              <h3 className="text-[#0d2b1a] font-bold text-lg uppercase tracking-wide">Our Aspiration</h3>
+              <h3 className="text-[#0b1f3b] font-bold text-lg uppercase tracking-wide">Our Aspiration</h3>
             </div>
 
             <p className="text-sm text-slate-600 mb-4">

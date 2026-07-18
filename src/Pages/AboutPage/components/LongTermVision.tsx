@@ -30,7 +30,7 @@ export default function LongTermVision() {
           </div>
 
           {/* RIGHT: Card */}
-          <div className="bg-[#0d2b1a] text-white rounded-2xl p-8 relative overflow-hidden shadow-xl">
+          <div className="bg-[#0b1f3b] text-white rounded-2xl p-8 relative overflow-hidden shadow-xl">
             <div className="inline-flex items-center gap-2 bg-brand-green/30 px-3 py-1.5 rounded-full mb-6">
               <Eye className="w-4 h-4 text-white" />
               <span className="font-bold text-xs uppercase tracking-wider">VISION STATEMENT</span>

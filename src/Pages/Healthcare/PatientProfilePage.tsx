@@ -83,11 +83,11 @@ function HeroSection({ patient }: { patient: Patient }) {
     <section className="bg-white pt-6 pb-0 px-4 lg:px-16">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-xs text-gray-500 mb-6 font-medium max-w-7xl mx-auto">
-        <Link to="/" className="hover:text-[#0d2b1a] flex items-center gap-1">
+        <Link to="/" className="hover:text-[#0b1f3b] flex items-center gap-1">
           <Home className="w-3 h-3" /> Home
         </Link>
         <ChevronRight className="w-3 h-3" />
-        <Link to="/programs/healthcare/critical-life-support" className="hover:text-[#0d2b1a]">
+        <Link to="/programs/healthcare/critical-life-support" className="hover:text-[#0b1f3b]">
           Critical Life Support
         </Link>
         <ChevronRight className="w-3 h-3" />
@@ -126,7 +126,7 @@ function HeroSection({ patient }: { patient: Patient }) {
           <div className="flex flex-col gap-5">
             {/* Case ID badge */}
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="flex items-center gap-1.5 bg-[#0d2b1a]/5 border border-[#0d2b1a]/20 text-[#0d2b1a] text-xs font-bold px-3 py-1.5 rounded-full">
+              <span className="flex items-center gap-1.5 bg-[#0b1f3b]/5 border border-[#0b1f3b]/20 text-[#0b1f3b] text-xs font-bold px-3 py-1.5 rounded-full">
                 <Shield className="w-3.5 h-3.5" />
                 Case ID: {patient.verificationId}
               </span>
@@ -140,7 +140,7 @@ function HeroSection({ patient }: { patient: Patient }) {
             </div>
 
             <div>
-              <h1 className="text-3xl lg:text-4xl font-black text-[#0d2b1a] mb-1">
+              <h1 className="text-3xl lg:text-4xl font-black text-[#0b1f3b] mb-1">
                 {patient.name}
               </h1>
               <p className="text-[#f97316] font-bold text-base">{patient.disease}</p>
@@ -155,7 +155,7 @@ function HeroSection({ patient }: { patient: Patient }) {
                   </p>
                   <div className="flex items-center gap-1">
                     <IndianRupee className="w-5 h-5 text-[#f97316]" />
-                    <span className="text-3xl font-black text-[#0d2b1a]">
+                    <span className="text-3xl font-black text-[#0b1f3b]">
                       {patient.raisedAmount.toLocaleString("en-IN")}
                     </span>
                   </div>
@@ -230,7 +230,7 @@ function StorySection({ patient }: { patient: Patient }) {
           <p className="text-xs font-black text-[#f97316] uppercase tracking-widest mb-3">
             Patient Story
           </p>
-          <h2 className="text-2xl font-black text-[#0d2b1a] mb-6">
+          <h2 className="text-2xl font-black text-[#0b1f3b] mb-6">
             The Human Behind the Case
           </h2>
 
@@ -277,7 +277,7 @@ function StorySection({ patient }: { patient: Patient }) {
           </div>
 
           <div className="bg-gray-50 border border-gray-100 rounded-2xl p-5 space-y-3">
-            <p className="text-xs font-black text-[#0d2b1a] uppercase tracking-wide">Quick Facts</p>
+            <p className="text-xs font-black text-[#0b1f3b] uppercase tracking-wide">Quick Facts</p>
             {[
               { icon: User, label: "Patient", value: `${patient.name}, ${patient.age} yrs (${patient.gender})` },
               { icon: Calendar, label: "Admitted", value: formatDate(patient.admissionDate) },
@@ -285,7 +285,7 @@ function StorySection({ patient }: { patient: Patient }) {
               { icon: AlertCircle, label: "Condition", value: patient.condition },
             ].map(({ icon: Icon, label, value }) => (
               <div key={label} className="flex items-start gap-2.5">
-                <Icon className="w-4 h-4 text-[#0d2b1a]/50 shrink-0 mt-0.5" />
+                <Icon className="w-4 h-4 text-[#0b1f3b]/50 shrink-0 mt-0.5" />
                 <div>
                   <p className="text-[10px] text-gray-400 font-bold uppercase">{label}</p>
                   <p className="text-xs text-gray-700 font-medium">{value}</p>
@@ -294,7 +294,7 @@ function StorySection({ patient }: { patient: Patient }) {
             ))}
           </div>
 
-          <div className="bg-[#0d2b1a] rounded-2xl p-5 text-white text-center">
+          <div className="bg-[#0b1f3b] rounded-2xl p-5 text-white text-center">
             <Phone className="w-6 h-6 mx-auto mb-2 opacity-70" />
             <p className="text-xs font-black uppercase tracking-wide mb-1">Contact IWF</p>
             <p className="text-xs opacity-70 mb-3">
@@ -324,7 +324,7 @@ function VerificationSection({ patient }: { patient: Patient }) {
             <BadgeCheck className="w-4 h-4" />
             Transparency & Verification
           </div>
-          <h2 className="text-2xl font-black text-[#0d2b1a]">
+          <h2 className="text-2xl font-black text-[#0b1f3b]">
             100% Verified by IWF Field Team
           </h2>
           <p className="text-sm text-gray-600 mt-2 max-w-xl mx-auto">
@@ -341,7 +341,7 @@ function VerificationSection({ patient }: { patient: Patient }) {
               </div>
               <div>
                 <p className="text-xs text-gray-400 font-bold uppercase tracking-wide">Case Reference</p>
-                <p className="text-base font-black text-[#0d2b1a]">{patient.verificationId}</p>
+                <p className="text-base font-black text-[#0b1f3b]">{patient.verificationId}</p>
               </div>
             </div>
             <div className="space-y-4">
@@ -369,8 +369,8 @@ function VerificationSection({ patient }: { patient: Patient }) {
           {/* Document checklist */}
           <div className="bg-white rounded-2xl border border-green-100 shadow-sm p-6">
             <div className="flex items-center gap-2 mb-5">
-              <FileText className="w-5 h-5 text-[#0d2b1a]" />
-              <p className="text-sm font-black text-[#0d2b1a] uppercase tracking-wide">
+              <FileText className="w-5 h-5 text-[#0b1f3b]" />
+              <p className="text-sm font-black text-[#0b1f3b] uppercase tracking-wide">
                 Documents Verified
               </p>
             </div>
@@ -402,7 +402,7 @@ function VerificationSection({ patient }: { patient: Patient }) {
           </div>
 
           {/* IWF transparency pledge */}
-          <div className="bg-[#0d2b1a] rounded-2xl p-6 text-white flex flex-col">
+          <div className="bg-[#0b1f3b] rounded-2xl p-6 text-white flex flex-col">
             <BadgeCheck className="w-8 h-8 text-[#f97316] mb-4" />
             <h3 className="font-black text-lg mb-3">IWF's Transparency Pledge</h3>
             <ul className="space-y-3 flex-1">
@@ -443,12 +443,12 @@ function FinancialSection({ patient }: { patient: Patient }) {
         <p className="text-xs font-black text-[#f97316] uppercase tracking-widest mb-2">
           Financial Transparency
         </p>
-        <h2 className="text-2xl font-black text-[#0d2b1a] mb-8">Complete Cost Breakdown</h2>
+        <h2 className="text-2xl font-black text-[#0b1f3b] mb-8">Complete Cost Breakdown</h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Cost table */}
           <div className="bg-gray-50 rounded-2xl border border-gray-100 overflow-hidden">
-            <div className="bg-[#0d2b1a] px-5 py-3 flex items-center justify-between">
+            <div className="bg-[#0b1f3b] px-5 py-3 flex items-center justify-between">
               <p className="text-white text-xs font-black uppercase tracking-wide">
                 Treatment Cost Estimate
               </p>
@@ -458,13 +458,13 @@ function FinancialSection({ patient }: { patient: Patient }) {
               {patient.costBreakdown.map((item, i) => (
                 <div key={i} className="flex items-center justify-between px-5 py-3.5">
                   <p className="text-sm text-gray-700">{item.label}</p>
-                  <p className="text-sm font-bold text-[#0d2b1a]">
+                  <p className="text-sm font-bold text-[#0b1f3b]">
                     ₹{item.amount.toLocaleString("en-IN")}
                   </p>
                 </div>
               ))}
-              <div className="flex items-center justify-between px-5 py-4 bg-[#0d2b1a]/5">
-                <p className="text-sm font-black text-[#0d2b1a] uppercase tracking-wide">
+              <div className="flex items-center justify-between px-5 py-4 bg-[#0b1f3b]/5">
+                <p className="text-sm font-black text-[#0b1f3b] uppercase tracking-wide">
                   Total Required
                 </p>
                 <div className="flex items-center gap-1">
@@ -480,13 +480,13 @@ function FinancialSection({ patient }: { patient: Patient }) {
           {/* Funding status */}
           <div className="flex flex-col gap-5">
             <div className="bg-orange-50 border border-orange-100 rounded-2xl p-6">
-              <p className="text-xs font-black text-[#0d2b1a] uppercase tracking-wide mb-4">
+              <p className="text-xs font-black text-[#0b1f3b] uppercase tracking-wide mb-4">
                 Funding Status
               </p>
 
               <div className="grid grid-cols-3 gap-4 mb-5">
                 {[
-                  { label: "Total Needed", value: `₹${patient.neededAmount.toLocaleString("en-IN")}`, color: "text-[#0d2b1a]" },
+                  { label: "Total Needed", value: `₹${patient.neededAmount.toLocaleString("en-IN")}`, color: "text-[#0b1f3b]" },
                   { label: "Raised So Far", value: `₹${patient.raisedAmount.toLocaleString("en-IN")}`, color: "text-green-600" },
                   { label: "Still Needed", value: `₹${remaining.toLocaleString("en-IN")}`, color: "text-[#f97316]" },
                 ].map(({ label, value, color }) => (
@@ -505,7 +505,7 @@ function FinancialSection({ patient }: { patient: Patient }) {
               </div>
               <div className="flex justify-between text-xs text-gray-500">
                 <span>₹0</span>
-                <span className="font-bold text-[#0d2b1a]">{pct}% funded</span>
+                <span className="font-bold text-[#0b1f3b]">{pct}% funded</span>
                 <span>₹{patient.neededAmount.toLocaleString("en-IN")}</span>
               </div>
             </div>
@@ -551,7 +551,7 @@ function DonationHistorySection({ patient }: { patient: Patient }) {
             <p className="text-xs font-black text-[#f97316] uppercase tracking-widest mb-2">
               Recent Contributions
             </p>
-            <h2 className="text-2xl font-black text-[#0d2b1a] mb-6">
+            <h2 className="text-2xl font-black text-[#0b1f3b] mb-6">
               {patient.donorsCount} People Have Donated
             </h2>
             <div className="space-y-3">
@@ -561,11 +561,11 @@ function DonationHistorySection({ patient }: { patient: Patient }) {
                   className="bg-white border border-gray-100 rounded-xl p-4 flex items-start justify-between gap-3 shadow-sm"
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-9 h-9 rounded-full bg-[#0d2b1a]/10 flex items-center justify-center shrink-0">
+                    <div className="w-9 h-9 rounded-full bg-[#0b1f3b]/10 flex items-center justify-center shrink-0">
                       <Heart className="w-4 h-4 text-[#f97316]" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-xs font-bold text-[#0d2b1a] truncate">{d.donor}</p>
+                      <p className="text-xs font-bold text-[#0b1f3b] truncate">{d.donor}</p>
                       {d.message && (
                         <p className="text-[11px] text-gray-500 italic truncate">"{d.message}"</p>
                       )}
@@ -590,7 +590,7 @@ function DonationHistorySection({ patient }: { patient: Patient }) {
             <p className="text-xs font-black text-[#f97316] uppercase tracking-widest mb-2">
               IWF Field Updates
             </p>
-            <h2 className="text-2xl font-black text-[#0d2b1a] mb-6">
+            <h2 className="text-2xl font-black text-[#0b1f3b] mb-6">
               Case Progress Timeline
             </h2>
             <div className="relative">
@@ -626,7 +626,7 @@ function DonationHistorySection({ patient }: { patient: Patient }) {
                       </div>
                       <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
                         <div className="flex items-start justify-between gap-2 mb-1.5">
-                          <p className="text-xs font-black text-[#0d2b1a]">{update.title}</p>
+                          <p className="text-xs font-black text-[#0b1f3b]">{update.title}</p>
                           <time className="text-[10px] text-gray-400 shrink-0">
                             {formatDate(update.date)}
                           </time>
@@ -656,7 +656,7 @@ function OtherPatientsSection({ currentSlug }: { currentSlug: string }) {
         <p className="text-xs font-black text-[#f97316] uppercase tracking-widest mb-2">
           Others Needing Help
         </p>
-        <h2 className="text-2xl font-black text-[#0d2b1a] mb-6">More Patients Need Your Support</h2>
+        <h2 className="text-2xl font-black text-[#0b1f3b] mb-6">More Patients Need Your Support</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {others.map((p) => (
             <PatientCard key={p.id} {...p} />
@@ -665,7 +665,7 @@ function OtherPatientsSection({ currentSlug }: { currentSlug: string }) {
         <div className="text-center mt-8">
           <Link
             to="/programs/healthcare/critical-life-support"
-            className="inline-flex items-center gap-2 bg-[#0d2b1a] hover:bg-[#1a4a2e] text-white font-bold text-sm py-3 px-6 rounded-xl transition-colors duration-200"
+            className="inline-flex items-center gap-2 bg-[#0b1f3b] hover:bg-[#18325c] text-white font-bold text-sm py-3 px-6 rounded-xl transition-colors duration-200"
           >
             <ArrowLeft className="w-4 h-4" />
             View All Patients Needing Support
@@ -701,7 +701,7 @@ export default function PatientProfilePage() {
             </p>
             <Link
               to="/programs/healthcare/critical-life-support"
-              className="bg-[#0d2b1a] text-white font-bold py-3 px-6 rounded-xl hover:bg-[#1a4a2e] transition-colors"
+              className="bg-[#0b1f3b] text-white font-bold py-3 px-6 rounded-xl hover:bg-[#18325c] transition-colors"
             >
               View All Patients
             </Link>

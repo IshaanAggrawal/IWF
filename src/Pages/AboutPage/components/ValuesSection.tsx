@@ -57,7 +57,7 @@ export default function ValuesSection() {
                 <div className="w-14 h-14 mx-auto rounded-full bg-brand-orange/10 mb-4 flex items-center justify-center">
                   <val.icon className="text-brand-orange w-7 h-7" />
                 </div>
-                <h3 className="font-bold text-[#0d2b1a] text-sm uppercase tracking-widest mb-3">
+                <h3 className="font-bold text-[#0b1f3b] text-sm uppercase tracking-widest mb-3">
                   {val.title}
                 </h3>
                 <p className="text-xs text-slate-600 leading-relaxed">

@@ -10,7 +10,7 @@ export default function BePartOfChange({ onOpenModal }: BePartOfChangeProps) {
       {/* Background */}
       <div className="absolute inset-0">
         <img src={footerBg} alt="" className="w-full h-full object-cover opacity-30" />
-        <div className="absolute inset-0 bg-[#0d2b1a]/90" />
+        <div className="absolute inset-0 bg-[#0b1f3b]/90" />
       </div>
 
       {/* Content */}

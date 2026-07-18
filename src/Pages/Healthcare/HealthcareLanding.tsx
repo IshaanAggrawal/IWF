@@ -284,7 +284,7 @@ function OverviewSection() {
             {WHY_POINTS.map(({ icon: Icon, text }, i) => (
               <div
                 key={i}
-                className="group bg-[#0d2b1a] hover:bg-white rounded-md p-5 border border-brand-green/10 hover:border-brand-green/30 transition-all duration-300 hover:-translate-y-0.5 shadow-sm hover:shadow-md flex flex-col"
+                className="group bg-[#0b1f3b] hover:bg-white rounded-md p-5 border border-brand-green/10 hover:border-brand-green/30 transition-all duration-300 hover:-translate-y-0.5 shadow-sm hover:shadow-md flex flex-col"
               >
                 <div className="w-10 h-10 rounded-md bg-white/15 group-hover:bg-brand-green/10 flex items-center justify-center mb-4 transition-colors">
                   <Icon className="w-5 h-5 text-white group-hover:text-brand-green transition-colors" />
@@ -354,7 +354,7 @@ function ImpactSection() {
         <ScrollReveal stagger={0.07}>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
             {IMPACT_OUTCOMES.slice(0, 4).map((outcome, i) => (
-              <div key={i} className="group bg-[#0d2b1a] hover:bg-white rounded-md p-5 border border-brand-green/10 hover:border-brand-green/20 transition-all duration-300 shadow-sm hover:shadow-md">
+              <div key={i} className="group bg-[#0b1f3b] hover:bg-white rounded-md p-5 border border-brand-green/10 hover:border-brand-green/20 transition-all duration-300 shadow-sm hover:shadow-md">
                 <div className="w-8 h-8 rounded-full bg-white group-hover:bg-brand-green flex items-center justify-center text-brand-green group-hover:text-white font-bold text-xs mb-4 transition-colors">
                   {i + 1}
                 </div>
@@ -364,7 +364,7 @@ function ImpactSection() {
           </div>
           <div className="grid md:grid-cols-3 gap-4">
             {IMPACT_OUTCOMES.slice(4).map((outcome, i) => (
-              <div key={i} className="group bg-[#0d2b1a] hover:bg-white rounded-md p-5 border border-brand-green/10 hover:border-brand-green/20 transition-all duration-300 shadow-sm hover:shadow-md">
+              <div key={i} className="group bg-[#0b1f3b] hover:bg-white rounded-md p-5 border border-brand-green/10 hover:border-brand-green/20 transition-all duration-300 shadow-sm hover:shadow-md">
                 <div className="w-8 h-8 rounded-full bg-white group-hover:bg-brand-green flex items-center justify-center text-brand-green group-hover:text-white font-bold text-xs mb-4 transition-colors">
                   {i + 5}
                 </div>
@@ -415,7 +415,7 @@ function ProgrammesGrid() {
                 <Link
                   key={prog.num}
                   to={prog.route}
-                  className="group bg-[#0d2b1a] hover:bg-white rounded-md p-5 border border-brand-green/10 hover:border-brand-green/30 transition-all duration-300 hover:-translate-y-0.5 flex flex-col shadow-sm hover:shadow-md"
+                  className="group bg-[#0b1f3b] hover:bg-white rounded-md p-5 border border-brand-green/10 hover:border-brand-green/30 transition-all duration-300 hover:-translate-y-0.5 flex flex-col shadow-sm hover:shadow-md"
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div className="w-10 h-10 rounded-md bg-white/15 group-hover:bg-brand-orange/15 flex items-center justify-center transition-colors">

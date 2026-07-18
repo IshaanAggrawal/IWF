@@ -21,7 +21,7 @@ export default function ObjectivesSection() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 lg:rounded-2xl lg:overflow-hidden lg:shadow-xl">
 
           {/* LEFT: Objectives */}
-          <div className="bg-[#0d2b1a] p-8 flex flex-col">
+          <div className="bg-[#0b1f3b] p-8 flex flex-col">
             <div className="flex items-center gap-3 mb-8">
               <div className="w-10 h-10 rounded-full bg-brand-orange/20 flex items-center justify-center shrink-0">
                 <Target className="text-brand-orange w-5 h-5" />

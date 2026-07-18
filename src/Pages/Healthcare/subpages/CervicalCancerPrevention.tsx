@@ -242,7 +242,7 @@ function OverviewSection() {
         <ScrollReveal stagger={0.06}>
           <div className="grid md:grid-cols-2 gap-6 mb-12">
             {/* Left: What Women Don't Know */}
-            <div className="group bg-[#0d2b1a] hover:bg-white rounded-md border border-brand-green/10 hover:border-brand-green/30 shadow-sm p-6 hover:shadow-md transition-all duration-300 flex flex-col">
+            <div className="group bg-[#0b1f3b] hover:bg-white rounded-md border border-brand-green/10 hover:border-brand-green/30 shadow-sm p-6 hover:shadow-md transition-all duration-300 flex flex-col">
               <div className="flex items-center gap-3 mb-5">
                 <div className="w-10 h-10 rounded-md bg-white/15 group-hover:bg-brand-green/10 flex items-center justify-center transition-colors">
                   <BookOpen className="w-5 h-5 text-white group-hover:text-brand-green transition-colors" />
@@ -267,7 +267,7 @@ function OverviewSection() {
             </div>
 
             {/* Right: What Women Face */}
-            <div className="group bg-[#0d2b1a] hover:bg-white rounded-md border border-brand-green/10 hover:border-brand-green/30 shadow-sm p-6 hover:shadow-md transition-all duration-300 flex flex-col">
+            <div className="group bg-[#0b1f3b] hover:bg-white rounded-md border border-brand-green/10 hover:border-brand-green/30 shadow-sm p-6 hover:shadow-md transition-all duration-300 flex flex-col">
               <div className="flex items-center gap-3 mb-5">
                 <div className="w-10 h-10 rounded-md bg-white/15 group-hover:bg-brand-orange/15 flex items-center justify-center transition-colors">
                   <ShieldCheck className="w-5 h-5 text-white group-hover:text-brand-orange transition-colors" />
@@ -351,7 +351,7 @@ function ApproachSection() {
               return (
                 <div
                   key={area.num}
-                  className="group relative bg-[#0d2b1a] hover:bg-white rounded-md p-6 border border-brand-green/10 hover:border-brand-green/30 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden"
+                  className="group relative bg-[#0b1f3b] hover:bg-white rounded-md p-6 border border-brand-green/10 hover:border-brand-green/30 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden"
                 >
                   <span className="absolute top-3 right-4 text-6xl font-extrabold text-white/10 select-none leading-none group-hover:text-brand-green/5 transition-colors">
                     {area.num}
@@ -380,7 +380,7 @@ function ApproachSection() {
               return (
                 <div
                   key={area.num}
-                  className="group relative bg-[#0d2b1a] hover:bg-white rounded-md p-6 border border-brand-green/10 hover:border-brand-green/30 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden"
+                  className="group relative bg-[#0b1f3b] hover:bg-white rounded-md p-6 border border-brand-green/10 hover:border-brand-green/30 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden"
                 >
                   <span className="absolute top-3 right-4 text-6xl font-extrabold text-white/10 select-none leading-none group-hover:text-brand-green/5 transition-colors">
                     {area.num}
@@ -449,7 +449,7 @@ function ImpactSection() {
             {IMPACT_OUTCOMES.map(({ icon: Icon, text }, i) => (
               <div
                 key={i}
-                className="group bg-[#0d2b1a] hover:bg-white rounded-md p-5 border border-brand-green/10 hover:border-brand-green/20 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 flex flex-col items-center text-center"
+                className="group bg-[#0b1f3b] hover:bg-white rounded-md p-5 border border-brand-green/10 hover:border-brand-green/20 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 flex flex-col items-center text-center"
               >
                 <div className="w-10 h-10 rounded-full bg-white/15 group-hover:bg-brand-green/10 flex items-center justify-center mb-3 transition-colors">
                   <Icon className="w-4.5 h-4.5 text-white group-hover:text-brand-green transition-colors" />

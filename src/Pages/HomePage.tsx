@@ -347,38 +347,26 @@ function Header({ lang }: HeaderProps) {
 
       {/* White Branding Logo Banner (Scrolls away) */}
       <div className="bg-white py-4 border-b border-gray-100 relative">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <a href="/" className="flex items-center gap-4 group" aria-label="IWF Home">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-center">
+          <a href="/" className="flex flex-col md:flex-row items-center gap-4 md:gap-6 group text-center md:text-left" aria-label="IWF Home">
             <img src={newLogo} alt="IWF Logo" className="h-16 md:h-20 w-auto object-contain transition-transform group-hover:scale-105 shrink-0" />
-            <div className="flex flex-col">
-              <span className="text-xl md:text-3xl font-extrabold text-[#0d2b1a] tracking-wide font-sans leading-tight">
+            <div className="flex flex-col items-center md:items-start">
+              <span className="text-xl md:text-3xl font-extrabold text-[#0b1f3b] tracking-wide font-sans leading-tight text-center md:text-left">
                 ISLAH WELFARE FOUNDATION
               </span>
-              <span className="text-xs md:text-sm font-semibold italic text-brand-orange mt-1.5 leading-none">
+              <span className="text-xs md:text-sm font-semibold italic text-brand-orange mt-1.5 leading-none text-center md:text-left">
                 Planting Seeds of Hope and Change
               </span>
-              <span className="text-[10px] md:text-xs text-gray-500 font-medium mt-1.5 leading-none">
+              <span className="text-[10px] md:text-xs text-gray-500 font-medium mt-1.5 leading-none text-center md:text-left">
                 Bathiya, Via- Putai Manigachhi, Darbhanga, Bihar – 847423, India
               </span>
             </div>
           </a>
-
-          {/* Right stats/trust labels for premium styling */}
-          <div className="hidden md:flex items-center gap-4 text-[10px] font-bold uppercase tracking-wider text-gray-400">
-            <div className="text-right border-r pr-4 border-gray-200">
-              <div className="text-brand-orange">12A & 80G Certified</div>
-              <div>Registered Trust</div>
-            </div>
-            <div>
-              <div className="text-brand-green">FCRA Compliant</div>
-              <div>Govt. Registered</div>
-            </div>
-          </div>
         </div>
       </div>
 
       {/* Dark Themed Menu Navbar (Sticky) */}
-      <header className="bg-[#0d2b1a] text-white sticky top-0 z-50 shadow-md transition-all duration-200 py-1">
+      <header className="bg-[#0b1f3b] text-white sticky top-0 z-50 shadow-md transition-all duration-200 py-1">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between relative">
 
           {/* Left Group: Nav Links */}
@@ -542,7 +530,7 @@ function Header({ lang }: HeaderProps) {
                                                                               ? "/#get-involved"
                                                                               : "#"
                               }
-                              className="flex items-center gap-2 text-gray-700 hover:text-[#0d2b1a] text-sm hover:translate-x-1 transition-all duration-200"
+                              className="flex items-center gap-2 text-gray-700 hover:text-[#0b1f3b] text-sm hover:translate-x-1 transition-all duration-200"
                               style={{
                                 transitionDelay: `${globalIndex * 30}ms`,
                               }}
@@ -566,7 +554,7 @@ function Header({ lang }: HeaderProps) {
                     <div className="w-10 h-10 rounded-full bg-brand-green/10 flex items-center justify-center text-brand-green">
                       <Leaf className="w-5 h-5" />
                     </div>
-                    <div className="font-bold text-[#0d2b1a] text-sm leading-snug">
+                    <div className="font-bold text-[#0b1f3b] text-sm leading-snug">
                       Planting Seeds of Hope and Change
                     </div>
                     <div className="text-xs text-gray-600 leading-normal">
@@ -606,7 +594,7 @@ function Header({ lang }: HeaderProps) {
             aria-label="Mobile navigation"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-4 bg-[#0d2b1a] shrink-0 text-white">
+            <div className="flex items-center justify-between p-4 bg-[#0b1f3b] shrink-0 text-white">
               <div className="flex items-center gap-2.5">
                 <Leaf className="w-6 h-6 text-brand-green fill-brand-green/20" />
                 <div className="flex flex-col leading-none">
@@ -1093,7 +1081,7 @@ function EventsAndNoticesSection({ lang }: LanguageProp) {
   }, [newsList.length]);
 
   return (
-    <section className="py-16 bg-[#0d2b1a] text-white border-y border-white/5">
+    <section className="py-16 bg-[#0b1f3b] text-white border-y border-white/5">
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-10 items-stretch">
           
@@ -1331,11 +1319,11 @@ function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void }) {
 
           {/* Left — Stay Connected */}
           <div className="flex gap-4 items-start">
-            <div className="w-12 h-12 rounded-full bg-[#0d2b1a] text-white flex items-center justify-center shrink-0">
+            <div className="w-12 h-12 rounded-full bg-[#0b1f3b] text-white flex items-center justify-center shrink-0">
               <Mail className="w-6 h-6 text-white" />
             </div>
             <div className="flex-1">
-              <h5 className="font-bold text-[#0d2b1a] text-base leading-tight">STAY CONNECTED</h5>
+              <h5 className="font-bold text-[#0b1f3b] text-base leading-tight">STAY CONNECTED</h5>
               <p className="text-gray-600 text-sm mt-1">
                 Subscribe to our newsletter and stay updated with our latest activities and impact.
               </p>
@@ -1348,7 +1336,7 @@ function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void }) {
                 />
                 <button
                   type="submit"
-                  className="bg-[#0d2b1a] hover:bg-brand-green text-white text-xs font-semibold px-5 py-2.5 transition-colors uppercase shrink-0 cursor-pointer"
+                  className="bg-[#0b1f3b] hover:bg-brand-green text-white text-xs font-semibold px-5 py-2.5 transition-colors uppercase shrink-0 cursor-pointer"
                 >
                   SUBSCRIBE
                 </button>
@@ -1358,21 +1346,21 @@ function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void }) {
 
           {/* Center — We Are A Trusted Organization */}
           <div className="text-center">
-            <h5 className="font-bold text-[#0d2b1a] text-xs uppercase tracking-wide mb-6">
+            <h5 className="font-bold text-[#0b1f3b] text-xs uppercase tracking-wide mb-6">
               WE ARE A TRUSTED ORGANIZATION
             </h5>
             <div className="grid grid-cols-4 gap-2">
               {[
-                { label: "Registered Trust", Icon: () => <Award className="w-5 h-5 text-[#0d2b1a]" /> },
-                { label: "12A & 80G Certified", Icon: () => <span className="text-[9px] font-black tracking-tighter text-[#0d2b1a]">12A 80G</span> },
-                { label: "Impact Driven", Icon: () => <BarChart2 className="w-5 h-5 text-[#0d2b1a]" /> },
-                { label: "Secure & Transparent", Icon: () => <Lock className="w-5 h-5 text-[#0d2b1a]" /> }
+                { label: "Registered Trust", Icon: () => <Award className="w-5 h-5 text-[#0b1f3b]" /> },
+                { label: "12A & 80G Certified", Icon: () => <span className="text-[9px] font-black tracking-tighter text-[#0b1f3b]">12A 80G</span> },
+                { label: "Impact Driven", Icon: () => <BarChart2 className="w-5 h-5 text-[#0b1f3b]" /> },
+                { label: "Secure & Transparent", Icon: () => <Lock className="w-5 h-5 text-[#0b1f3b]" /> }
               ].map((badge, i) => (
                 <div key={i} className="flex flex-col items-center">
-                  <div className="w-10 h-10 rounded-full border-2 border-[#0d2b1a] bg-white flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full border-2 border-[#0b1f3b] bg-white flex items-center justify-center">
                     <badge.Icon />
                   </div>
-                  <span className="text-[#0d2b1a] font-semibold text-[9px] text-center mt-2 leading-tight">
+                  <span className="text-[#0b1f3b] font-semibold text-[9px] text-center mt-2 leading-tight">
                     {badge.label}
                   </span>
                 </div>
@@ -1382,11 +1370,11 @@ function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void }) {
 
           {/* Right — Quote Block */}
           <div className="border-t lg:border-t-0 lg:border-l border-gray-200 pt-6 lg:pt-0 lg:pl-6 flex flex-col justify-center mt-4 lg:mt-0">
-            <span className="text-[#0d2b1a] text-5xl font-serif leading-none block h-5">“</span>
-            <p className="text-[#0d2b1a] font-medium text-sm italic leading-relaxed mt-2">
+            <span className="text-[#0b1f3b] text-5xl font-serif leading-none block h-5">“</span>
+            <p className="text-[#0b1f3b] font-medium text-sm italic leading-relaxed mt-2">
               Alone we can do so little, together we can do so much.
             </p>
-            <span className="text-xs font-semibold text-[#0d2b1a] mt-2 block">
+            <span className="text-xs font-semibold text-[#0b1f3b] mt-2 block">
               – Helen Keller
             </span>
           </div>
@@ -1395,7 +1383,7 @@ function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void }) {
       </div>
 
       {/* Zone C — Values Strip */}
-      <div className="bg-[#0d2b1a] text-white py-6 px-4 md:px-10 border-t border-white/10">
+      <div className="bg-[#0b1f3b] text-white py-6 px-4 md:px-10 border-t border-white/10">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 items-center">
           {[
             { title: "Transparency", desc: "We are open and honest in all our actions.", Icon: ShieldCheck },
@@ -1423,7 +1411,7 @@ function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void }) {
       </div>
 
       {/* Zone A — Main Footer */}
-      <div className="bg-[#0d2b1a] text-white py-14 px-4 md:px-10 border-t border-white/10">
+      <div className="bg-[#0b1f3b] text-white py-14 px-4 md:px-10 border-t border-white/10">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
 
           {/* Column 1 — Organization Identity */}
@@ -1641,7 +1629,7 @@ function StatCard({ stat, visible }: { stat: typeof IMPACT_STATS[0]; visible: bo
         <div className="w-10 h-10 rounded-lg flex items-center justify-center mx-auto mb-2" style={{ backgroundColor: `${stat.color}18` }}>
           <Icon className="w-5 h-5" style={{ color: stat.color }} />
         </div>
-        <div className="text-2xl font-extrabold text-[#0d2b1a] mb-0.5">
+        <div className="text-2xl font-extrabold text-[#0b1f3b] mb-0.5">
           {count.toLocaleString("en-IN")}{stat.suffix}
         </div>
         <div className="text-[10px] font-semibold text-slate-500">{stat.label}</div>
@@ -1668,7 +1656,7 @@ function ImpactStats() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-6">
           <p className="text-xs font-bold uppercase tracking-widest text-brand-orange mb-1">Our Impact</p>
-          <h2 className="text-xl md:text-2xl font-extrabold text-[#0d2b1a]">Numbers That Speak</h2>
+          <h2 className="text-xl md:text-2xl font-extrabold text-[#0b1f3b]">Numbers That Speak</h2>
         </div>
 
         <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
@@ -1776,7 +1764,7 @@ function CampaignsSection() {
             ))}
 
             {/* CTA card */}
-            <div className="bg-gradient-to-br from-brand-green to-[#0d2b1a] rounded-2xl p-6 flex flex-col justify-between">
+            <div className="bg-gradient-to-br from-brand-green to-[#0b1f3b] rounded-2xl p-6 flex flex-col justify-between">
               <div>
                 <div className="text-3xl mb-3">🌟</div>
                 <h3 className="font-extrabold text-white text-base mb-2">Join the Movement</h3>

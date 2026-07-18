@@ -56,7 +56,7 @@ export function PatientCard({
 
       {/* Content */}
       <div className="p-4 flex flex-col flex-1 gap-2">
-        <h3 className="font-bold text-[#0d2b1a] text-base leading-tight">{name}</h3>
+        <h3 className="font-bold text-[#0b1f3b] text-base leading-tight">{name}</h3>
         <p className="text-xs text-gray-500">
           Age: {age} Yrs | {gender}
         </p>
@@ -71,7 +71,7 @@ export function PatientCard({
         </div>
 
         <div>
-          <span className="text-[10px] font-black text-[#0d2b1a] uppercase tracking-wide">
+          <span className="text-[10px] font-black text-[#0b1f3b] uppercase tracking-wide">
             Hospital:
           </span>
           <p className="text-xs text-gray-600 mt-0.5 leading-snug">{hospital}</p>
@@ -80,7 +80,7 @@ export function PatientCard({
         {/* Financial section */}
         <div className="mt-1">
           <div className="flex items-center justify-between mb-1">
-            <span className="text-[10px] font-black text-[#0d2b1a] uppercase tracking-wide">
+            <span className="text-[10px] font-black text-[#0b1f3b] uppercase tracking-wide">
               Needed Amount
             </span>
             <span className="text-[10px] text-gray-400">{donorsCount} donors</span>
@@ -112,7 +112,7 @@ export function PatientCard({
         <Link
           to="/patients/$patientSlug"
           params={{ patientSlug: slug }}
-          className="mt-auto w-full bg-[#0d2b1a] hover:bg-[#1a4a2e] text-white font-bold text-xs py-2.5 rounded-xl flex items-center justify-center gap-2 transition-colors duration-200 active:scale-95"
+          className="mt-auto w-full bg-[#0b1f3b] hover:bg-[#18325c] text-white font-bold text-xs py-2.5 rounded-xl flex items-center justify-center gap-2 transition-colors duration-200 active:scale-95"
         >
           <Eye className="w-3.5 h-3.5" />
           VIEW MORE
