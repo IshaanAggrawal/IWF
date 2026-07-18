@@ -555,7 +555,7 @@ function MemberCardVisual({ category, name, memberId, validTill, district, state
 function MembersAndDonorsHero({ activeTab, setActiveTab }: { activeTab: PageTab; setActiveTab: (t: PageTab) => void }) {
   const tabs: PageTab[] = ["Members", "Donors", "Your Membership"];
   return (
-    <section id="community-tabs" className="relative bg-[#0d2b1a] text-white pt-14 pb-8 overflow-hidden">
+    <section id="community-tabs" className="relative bg-[#0b1f3b] text-white pt-14 pb-8 overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-24 right-8 w-96 h-96 rounded-full bg-brand-orange/10 blur-3xl" />
         <div className="absolute top-8 -left-20 w-64 h-64 rounded-full bg-green-400/10 blur-3xl" />
@@ -586,7 +586,7 @@ function MembersAndDonorsHero({ activeTab, setActiveTab }: { activeTab: PageTab;
               onClick={() => setActiveTab(tab)}
               className={`px-6 sm:px-8 py-2.5 rounded-full text-sm font-bold transition-all duration-200 ${
                 activeTab === tab
-                  ? "bg-white text-[#0d2b1a] shadow-lg"
+                  ? "bg-white text-[#0b1f3b] shadow-lg"
                   : "text-white/70 hover:text-white hover:bg-white/10"
               }`}
             >
@@ -800,7 +800,7 @@ function MembersTab({ onRenewClick }: { onRenewClick: () => void }) {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr style={{ background: "linear-gradient(90deg, #0d2b1a, #1a4a2e)" }}>
+              <tr style={{ background: "linear-gradient(90deg, #0b1f3b, #18325c)" }}>
                 {["S. No.", "Photo", "Name", "Member ID", "Category", "District", "Valid Till"].map(h => (
                   <th key={h} className="px-4 py-3.5 text-left text-xs font-bold text-white/90 uppercase tracking-wider whitespace-nowrap">
                     {h}
@@ -1059,7 +1059,7 @@ function DonorsTab({ isTopDonors = false }: { isTopDonors?: boolean }) {
 
       {/* ─ Sub-hero */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8 p-6 md:p-8 rounded-2xl relative overflow-hidden"
-        style={{ background: "linear-gradient(135deg, #0d2b1a 0%, #1a4a2e 60%, #0f3320 100%)" }}>
+        style={{ background: "linear-gradient(135deg, #0b1f3b 0%, #18325c 60%, #0a1b33 100%)" }}>
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-0 right-0 w-48 h-48 rounded-full bg-brand-orange/10 blur-2xl" />
           <div className="absolute bottom-0 left-1/4 w-32 h-32 rounded-full bg-green-400/10 blur-xl" />
@@ -1858,7 +1858,7 @@ function ReceiptCard({ data, memberId, joinDate, validTill, receiptNo, period }:
   return (
     <div className="border-2 border-slate-100 rounded-2xl overflow-hidden shadow-md">
       <div className="px-5 py-4 flex items-center justify-between text-white"
-        style={{ background: "linear-gradient(135deg, #0d2b1a, #1a4a2e)" }}>
+        style={{ background: "linear-gradient(135deg, #0b1f3b, #18325c)" }}>
         <div>
           <p className="font-extrabold text-sm">ISLAH WELFARE FOUNDATION</p>
           <p className="text-white/60 text-[10px]">"Planting Seeds of Hope and Change"</p>
@@ -2183,7 +2183,7 @@ function ApplicationFormSection({ preSelectedCategory, onViewMembership }: { pre
           {/* Form Card */}
           <div className="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
             <div className="px-6 py-5 relative overflow-hidden"
-              style={{ background: "linear-gradient(135deg, #0d2b1a 0%, #1a4a2e 60%, #0f3320 100%)" }}>
+              style={{ background: "linear-gradient(135deg, #0b1f3b 0%, #18325c 60%, #0a1b33 100%)" }}>
               <div className="absolute top-0 right-0 w-24 h-24 rounded-full bg-white/5 -translate-y-1/2 translate-x-1/2" />
               <h3 className="text-white font-extrabold text-lg relative z-10">Member Registration</h3>
               <p className="text-white/60 text-xs mt-1 relative z-10">
@@ -2231,7 +2231,7 @@ function ApplicationFormSection({ preSelectedCategory, onViewMembership }: { pre
 
         {/* Thank you strip */}
         <div className="mt-12 rounded-2xl text-white p-6 flex flex-col md:flex-row items-center gap-6 relative overflow-hidden"
-          style={{ background: "linear-gradient(135deg, #0d2b1a, #1a4a2e)" }}>
+          style={{ background: "linear-gradient(135deg, #0b1f3b, #18325c)" }}>
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute right-0 top-0 w-40 h-40 rounded-full bg-brand-orange/10 blur-2xl" />
           </div>
@@ -2274,7 +2274,7 @@ function MemberCardPreviewSection() {
   };
   return (
     <section className="py-16 relative overflow-hidden"
-      style={{ background: "linear-gradient(135deg, #0d2b1a 0%, #1a3f26 50%, #0d2b1a 100%)" }}>
+      style={{ background: "linear-gradient(135deg, #0b1f3b 0%, #162f54 50%, #0b1f3b 100%)" }}>
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-brand-orange/8 blur-3xl" />
         <div className="absolute bottom-0 left-0 w-60 h-60 rounded-full bg-blue-400/8 blur-3xl" />
@@ -2427,7 +2427,7 @@ function MemberStatusCheck({
         </div>
 
         <div className="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
-          <div className="px-6 py-4" style={{ background: "linear-gradient(90deg, #0d2b1a, #1a4a2e)" }}>
+          <div className="px-6 py-4" style={{ background: "linear-gradient(90deg, #0b1f3b, #18325c)" }}>
             <h3 className="text-white font-bold flex items-center gap-2 text-sm"><Search className="w-4 h-4" /> Member Lookup</h3>
           </div>
           <div className="p-6">
@@ -2636,7 +2636,7 @@ function RenewalSection({
         </div>
 
         <div className="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
-          <div className="px-6 py-4" style={{ background: "linear-gradient(90deg, #0d2b1a, #1a4a2e)" }}>
+          <div className="px-6 py-4" style={{ background: "linear-gradient(90deg, #0b1f3b, #18325c)" }}>
             <h3 className="text-white font-bold text-sm flex items-center gap-2">
               <RefreshCw className="w-4 h-4" /> Membership Renewal
             </h3>

@@ -281,7 +281,7 @@ function OverviewSection() {
             {CHALLENGES.map(({ icon: Icon, text }, i) => (
               <div
                 key={i}
-                className="flex-shrink-0 w-56 snap-start flex items-start gap-3 p-4 bg-[#0d2b1a] rounded-md border border-brand-green/10 shadow-sm"
+                className="flex-shrink-0 w-56 snap-start flex items-start gap-3 p-4 bg-[#0b1f3b] rounded-md border border-brand-green/10 shadow-sm"
               >
                 <div className="shrink-0 w-8 h-8 rounded-md bg-white/15 flex items-center justify-center">
                   <Icon className="w-4 h-4 text-white" />
@@ -296,7 +296,7 @@ function OverviewSection() {
             {CHALLENGES.map(({ icon: Icon, text }, i) => (
               <div
                 key={i}
-                className="group flex items-start gap-4 p-5 bg-[#0d2b1a] hover:bg-white rounded-md border border-brand-green/10 hover:border-brand-green/30 shadow-sm hover:shadow-md transition-all duration-300"
+                className="group flex items-start gap-4 p-5 bg-[#0b1f3b] hover:bg-white rounded-md border border-brand-green/10 hover:border-brand-green/30 shadow-sm hover:shadow-md transition-all duration-300"
               >
                 <div className="relative shrink-0 w-9 h-9 rounded-md bg-white/15 group-hover:bg-brand-green/10 flex items-center justify-center transition-colors">
                   <Icon className="w-4.5 h-4.5 text-white group-hover:text-brand-green transition-colors" />
@@ -364,7 +364,7 @@ function ApproachSection() {
               return (
                 <div
                   key={area.num}
-                  className="group relative bg-[#0d2b1a] hover:bg-white rounded-md p-6 border border-brand-green/10 hover:border-brand-green/30 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden"
+                  className="group relative bg-[#0b1f3b] hover:bg-white rounded-md p-6 border border-brand-green/10 hover:border-brand-green/30 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden"
                 >
                   {/* Pulse on icon for urgency */}
                   <span className="absolute top-3 right-4 text-6xl font-extrabold text-white/10 select-none leading-none group-hover:text-brand-green/5 transition-colors">
@@ -397,7 +397,7 @@ function ApproachSection() {
               return (
                 <div
                   key={area.num}
-                  className="group relative bg-[#0d2b1a] hover:bg-white rounded-md p-6 border border-brand-green/10 hover:border-brand-green/30 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden"
+                  className="group relative bg-[#0b1f3b] hover:bg-white rounded-md p-6 border border-brand-green/10 hover:border-brand-green/30 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden"
                 >
                   <span className="absolute top-3 right-4 text-6xl font-extrabold text-white/10 select-none leading-none group-hover:text-brand-green/5 transition-colors">
                     {area.num}
@@ -464,7 +464,7 @@ function ImplementationSection() {
                   </div>
 
                   {/* Content */}
-                  <div className="flex-1 bg-[#0d2b1a] hover:bg-white border border-brand-green/10 hover:border-brand-green/30 rounded-md p-4 shadow-sm group-hover:shadow-md transition-all duration-300">
+                  <div className="flex-1 bg-[#0b1f3b] hover:bg-white border border-brand-green/10 hover:border-brand-green/30 rounded-md p-4 shadow-sm group-hover:shadow-md transition-all duration-300">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="text-[10px] font-bold text-white/80 group-hover:text-brand-orange uppercase tracking-widest transition-colors">Step {String(i + 1).padStart(2, "0")}</span>
                       <span className="text-[10px] text-white/30 group-hover:text-slate-300 transition-colors">•</span>
@@ -495,7 +495,7 @@ function ImpactSection() {
             {IMPACT_OUTCOMES.map(({ icon: Icon, text }, i) => (
               <div
                 key={i}
-                className="group flex items-start gap-4 p-5 bg-[#0d2b1a] hover:bg-white rounded-md border border-brand-green/10 hover:border-brand-green/20 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5"
+                className="group flex items-start gap-4 p-5 bg-[#0b1f3b] hover:bg-white rounded-md border border-brand-green/10 hover:border-brand-green/20 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5"
               >
                 <div className="shrink-0 w-9 h-9 rounded-full bg-white/15 group-hover:bg-brand-green/10 flex items-center justify-center transition-colors">
                   <Icon className="w-4.5 h-4.5 text-white group-hover:text-brand-green transition-colors" />

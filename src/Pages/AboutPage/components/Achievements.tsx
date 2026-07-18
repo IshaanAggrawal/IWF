@@ -60,7 +60,7 @@ export default function Achievements() {
           ))}
 
           {/* Wide span card */}
-          <div className="col-span-2 bg-[#0d2b1a] text-white rounded-xl p-5 text-center">
+          <div className="col-span-2 bg-[#0b1f3b] text-white rounded-xl p-5 text-center">
             <div className="text-3xl font-extrabold text-brand-orange">Multiple</div>
             <div className="text-xs text-white/70 mt-1 leading-tight">Regions Across India</div>
           </div>

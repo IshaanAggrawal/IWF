@@ -174,7 +174,7 @@ function RootComponent() {
         {msgOpen && (
           <div className="mb-4 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden transition-all duration-300 animate-in slide-in-from-bottom-5 fade-in">
             {/* Header */}
-            <div className="bg-[#0d2b1a] text-white p-4 flex items-center justify-between">
+            <div className="bg-[#0b1f3b] text-white p-4 flex items-center justify-between">
               <div>
                 <h4 className="font-bold text-sm">Quick Message</h4>
                 <p className="text-[10px] text-white/70">Let us know how we can help you</p>
@@ -206,7 +206,7 @@ function RootComponent() {
                 <div className="py-6 flex flex-col items-center text-center gap-3">
                   <CheckCircle2 className="w-12 h-12 text-[#22c55e] animate-bounce" />
                   <div>
-                    <h5 className="font-bold text-sm text-[#0d2b1a]">Thank you!</h5>
+                    <h5 className="font-bold text-sm text-[#0b1f3b]">Thank you!</h5>
                     <p className="text-xs text-gray-600 mt-1">Your message has been sent successfully. We will get back to you shortly.</p>
                   </div>
                   <button
@@ -275,7 +275,7 @@ function RootComponent() {
         <button
           onClick={() => setMsgOpen(!msgOpen)}
           className={`w-14 h-14 rounded-full flex items-center justify-center text-white shadow-2xl transition-all duration-300 hover:scale-110 cursor-pointer ${
-            msgOpen ? "bg-[#0d2b1a] hover:bg-[#081e12] rotate-90" : "bg-brand-orange hover:bg-brand-orange-dark hover:shadow-brand-orange/30"
+            msgOpen ? "bg-[#0b1f3b] hover:bg-[#071629] rotate-90" : "bg-brand-orange hover:bg-brand-orange-dark hover:shadow-brand-orange/30"
           }`}
           aria-label="Toggle contact message popup"
           title="Send a message"

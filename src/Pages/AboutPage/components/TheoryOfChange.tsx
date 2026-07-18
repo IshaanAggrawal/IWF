@@ -54,7 +54,7 @@ function StepCard({ label, Icon, desc }: { label: string; Icon: React.FC<{ class
 
 export default function TheoryOfChange() {
   return (
-    <section className="bg-[#0d2b1a] py-16 px-4">
+    <section className="bg-[#0b1f3b] py-16 px-4">
       <SectionTitle white>Theory of Change</SectionTitle>
       <p className="text-slate-300 text-sm max-w-2xl mx-auto text-center mb-12">
         Our work follows a clear pathway — from inputs and activities to meaningful, lasting impact in communities across India.

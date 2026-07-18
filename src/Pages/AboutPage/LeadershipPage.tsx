@@ -120,7 +120,7 @@ export default function LeadershipPage() {
 
       <main>
         {/* Hero */}
-        <section className="bg-[#0d2b1a] text-white py-14 relative overflow-hidden">
+        <section className="bg-[#0b1f3b] text-white py-14 relative overflow-hidden">
           <div className="absolute inset-0 opacity-10">
             <div className="absolute top-0 right-0 w-80 h-80 bg-brand-orange rounded-full -translate-y-1/2 translate-x-1/2" />
           </div>

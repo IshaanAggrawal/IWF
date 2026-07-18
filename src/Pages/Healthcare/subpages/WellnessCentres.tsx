@@ -150,13 +150,13 @@ function AccordionPanel({ area, isOpen, onToggle }: {
       className={`border rounded-md overflow-hidden transition-all duration-300 ${
         isOpen
           ? "bg-white border-brand-green shadow-md"
-          : "bg-[#0d2b1a] hover:bg-white border-brand-green/10 hover:border-brand-green/30 shadow-sm hover:shadow-md"
+          : "bg-[#0b1f3b] hover:bg-white border-brand-green/10 hover:border-brand-green/30 shadow-sm hover:shadow-md"
       } group`}
     >
       {/* Accordion Header */}
       <button
         className={`w-full flex items-center gap-4 p-5 transition-colors text-left cursor-pointer ${
-          isOpen ? "bg-white" : "bg-[#0d2b1a] group-hover:bg-white"
+          isOpen ? "bg-white" : "bg-[#0b1f3b] group-hover:bg-white"
         }`}
         onClick={onToggle}
         aria-expanded={isOpen}
@@ -324,7 +324,7 @@ function OverviewSection() {
             {CHALLENGES.slice(0, 4).map(({ icon: Icon, text }, i) => (
               <div
                 key={i}
-                className="group flex items-start gap-3 p-4 bg-[#0d2b1a] hover:bg-white rounded-md border border-brand-green/10 hover:border-brand-green/30 shadow-sm hover:shadow-md transition-all duration-300"
+                className="group flex items-start gap-3 p-4 bg-[#0b1f3b] hover:bg-white rounded-md border border-brand-green/10 hover:border-brand-green/30 shadow-sm hover:shadow-md transition-all duration-300"
               >
                 <div className="shrink-0 w-8 h-8 rounded-md bg-white/15 group-hover:bg-brand-green/10 flex items-center justify-center transition-colors">
                   <Icon className="w-4 h-4 text-white group-hover:text-brand-green transition-colors" />
@@ -337,7 +337,7 @@ function OverviewSection() {
             {CHALLENGES.slice(4).map(({ icon: Icon, text }, i) => (
               <div
                 key={i}
-                className="group flex items-start gap-3 p-4 bg-[#0d2b1a] hover:bg-white rounded-md border border-brand-green/10 hover:border-brand-green/30 shadow-sm hover:shadow-md transition-all duration-300"
+                className="group flex items-start gap-3 p-4 bg-[#0b1f3b] hover:bg-white rounded-md border border-brand-green/10 hover:border-brand-green/30 shadow-sm hover:shadow-md transition-all duration-300"
               >
                 <div className="shrink-0 w-8 h-8 rounded-md bg-white/15 group-hover:bg-brand-green/10 flex items-center justify-center transition-colors">
                   <Icon className="w-4 h-4 text-white group-hover:text-brand-green transition-colors" />
@@ -461,7 +461,7 @@ function ImpactSection() {
             {IMPACT_OUTCOMES.map(({ icon: Icon, text }, i) => (
               <div
                 key={i}
-                className="group flex items-start gap-4 p-5 bg-[#0d2b1a] hover:bg-white rounded-md border border-brand-green/10 hover:border-brand-green/20 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5"
+                className="group flex items-start gap-4 p-5 bg-[#0b1f3b] hover:bg-white rounded-md border border-brand-green/10 hover:border-brand-green/20 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5"
               >
                 <div className="shrink-0 w-9 h-9 rounded-full bg-white/15 group-hover:bg-brand-green/10 flex items-center justify-center transition-colors">
                   <Icon className="w-4 h-4 text-white group-hover:text-brand-green transition-colors" />

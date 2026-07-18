@@ -47,7 +47,7 @@ export default function OurApproach() {
               <div className="w-12 h-12 rounded-full bg-brand-green/10 flex items-center justify-center mb-4">
                 <pillar.Icon className="w-6 h-6 text-brand-green" />
               </div>
-              <h3 className="font-bold text-[#0d2b1a] text-sm mb-2">{pillar.title}</h3>
+              <h3 className="font-bold text-[#0b1f3b] text-sm mb-2">{pillar.title}</h3>
               <p className="text-xs text-slate-600 leading-relaxed">{pillar.desc}</p>
             </div>
           ))}

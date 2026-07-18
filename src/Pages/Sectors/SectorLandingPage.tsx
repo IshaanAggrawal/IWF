@@ -347,7 +347,7 @@ function SectorIdentity({ content }: { content: SectorContent }) {
                     className={`rounded-md p-6 border shadow-sm ${
                       index % 2 === 0
                         ? "bg-white border-orange-100"
-                        : "bg-[#0d2b1a] border-[#0d2b1a] text-white"
+                        : "bg-[#0b1f3b] border-[#0b1f3b] text-white"
                     }`}
                   >
                     {index % 2 === 0 ? (
@@ -445,7 +445,7 @@ export default function SectorLandingPage({ content }: { content: SectorContent 
                 {content.challenges.map((item, index) => (
                   <div
                     key={item}
-                    className="group rounded-md bg-[#0d2b1a] hover:bg-white border border-brand-green/10 hover:border-brand-green/30 p-5 shadow-sm hover:shadow-md transition-all duration-300"
+                    className="group rounded-md bg-[#0b1f3b] hover:bg-white border border-brand-green/10 hover:border-brand-green/30 p-5 shadow-sm hover:shadow-md transition-all duration-300"
                   >
                     <span className="inline-flex w-8 h-8 rounded-full bg-white/15 group-hover:bg-brand-green/10 text-white group-hover:text-brand-green items-center justify-center text-xs font-bold mb-4 transition-colors">
                       {index + 1}
@@ -500,7 +500,7 @@ export default function SectorLandingPage({ content }: { content: SectorContent 
                 {content.initiatives.map((item, index) => (
                   <div
                     key={item}
-                    className="rounded-md bg-[#0d2b1a] border border-brand-green/10 p-5 shadow-sm hover:bg-white hover:border-brand-green/30 hover:shadow-md transition-all duration-300 group"
+                    className="rounded-md bg-[#0b1f3b] border border-brand-green/10 p-5 shadow-sm hover:bg-white hover:border-brand-green/30 hover:shadow-md transition-all duration-300 group"
                   >
                     <div className="flex items-center justify-between mb-4">
                       <Icon className="w-5 h-5 text-brand-orange" />

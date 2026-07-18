@@ -135,7 +135,7 @@ function ContactForm() {
 
   return (
     <div className="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
-      <div className="bg-gradient-to-r from-brand-green to-[#0d2b1a] px-6 py-5">
+      <div className="bg-gradient-to-r from-brand-green to-[#0b1f3b] px-6 py-5">
         <h2 className="text-white font-extrabold text-xl flex items-center gap-2">
           <MessageCircle className="w-5 h-5 text-brand-orange" /> Send Us a Message
         </h2>
@@ -273,7 +273,7 @@ export default function ContactPage() {
 
       <main>
         {/* Hero */}
-        <section className="bg-[#0d2b1a] text-white py-14 relative overflow-hidden">
+        <section className="bg-[#0b1f3b] text-white py-14 relative overflow-hidden">
           <div className="absolute inset-0 opacity-10">
             <div className="absolute top-0 right-0 w-80 h-80 bg-brand-orange rounded-full -translate-y-1/2 translate-x-1/2" />
             <div className="absolute bottom-0 left-0 w-56 h-56 bg-brand-green rounded-full translate-y-1/2 -translate-x-1/2" />
@@ -419,7 +419,7 @@ export default function ContactPage() {
               </div>
 
               {/* CTA to donate */}
-              <div className="bg-gradient-to-br from-brand-green to-[#0d2b1a] rounded-xl p-5 text-white">
+              <div className="bg-gradient-to-br from-brand-green to-[#0b1f3b] rounded-xl p-5 text-white">
                 <h3 className="font-extrabold text-base mb-1">Support Our Mission</h3>
                 <p className="text-white/70 text-xs leading-relaxed mb-4">Every contribution goes directly to our programs in education, healthcare, and livelihood.</p>
                 <a href="/donate" className="block w-full text-center bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-3 rounded-lg transition text-sm">

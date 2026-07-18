@@ -43,7 +43,7 @@ export default function OverviewSection() {
           </div>
 
           {/* Mission Card */}
-          <div className="bg-[#0d2b1a] text-white rounded-xl p-6">
+          <div className="bg-[#0b1f3b] text-white rounded-xl p-6">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
                 <Target className="w-5 h-5 text-brand-orange" />
