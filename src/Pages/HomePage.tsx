@@ -194,14 +194,27 @@ const NAV_ITEMS_TRANSLATIONS = {
   hi: ["होम", "हमारे बारे में", "हम क्या करते हैं", "कार्यक्रम", "प्रभाव", "मीडिया और अपडेट", "जुड़ें", "संपर्क करें"]
 };
 
-function SectionTitle({ children }: { children: React.ReactNode }) {
+interface SectionHeaderProps {
+  tag: string;
+  title: string;
+  subtitle?: string;
+  center?: boolean;
+}
+
+function SectionHeader({ tag, title, subtitle, center = true }: SectionHeaderProps) {
   return (
-    <div className="flex items-center justify-center gap-3 mb-8">
-      <span className="h-px w-8 bg-brand-green" />
-      <h2 className="text-2xl md:text-3xl font-bold text-brand-green-dark tracking-wide uppercase">
-        {children}
+    <div className={`mb-6 ${center ? "text-center" : "text-left"}`}>
+      <p className="text-xs font-bold uppercase tracking-widest text-[#f97316] mb-1.5">
+        {tag}
+      </p>
+      <h2 className="text-2xl md:text-3xl font-black text-[#0b1f3b] uppercase tracking-wide">
+        {title}
       </h2>
-      <span className="h-px w-8 bg-brand-green" />
+      {subtitle && (
+        <p className={`text-slate-900 font-medium text-sm mt-3 leading-relaxed ${center ? "max-w-4xl mx-auto" : "max-w-2xl"}`}>
+          {subtitle}
+        </p>
+      )}
     </div>
   );
 }
@@ -301,9 +314,6 @@ function UtilityBar({ lang, setLang }: UtilityBarProps) {
               </a>
             ))}
           </div>
-
-          {/* Hindi Translate Pill - Stacked below socials */}
-          <TranslateButton />
         </div>
       </div>
     </div>
@@ -433,8 +443,7 @@ function Header({ lang }: HeaderProps) {
 
           {/* Right Group: Donate Button & Mobile Hamburger */}
           <div className="flex items-center gap-2 md:gap-3 shrink-0 py-1.5 ml-auto lg:ml-0">
-            <TranslateButton className="border-white/20 bg-white/5 hover:bg-white/15 text-xs text-white" />
-            <a href="/donate" className="bg-brand-orange hover:bg-brand-orange-dark text-white font-bold text-xs md:text-sm px-4 py-2 rounded-md shadow-md transition-all hover:scale-105 active:scale-95 uppercase tracking-wide">
+            <a href="/donate" className="bg-[#f97316] hover:bg-orange-600 text-white font-bold text-xs md:text-sm px-4 py-2 rounded-md shadow-md transition-all hover:scale-105 active:scale-95 uppercase tracking-wide">
               DONATE NOW
             </a>
             <button
@@ -754,265 +763,32 @@ function Header({ lang }: HeaderProps) {
   );
 }
 
-function HeroSection() {
-  return (
-    <section id="welcome-hero" className="relative scroll-mt-20">
-      <div className="relative min-h-[600px] lg:min-h-[680px] overflow-hidden flex items-center">
-        {/* Background Image */}
-        <img
-          src={hero}
-          alt="Empowering kids in rural India"
-          width={1600}
-          height={900}
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        {/* Modern dark/green gradient overlay for rich premium feel and high text contrast */}
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/80 to-transparent" />
-
-        <div className="relative max-w-7xl mx-auto px-4 py-16 w-full z-10">
-          <div className="max-w-3xl text-white">
-            {/* H1 Heading */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight text-white mb-6">
-              Welcome to <span className="text-brand-orange">Islah Welfare Foundation</span>
-            </h1>
-
-            {/* Body Paragraph */}
-            <p className="text-base md:text-lg text-slate-200 leading-relaxed mb-6 font-normal">
-              Islah Welfare Foundation is an effort to lay a positive foundation of change in the field of education for the underprivileged kids. We believe that happiness for a lifetime can only be achieved by helping and enriching the next generation. Some of us give our time, some money, and some give skills, but ultimately, we strongly feel everyone has something to give to these kids in need. Most importantly, working for ISLAH does not translate to sacrificing personal lives or needs.
-            </p>
-
-            {/* Styled Mother Teresa Quote Block */}
-            <blockquote className="border-l-4 border-brand-orange bg-white/5 backdrop-blur-sm p-4 rounded-r-lg my-6 max-w-2xl">
-              <p className="text-sm md:text-base italic text-slate-100 font-medium">
-                “We ourselves feel that what we are doing is just a drop in the ocean. But the ocean would be less because of that missing drop.”
-              </p>
-              <cite className="block text-xs md:text-sm font-semibold text-brand-orange mt-2 not-italic">
-                — Mother Teresa
-              </cite>
-            </blockquote>
-
-            {/* Join CTA Paragraph */}
-            <p className="text-base md:text-lg font-semibold text-slate-100 mb-8 tracking-wide">
-              IWF‘s doors are always open. If you feel you can fill the gap of a missing drop, <span className="text-brand-orange underline underline-offset-4 decoration-brand-orange/60">come join us….</span>
-            </p>
-
-            {/* Action Buttons */}
-            <div className="flex flex-wrap gap-4">
-              <a href="/donate" className="bg-brand-orange hover:bg-brand-orange-dark text-white font-bold px-8 py-3.5 rounded shadow-lg transition-all hover:scale-[1.02] active:scale-95 uppercase tracking-wider text-sm">
-                DONATE NOW
-              </a>
-              <a href="#get-involved" className="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold px-8 py-3.5 rounded shadow-lg transition-all hover:scale-[1.02] active:scale-95 uppercase tracking-wider text-sm backdrop-blur-sm">
-                GET INVOLVED
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Stats bar */}
-      <div className="max-w-7xl mx-auto px-4 -mt-10 relative z-20">
-        <div className="bg-sky-50 border border-sky-100/80 text-[#0b1f3b] rounded-xl shadow-lg grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-sky-200/60">
-          {[
-            { icon: Users, n: "5,000+", l: "Lives Impacted" },
-            { icon: HeartPulse, n: "100+", l: "Health Camps" },
-            { icon: GraduationCap, n: "2,000+", l: "Students Supported" },
-            { icon: Leaf, n: "10,000+", l: "Beneficiaries" },
-          ].map(({ icon: Icon, n, l }) => (
-            <div key={l} className="py-3 px-4 flex items-center gap-3 justify-center">
-              <Icon className="w-8 h-8 text-brand-orange shrink-0" />
-              <div>
-                <div className="text-xl font-extrabold text-[#0b1f3b] leading-tight">{n}</div>
-                <div className="text-xs font-semibold text-gray-600 mt-0.5 leading-tight">{l}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-interface LanguageProp {
-  lang: "en" | "hi";
-}
-
-function UrgentPatientsSection({ lang }: LanguageProp) {
-  const t = TRANSLATIONS[lang];
-  return (
-    <section className="py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-4">
-        <ScrollReveal>
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-brand-orange mb-2">
-                {t.urgentTag}
-              </p>
-              <h2 className="text-xl md:text-2xl font-black text-slate-950 uppercase tracking-wide">
-                {t.urgentTitle}
-              </h2>
-              <p className="text-base font-bold text-[#f97316] mt-1 font-sans">
-                हर पल अनमोल है
-              </p>
-              <div className="h-1 w-12 bg-[#f97316] rounded-full mt-1.5" />
-              <p className="text-sm text-slate-900 font-medium mt-3 max-w-2xl leading-relaxed">
-                {t.urgentSub}
-              </p>
-            </div>
-            <a
-              href="/programs/healthcare/critical-life-support"
-              className="inline-flex items-center gap-1 text-sm font-bold text-brand-green hover:text-slate-950 transition-colors shrink-0"
-            >
-              {t.viewAllPatients} <ArrowRight className="w-4 h-4" />
-            </a>
-          </div>
-        </ScrollReveal>
-        <ScrollReveal stagger={0.08}>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {URGENT_PATIENTS.map((patient) => (
-              <PatientCard key={patient.id} {...patient} />
-            ))}
-          </div>
-        </ScrollReveal>
-      </div>
-    </section>
-  );
-}
-
-function FeaturedCauses({ lang }: LanguageProp) {
-  const t = TRANSLATIONS[lang];
-  const causes = [
-    { img: causeEdu, icon: BookOpen, title: lang === "en" ? "Child Education" : "बाल शिक्षा", desc: lang === "en" ? "Scholarships, school kits & learning centres keeping children in school." : "छात्रवृत्ति, स्कूल किट और लर्निंग सेंटर बच्चों को स्कूल से जोड़े रखने के लिए।", route: "/programs/education" },
-    { img: causeMed, icon: Stethoscope, title: lang === "en" ? "Medical Help" : "चिकित्सा सहायता", desc: lang === "en" ? "Free health camps, essential medicines & emergency treatment." : "मुफ़्त स्वास्थ्य शिविर, आवश्यक दवाएं और आपातकालीन चिकित्सा सहायता।", route: "/programs/healthcare" },
-    { img: causeWomen, icon: Users, title: lang === "en" ? "Women Empowerment" : "महिला सशक्तिकरण", desc: lang === "en" ? "Self-Help Groups, vocational skills & financial literacy programs." : "स्वयं सहायता समूह, व्यावसायिक कौशल और वित्तीय साक्षरता कार्यक्रम।", route: "/programs/women-empowerment" },
-    { img: thAgr, icon: Sprout, title: lang === "en" ? "Rural Development" : "ग्रामीण विकास", desc: lang === "en" ? "Sanitation, clean water and housing for self-reliant villages." : "आत्मनिर्भर गांवों के लिए स्वच्छता, स्वच्छ पानी और आवास निर्माण।", route: "#" },
-    { img: thEnt, icon: Wrench, title: lang === "en" ? "Skill Development" : "कौशल विकास", desc: lang === "en" ? "Vocational training and micro-entrepreneurship for village youth." : "ग्रामीण युवाओं के लिए व्यावसायिक प्रशिक्षण और सूक्ष्म-उद्यम विकास।", route: "/programs/skills-development" },
-  ];
-
-  return (
-    <section className="py-16 bg-slate-50 border-y border-slate-100">
-      <div className="max-w-7xl mx-auto px-4">
-        <ScrollReveal><SectionTitle>{t.featuredCauses}</SectionTitle></ScrollReveal>
-        <ScrollReveal stagger={0.08}>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            {causes.map((c) => (
-              <div key={c.title} className="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 overflow-hidden flex flex-col">
-                <div className="relative h-36 w-full">
-                  <img src={c.img} alt={c.title} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                  <div className="absolute bottom-2 left-2 w-8 h-8 rounded-full bg-white shadow flex items-center justify-center">
-                    <c.icon className="w-4 h-4 text-brand-green" />
-                  </div>
-                </div>
-                <div className="p-4 flex flex-col flex-1">
-                  <h3 className="font-extrabold text-base text-slate-950 mb-1.5">{c.title}</h3>
-                  <p className="text-sm text-slate-700 font-medium leading-relaxed flex-1">{c.desc}</p>
-                  <div className="flex items-center justify-between mt-4 pt-3 border-t border-slate-100">
-                    <a href={c.route} className="text-sm font-bold text-brand-green hover:text-brand-green-dark">{t.readMore} →</a>
-                    <a href="/donate" className="text-xs font-extrabold bg-brand-orange text-white px-3.5 py-1.5 rounded-lg hover:bg-brand-orange-dark transition-all">{t.donateNow}</a>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </ScrollReveal>
-      </div>
-    </section>
-  );
-}
-
-function WhatWeDo({ lang }: LanguageProp) {
-  const t = TRANSLATIONS[lang];
-  const items = [
-    { icon: GraduationCap, l: lang === "en" ? "Education" : "शिक्षा", s: lang === "en" ? "Learning & Scholarships" : "लर्निंग और छात्रवृत्ति", route: "/programs/education" },
-    { icon: HeartPulse, l: lang === "en" ? "Healthcare" : "स्वास्थ्य सेवा", s: lang === "en" ? "Free camps & awareness" : "मुफ़्त शिविर और जागरूकता", route: "/programs/healthcare" },
-    { icon: Users, l: lang === "en" ? "Women Empowerment" : "महिला सशक्तिकरण", s: lang === "en" ? "SHGs & skills" : "एसएचजी और व्यावसायिक कौशल", route: "/programs/women-empowerment" },
-    { icon: Sprout, l: lang === "en" ? "Rural Development" : "ग्रामीण विकास", s: lang === "en" ? "Water & infrastructure" : "जल और बुनियादी ढांचा", route: "#" },
-    { icon: Wrench, l: lang === "en" ? "Skill Development" : "कौशल विकास", s: lang === "en" ? "Vocational training" : "व्यावसायिक प्रशिक्षण", route: "/programs/skills-development" },
-    { icon: Leaf, l: lang === "en" ? "Environment" : "पर्यावरण", s: lang === "en" ? "Plantation & green energy" : "वृक्षारोपण और हरित ऊर्जा", route: "#" },
-  ];
-
-  return (
-    <section id="focus-areas" className="py-16 bg-slate-50 scroll-mt-20 border-b border-slate-100">
-      <div className="max-w-7xl mx-auto px-4">
-        <ScrollReveal><SectionTitle>{t.whatWeDo}</SectionTitle></ScrollReveal>
-        <ScrollReveal stagger={0.07}>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {items.map(({ icon: Icon, l, s, route }) => (
-              <a key={l} href={route} className="bg-white rounded-xl p-6 text-center shadow-sm border border-slate-200 hover:shadow-md transition block group hover:-translate-y-0.5">
-                <div className="w-14 h-14 mx-auto rounded-full bg-brand-green/10 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
-                  <Icon className="w-7 h-7 text-brand-green" />
-                </div>
-                <div className="text-base font-extrabold text-slate-950">{l}</div>
-                <div className="text-sm font-semibold text-slate-800 mt-1">{s}</div>
-              </a>
-            ))}
-          </div>
-        </ScrollReveal>
-      </div>
-    </section>
-  );
-}
-
-function ProgramsAndThematic({ lang }: LanguageProp) {
-  const t = TRANSLATIONS[lang];
-  const programs = [
-    { icon: BookOpen, title: lang === "en" ? "Education Support" : "शिक्षा सहायता", desc: lang === "en" ? "We run Community Learning Centres and 'Shiksha Na Ruke' scholarships to support children." : "हम बच्चों के सहयोग के लिए सामुदायिक शिक्षा केंद्र और 'शिक्षा न रुके' छात्रवृत्ति चलाते हैं।", route: "/programs/education" },
-    { icon: HeartPulse, title: lang === "en" ? "Healthcare Camps" : "स्वास्थ्य शिविर", desc: lang === "en" ? "Under 'Health Cannot Wait', we organize free camps, check-ups and hygiene drives." : "'हेल्थ कैन नॉट वेट' के तहत, हम मुफ्त चिकित्सा शिविर और स्वच्छता अभियान आयोजित करते हैं।", route: "/programs/healthcare" },
-    { icon: Users, title: lang === "en" ? "Women Empowerment" : "महिला सशक्तिकरण", desc: lang === "en" ? "Forming Self-Help Groups (SHGs) and providing vocational and leadership training." : "स्वयं सहायता समूहों (SHGs) का गठन और व्यावसायिक एवं नेतृत्व प्रशिक्षण प्रदान करना।", route: "/programs/women-empowerment" },
-    { icon: Sprout, title: lang === "en" ? "Rural Development" : "ग्रामीण विकास", desc: lang === "en" ? "Clean water access, sanitation, and public infrastructure in 'Model Villages'." : "'मॉडल गांवों' में स्वच्छ पेयजल पहुंच, स्वच्छता और सार्वजनिक बुनियादी ढांचा।", route: "#" },
-  ];
-
-  return (
-    <section className="py-16">
-      <div className="max-w-7xl mx-auto px-4">
-        <SectionTitle>{t.ourPrograms}</SectionTitle>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {programs.map((p) => (
-            <div key={p.title} className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition hover:-translate-y-0.5">
-              <div className="w-10 h-10 rounded-md bg-brand-orange/15 flex items-center justify-center mb-3">
-                <p.icon className="w-5 h-5 text-brand-orange" />
-              </div>
-              <h3 className="font-extrabold text-sm text-slate-950 mb-1">{p.title}</h3>
-              <p className="text-xs text-slate-900 font-semibold mb-3 leading-relaxed">{p.desc}</p>
-              <a href={p.route} className="text-xs font-bold text-brand-green hover:text-brand-green-dark inline-flex items-center gap-1">
-                {t.readMore} <ArrowRight className="w-3 h-3" />
-              </a>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function EventsAndNoticesSection({ lang }: LanguageProp) {
+function HeroSection({ lang }: LanguageProp) {
   const t = TRANSLATIONS[lang];
   const notices = [
-    { d: "25", m: "MAY", title: lang === "en" ? "Free Health Camp — Darbhanga" : "निःशुल्क स्वास्थ्य शिविर — दरभंगा", desc: lang === "en" ? "Free diagnostic consultation and distributing medicines to rural families." : "ग्रामीण परिवारों के लिए निःशुल्क परामर्श, जाँच शिविर और निःशुल्क दवा वितरण।" },
-    { d: "05", m: "JUN", title: lang === "en" ? "Environment Day Plantation" : "पर्यावरण दिवस वृक्षारोपण अभियान", desc: lang === "en" ? "Planting saplings and promoting environment awareness in local villages." : "स्थानीय गांवों में वृक्षारोपण और पर्यावरण संरक्षण के प्रति जागरूकता फैलाना।" },
-    { d: "15", m: "JUL", title: lang === "en" ? "Shiksha Na Ruke Distribution" : "शिक्षा न रुके छात्रवृत्ति वितरण", desc: lang === "en" ? "Scholarship kits distribution to deserving students under our flagship campaign." : "फ्लैगशिप अभियान के तहत पात्र विद्यार्थियों को छात्रवृत्ति किट का वितरण।" },
-    { d: "10", m: "NOV", title: lang === "en" ? "Winter Relief Blanket Drive" : "शीतकालीन राहत कंबल वितरण अभियान", desc: lang === "en" ? "Distributing warm blankets to shelterless and needy families before peak winter." : "भीषण ठंड से पहले बेघर और जरूरतमंद परिवारों को गर्म कंबल वितरित करना।" },
-    { d: "12", m: "DEC", title: lang === "en" ? "Livelihood Toolkit Distribution" : "आजीविका टूलकिट वितरण कार्यक्रम", desc: lang === "en" ? "Providing sewing machines and tools to local youth and women to support self-employment." : "स्थानीय युवाओं और महिलाओं को स्वरोजगार के लिए सिलाई मशीन और उपकरण प्रदान करना।" },
+    { d: "25", m: "MAY", title: lang === "en" ? "Free Health Camp — Darbhanga" : "निःशुल्क स्वास्थ्य शिविर — दरभंगा" },
+    { d: "05", m: "JUN", title: lang === "en" ? "Environment Day Plantation" : "पर्यावरण दिवस वृक्षारोपण अभियान" },
+    { d: "15", m: "JUL", title: lang === "en" ? "Shiksha Na Ruke Distribution" : "शिक्षा न रुके छात्रवृत्ति वितरण" },
+    { d: "10", m: "NOV", title: lang === "en" ? "Winter Relief Blanket Drive" : "शीतकालीन राहत कंबल वितरण अभियान" },
+    { d: "12", m: "DEC", title: lang === "en" ? "Livelihood Toolkit Distribution" : "आजीविका टूलकिट वितरण कार्यक्रम" },
   ];
 
-  // We will clone the first 3 notices to the end for seamless looping
   const loopNotices = [...notices, ...notices.slice(0, 3)];
-
   const [noticeIndex, setNoticeIndex] = useState(0);
-  const [transitionEnabled, setTransitionEnabled] = useState(true);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [noticeTransition, setNoticeTransition] = useState(true);
+  const noticeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const tick = () => {
       setNoticeIndex((prev) => {
         const next = prev + 1;
-        setTransitionEnabled(true);
+        setNoticeTransition(true);
         return next;
       });
     };
 
     const run = () => {
-      timeoutRef.current = setTimeout(() => {
+      noticeTimeoutRef.current = setTimeout(() => {
         tick();
         run();
       }, 3500);
@@ -1020,22 +796,20 @@ function EventsAndNoticesSection({ lang }: LanguageProp) {
 
     run();
     return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      if (noticeTimeoutRef.current) clearTimeout(noticeTimeoutRef.current);
     };
   }, []);
 
-  // When we reach index 5 (which displays duplicates of 0, 1, 2), snap back to 0 without animation
   useEffect(() => {
     if (noticeIndex === 5) {
       const snapTimer = setTimeout(() => {
-        setTransitionEnabled(false);
+        setNoticeTransition(false);
         setNoticeIndex(0);
-      }, 500); // Wait for transition animation (500ms) to complete
+      }, 500);
       return () => clearTimeout(snapTimer);
     }
   }, [noticeIndex]);
 
-  // For the News column on the right: a vertical carousel showing 1 card at a time.
   const newsList = LATEST_NEWS.map((news) => {
     let title = news.title;
     let excerpt = news.excerpt;
@@ -1073,109 +847,338 @@ function EventsAndNoticesSection({ lang }: LanguageProp) {
   }, [newsList.length]);
 
   return (
-    <section className="py-16 bg-[#0b1f3b] text-white border-y border-white/5">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="grid lg:grid-cols-2 gap-10 items-stretch">
+    <section id="welcome-hero" className="relative scroll-mt-20 bg-white py-8 border-b border-slate-100">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+          {/* Left Column (50%): Welcome text & copy */}
+          <div className="flex flex-col justify-center text-left">
+            <h1 className="text-xl md:text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight mb-3">
+              Welcome to <span className="text-brand-orange">Islah Welfare Foundation</span>
+            </h1>
 
-          {/* Left Column: Events & Notices */}
-          <div className="flex flex-col">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl md:text-2xl font-extrabold text-white flex items-center gap-2">
-                <span className="w-1.5 h-6 bg-brand-orange rounded-full"></span>
-                {t.eventsNotices}
-              </h2>
+            <p className="text-sm text-black leading-relaxed font-normal mb-4">
+              Islah Welfare Foundation is an effort to lay a positive foundation of change in the field of education for the underprivileged kids. We believe that happiness for a lifetime can only be achieved by helping and enriching the next generation. Some of us give our time, some money, and some give skills, but ultimately, we strongly feel everyone has something to give to these kids in need. Most importantly, working for ISLAH does not translate to sacrificing personal lives or needs.
+            </p>
+
+            <blockquote className="border-l-4 border-brand-orange bg-sky-50/50 p-3 rounded-r-lg my-4 max-w-2xl">
+              <p className="text-xs md:text-sm italic text-black font-semibold leading-relaxed">
+                “We ourselves feel that what we are doing is just a drop in the ocean. But the ocean would be less because of that missing drop.”
+              </p>
+              <cite className="block text-[10px] md:text-xs font-semibold text-brand-orange mt-1 not-italic">
+                — Mother Teresa
+              </cite>
+            </blockquote>
+
+            <p className="text-sm font-semibold text-black mb-4">
+              IWF‘s doors are always open. If you feel you can fill the gap of a missing drop, <span className="text-brand-orange underline underline-offset-4 decoration-brand-orange/60">come join us….</span>
+            </p>
+
+            <div className="flex flex-wrap gap-3">
+              <a href="/donate" className="bg-[#f97316] hover:bg-orange-600 text-white font-bold px-6 py-2.5 rounded shadow transition-all hover:scale-[1.02] active:scale-95 uppercase tracking-wider text-xs">
+                DONATE NOW
+              </a>
+              <a href="#get-involved" className="bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 font-bold px-6 py-2.5 rounded shadow transition-all hover:scale-[1.02] active:scale-95 uppercase tracking-wider text-xs">
+                GET INVOLVED
+              </a>
+            </div>
+          </div>
+
+          {/* Right Column (50%): Events/Notices + News stacked in darker blue container */}
+          <div className="bg-[#13195c] text-white p-6 rounded-2xl border border-white/5 shadow-xl flex flex-col gap-6 justify-between">
+            {/* Events & Notices Part */}
+            <div className="flex flex-col">
+              <div className="flex items-center justify-between mb-3">
+                <h2 className="text-base md:text-lg font-extrabold text-white flex items-center gap-2">
+                  <span className="w-1.5 h-5 bg-white rounded-full"></span>
+                  {t.eventsNotices}
+                </h2>
+              </div>
+
+              {/* Notice vertical scroll ticker showing 3 compact items without desc */}
+              <div className="relative h-[190px] max-h-[190px] overflow-hidden rounded-xl bg-[#202896] p-2.5">
+                <div
+                  className="space-y-2.5"
+                  style={{
+                    transform: `translateY(-${noticeIndex * 62}px)`,
+                    transition: noticeTransition ? "transform 500ms cubic-bezier(0.4, 0, 0.2, 1)" : "none",
+                  }}
+                >
+                  {loopNotices.map((e, i) => (
+                    <div key={i} className="h-[52px] bg-[#181f7d] hover:bg-[#1f289c] rounded-lg px-3 py-2 flex gap-3 items-center border border-white/5 shadow-sm transition-colors duration-200">
+                      <div className="text-center bg-white/10 rounded px-2.5 py-0.5 w-12 shrink-0">
+                        <div className="text-[8px] font-bold text-white/90 uppercase leading-none">{e.m}</div>
+                        <div className="text-sm font-black text-white leading-none mt-0.5">{e.d}</div>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-extrabold text-xs text-white truncate">{e.title}</h4>
+                      </div>
+                      <a href="#" className="text-[10px] font-bold text-white/80 hover:text-white underline decoration-white/20 shrink-0">{t.readMore} →</a>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
-            {/* Scroll Container with height exactly matching 3 items (440px) */}
-            <div className="relative flex-1 h-[440px] max-h-[440px] overflow-hidden rounded-2xl border border-white/10 bg-[#0b1f3b] shadow-sm p-4">
-              <div
-                className="space-y-4"
-                style={{
-                  transform: `translateY(-${noticeIndex * 140}px)`,
-                  transition: transitionEnabled ? "transform 500ms cubic-bezier(0.4, 0, 0.2, 1)" : "none",
-                }}
-              >
-                {loopNotices.map((e, i) => (
-                  <div key={i} className="h-[124px] bg-[#0c2445] hover:bg-[#112d54] rounded-xl p-5 flex gap-5 items-center border border-white/5 shadow-sm transition-colors duration-200">
-                    <div className="text-center bg-white/5 rounded-lg px-4 py-2 w-20 shrink-0">
-                      <div className="text-xs font-bold text-brand-orange uppercase">{e.m}</div>
-                      <div className="text-2xl font-extrabold text-white leading-none mt-1">{e.d}</div>
+            {/* News & Updates Part */}
+            <div className="flex flex-col">
+              <div className="flex items-center justify-between mb-3">
+                <h2 className="text-base md:text-lg font-extrabold text-white flex items-center gap-2">
+                  <span className="w-1.5 h-5 bg-white rounded-full"></span>
+                  {t.newsUpdates}
+                </h2>
+                <a href="/news-and-events" className="text-[10px] font-bold text-white/85 hover:text-white underline decoration-white/20">
+                  {t.viewAll} →
+                </a>
+              </div>
+
+              {/* News Slider (showing 1 compact news item) */}
+              <div className="relative h-[150px] max-h-[150px] overflow-hidden rounded-xl bg-[#202896]">
+                {newsList.map((news, idx) => (
+                  <div
+                    key={idx}
+                    className={`absolute inset-0 p-4 bg-[#181f7d] rounded-xl flex flex-col justify-between transition-all duration-700 ease-in-out ${newsIndex === idx
+                      ? "opacity-100 translate-y-0 pointer-events-auto z-10"
+                      : "opacity-0 translate-y-4 pointer-events-none z-0"
+                      }`}
+                  >
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-white/10 text-white">
+                          {news.tag}
+                        </span>
+                        <span className="text-[9px] text-white/60 font-semibold">{news.date}</span>
+                      </div>
+                      <h3 className="font-extrabold text-xs md:text-sm text-white leading-snug hover:underline truncate">
+                        {news.title}
+                      </h3>
+                      <p className="text-[10px] text-white/80 font-medium leading-relaxed line-clamp-2">
+                        {news.excerpt}
+                      </p>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-extrabold text-sm md:text-base text-white truncate">{e.title}</h4>
-                      <p className="text-xs md:text-sm text-white/70 font-medium leading-relaxed mt-1.5 line-clamp-2">{e.desc}</p>
+
+                    <div className="pt-2 flex items-center justify-between border-t border-white/5 mt-2">
+                      <a href="#" className="text-[10px] font-bold inline-flex items-center gap-1 text-white underline decoration-white/20">
+                        {t.readMore} <ArrowRight className="w-2.5 h-2.5" />
+                      </a>
+
+                      <div className="flex gap-1">
+                        {newsList.map((_, i) => (
+                          <button
+                            key={i}
+                            onClick={() => setNewsIndex(i)}
+                            className={`w-1 h-1 rounded-full transition-all duration-300 ${newsIndex === i ? "w-2.5 bg-white" : "bg-white/30"}`}
+                          />
+                        ))}
+                      </div>
                     </div>
-                    <a href="#" className="text-xs md:text-sm font-bold text-brand-orange hover:underline shrink-0 transition-colors">{t.readMore} →</a>
                   </div>
                 ))}
               </div>
             </div>
           </div>
+        </div>
+      </div>
 
-          {/* Right Column: News & Updates (Vertical Carousel) */}
-          <div className="flex flex-col">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl md:text-2xl font-extrabold text-white flex items-center gap-2">
-                <span className="w-1.5 h-6 bg-brand-orange rounded-full"></span>
-                {t.newsUpdates}
-              </h2>
-              <a href="/news-and-events" className="text-xs font-bold text-brand-orange hover:underline transition-colors">
-                {t.viewAll} →
-              </a>
+      {/* Floating Stats Bar */}
+      <div className="max-w-7xl mx-auto px-4 mt-8 relative z-20">
+        <div className="bg-sky-50 border border-sky-100/80 text-[#0b1f3b] rounded-xl shadow-lg grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-sky-200/60">
+          {[
+            { icon: Users, n: "5,000+", l: "Lives Impacted" },
+            { icon: HeartPulse, n: "100+", l: "Health Camps" },
+            { icon: GraduationCap, n: "2,000+", l: "Students Supported" },
+            { icon: Leaf, n: "10,000+", l: "Beneficiaries" },
+          ].map(({ icon: Icon, n, l }) => (
+            <div key={l} className="py-3 px-4 flex items-center gap-3 justify-center">
+              <Icon className="w-8 h-8 text-brand-orange shrink-0" />
+              <div>
+                <div className="text-xl font-extrabold text-[#0b1f3b] leading-tight">{n}</div>
+                <div className="text-xs font-semibold text-gray-600 mt-0.5 leading-tight">{l}</div>
+              </div>
             </div>
-
-            {/* Carousel Container showing 1 card with animation transitions */}
-            <div className="relative flex-1 h-[440px] max-h-[440px] overflow-hidden rounded-2xl border border-white/10 bg-[#0b1f3b] shadow-sm flex flex-col justify-between">
-              {newsList.map((news, idx) => (
-                <div
-                  key={idx}
-                  className={`absolute inset-0 p-6 bg-[#0c2445] rounded-2xl flex flex-col justify-between transition-all duration-700 ease-in-out ${newsIndex === idx
-                    ? "opacity-100 translate-y-0 pointer-events-auto z-10"
-                    : "opacity-0 translate-y-4 pointer-events-none z-0"
-                    }`}
-                >
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-white/10" style={{ color: news.tagColor }}>
-                        {news.tag}
-                      </span>
-                      <span className="text-xs text-white/50 font-semibold">{news.date}</span>
-                    </div>
-                    <h3 className="font-extrabold text-base md:text-lg text-white leading-snug hover:text-brand-orange transition-colors">
-                      {news.title}
-                    </h3>
-                    <p className="text-sm text-white/70 font-medium leading-relaxed line-clamp-4">
-                      {news.excerpt}
-                    </p>
-                  </div>
-
-                  <div className="pt-4 flex items-center justify-between border-t border-white/5 mt-4">
-                    <a href="#" className="text-xs font-bold inline-flex items-center gap-1 hover:underline" style={{ color: news.tagColor }}>
-                      {t.readMore} <ArrowRight className="w-3 h-3" />
-                    </a>
-
-                    {/* Dots indicator */}
-                    <div className="flex gap-1.5">
-                      {newsList.map((_, i) => (
-                        <button
-                          key={i}
-                          onClick={() => setNewsIndex(i)}
-                          className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${newsIndex === i ? "w-4 bg-brand-orange" : "bg-white/20"}`}
-                          aria-label={`Go to slide ${i + 1}`}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
+          ))}
         </div>
       </div>
     </section>
   );
 }
+
+interface LanguageProp {
+  lang: "en" | "hi";
+}
+
+function UrgentPatientsSection({ lang }: LanguageProp) {
+  const t = TRANSLATIONS[lang];
+  const urgentInlineTitle = lang === "en"
+    ? `Patients Needing Urgent Support — हर पल अनमोल है`
+    : `मदद की तत्काल आवश्यकता वाले मरीज — हर पल अनमोल है`;
+  return (
+    <section className="py-6 bg-white">
+      <div className="max-w-7xl mx-auto px-4">
+        <ScrollReveal>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-4 border-b border-slate-100 pb-2">
+            <div className="flex-1">
+              <SectionHeader
+                tag={t.urgentTag}
+                title={urgentInlineTitle}
+                center={false}
+              />
+            </div>
+            <a
+              href="/programs/healthcare/critical-life-support"
+              className="inline-flex items-center gap-1 text-sm font-bold text-brand-green hover:text-slate-950 transition-colors shrink-0 mb-3"
+            >
+              {t.viewAllPatients} <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+          <p className="text-slate-600 text-sm max-w-4xl mb-6 leading-relaxed">
+            {t.urgentSub}
+          </p>
+        </ScrollReveal>
+        <ScrollReveal stagger={0.08}>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {URGENT_PATIENTS.map((patient) => (
+              <PatientCard key={patient.id} {...patient} />
+            ))}
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
+
+function FeaturedCauses({ lang }: LanguageProp) {
+  const t = TRANSLATIONS[lang];
+  const causes = [
+    { img: causeEdu, icon: BookOpen, title: lang === "en" ? "Child Education" : "बाल शिक्षा", desc: lang === "en" ? "Scholarships, school kits & learning centres keeping children in school." : "छात्रवृत्ति, स्कूल किट और लर्निंग सेंटर बच्चों को स्कूल से जोड़े रखने के लिए।", route: "/programs/education" },
+    { img: causeMed, icon: Stethoscope, title: lang === "en" ? "Medical Help" : "चिकित्सा सहायता", desc: lang === "en" ? "Free health camps, essential medicines & emergency treatment." : "मुफ़्त स्वास्थ्य शिविर, आवश्यक दवाएं और आपातकालीन चिकित्सा सहायता।", route: "/programs/healthcare" },
+    { img: causeWomen, icon: Users, title: lang === "en" ? "Women Empowerment" : "महिला सशक्तिकरण", desc: lang === "en" ? "Self-Help Groups, vocational skills & financial literacy programs." : "स्वयं सहायता समूह, व्यावसायिक कौशल और वित्तीय साक्षरता कार्यक्रम।", route: "/programs/women-empowerment" },
+    { img: thAgr, icon: Sprout, title: lang === "en" ? "Rural Development" : "ग्रामीण विकास", desc: lang === "en" ? "Sanitation, clean water and housing for self-reliant villages." : "आत्मनिर्भर गांवों के लिए स्वच्छता, स्वच्छ पानी और आवास निर्माण।", route: "#" },
+    { img: thEnt, icon: Wrench, title: lang === "en" ? "Skill Development" : "कौशल विकास", desc: lang === "en" ? "Vocational training and micro-entrepreneurship for village youth." : "ग्रामीण युवाओं के लिए व्यावसायिक प्रशिक्षण और सूक्ष्म-उद्यम विकास।", route: "/programs/skills-development" },
+  ];
+
+  return (
+    <section className="py-6 bg-slate-50 border-y border-slate-100">
+      <div className="max-w-7xl mx-auto px-4">
+        <ScrollReveal>
+          <SectionHeader
+            tag={lang === "en" ? "Our Focus" : "मुख्य उद्देश्य"}
+            title={t.featuredCauses}
+          />
+        </ScrollReveal>
+        <ScrollReveal stagger={0.08}>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            {causes.map((c) => (
+              <div key={c.title} className="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 overflow-hidden flex flex-col">
+                <div className="relative h-36 w-full">
+                  <img src={c.img} alt={c.title} className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                  <div className="absolute bottom-2 left-2 w-8 h-8 rounded-full bg-white shadow flex items-center justify-center">
+                    <c.icon className="w-4 h-4 text-brand-green" />
+                  </div>
+                </div>
+                <div className="p-4 flex flex-col flex-1">
+                  <h3 className="font-extrabold text-base text-slate-950 mb-1.5">{c.title}</h3>
+                  <p className="text-sm text-slate-700 font-medium leading-relaxed flex-1">{c.desc}</p>
+                  <div className="flex items-center justify-between mt-4 pt-3 border-t border-slate-100">
+                    <a href={c.route} className="text-sm font-bold text-brand-green hover:text-brand-green-dark">{t.readMore} →</a>
+                    <a href="/donate" className="text-xs font-extrabold bg-[#f97316] hover:bg-orange-600 text-white px-3.5 py-1.5 rounded-lg transition-all">{t.donateNow}</a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
+
+const CHEERFUL_COLORS = [
+  { bg: "bg-emerald-50", text: "text-emerald-600", border: "border-emerald-100/70" },
+  { bg: "bg-orange-50", text: "text-orange-600", border: "border-orange-100/70" },
+  { bg: "bg-blue-50", text: "text-blue-600", border: "border-blue-100/70" },
+  { bg: "bg-amber-50", text: "text-amber-600", border: "border-amber-100/70" },
+  { bg: "bg-violet-50", text: "text-violet-600", border: "border-violet-100/70" },
+  { bg: "bg-rose-50", text: "text-rose-600", border: "border-rose-100/70" },
+];
+
+function WhatWeDo({ lang }: LanguageProp) {
+  const t = TRANSLATIONS[lang];
+  const items = [
+    { icon: GraduationCap, l: lang === "en" ? "Education" : "शिक्षा", s: lang === "en" ? "Learning & Scholarships" : "लर्निंग और छात्रवृत्ति", route: "/programs/education" },
+    { icon: HeartPulse, l: lang === "en" ? "Healthcare" : "स्वास्थ्य सेवा", s: lang === "en" ? "Free camps & awareness" : "शिविर और जागरूकता", route: "/programs/healthcare" },
+    { icon: Users, l: lang === "en" ? "Women Empowerment" : "महिला सशक्तिकरण", s: lang === "en" ? "SHGs & Skills" : "एसएचजी और कौशल", route: "/programs/women-empowerment" },
+    { icon: Sprout, l: lang === "en" ? "Rural Development" : "ग्रामीण विकास", s: lang === "en" ? "Infrastructure" : "बुनियादी ढांचा", route: "#" },
+    { icon: Wrench, l: lang === "en" ? "Skill Development" : "कौशल विकास", s: lang === "en" ? "Vocational Training" : "व्यावसायिक प्रशिक्षण", route: "/programs/skills-development" },
+    { icon: Leaf, l: lang === "en" ? "Environment" : "पर्यावरण", s: lang === "en" ? "Plantation & Green Energy" : "वृक्षारोपण और ऊर्जा", route: "#" },
+  ];
+
+  return (
+    <section id="focus-areas" className="py-6 bg-slate-50 scroll-mt-20 border-b border-slate-100">
+      <div className="max-w-7xl mx-auto px-4">
+        <ScrollReveal>
+          <SectionHeader
+            tag={lang === "en" ? "Focus Areas" : "मुख्य ध्यान"}
+            title={t.whatWeDo}
+          />
+        </ScrollReveal>
+        <ScrollReveal stagger={0.07}>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {items.map(({ icon: Icon, l, s, route }, i) => {
+              const col = CHEERFUL_COLORS[i % 6];
+              return (
+                <a key={l} href={route} className={`bg-white rounded-xl p-4 h-36 flex flex-col items-center justify-center text-center shadow-sm border ${col.border} hover:shadow-md transition block group hover:-translate-y-0.5`}>
+                  <div className={`w-11 h-11 mx-auto rounded-full ${col.bg} flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform`}>
+                    <Icon className={`w-5 h-5 ${col.text}`} />
+                  </div>
+                  <div className="text-sm font-black text-slate-950 leading-tight">{l}</div>
+                  <div className="text-[11px] font-bold text-slate-500 mt-0.5 whitespace-nowrap overflow-hidden text-ellipsis w-full">{s}</div>
+                </a>
+              );
+            })}
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
+
+function ProgramsAndThematic({ lang }: LanguageProp) {
+  const t = TRANSLATIONS[lang];
+  const programs = [
+    { icon: BookOpen, title: lang === "en" ? "Education Support" : "शिक्षा सहायता", desc: lang === "en" ? "We run Community Learning Centres and 'Shiksha Na Ruke' scholarships to support children." : "हम बच्चों के सहयोग के लिए सामुदायिक शिक्षा केंद्र और 'शिक्षा न रुके' छात्रवृत्ति चलाते हैं।", route: "/programs/education" },
+    { icon: HeartPulse, title: lang === "en" ? "Healthcare Camps" : "स्वास्थ्य शिविर", desc: lang === "en" ? "Under 'Health Cannot Wait', we organize free camps, check-ups and hygiene drives." : "'हेल्थ कैन नॉट वेट' के तहत, हम मुफ्त चिकित्सा शिविर और स्वच्छता अभियान आयोजित करते हैं।", route: "/programs/healthcare" },
+    { icon: Users, title: lang === "en" ? "Women Empowerment" : "महिला सशक्तिकरण", desc: lang === "en" ? "Forming Self-Help Groups (SHGs) and providing vocational and leadership training." : "स्वयं सहायता समूहों (SHGs) का गठन और व्यावसायिक एवं नेतृत्व प्रशिक्षण प्रदान करना।", route: "/programs/women-empowerment" },
+    { icon: Sprout, title: lang === "en" ? "Rural Development" : "ग्रामीण विकास", desc: lang === "en" ? "Clean water access, sanitation, and public infrastructure in 'Model Villages'." : "'मॉडल गांवों' में स्वच्छ पेयजल पहुंच, स्वच्छता और सार्वजनिक बुनियादी ढांचा।", route: "#" },
+  ];
+
+  return (
+    <section className="py-6">
+      <div className="max-w-7xl mx-auto px-4">
+        <SectionHeader
+          tag={lang === "en" ? "Core Activities" : "मुख्य कार्यक्रम"}
+          title={t.ourPrograms}
+        />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {programs.map((p) => (
+            <div key={p.title} className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition hover:-translate-y-0.5">
+              <div className="w-10 h-10 rounded-md bg-brand-orange/15 flex items-center justify-center mb-3">
+                <p.icon className="w-5 h-5 text-brand-orange" />
+              </div>
+              <h3 className="font-extrabold text-sm text-slate-950 mb-1">{p.title}</h3>
+              <p className="text-xs text-slate-900 font-semibold mb-3 leading-relaxed">{p.desc}</p>
+              <a href={p.route} className="text-xs font-bold text-brand-green hover:text-brand-green-dark inline-flex items-center gap-1">
+                {t.readMore} <ArrowRight className="w-3 h-3" />
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
 
 interface GetInvolvedProps {
   lang: "en" | "hi";
@@ -1185,12 +1188,15 @@ interface GetInvolvedProps {
 function GetInvolved({ lang, onOpenModal }: GetInvolvedProps) {
   const t = TRANSLATIONS[lang];
   return (
-    <section id="get-involved" className="py-12 border-t border-slate-100 bg-white">
+    <section id="get-involved" className="py-6 border-t border-slate-100 bg-white">
       <div className="max-w-7xl mx-auto px-4">
-        <ScrollReveal><SectionTitle>{t.getInvolved}</SectionTitle></ScrollReveal>
-        <p className="text-center text-slate-950 font-medium text-base max-w-2xl mx-auto mb-8 leading-relaxed">
-          {t.getInvolvedSub}
-        </p>
+        <ScrollReveal>
+          <SectionHeader
+            tag={lang === "en" ? "Join Hands" : "हाथ मिलाएं"}
+            title={t.getInvolved}
+            subtitle={t.getInvolvedSub}
+          />
+        </ScrollReveal>
         <div className="bg-white border border-slate-200 shadow-sm rounded-xl p-6 grid grid-cols-2 md:grid-cols-6 gap-4 items-center">
           {[
             { icon: Hand, l: t.volunteer, s: t.volunteerSub, type: "volunteer" as const },
@@ -1211,7 +1217,7 @@ function GetInvolved({ lang, onOpenModal }: GetInvolvedProps) {
               <div className="text-[11px] text-slate-900 font-semibold mt-1 leading-snug">{item.s}</div>
             </div>
           ))}
-          <a href="/donate" className="bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-3 rounded-lg transition shadow-md w-full text-center text-sm tracking-wider uppercase select-none">
+          <a href="/donate" className="bg-[#f97316] hover:bg-orange-600 text-white font-bold py-3 rounded-lg transition shadow-md w-full text-center text-sm tracking-wider uppercase select-none">
             {t.donateNow}
           </a>
         </div>
@@ -1274,12 +1280,15 @@ function ExploreIWF({ lang }: LanguageProp) {
   ];
 
   return (
-    <section className="py-16 bg-slate-50 border-b border-slate-100">
+    <section className="py-6 bg-slate-50 border-b border-slate-100">
       <div className="max-w-7xl mx-auto px-4">
-        <ScrollReveal><SectionTitle>{t.exploreIWF}</SectionTitle></ScrollReveal>
-        <p className="text-center text-slate-900 font-medium text-base max-w-2xl mx-auto mb-10 leading-relaxed">
-          {t.exploreSub}
-        </p>
+        <ScrollReveal>
+          <SectionHeader
+            tag={lang === "en" ? "Discover IWF" : "आईडब्ल्यूएफ को जानें"}
+            title={t.exploreIWF}
+            subtitle={t.exploreSub}
+          />
+        </ScrollReveal>
         <ScrollReveal stagger={0.08}>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {items.map((item) => (
@@ -1611,25 +1620,48 @@ const IMPACT_STATS = [
   { icon: Award, value: 8, suffix: "", label: "Years of Service", color: "#DB2777" },
 ];
 
-function StatCard({ stat, visible }: { stat: typeof IMPACT_STATS[0]; visible: boolean }) {
+const STAT_TRANSLATIONS = {
+  en: {
+    "Lives Touched": "Lives Touched",
+    "Health Camps": "Health Camps",
+    "Students Supported": "Students Supported",
+    "Villages Reached": "Villages Reached",
+    "Active Programs": "Active Programs",
+    "Years of Service": "Years of Service"
+  },
+  hi: {
+    "Lives Touched": "लाभार्थी",
+    "Health Camps": "स्वास्थ्य शिविर",
+    "Students Supported": "सहायता प्राप्त छात्र",
+    "Villages Reached": "सक्रिय गाँव",
+    "Active Programs": "सक्रिय कार्यक्रम",
+    "Years of Service": "सेवा के वर्ष"
+  }
+};
+
+function StatCard({ stat, visible, lang, index }: { stat: typeof IMPACT_STATS[0]; visible: boolean; lang: "en" | "hi"; index: number }) {
   const count = useCountUp(stat.value, 1800, visible);
   const Icon = stat.icon;
+  const col = CHEERFUL_COLORS[index % 6];
   return (
     <ScrollReveal>
-      <div className="text-center p-4 rounded-xl bg-white border border-blue-100 shadow-sm hover:shadow-md transition-all hover:scale-[1.02] group">
-        <div className="w-10 h-10 rounded-lg flex items-center justify-center mx-auto mb-2" style={{ backgroundColor: `${stat.color}18` }}>
-          <Icon className="w-5 h-5" style={{ color: stat.color }} />
+      <div className={`bg-white rounded-xl p-4 h-36 flex flex-col items-center justify-center text-center shadow-sm border ${col.border} hover:shadow-md transition block group hover:-translate-y-0.5`}>
+        <div className={`w-11 h-11 mx-auto rounded-full ${col.bg} flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform`}>
+          <Icon className={`w-5 h-5 ${col.text}`} />
         </div>
-        <div className="text-2xl font-extrabold text-[#0b1f3b] mb-0.5">
+        <div className={`text-sm font-black ${col.text} leading-tight`}>
           {count.toLocaleString("en-IN")}{stat.suffix}
         </div>
-        <div className="text-[10px] font-semibold text-slate-500">{stat.label}</div>
+        <div className="text-[11px] font-bold text-slate-500 mt-0.5 whitespace-nowrap overflow-hidden text-ellipsis w-full">
+          {STAT_TRANSLATIONS[lang][stat.label as keyof typeof STAT_TRANSLATIONS["en"]] || stat.label}
+        </div>
       </div>
     </ScrollReveal>
   );
 }
 
-function ImpactStats() {
+function ImpactStats({ lang }: LanguageProp) {
+  const t = TRANSLATIONS[lang];
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -1643,16 +1675,17 @@ function ImpactStats() {
   }, []);
 
   return (
-    <section ref={ref} id="impact-stats" className="py-8 bg-blue-50/60 border-y border-blue-100">
+    <section ref={ref} id="impact-stats" className="py-4 bg-blue-50/60 border-y border-blue-100">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="text-center mb-6">
-          <p className="text-xs font-bold uppercase tracking-widest text-brand-orange mb-1">Our Impact</p>
-          <h2 className="text-xl md:text-2xl font-extrabold text-[#0b1f3b]">Numbers That Speak</h2>
-        </div>
+        <SectionHeader
+          tag={t.ourImpactTag}
+          title={t.ourImpactTitle}
+          subtitle={t.ourImpactSub}
+        />
 
         <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
-          {IMPACT_STATS.map((stat) => (
-            <StatCard key={stat.label} stat={stat} visible={visible} />
+          {IMPACT_STATS.map((stat, i) => (
+            <StatCard key={stat.label} stat={stat} visible={visible} lang={lang} index={i} />
           ))}
         </div>
       </div>
@@ -1715,16 +1748,16 @@ const CAMPAIGNS = [
   },
 ];
 
-function CampaignsSection() {
+function CampaignsSection({ lang }: LanguageProp) {
   return (
-    <section className="py-16 bg-slate-50">
+    <section className="py-6 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4">
         <ScrollReveal>
-          <div className="text-center mb-10">
-            <p className="text-xs font-bold uppercase tracking-widest text-brand-orange mb-2">Our Campaigns</p>
-            <h2 className="text-2xl md:text-3xl font-extrabold text-brand-green-dark">Five Pillars of Change</h2>
-            <p className="text-slate-500 text-sm mt-2 max-w-xl mx-auto">Each campaign targets a critical dimension of poverty and inequality — together they form IWF's blueprint for a better India.</p>
-          </div>
+          <SectionHeader
+            tag={lang === "en" ? "Our Campaigns" : "हमारे अभियान"}
+            title={lang === "en" ? "Five Pillars of Change" : "परिवर्तन के पांच स्तंभ"}
+            subtitle={lang === "en" ? "Each campaign targets a critical dimension of poverty and inequality — together they form IWF's blueprint for a better India." : "प्रत्येक अभियान गरीबी और असमानता के एक महत्वपूर्ण आयाम को लक्षित करता है — मिलकर वे एक बेहतर भारत के लिए आईडब्ल्यूएफ का खाका तैयार करते हैं"}
+          />
         </ScrollReveal>
 
         <ScrollReveal stagger={0.08}>
@@ -1732,21 +1765,23 @@ function CampaignsSection() {
             {CAMPAIGNS.map((c, i) => (
               <div
                 key={c.name}
-                className="bg-white rounded-2xl border-2 p-6 shadow-sm hover:shadow-md transition-all hover:-translate-y-1 group"
+                className="bg-white rounded-2xl border-2 p-6 shadow-sm hover:shadow-md transition-all hover:-translate-y-1 group flex flex-col justify-between h-full"
                 style={{ borderColor: i === 0 ? "transparent" : "transparent" }}
               >
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="text-3xl shrink-0">{c.emoji}</div>
-                  <div>
-                    <h3 className="font-extrabold text-slate-800 text-base">{c.name}</h3>
-                    <p className="text-xs font-semibold" style={{ color: c.color }}>{c.tagline}</p>
+                <div>
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="text-3xl shrink-0">{c.emoji}</div>
+                    <div>
+                      <h3 className="font-extrabold text-slate-800 text-base">{c.name}</h3>
+                      <p className="text-xs font-semibold" style={{ color: c.color }}>{c.tagline}</p>
+                    </div>
                   </div>
+                  <div className="w-full h-1 rounded-full mb-4" style={{ backgroundColor: c.color, opacity: 0.2 }} />
+                  <p className="text-sm text-slate-600 leading-relaxed mb-5">{c.desc}</p>
                 </div>
-                <div className="w-full h-1 rounded-full mb-4" style={{ backgroundColor: c.color, opacity: 0.2 }} />
-                <p className="text-sm text-slate-600 leading-relaxed mb-5">{c.desc}</p>
                 <a
                   href="/donate"
-                  className="inline-flex items-center gap-2 text-xs font-bold px-4 py-2 rounded-lg transition-all hover:scale-[1.02]"
+                  className="inline-flex items-center gap-2 text-xs font-bold px-4 py-2 rounded-lg transition-all hover:scale-[1.02] self-start"
                   style={{ backgroundColor: c.bg, color: c.color, border: `1.5px solid ${c.border}` }}
                 >
                   {c.cta} <ArrowRight className="w-3 h-3" />
@@ -1755,14 +1790,16 @@ function CampaignsSection() {
             ))}
 
             {/* CTA card */}
-            <div className="bg-gradient-to-br from-brand-green to-[#0b1f3b] rounded-2xl p-6 flex flex-col justify-between">
+            <div className="bg-gradient-to-br from-brand-green to-[#0b1f3b] rounded-2xl p-6 flex flex-col justify-between h-full">
               <div>
-                <div className="text-3xl mb-3">🌟</div>
-                <h3 className="font-extrabold text-white text-base mb-2">Join the Movement</h3>
-                <p className="text-white/70 text-sm leading-relaxed">Volunteer, donate, or partner with IWF to amplify the impact of these campaigns across rural India.</p>
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="text-2xl shrink-0">🌟</span>
+                  <h3 className="font-extrabold text-white text-base leading-none">Join the Movement</h3>
+                </div>
+                <p className="text-white/70 text-sm leading-relaxed mb-4">Volunteer, donate, or partner with IWF to amplify the impact of these campaigns across rural India.</p>
               </div>
-              <div className="flex flex-col gap-2 mt-5">
-                <a href="/donate" className="w-full text-center bg-brand-orange hover:bg-brand-orange-dark text-white font-bold text-sm py-2.5 rounded-lg transition">
+              <div className="flex flex-col gap-2 mt-auto">
+                <a href="/donate" className="w-full text-center bg-[#f97316] hover:bg-orange-600 text-white font-bold text-sm py-2.5 rounded-lg transition shadow-md">
                   Donate Now
                 </a>
                 <a href="/membership" className="w-full text-center bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold text-sm py-2.5 rounded-lg transition">
@@ -1854,19 +1891,18 @@ function GallerySection({ lang }: LanguageProp) {
   };
 
   return (
-    <section className="py-16 bg-white border-y border-slate-100 overflow-hidden">
+    <section className="py-6 bg-white border-y border-slate-100 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4">
 
         {/* Header Title with red/orange dashes and navigation arrows */}
         <div className="flex items-center justify-between mb-10 relative">
 
           {/* Centered Gallery Header in full width parent */}
-          <div className="flex-1 flex items-center justify-center gap-3">
-            <span className="w-8 h-1 bg-brand-orange rounded-full"></span>
-            <h2 className="text-2xl md:text-3xl font-extrabold text-slate-950 tracking-wider uppercase">
-              {lang === "en" ? "Gallery" : "गैलरी"}
-            </h2>
-            <span className="w-8 h-1 bg-brand-orange rounded-full"></span>
+          <div className="flex-1">
+            <SectionHeader
+              tag={lang === "en" ? "Visual Journey" : "दृश्य यात्रा"}
+              title={lang === "en" ? "Gallery" : "गैलरी"}
+            />
           </div>
 
           {/* Navigation controls */}
@@ -2006,13 +2042,12 @@ export default function HomePage() {
       <NotificationTicker />
       <Header lang={lang} />
       <VideoHeroSection lang={lang} />
-      <HeroSection />
+      <HeroSection lang={lang} />
       <UrgentPatientsSection lang={lang} />
-      <EventsAndNoticesSection lang={lang} />
       <WhatWeDo lang={lang} />
-      <ImpactStats />
+      <ImpactStats lang={lang} />
       <FeaturedCauses lang={lang} />
-      <CampaignsSection />
+      <CampaignsSection lang={lang} />
       <ProgramsAndThematic lang={lang} />
       <ExploreIWF lang={lang} />
       <GallerySection lang={lang} />

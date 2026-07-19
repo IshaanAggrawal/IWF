@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Languages } from "lucide-react";
+import { Languages, ChevronDown, Check } from "lucide-react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 declare global {
@@ -22,7 +22,13 @@ const GOOGLE_TRANSLATE_SCRIPT_ID = "google-translate-script";
 const GOOGLE_TRANSLATE_ELEMENT_ID = "google_translate_element";
 const SUPPRESSION_STYLE_ID = "goog-translate-suppress";
 
-/** CSS that hides all Google Translate UI chrome while keeping the translation active */
+const LANGUAGES = [
+  { code: "en", name: "English", nativeName: "English" },
+  { code: "hi", name: "Hindi", nativeName: "हिंदी" },
+  { code: "ur", name: "Urdu", nativeName: "اردو" },
+  { code: "bn", name: "Bengali", nativeName: "বাংলা" }
+];
+
 const SUPPRESSION_CSS = `
   /* Hide Google's top banner frame */
   .goog-te-banner-frame.skiptranslate,
@@ -62,14 +68,12 @@ function injectTranslateContainer() {
 }
 
 function loadGoogleTranslateScript(onReady: () => void) {
-  // Already initialised
   if (window._iwfTranslateReady) { onReady(); return; }
-  // Script already injected but not yet ready
   if (document.getElementById(GOOGLE_TRANSLATE_SCRIPT_ID)) return;
 
   window.googleTranslateElementInit = () => {
     new window.google.translate.TranslateElement(
-      { pageLanguage: "en", includedLanguages: "hi", autoDisplay: false },
+      { pageLanguage: "en", includedLanguages: "hi,ur,bn", autoDisplay: false },
       GOOGLE_TRANSLATE_ELEMENT_ID
     );
     window._iwfTranslateReady = true;
@@ -78,99 +82,179 @@ function loadGoogleTranslateScript(onReady: () => void) {
 
   const script = document.createElement("script");
   script.id = GOOGLE_TRANSLATE_SCRIPT_ID;
-  script.src =
-    "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+  script.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
   script.async = true;
   document.body.appendChild(script);
 }
 
-/** Poll until the internal Google Translate <select> appears, then call cb. */
 function waitForCombo(cb: (select: HTMLSelectElement) => void, attempts = 0) {
-  if (attempts > 60) return; // give up after ~3 s
+  if (attempts > 60) return;
   const sel = document.querySelector<HTMLSelectElement>(".goog-te-combo");
   if (sel) { cb(sel); return; }
   setTimeout(() => waitForCombo(cb, attempts + 1), 50);
 }
 
-// ─── Component ────────────────────────────────────────────────────────────────
-export function TranslateButton({ className = "" }: { className?: string }) {
-  const [isHindi, setIsHindi] = useState(false);
+function getCookieLang(): string {
+  const match = document.cookie.match(/googtrans=\/en\/([^;]+)/);
+  return match ? match[1] : "en";
+}
+
+// Helper to switch language
+function setGoogleLanguage(langCode: string, callback: () => void) {
+  if (langCode === "en") {
+    const past = "expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    const hostname = window.location.hostname;
+    document.cookie = `googtrans=; ${past}; path=/`;
+    document.cookie = `googtrans=; ${past}; path=/; domain=${hostname}`;
+    document.cookie = `googtrans=; ${past}; path=/; domain=.${hostname}`;
+    window.location.reload();
+  } else {
+    waitForCombo((select) => {
+      select.value = langCode;
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+      select.dispatchEvent(new Event("input", { bubbles: true }));
+      setTimeout(callback, 500);
+    });
+  }
+}
+
+// ─── Floating Translate Widget (Bottom Left) ──────────────────────────────────
+export function FloatingTranslateButton() {
+  const [currentLang, setCurrentLang] = useState("en");
+  const [isOpen, setIsOpen] = useState(false);
   const [isReady, setIsReady] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const initialised = useRef(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (initialised.current) return;
-    initialised.current = true;
-
     injectSuppressionStyle();
     injectTranslateContainer();
+    loadGoogleTranslateScript(() => {
+      waitForCombo(() => {
+        setIsReady(true);
+        setCurrentLang(getCookieLang());
+      });
+    });
 
-    const handleReady = () => {
-      // Wait a tick for the select element to be injected into the DOM
-      waitForCombo(() => setIsReady(true));
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
     };
-
-    loadGoogleTranslateScript(handleReady);
-
-    // If the script was already loaded by another instance
-    if (window._iwfTranslateReady) {
-      waitForCombo(() => setIsReady(true));
-    }
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, []);
 
-  const handleToggle = () => {
-    if (isLoading) return;
-
-    if (isHindi) {
-      // ── Revert to English ─────────────────────────────────────────────────
-      // Google Translate Widget does NOT reliably restore via select.value = 'en'.
-      // The only guaranteed method is clearing the googtrans cookie then reloading.
-      setIsLoading(true);
-      const past = "expires=Thu, 01 Jan 1970 00:00:00 UTC";
-      const hostname = window.location.hostname;
-      document.cookie = `googtrans=; ${past}; path=/`;
-      document.cookie = `googtrans=; ${past}; path=/; domain=${hostname}`;
-      document.cookie = `googtrans=; ${past}; path=/; domain=.${hostname}`;
-      window.location.reload();
-    } else {
-      // ── Translate to Hindi ─────────────────────────────────────────────────
-      if (!isReady) return;
-      setIsLoading(true);
-      waitForCombo((select) => {
-        select.value = "hi";
-        select.dispatchEvent(new Event("change", { bubbles: true }));
-        select.dispatchEvent(new Event("input", { bubbles: true }));
-        setTimeout(() => {
-          setIsHindi(true);
-          setIsLoading(false);
-        }, 400);
-      });
-    }
+  const selectLanguage = (code: string) => {
+    setIsOpen(false);
+    if (code === currentLang) return;
+    setGoogleLanguage(code, () => {
+      setCurrentLang(code);
+    });
   };
 
+  const activeLangObj = LANGUAGES.find((l) => l.code === currentLang) || LANGUAGES[0];
+
   return (
-    <button
-      onClick={handleToggle}
-      disabled={isLoading}
-      title={isHindi ? "Switch to English" : "Switch to Hindi / हिंदी में देखें"}
-      aria-label={isHindi ? "Switch to English" : "Switch to Hindi"}
-      className={`
-        flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-white/30
-        bg-white/10 hover:bg-white/25 text-white text-[10px] font-bold
-        transition-all duration-200 cursor-pointer select-none
-        disabled:opacity-50 disabled:cursor-wait
-        ${className}
-      `}
-    >
-      <Languages className="w-3 h-3 shrink-0" />
-      {isLoading ? (
-        <span className="animate-pulse">…</span>
-      ) : isHindi ? (
-        <span>EN</span>
-      ) : (
-        <span>हिंदी</span>
+    <div ref={dropdownRef} className="fixed top-8 right-3 z-50 flex flex-col items-end gap-2">
+      {/* Floating Action Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#1a365d] hover:bg-[#254f8a] text-white shadow-2xl border border-white/10 transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer group relative"
+        title="Change Website Language / भाषा बदलें"
+      >
+        <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#f97316] opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#f97316]"></span>
+        </span>
+        <Languages className="w-5 h-5 shrink-0 text-white" />
+      </button>
+
+      {/* Dropdown Menu */}
+      {isOpen && (
+        <div className="bg-[#0b1f3b]/95 backdrop-blur-md border border-white/10 rounded-xl shadow-2xl p-2 w-44 flex flex-col gap-1 text-white animate-in slide-in-from-top-2 fade-in duration-200">
+          <div className="px-2.5 py-1.5 text-[10px] font-black tracking-wider text-white/50 uppercase border-b border-white/5 mb-1">
+            Select Language
+          </div>
+          {LANGUAGES.map((lang) => (
+            <button
+              key={lang.code}
+              onClick={() => selectLanguage(lang.code)}
+              className={`flex items-center justify-between w-full px-3 py-2 text-xs font-bold rounded-lg transition-colors text-left cursor-pointer ${
+                currentLang === lang.code
+                  ? "bg-brand-orange text-white"
+                  : "hover:bg-white/10 text-white/90"
+              }`}
+            >
+              <span>{lang.nativeName} ({lang.name})</span>
+              {currentLang === lang.code && <Check className="w-3.5 h-3.5 shrink-0" />}
+            </button>
+          ))}
+        </div>
       )}
-    </button>
+    </div>
+  );
+}
+
+// ─── Inline Translate Button (Backward Compatible Header Pill) ────────────────
+export function TranslateButton({ className = "" }: { className?: string }) {
+  const [currentLang, setCurrentLang] = useState("en");
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setCurrentLang(getCookieLang());
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, []);
+
+  const selectLanguage = (code: string) => {
+    setIsOpen(false);
+    setGoogleLanguage(code, () => {
+      setCurrentLang(code);
+    });
+  };
+
+  const activeLangObj = LANGUAGES.find((l) => l.code === currentLang) || LANGUAGES[0];
+
+  return (
+    <div ref={dropdownRef} className="relative inline-block text-left">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className={`
+          flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/30
+          bg-white/10 hover:bg-white/20 text-white text-[11px] font-bold
+          transition-all duration-200 cursor-pointer select-none
+          ${className}
+        `}
+      >
+        <Languages className="w-3.5 h-3.5 shrink-0" />
+        <span>{activeLangObj.nativeName}</span>
+        <ChevronDown className="w-3 h-3 opacity-60" />
+      </button>
+
+      {isOpen && (
+        <div className="absolute right-0 mt-2 z-50 bg-[#0b1f3b]/95 backdrop-blur-md border border-white/10 rounded-xl shadow-2xl p-1.5 w-36 flex flex-col gap-0.5 text-white">
+          {LANGUAGES.map((lang) => (
+            <button
+              key={lang.code}
+              onClick={() => selectLanguage(lang.code)}
+              className={`flex items-center justify-between w-full px-2.5 py-1.5 text-[11px] font-bold rounded-md transition-colors text-left cursor-pointer ${
+                currentLang === lang.code
+                  ? "bg-brand-orange text-white"
+                  : "hover:bg-white/10 text-white/90"
+              }`}
+            >
+              <span>{lang.nativeName}</span>
+              {currentLang === lang.code && <Check className="w-3 h-3 shrink-0" />}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }

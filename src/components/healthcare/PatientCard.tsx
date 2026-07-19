@@ -21,7 +21,7 @@ export function PatientCard({
   condition,
   compact = false,
 }: PatientCardProps) {
-  const pct = Math.min(100, Math.round((raisedAmount / neededAmount) * 100));
+
 
   const conditionColor =
     condition === "Critical"
@@ -78,33 +78,13 @@ export function PatientCard({
         </div>
 
         {/* Financial section */}
-        <div className="mt-1">
-          <div className="flex items-center justify-between mb-1">
-            <span className="text-[10px] font-black text-[#0b1f3b] uppercase tracking-wide">
-              Needed Amount
-            </span>
-            <span className="text-[10px] text-gray-400">{donorsCount} donors</span>
-          </div>
-          <div className="flex items-center gap-1 mb-1.5">
-            <IndianRupee className="w-3 h-3 text-[#f97316] shrink-0" />
-            <span className="text-base font-black text-[#f97316]">
-              {neededAmount.toLocaleString("en-IN")}
-            </span>
-          </div>
-          {/* Progress bar */}
-          <div className="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
-            <div
-              className="h-full bg-[#f97316] rounded-full transition-all duration-500"
-              style={{ width: `${pct}%` }}
-            />
-          </div>
-          <div className="flex justify-between mt-1">
-            <span className="text-[10px] text-gray-500">
-              Raised: ₹{raisedAmount.toLocaleString("en-IN")}
-            </span>
-            <span className="text-[10px] text-gray-400">
-              Goal: ₹{neededAmount.toLocaleString("en-IN")}
-            </span>
+        <div className="mt-1 py-1.5 flex items-center justify-between border-t border-b border-gray-50">
+          <span className="text-[10px] font-black text-[#0b1f3b] uppercase tracking-wide">
+            Needed Amount
+          </span>
+          <div className="flex items-center gap-0.5 text-sm text-[#f97316] font-bold">
+            <IndianRupee className="w-3.5 h-3.5 text-[#f97316] shrink-0" />
+            <span className="font-black">{neededAmount.toLocaleString("en-IN")}</span>
           </div>
         </div>
 

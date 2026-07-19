@@ -275,7 +275,7 @@ export function Header() {
       </div>
 
       {/* Dark Themed Menu Navbar (Sticky) */}
-      <header className="bg-[#0b1f3b] text-white sticky top-0 z-50 shadow-md transition-all duration-200 py-1">
+      <header className="bg-[#1a365d] text-white sticky top-0 z-50 shadow-md transition-all duration-200 py-1">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between relative">
 
           <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
@@ -313,10 +313,9 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-2 md:gap-3 shrink-0 py-1.5 ml-auto lg:ml-0">
-            <TranslateButton className="border-white/20 bg-white/5 hover:bg-white/15 text-xs text-white" />
             <a
               href="/donate"
-              className="bg-brand-orange hover:bg-brand-orange-dark text-white font-bold text-xs md:text-sm px-4 py-2 rounded-md shadow-md transition-all hover:scale-105 active:scale-95 uppercase tracking-wide"
+              className="bg-[#f97316] hover:bg-orange-600 text-white font-bold text-xs md:text-sm px-4 py-2 rounded-md shadow-md transition-all hover:scale-105 active:scale-95 uppercase tracking-wide"
             >
               DONATE NOW
             </a>
