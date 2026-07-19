@@ -23,6 +23,7 @@ import {
   Mail,
 } from "lucide-react";
 import PageTransition, { ScrollProgressBar } from "@/components/PageTransition";
+import { FloatingTranslateButton } from "@/components/TranslateButton";
 
 import appCss from "../styles.css?url";
 
@@ -283,6 +284,7 @@ function RootComponent() {
           {msgOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6 fill-white text-brand-orange" />}
         </button>
       </div>
+      <FloatingTranslateButton />
     </QueryClientProvider>
   );
 }
