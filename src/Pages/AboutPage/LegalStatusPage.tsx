@@ -9,7 +9,7 @@ const REGISTRATIONS = [
   { label: "Type of Organization", value: "Public Charitable Trust", icon: "⚖️" },
   { label: "Registration Act", value: "Indian Trust Act, 1882", icon: "📜" },
   { label: "Year of Establishment", value: "2016", icon: "📅" },
-  { label: "Registered Address", value: "Bathiya, Via-Putai Manigachhi, Darbhanga, Bihar – 847423", icon: "📍" },
+  { label: "Registered Address", value: "Bathiya, Darbhanga, Bihar – 847423", icon: "📍" },
   { label: "PAN Number", value: "AABTI1234F (Representative)", icon: "💳" },
   { label: "12A Registration", value: "Registered (Income Tax Exemption)", icon: "✅" },
   { label: "80G Registration", value: "Registered (Donor Tax Exemption — 50%)", icon: "✅" },

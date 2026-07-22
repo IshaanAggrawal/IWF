@@ -19,7 +19,7 @@ const OFFICES = [
     badge: "Headquarters",
     badgeColor: "#15803d",
     badgeBg: "#F0FDF4",
-    address: "Bathiya, Via-Putai Manigachhi, Darbhanga, Bihar – 847423",
+    address: "Bathiya, Darbhanga, Bihar – 847423",
     phone: "+91 9811861633",
     email: "info@iwfindia.org",
     timing: "Mon–Sat: 9:00 AM – 5:00 PM",

@@ -107,7 +107,7 @@ function setGoogleLanguage(langCode: string, callback: () => void) {
     document.cookie = `googtrans=; ${past}; path=/`;
     document.cookie = `googtrans=; ${past}; path=/; domain=${hostname}`;
     document.cookie = `googtrans=; ${past}; path=/; domain=.${hostname}`;
-    window.location.reload();
+    try { window.location.reload(); } catch (_) {/* ignore */}
   } else {
     waitForCombo((select) => {
       select.value = langCode;
@@ -155,7 +155,7 @@ export function FloatingTranslateButton() {
   const activeLangObj = LANGUAGES.find((l) => l.code === currentLang) || LANGUAGES[0];
 
   return (
-    <div ref={dropdownRef} className="fixed top-8 right-3 z-50 flex flex-col items-end gap-2">
+    <div ref={dropdownRef} className="fixed top-20 right-3 z-[60] flex flex-col items-end gap-2">
       {/* Floating Action Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
