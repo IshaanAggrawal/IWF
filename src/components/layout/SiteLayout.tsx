@@ -58,7 +58,7 @@ export const MEGA_DATA: Record<string, MegaSection> = {
       "Leadership & Management",
       "Governance & Transparency",
       "Legal Status & Registration",
-      "Members & Supporters",
+      "Members & Donors",
       "Our Partners & Donors",
       "Membership Policy",
     ],
@@ -72,7 +72,6 @@ export const MEGA_DATA: Record<string, MegaSection> = {
       "Women Empowerment",
       "Entrepreneur Development",
       "Relief & Rehabilitation",
-      "Model Village",
       "Environment & Sustainability",
       "Agriculture & Rural Livelihood",
     ],
@@ -101,6 +100,7 @@ export const MEGA_DATA: Record<string, MegaSection> = {
     items: [
       "Volunteer With Us",
       "Partner With Us",
+      "Become a Member",
       "Sponsor a Programme",
       "Become a Mentor",
       "Careers & Opportunities",
@@ -129,7 +129,7 @@ function getMegaHref(menu: string, item: string) {
   if (menu === "About Us" && item === "Leadership & Management") return "/about/leadership";
   if (menu === "About Us" && item === "Governance & Transparency") return "/about/governance";
   if (menu === "About Us" && item === "Legal Status & Registration") return "/about/legal-status";
-  if (menu === "About Us" && item === "Members & Supporters") return "/membership";
+  if (menu === "About Us" && (item === "Members & Donors" || item === "Members & Supporters")) return "/membership";
   if (menu === "About Us" && item === "Membership Policy") return "/membership#status";
   if (menu === "About Us" && item === "Partners & Donors") return "/about/partners";
   // What We Do
@@ -267,7 +267,7 @@ export function Header() {
                 Planting Seeds of Hope and Change
               </span>
               <span className="text-[10px] md:text-xs text-gray-500 font-medium mt-1.5 leading-none text-center md:text-left">
-                Bathiya, Via- Putai Manigachhi, Darbhanga, Bihar – 847423, India
+                Bathiya, Darbhanga, Bihar – 847423, India
               </span>
             </div>
           </a>
@@ -298,7 +298,13 @@ export function Header() {
                       if (!hasMega) setActiveMenu(null);
                     }}
                   >
-                    {item}
+                    {item === "Home" ? (
+                      <span className="flex items-center gap-1.5 font-bold">
+                        <Home className="w-4 h-4 text-[#f97316]" /> IWF
+                      </span>
+                    ) : (
+                      item
+                    )}
                     {hasMega && (
                       <ChevronDown
                         className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpen ? "rotate-180 text-white" : "text-white/60"
@@ -321,25 +327,23 @@ export function Header() {
             </a>
             <button
               className="lg:hidden p-2 text-white/80 hover:text-white transition-colors cursor-pointer"
-              onClick={() => setMobileOpen(true)}
-              aria-label="Open navigation menu"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label="Toggle Navigation Menu"
             >
-              <Menu className="w-6 h-6" />
+              {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
 
+          {/* Mega Menu Dropdown Window */}
           {activeMenu && MEGA_DATA[activeMenu] && (
             <div
-              className="absolute left-0 right-0 top-full bg-white shadow-2xl z-50 border-t-2 border-brand-orange py-8 px-16 flex gap-10"
+              className="absolute left-0 right-0 top-full bg-[#0b1f3b]/95 backdrop-blur-md border-t border-white/10 shadow-2xl z-50 text-white animate-in fade-in slide-in-from-top-2 duration-200"
               onMouseEnter={cancelClose}
               onMouseLeave={scheduleClose}
             >
-              <div className="flex-1">
-                <div className="text-brand-orange uppercase text-xs tracking-widest font-bold mb-4">
-                  {activeMenu}
-                </div>
+              <div className="max-w-7xl mx-auto px-6 py-6">
                 <div
-                  className="grid gap-8"
+                  className="grid gap-6"
                   style={{ gridTemplateColumns: `repeat(${MEGA_DATA[activeMenu].cols}, minmax(0, 1fr))` }}
                 >
                   {Array.from({ length: MEGA_DATA[activeMenu].cols }).map((_, colIndex) => {
@@ -347,192 +351,108 @@ export function Header() {
                     const itemsPerCol = Math.ceil(items.length / MEGA_DATA[activeMenu].cols);
                     const colItems = items.slice(colIndex * itemsPerCol, (colIndex + 1) * itemsPerCol);
                     return (
-                      <div key={colIndex} className="flex flex-col gap-3">
-                        {colItems.map((subItem, itemIndex) => {
-                          const globalIndex = colIndex * itemsPerCol + itemIndex;
-                          return (
-                            <a
-                              key={subItem}
-                              href={
-                                activeMenu === "About Us" && subItem === "Overview"
-                                  ? "/about"
-                                  : activeMenu === "About Us" && subItem === "Our Objective & Vision"
-                                    ? "/about/objective-and-vision"
-                                    : activeMenu === "About Us" && subItem === "Vision 2047"
-                                      ? "/about/vision-2047"
-                                      : activeMenu === "What We Do" && subItem === "Education"
-                                        ? "/programs/education"
-                                        : activeMenu === "What We Do" && subItem === "Health Care"
-                                          ? "/programs/healthcare"
-                                          : activeMenu === "What We Do" && subItem === "Skills Development"
-                                            ? "/programs/skills-development"
-                                            : activeMenu === "What We Do" && subItem === "Women Empowerment"
-                                              ? "/programs/women-empowerment"
-                                              : activeMenu === "Programs" && subItem === "View All Programs →"
-                                                ? "/programs/healthcare"
-                                                : "#"
-                              }
-                              className="flex items-center gap-2 text-gray-700 hover:text-[#0b1f3b] text-sm hover:translate-x-1 transition-all duration-200"
-                              style={{ transitionDelay: `${globalIndex * 30}ms` }}
-                              onClick={() => setActiveMenu(null)}
-                            >
-                              <span className="text-brand-orange text-sm font-semibold">→</span>
-                              {subItem}
-                            </a>
-                          );
-                        })}
+                      <div key={colIndex} className="flex flex-col gap-2">
+                        {colItems.map((sub) => (
+                          <a
+                            key={sub}
+                            href={getMegaHref(activeMenu, sub)}
+                            className="flex items-center gap-2 text-sm text-white/80 hover:text-brand-orange hover:bg-white/5 px-3 py-2 rounded-md transition-all"
+                            onClick={() => setActiveMenu(null)}
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full bg-brand-orange/60" />
+                            {sub}
+                          </a>
+                        ))}
                       </div>
                     );
                   })}
                 </div>
               </div>
-              {(activeMenu === "About Us" || activeMenu === "What We Do" || activeMenu === "Get Involved") && (
-                <div className="w-72 shrink-0 border-l border-gray-100 pl-8">
-                  <div className="bg-[#f9fdf9] border border-green-100/50 rounded-md p-5 flex flex-col gap-3">
-                    <div className="w-10 h-10 rounded-full bg-brand-green/10 flex items-center justify-center text-brand-green">
-                      <Leaf className="w-5 h-5" />
-                    </div>
-                    <div className="font-bold text-[#0b1f3b] text-sm leading-snug">
-                      Planting Seeds of Hope and Change
-                    </div>
-                    <div className="text-xs text-gray-600 leading-normal">
-                      Join IWF in building education, healthcare and livelihood pathways for underserved communities.
-                    </div>
-                    <a href="/about" className="text-brand-orange text-xs font-bold hover:underline inline-flex items-center gap-1">
-                      Learn More -&gt;
-                    </a>
-                  </div>
-                </div>
-              )}
             </div>
           )}
         </div>
       </header>
 
+      {/* Mobile Drawer */}
       {mobileOpen && (
-        <>
-          <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setMobileOpen(false)} aria-hidden="true" />
-          <div className="fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-white z-50 shadow-2xl overflow-y-auto mobile-drawer lg:hidden flex flex-col">
-            <div className="flex items-center justify-between p-4 bg-[#0b1f3b] shrink-0 text-white">
-              <div className="flex items-center gap-2.5">
-                <Leaf className="w-6 h-6 text-brand-green fill-brand-green/20" />
-                <div className="flex flex-col leading-none">
-                  <span className="font-extrabold text-white text-base">IWF</span>
-                  <span className="font-semibold text-[8px] text-white/70 tracking-wider">ISLAH WELFARE FOUNDATION</span>
-                </div>
-              </div>
-              <button onClick={() => setMobileOpen(false)} className="p-1.5 text-white/80 hover:text-white rounded cursor-pointer" aria-label="Close navigation menu">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <nav className="flex-1 py-2" aria-label="Mobile navigation">
-              {NAV_ITEMS.map((item) => {
-                const hasMega = !!MEGA_DATA[item];
-                const isExpanded = mobileExpanded === item;
-                return (
-                  <div key={item} className="border-b border-slate-100 last:border-0">
-                    <div className="flex items-center">
-                      <a
-                        href={getHeaderHref(item)}
-                        className="flex-1 px-5 py-3.5 text-sm font-semibold text-slate-800 hover:text-brand-green transition-colors"
-                        onClick={(event) => {
-                          handleHeaderClick(item, event);
-                          if (event.defaultPrevented) {
-                            setMobileOpen(false);
-                            return;
-                          }
-                          if (!hasMega) setMobileOpen(false);
-                          else setMobileExpanded(isExpanded ? null : item);
-                        }}
-                      >
-                        {item}
-                      </a>
-                      {hasMega && (
-                        <button
-                          onClick={() => setMobileExpanded(isExpanded ? null : item)}
-                          className="px-4 py-3.5 text-slate-400 hover:text-brand-green transition-colors cursor-pointer"
-                          aria-label={`${isExpanded ? "Collapse" : "Expand"} ${item}`}
-                        >
-                          <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? "rotate-180 text-brand-green" : ""}`} />
-                        </button>
+        <div className="fixed inset-0 z-50 lg:hidden flex flex-col bg-white animate-in slide-in-from-right duration-200">
+          <div className="flex items-center justify-between p-4 border-b border-slate-100">
+            <span className="font-extrabold text-[#0b1f3b] text-base">Navigation</span>
+            <button
+              onClick={() => setMobileOpen(false)}
+              className="p-2 text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+
+          <nav className="flex-1 py-2 overflow-y-auto" aria-label="Mobile navigation items">
+            {NAV_ITEMS.map((item) => {
+              const hasMega = !!MEGA_DATA[item];
+              const isExpanded = mobileExpanded === item;
+              return (
+                <div key={item} className="border-b border-slate-100 last:border-0">
+                  <div className="flex items-center">
+                    <a
+                      href={getHeaderHref(item)}
+                      className="flex-1 px-5 py-3.5 text-sm font-semibold text-slate-800 hover:text-brand-green transition-colors"
+                      onClick={(event) => {
+                        handleHeaderClick(item, event);
+                        if (event.defaultPrevented) {
+                          setMobileOpen(false);
+                          return;
+                        }
+                        if (!hasMega) setMobileOpen(false);
+                        else setMobileExpanded(isExpanded ? null : item);
+                      }}
+                    >
+                      {item === "Home" ? (
+                        <span className="flex items-center gap-1.5 font-bold">
+                          <Home className="w-4 h-4 text-[#f97316]" /> IWF
+                        </span>
+                      ) : (
+                        item
                       )}
-                    </div>
-                    {hasMega && isExpanded && (
-                      <div className="bg-slate-50 border-l-4 border-brand-green ml-4 mr-2 rounded-sm mb-1.5 py-1">
-                        {MEGA_DATA[item].items.map((sub) => (
-                          <a
-                            key={sub}
-                            href={
-                              item === "About Us" && sub === "Overview"
-                                ? "/about"
-                                : item === "About Us" && sub === "Our Objective & Vision"
-                                  ? "/about/objective-and-vision"
-                                  : item === "About Us" && sub === "Vision 2047"
-                                    ? "/about/vision-2047"
-                                    : item === "About Us" && sub === "Leadership & Management"
-                                      ? "/about/leadership"
-                                      : item === "About Us" && sub === "Governance & Transparency"
-                                        ? "/about/governance"
-                                        : item === "About Us" && sub === "Legal Status & Registration"
-                                          ? "/about/legal-status"
-                                          : item === "About Us" && sub === "Members & Supporters"
-                                            ? "/membership"
-                                            : item === "About Us" && sub === "Our Partners & Donors"
-                                              ? "/about/legal-status"
-                                              : item === "About Us" && sub === "Membership Policy"
-                                                ? "/membership#status"
-                                                : item === "What We Do" && sub === "Health Care"
-                                                  ? "/programs/healthcare"
-                                                  : item === "What We Do" && sub === "Education"
-                                                    ? "/programs/education"
-                                                    : item === "What We Do" && sub === "Skills Development"
-                                                      ? "/programs/skills-development"
-                                                      : item === "What We Do" && sub === "Women Empowerment"
-                                                        ? "/programs/women-empowerment"
-                                                        : item === "What We Do"
-                                                          ? "/programs/healthcare"
-                                                          : item === "Programs" && sub === "View All Programs"
-                                                            ? "/programs/healthcare"
-                                                            : item === "Impact"
-                                                              ? "/#impact-stats"
-                                                              : item === "Media & Updates" && sub === "News & Events"
-                                                                ? "/news-and-events"
-                                                                : item === "Media & Updates" && sub === "Gallery"
-                                                                  ? "/news-and-events"
-                                                                  : item === "Media & Updates" && sub === "Press Release"
-                                                                    ? "/news-and-events"
-                                                                    : item === "Media & Updates"
-                                                                      ? "/news-and-events"
-                                                                      : item === "Get Involved" && sub === "Donate & Support"
-                                                                        ? "/donate"
-                                                                        : item === "Get Involved"
-                                                                          ? "/#get-involved"
-                                                                          : "#"
-                            }
-                            className="flex items-center gap-2 px-4 py-2 text-sm text-slate-600 hover:text-brand-green hover:bg-white transition-all"
-                            onClick={() => setMobileOpen(false)}
-                          >
-                            <span className="text-brand-orange text-xs">-&gt;</span>
-                            {sub}
-                          </a>
-                        ))}
-                      </div>
+                    </a>
+                    {hasMega && (
+                      <button
+                        onClick={() => setMobileExpanded(isExpanded ? null : item)}
+                        className="px-4 py-3.5 text-slate-400 hover:text-brand-green transition-colors cursor-pointer"
+                        aria-label={`${isExpanded ? "Collapse" : "Expand"} ${item}`}
+                      >
+                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? "rotate-180 text-brand-green" : ""}`} />
+                      </button>
                     )}
                   </div>
-                );
-              })}
-            </nav>
-            <div className="p-4 border-t border-slate-100 shrink-0">
-              <a
-                href="/donate"
-                onClick={() => setMobileOpen(false)}
-                className="block text-center w-full bg-brand-orange hover:bg-orange-600 text-white font-bold py-3 rounded transition-colors uppercase tracking-wide text-sm"
-              >
-                DONATE NOW
-              </a>
-            </div>
+                  {hasMega && isExpanded && (
+                    <div className="bg-slate-50 border-l-4 border-brand-green ml-4 mr-2 rounded-sm mb-1.5 py-1">
+                      {MEGA_DATA[item].items.map((sub) => (
+                        <a
+                          key={sub}
+                          href={getMegaHref(item, sub)}
+                          className="flex items-center gap-2 px-4 py-2 text-sm text-slate-600 hover:text-brand-green hover:bg-white transition-all"
+                          onClick={() => setMobileOpen(false)}
+                        >
+                          <span className="text-brand-orange text-xs">→</span>
+                          {sub}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </nav>
+          <div className="p-4 border-t border-slate-100 shrink-0">
+            <a
+              href="/donate"
+              onClick={() => setMobileOpen(false)}
+              className="block text-center w-full bg-[#f97316] hover:bg-orange-600 text-white font-bold py-3 rounded transition-colors uppercase tracking-wide text-sm"
+            >
+              DONATE NOW
+            </a>
           </div>
-        </>
+        </div>
       )}
     </>
   );
@@ -553,78 +473,6 @@ export function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void 
 
   return (
     <footer className="w-full">
-      <div className="bg-[#f9f9f6] text-slate-800 py-10 px-4 md:px-10 border-t border-gray-100">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-          <div className="flex gap-4 items-start">
-            <div className="w-12 h-12 rounded-full bg-[#0b1f3b] text-white flex items-center justify-center shrink-0">
-              <Mail className="w-6 h-6 text-white" />
-            </div>
-            <div className="flex-1">
-              <h5 className="font-bold text-[#0b1f3b] text-base leading-tight">Stay Connected</h5>
-              <p className="text-gray-600 text-sm mt-1">
-                Subscribe to updates about IWF activities, campaigns and impact.
-              </p>
-              <form onSubmit={(e) => e.preventDefault()} className="flex items-center mt-3 shadow-sm rounded-md overflow-hidden border border-gray-200">
-                <input type="email" placeholder="Enter your email" required className="flex-1 bg-white px-4 py-2 text-sm text-slate-800 placeholder-slate-400 focus:outline-none border-0 min-w-0" />
-                <button type="submit" className="bg-[#0b1f3b] hover:bg-brand-green text-white text-xs font-semibold px-5 py-2.5 transition-colors uppercase shrink-0 cursor-pointer">
-                  Subscribe
-                </button>
-              </form>
-            </div>
-          </div>
-          <div className="text-center">
-            <h5 className="font-bold text-[#0b1f3b] text-xs uppercase tracking-wide mb-6">Trusted Organisation</h5>
-            <div className="grid grid-cols-4 gap-2">
-              {[
-                { label: "Registered Trust", Icon: Award },
-                { label: "12A & 80G", Icon: ShieldCheck },
-                { label: "Impact Driven", Icon: BarChart2 },
-                { label: "Transparent", Icon: Lock },
-              ].map(({ label, Icon }) => (
-                <div key={label} className="flex flex-col items-center">
-                  <div className="w-10 h-10 rounded-full border-2 border-[#0b1f3b] bg-white flex items-center justify-center">
-                    <Icon className="w-5 h-5 text-[#0b1f3b]" />
-                  </div>
-                  <span className="text-[#0b1f3b] font-semibold text-[9px] text-center mt-2 leading-tight">
-                    {label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="border-t lg:border-t-0 lg:border-l border-gray-200 pt-6 lg:pt-0 lg:pl-6">
-            <p className="text-[#0b1f3b] font-medium text-sm italic leading-relaxed">
-              "Alone we can do so little, together we can do so much."
-            </p>
-            <span className="text-xs font-semibold text-[#0b1f3b] mt-2 block">- Helen Keller</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-[#0b1f3b] text-white py-6 px-4 md:px-10 border-t border-white/10">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 items-center">
-          {[
-            { title: "Transparency", desc: "Open and honest in every action.", Icon: ShieldCheck },
-            { title: "Accountability", desc: "Responsible for every commitment.", Icon: UserCheck },
-            { title: "Integrity", desc: "Guided by strong ethical principles.", Icon: Scale },
-            { title: "Compassion", desc: "Sensitive to the needs of others.", Icon: Heart },
-          ].map(({ title, desc, Icon }) => (
-            <div key={title} className="flex items-start gap-3">
-              <Icon className="w-5 h-5 text-brand-green mt-0.5 shrink-0" />
-              <div>
-                <h6 className="font-bold text-white text-sm">{title}</h6>
-                <p className="text-white text-xs mt-0.5">{desc}</p>
-              </div>
-            </div>
-          ))}
-          <div className="p-4 rounded bg-black/10 border border-white/5 flex items-center justify-end">
-            <p className="text-white font-serif italic text-sm text-right">
-              "Together, we build a better tomorrow"
-            </p>
-          </div>
-        </div>
-      </div>
-
       <div className="bg-[#0b1f3b] text-white py-14 px-4 md:px-10 border-t border-white/10">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           <div className="space-y-4">

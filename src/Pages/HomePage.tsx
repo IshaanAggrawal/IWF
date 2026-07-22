@@ -29,8 +29,154 @@ import { CardContainer, CardBody, CardItem } from "@/components/ui/3d-card";
 import { RoleFormModal, type RoleType } from "@/components/forms/RoleFormModal";
 import { PatientCard } from "@/components/healthcare/PatientCard";
 import { URGENT_PATIENTS } from "@/content/patients";
-import { TranslateButton } from "@/components/TranslateButton";
 import newLogo from "@/assets/new logo.png";
+import { CONTACT_DETAILS } from "@/content/siteContent";
+
+function HomeFooter({ onOpenModal }: { onOpenModal: (type: RoleType) => void }) {
+  const quickLinks = [
+    ["About Us", "/about"],
+    ["Education", "/programs/education"],
+    ["Healthcare", "/programs/healthcare"],
+    ["Skills Development", "/programs/skills-development"],
+    ["Women Empowerment", "/programs/women-empowerment"],
+    ["Get In Touch", "/contact"],
+    ["Donate", "/donate"],
+    ["Membership", "/membership"],
+    ["News & Events", "/news-and-events"],
+  ];
+  return (
+    <footer className="w-full">
+      <div className="bg-[#0b1f3b] text-white py-14 px-4 md:px-10 border-t border-white/10">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <img src={newLogo} alt="IWF Logo" className="h-14 w-auto object-contain shrink-0" />
+              <div className="flex flex-col">
+                <span className="font-extrabold text-2xl tracking-wide text-white leading-none">ISLAH</span>
+                <span className="font-light text-[10px] tracking-widest text-white mt-0.5">WELFARE FOUNDATION</span>
+              </div>
+            </div>
+            <div className="text-brand-orange font-medium text-sm">Care | Empower | Uplift</div>
+            <p className="text-white text-sm leading-relaxed">
+              Islah Welfare Foundation empowers underprivileged communities through education, healthcare, women empowerment, skill development and social welfare initiatives.
+            </p>
+            <div>
+              <span className="block text-xs font-bold tracking-widest text-white uppercase mb-2">Follow Us</span>
+              <div className="flex gap-2">
+                {[Facebook, Instagram, Youtube, Linkedin, Twitter].map((Icon, i) => (
+                  <a key={i} href="#" className="w-7 h-7 rounded-full bg-white/10 hover:bg-brand-orange flex items-center justify-center text-white transition-all duration-200" aria-label="Social media profile">
+                    <Icon className="w-3.5 h-3.5" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="space-y-4">
+            <h4 className="flex items-center gap-2 text-white font-semibold text-sm uppercase border-l-2 border-brand-orange pl-2 tracking-wide">
+              <Leaf className="w-4 h-4 text-brand-orange" /> Quick Links
+            </h4>
+            <ul className="space-y-2.5">
+              {quickLinks.map(([label, href]) => (
+                <li key={label}>
+                  <a href={href} className="inline-flex items-center text-white text-sm hover:text-brand-orange hover:translate-x-1 transition-all duration-200">
+                    <span className="text-brand-orange text-xs mr-2">-&gt;</span>
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="space-y-4">
+            <h4 className="flex items-center gap-2 text-white font-semibold text-sm uppercase border-l-2 border-brand-orange pl-2 tracking-wide">
+              <Building2 className="w-4 h-4 text-brand-orange" /> Get Involved
+            </h4>
+            <ul className="space-y-2.5">
+              {[
+                ["Volunteer With Us", "volunteer"],
+                ["Partner With Us", "partner"],
+                ["Sponsor a Programme", "sponsor"],
+                ["Become a Mentor", "mentor"],
+                ["Careers & Opportunities", "employee"],
+              ].map(([label, type]) => (
+                <li key={label}>
+                  <button
+                    onClick={() => onOpenModal(type as RoleType)}
+                    className="inline-flex items-center text-left text-white text-sm hover:text-brand-orange hover:translate-x-1 transition-all duration-200 cursor-pointer"
+                  >
+                    <span className="text-brand-orange text-xs mr-2">-&gt;</span>
+                    {label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="space-y-4">
+            <h4 className="flex items-center gap-2 text-white font-semibold text-sm uppercase border-l-2 border-brand-orange pl-2 tracking-wide">
+              <Scale className="w-4 h-4 text-brand-orange" /> Legal
+            </h4>
+            <ul className="space-y-2.5">
+              {[
+                ["Privacy Policy", "/privacy-policy"],
+                ["Refund Policy", "/refund-policy"],
+                ["Terms & Conditions", "/terms-and-conditions"],
+                ["Certificates", "/about/legal-status"],
+                ["12A & 80G", "/about/legal-status"],
+              ].map(([label, href]) => (
+                <li key={label}>
+                  <a href={href} className="inline-flex items-center text-white text-sm hover:text-brand-orange hover:translate-x-1 transition-all duration-200">
+                    <span className="text-brand-orange text-xs mr-2">-&gt;</span>
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="space-y-4">
+            <h4 className="flex items-center gap-2 text-white font-semibold text-sm uppercase border-l-2 border-brand-orange pl-2 tracking-wide">
+              <Phone className="w-4 h-4 text-brand-orange" /> Contact Us
+            </h4>
+            <div className="space-y-3 text-white text-sm">
+              <div className="flex gap-2 items-start">
+                <MapPin className="w-4 h-4 mt-0.5 text-brand-orange shrink-0" />
+                <span>{CONTACT_DETAILS.address}</span>
+              </div>
+              <div className="flex gap-2 items-center">
+                <Phone className="w-4 h-4 text-brand-orange shrink-0" />
+                <span>{CONTACT_DETAILS.phone}</span>
+              </div>
+              <div className="flex gap-2 items-center">
+                <Mail className="w-4 h-4 text-brand-orange shrink-0" />
+                <span>{CONTACT_DETAILS.email}</span>
+              </div>
+              <div className="flex gap-2 items-center">
+                <Globe className="w-4 h-4 text-brand-orange shrink-0" />
+                <span>www.islahwelfarefoundation.org</span>
+              </div>
+            </div>
+            <a
+              href="/donate"
+              className="w-full mt-5 bg-[#f97316] hover:bg-orange-600 text-white font-bold py-3 rounded-md flex items-center justify-center gap-2 transition-all duration-200"
+            >
+              <Heart className="w-4 h-4 fill-white" /> DONATE NOW
+            </a>
+          </div>
+        </div>
+      </div>
+      <div className="bg-[#091f12] py-4 px-4 md:px-10">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 text-xs text-white">
+          <div>&copy; 2026 Islah Welfare Foundation. All Rights Reserved.</div>
+          <div className="flex flex-wrap gap-3">
+            <a href="/privacy-policy" className="hover:text-brand-orange transition-colors">Privacy Policy</a>
+            <span>|</span>
+            <a href="/refund-policy" className="hover:text-brand-orange transition-colors">Refund Policy</a>
+            <span>|</span>
+            <a href="/terms-and-conditions" className="hover:text-brand-orange transition-colors">Terms & Conditions</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
 
 // ─── Mega Nav Data ────────────────────────────────────────────────────────────
 
@@ -60,7 +206,7 @@ const MEGA_DATA: Record<string, MegaSection> = {
       "Leadership & Management",
       "Governance & Transparency",
       "Legal Status & Registration",
-      "Members & Supporters",
+      "Members & Donors",
       "Our Partners & Donors",
       "Membership Policy",
     ],
@@ -74,7 +220,6 @@ const MEGA_DATA: Record<string, MegaSection> = {
       "Women Empowerment",
       "Entrepreneur Development",
       "Relief & Rehabilitation",
-      "Model Village",
       "Environment & Sustainability",
       "Agriculture & Rural Livelihood",
     ],
@@ -112,6 +257,7 @@ const MEGA_DATA: Record<string, MegaSection> = {
     items: [
       "Volunteer With Us",
       "Partner With Us",
+      "Become a Member",
       "Sponsor a Programme",
       "Become a Mentor",
       "Careers & Opportunities",
@@ -234,7 +380,7 @@ function NotificationTicker() {
   const loopItems = [...items, ...items];
 
   return (
-    <div className="bg-[#1b365d] text-white py-2 overflow-hidden flex items-center relative select-none border-b border-[#1b365d]/20 shadow-sm group">
+    <div className="bg-gradient-to-r from-[#0f1b2d] via-[#1c558c] to-[#2b88d8] text-white py-2 overflow-hidden flex items-center relative select-none border-b border-white/10 shadow-sm group">
       <div className="bg-red-600 text-[10px] uppercase px-2 py-0.5 rounded font-black tracking-wider shadow z-10 shrink-0 ml-4 mr-4 animate-pulse">
         NEW
       </div>
@@ -343,18 +489,8 @@ function Header({ lang }: HeaderProps) {
     if (closeTimer.current) clearTimeout(closeTimer.current);
   }, []);
 
-  // Backdrop overlay visibility
-  const hasDropdown = activeMenu && MEGA_DATA[activeMenu];
-
   return (
     <>
-      {/* Dimming Page Backdrop Overlay */}
-      <div
-        className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-250 ease-out pointer-events-none ${hasDropdown ? "opacity-100 pointer-events-auto" : "opacity-0"
-          }`}
-        onClick={() => setActiveMenu(null)}
-      />
-
       {/* White Branding Logo Banner (Scrolls away) */}
       <div className="bg-white py-4 border-b border-gray-100 relative">
         <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-center">
@@ -368,7 +504,7 @@ function Header({ lang }: HeaderProps) {
                 Planting Seeds of Hope and Change
               </span>
               <span className="text-[10px] md:text-xs text-gray-500 font-medium mt-1.5 leading-none text-center md:text-left">
-                Bathiya, Via- Putai Manigachhi, Darbhanga, Bihar – 847423, India
+                Bathiya, Darbhanga, Bihar – 847423, India
               </span>
             </div>
           </a>
@@ -384,7 +520,22 @@ function Header({ lang }: HeaderProps) {
             {NAV_ITEMS.map((item, idx) => {
               const hasMega = !!MEGA_DATA[item];
               const isActive = activeMenu === item;
-              const label = NAV_ITEMS_TRANSLATIONS[lang][idx] || item;
+              const label = item === "Home" ? (
+                <span className="flex items-center gap-1.5 font-bold">
+                  <Home className="w-4 h-4 text-[#f97316]" /> IWF
+                </span>
+              ) : (
+                NAV_ITEMS_TRANSLATIONS[lang][idx] || item
+              );
+
+              // Dynamic width and alignment to prevent layout overflow
+              let dropdownWidth = "w-60";
+              if (hasMega) {
+                if (MEGA_DATA[item].cols === 2) dropdownWidth = "w-[360px]";
+                if (MEGA_DATA[item].cols === 3) dropdownWidth = "w-[540px]";
+              }
+              const alignClass = idx >= 5 ? "right-0" : "left-0";
+
               return (
                 <div
                   key={item}
@@ -436,6 +587,95 @@ function Header({ lang }: HeaderProps) {
                     {/* Sliding underline */}
                     <span className="absolute bottom-1 left-4 right-4 h-[2px] bg-brand-orange scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-200 ease-out" />
                   </a>
+
+                  {/* Mega Menu Dropdown Window positioned under nav item */}
+                  {isActive && hasMega && (
+                    <div
+                      className={`absolute ${alignClass} top-full mt-1.5 bg-white border border-gray-200 shadow-2xl rounded-xl p-5 z-50 text-slate-800 animate-in fade-in slide-in-from-top-1 duration-150 ${dropdownWidth}`}
+                      onMouseEnter={cancelClose}
+                      onMouseLeave={scheduleClose}
+                    >
+                      <div
+                        className="grid gap-5"
+                        style={{ gridTemplateColumns: `repeat(${MEGA_DATA[item].cols}, minmax(0, 1fr))` }}
+                      >
+                        {Array.from({ length: MEGA_DATA[item].cols }).map((_, colIndex) => {
+                          const subItems = MEGA_DATA[item].items;
+                          const colsCount = MEGA_DATA[item].cols;
+                          const itemsPerCol = Math.ceil(subItems.length / colsCount);
+                          const colItems = subItems.slice(colIndex * itemsPerCol, (colIndex + 1) * itemsPerCol);
+                          return (
+                            <div key={colIndex} className="flex flex-col gap-2.5">
+                              {colItems.map((subItem, subIdx) => {
+                                return (
+                                  <a
+                                    key={subItem}
+                                    href={
+                                      item === "About Us" && subItem === "Overview"
+                                        ? "/about"
+                                        : item === "About Us" && subItem === "Our Objective & Vision"
+                                          ? "/about/objective-and-vision"
+                                          : item === "About Us" && subItem === "Vision 2047"
+                                            ? "/about/vision-2047"
+                                            : item === "About Us" && subItem === "Leadership & Management"
+                                              ? "/about/leadership"
+                                              : item === "About Us" && subItem === "Governance & Transparency"
+                                                ? "/about/governance"
+                                                : item === "About Us" && subItem === "Legal Status & Registration"
+                                                  ? "/about/legal-status"
+                                                  : item === "About Us" && (subItem === "Members & Donors" || subItem === "Members & Supporters")
+                                                    ? "/membership"
+                                                    : item === "About Us" && subItem === "Our Partners & Donors"
+                                                      ? "/about/legal-status"
+                                                      : item === "About Us" && subItem === "Membership Policy"
+                                                        ? "/membership#status"
+                                                        : item === "What We Do" && subItem === "Health Care"
+                                                          ? "/programs/healthcare"
+                                                          : item === "What We Do" && subItem === "Education"
+                                                            ? "/programs/education"
+                                                            : item === "What We Do" && subItem === "Skills Development"
+                                                              ? "/programs/skills-development"
+                                                              : item === "What We Do" && subItem === "Women Empowerment"
+                                                                ? "/programs/women-empowerment"
+                                                                : item === "What We Do"
+                                                                  ? "/programs/healthcare"
+                                                                  : item === "Programs" && subItem === "View All Programs →"
+                                                                    ? "/programs/healthcare"
+                                                                    : item === "Impact"
+                                                                      ? "/#impact-stats"
+                                                                      : item === "Media & Updates" && subItem === "News & Events"
+                                                                        ? "/news-and-events"
+                                                                        : item === "Media & Updates" && subItem === "Latest Updates"
+                                                                          ? "/news-and-events"
+                                                                          : item === "Media & Updates" && subItem === "Gallery"
+                                                                            ? "/news-and-events"
+                                                                            : item === "Media & Updates" && subItem === "Press Release"
+                                                                              ? "/news-and-events"
+                                                                              : item === "Media & Updates"
+                                                                                ? "/news-and-events"
+                                                                                : item === "Get Involved" && subItem === "Donate & Support"
+                                                                                  ? "/donate"
+                                                                                  : item === "Get Involved"
+                                                                                    ? "/#get-involved"
+                                                                                    : "#"
+                                    }
+                                    className="flex items-center gap-1.5 text-slate-900 font-bold hover:text-[#0b1f3b] text-sm hover:translate-x-1 transition-all duration-200"
+                                    style={{
+                                      transitionDelay: `${(colIndex * 5 + subIdx) * 15}ms`,
+                                    }}
+                                    onClick={() => setActiveMenu(null)}
+                                  >
+                                    <span className="text-brand-orange text-sm font-semibold">→</span>
+                                    {subItem}
+                                  </a>
+                                );
+                              })}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -448,141 +688,12 @@ function Header({ lang }: HeaderProps) {
             </a>
             <button
               className="lg:hidden p-2 text-white/80 hover:text-white transition-colors cursor-pointer"
-              onClick={() => setMobileOpen(true)}
-              aria-label="Open navigation menu"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label="Toggle Navigation Menu"
             >
-              <Menu className="w-6 h-6" />
+              {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
-
-          {/* Mega Panel Dropdown */}
-          {activeMenu && MEGA_DATA[activeMenu] && (
-            <div
-              className="absolute left-0 right-0 top-full bg-white shadow-2xl z-50 border-t-2 border-brand-orange py-8 px-16 flex gap-10"
-              style={{
-                clipPath: activeMenu ? "inset(0 0 0% 0)" : "inset(0 0 100% 0)",
-                transition: "clip-path 280ms cubic-bezier(0.16, 1, 0.3, 1)",
-              }}
-              onMouseEnter={cancelClose}
-              onMouseLeave={scheduleClose}
-            >
-              {/* Left columns group */}
-              <div className="flex-1">
-                {/* Column Section Heading */}
-                <div className="text-brand-orange uppercase text-xs tracking-widest font-bold mb-4">
-                  {activeMenu}
-                </div>
-
-                {/* Columns grid */}
-                <div
-                  className="grid gap-8"
-                  style={{ gridTemplateColumns: `repeat(${MEGA_DATA[activeMenu].cols}, minmax(0, 1fr))` }}
-                >
-                  {Array.from({ length: MEGA_DATA[activeMenu].cols }).map((_, colIndex) => {
-                    const items = MEGA_DATA[activeMenu].items;
-                    const colsCount = MEGA_DATA[activeMenu].cols;
-                    const itemsPerCol = Math.ceil(items.length / colsCount);
-                    const colItems = items.slice(colIndex * itemsPerCol, (colIndex + 1) * itemsPerCol);
-                    return (
-                      <div key={colIndex} className="flex flex-col gap-3">
-                        {colItems.map((subItem, itemIndex) => {
-                          const globalIndex = colIndex * itemsPerCol + itemIndex;
-                          return (
-                            <a
-                              key={subItem}
-                              href={
-                                activeMenu === "About Us" && subItem === "Overview"
-                                  ? "/about"
-                                  : activeMenu === "About Us" && subItem === "Our Objective & Vision"
-                                    ? "/about/objective-and-vision"
-                                    : activeMenu === "About Us" && subItem === "Vision 2047"
-                                      ? "/about/vision-2047"
-                                      : activeMenu === "About Us" && subItem === "Leadership & Management"
-                                        ? "/about/leadership"
-                                        : activeMenu === "About Us" && subItem === "Governance & Transparency"
-                                          ? "/about/governance"
-                                          : activeMenu === "About Us" && subItem === "Legal Status & Registration"
-                                            ? "/about/legal-status"
-                                            : activeMenu === "About Us" && subItem === "Members & Supporters"
-                                              ? "/membership"
-                                              : activeMenu === "About Us" && subItem === "Our Partners & Donors"
-                                                ? "/about/legal-status"
-                                                : activeMenu === "About Us" && subItem === "Membership Policy"
-                                                  ? "/membership#status"
-                                                  : activeMenu === "What We Do" && subItem === "Health Care"
-                                                    ? "/programs/healthcare"
-                                                    : activeMenu === "What We Do" && subItem === "Education"
-                                                      ? "/programs/education"
-                                                      : activeMenu === "What We Do" && subItem === "Skills Development"
-                                                        ? "/programs/skills-development"
-                                                        : activeMenu === "What We Do" && subItem === "Women Empowerment"
-                                                          ? "/programs/women-empowerment"
-                                                          : activeMenu === "What We Do"
-                                                            ? "/programs/healthcare"
-                                                            : activeMenu === "Programs" && subItem === "View All Programs →"
-                                                              ? "/programs/healthcare"
-                                                              : activeMenu === "Impact"
-                                                                ? "/#impact-stats"
-                                                                : activeMenu === "Media & Updates" && subItem === "News & Events"
-                                                                  ? "/news-and-events"
-                                                                  : activeMenu === "Media & Updates" && subItem === "Latest Updates"
-                                                                    ? "/news-and-events"
-                                                                    : activeMenu === "Media & Updates" && subItem === "Gallery"
-                                                                      ? "/news-and-events"
-                                                                      : activeMenu === "Media & Updates" && subItem === "Press Release"
-                                                                        ? "/news-and-events"
-                                                                        : activeMenu === "Media & Updates"
-                                                                          ? "/news-and-events"
-                                                                          : activeMenu === "Get Involved" && subItem === "Donate & Support"
-                                                                            ? "/donate"
-                                                                            : activeMenu === "Get Involved"
-                                                                              ? "/#get-involved"
-                                                                              : "#"
-                              }
-                              className="flex items-center gap-2 text-gray-700 hover:text-[#0b1f3b] text-sm hover:translate-x-1 transition-all duration-200"
-                              style={{
-                                transitionDelay: `${globalIndex * 30}ms`,
-                              }}
-                              onClick={() => setActiveMenu(null)}
-                            >
-                              <span className="text-brand-orange text-sm font-semibold">→</span>
-                              {subItem}
-                            </a>
-                          );
-                        })}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Right Accent Column (Optional feature card for About Us, What We Do, Get Involved) */}
-              {(activeMenu === "About Us" || activeMenu === "What We Do" || activeMenu === "Get Involved") && (
-                <div className="w-72 shrink-0 border-l border-gray-100 pl-8 flex flex-col justify-between">
-                  <div className="bg-[#f9fdf9] border border-green-100/50 rounded-lg p-5 flex flex-col gap-3">
-                    <div className="w-10 h-10 rounded-full bg-brand-green/10 flex items-center justify-center text-brand-green">
-                      <Leaf className="w-5 h-5" />
-                    </div>
-                    <div className="font-bold text-[#0b1f3b] text-sm leading-snug">
-                      Planting Seeds of Hope and Change
-                    </div>
-                    <div className="text-xs text-gray-600 leading-normal">
-                      10,000+ lives impacted since 2019. Join us in bringing sustainable growth.
-                    </div>
-                    <a
-                      href="#"
-                      className="text-brand-orange text-xs font-bold hover:underline inline-flex items-center gap-1"
-                      onClick={() => setActiveMenu(null)}
-                    >
-                      Learn More →
-                    </a>
-                  </div>
-                </div>
-              )}
-
-            </div>
-          )}
-
         </div>
       </header>
 
@@ -883,8 +994,8 @@ function HeroSection({ lang }: LanguageProp) {
             </div>
           </div>
 
-          {/* Right Column (50%): Events/Notices + News stacked in darker blue container */}
-          <div className="bg-[#13195c] text-white p-6 rounded-2xl border border-white/5 shadow-xl flex flex-col gap-6 justify-between">
+          {/* Right Column (50%): Events/Notices + News stacked in navbar blue container */}
+          <div className="bg-[#0b1f3b] text-white p-6 rounded-2xl border border-white/10 shadow-xl flex flex-col gap-6 justify-between">
             {/* Events & Notices Part */}
             <div className="flex flex-col">
               <div className="flex items-center justify-between mb-3">
@@ -895,7 +1006,7 @@ function HeroSection({ lang }: LanguageProp) {
               </div>
 
               {/* Notice vertical scroll ticker showing 3 compact items without desc */}
-              <div className="relative h-[190px] max-h-[190px] overflow-hidden rounded-xl bg-[#202896] p-2.5">
+              <div className="relative h-[190px] max-h-[190px] overflow-hidden rounded-xl bg-[#132847] p-2.5">
                 <div
                   className="space-y-2.5"
                   style={{
@@ -904,7 +1015,7 @@ function HeroSection({ lang }: LanguageProp) {
                   }}
                 >
                   {loopNotices.map((e, i) => (
-                    <div key={i} className="h-[52px] bg-[#181f7d] hover:bg-[#1f289c] rounded-lg px-3 py-2 flex gap-3 items-center border border-white/5 shadow-sm transition-colors duration-200">
+                    <div key={i} className="h-[52px] bg-[#182f52] hover:bg-[#1f3c66] rounded-lg px-3 py-2 flex gap-3 items-center border border-white/10 shadow-sm transition-colors duration-200">
                       <div className="text-center bg-white/10 rounded px-2.5 py-0.5 w-12 shrink-0">
                         <div className="text-[8px] font-bold text-white/90 uppercase leading-none">{e.m}</div>
                         <div className="text-sm font-black text-white leading-none mt-0.5">{e.d}</div>
@@ -932,11 +1043,11 @@ function HeroSection({ lang }: LanguageProp) {
               </div>
 
               {/* News Slider (showing 1 compact news item) */}
-              <div className="relative h-[150px] max-h-[150px] overflow-hidden rounded-xl bg-[#202896]">
+              <div className="relative h-[150px] max-h-[150px] overflow-hidden rounded-xl bg-[#132847]">
                 {newsList.map((news, idx) => (
                   <div
                     key={idx}
-                    className={`absolute inset-0 p-4 bg-[#181f7d] rounded-xl flex flex-col justify-between transition-all duration-700 ease-in-out ${newsIndex === idx
+                    className={`absolute inset-0 p-4 bg-[#182f52] rounded-xl flex flex-col justify-between transition-all duration-700 ease-in-out ${newsIndex === idx
                       ? "opacity-100 translate-y-0 pointer-events-auto z-10"
                       : "opacity-0 translate-y-4 pointer-events-none z-0"
                       }`}
@@ -1080,7 +1191,7 @@ function FeaturedCauses({ lang }: LanguageProp) {
                   <h3 className="font-extrabold text-base text-slate-950 mb-1.5">{c.title}</h3>
                   <p className="text-sm text-slate-700 font-medium leading-relaxed flex-1">{c.desc}</p>
                   <div className="flex items-center justify-between mt-4 pt-3 border-t border-slate-100">
-                    <a href={c.route} className="text-sm font-bold text-brand-green hover:text-brand-green-dark">{t.readMore} →</a>
+                    <a href={c.route} className="text-sm font-bold text-brand-green hover:text-brand-green-dark">{t.readMore}</a>
                     <a href="/donate" className="text-xs font-extrabold bg-[#f97316] hover:bg-orange-600 text-white px-3.5 py-1.5 rounded-lg transition-all">{t.donateNow}</a>
                   </div>
                 </div>
@@ -1123,16 +1234,16 @@ function WhatWeDo({ lang }: LanguageProp) {
           />
         </ScrollReveal>
         <ScrollReveal stagger={0.07}>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3.5">
             {items.map(({ icon: Icon, l, s, route }, i) => {
               const col = CHEERFUL_COLORS[i % 6];
               return (
-                <a key={l} href={route} className={`bg-white rounded-xl p-4 h-36 flex flex-col items-center justify-center text-center shadow-sm border ${col.border} hover:shadow-md transition block group hover:-translate-y-0.5`}>
-                  <div className={`w-11 h-11 mx-auto rounded-full ${col.bg} flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform`}>
-                    <Icon className={`w-5 h-5 ${col.text}`} />
+                <a key={l} href={route} className={`bg-white rounded-xl py-3.5 px-3 min-h-[115px] flex flex-col items-center justify-center text-center shadow-sm border ${col.border} hover:shadow-md transition block group hover:-translate-y-0.5`}>
+                  <div className={`w-9 h-9 mx-auto rounded-full ${col.bg} flex items-center justify-center mb-1.5 group-hover:scale-105 transition-transform`}>
+                    <Icon className={`w-4 h-4 ${col.text}`} />
                   </div>
-                  <div className="text-sm font-black text-slate-950 leading-tight">{l}</div>
-                  <div className="text-[11px] font-bold text-slate-500 mt-0.5 whitespace-nowrap overflow-hidden text-ellipsis w-full">{s}</div>
+                  <div className="text-sm font-black text-slate-900 leading-tight mb-1">{l}</div>
+                  <div className="text-xs font-semibold text-slate-600 leading-snug w-full">{s}</div>
                 </a>
               );
             })}
@@ -1290,17 +1401,23 @@ function ExploreIWF({ lang }: LanguageProp) {
           />
         </ScrollReveal>
         <ScrollReveal stagger={0.08}>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {items.map((item) => (
-              <div key={item.page} className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition hover:-translate-y-0.5">
-                <div className="w-12 h-12 rounded-md bg-brand-orange/15 flex items-center justify-center mb-4">
-                  <item.icon className="w-6 h-6 text-brand-orange" />
+              <div key={item.page} className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition hover:-translate-y-0.5 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-9 h-9 rounded-lg bg-orange-50 border border-orange-100 flex items-center justify-center shrink-0">
+                      <item.icon className="w-5 h-5 text-brand-orange" />
+                    </div>
+                    <h3 className="font-extrabold text-base text-[#0b1f3b] leading-snug">{item.page}</h3>
+                  </div>
+                  <p className="text-sm text-slate-700 font-medium leading-relaxed mb-4">{item.summary}</p>
                 </div>
-                <h3 className="font-extrabold text-base mb-2.5 text-brand-green-dark">{item.page}</h3>
-                <p className="text-sm text-slate-800 font-medium leading-relaxed mb-4">{item.summary}</p>
-                <a href={item.route} className="text-sm font-bold text-brand-green hover:text-brand-green-dark inline-flex items-center gap-1 hover:opacity-80 transition">
-                  {t.readMore} <ArrowRight className="w-3.5 h-3.5" />
-                </a>
+                <div>
+                  <a href={item.route} className="text-sm font-bold text-brand-green hover:text-brand-green-dark inline-flex items-center gap-1 hover:opacity-80 transition">
+                    {t.readMore} <ArrowRight className="w-3.5 h-3.5" />
+                  </a>
+                </div>
               </div>
             ))}
           </div>
@@ -1310,288 +1427,7 @@ function ExploreIWF({ lang }: LanguageProp) {
   );
 }
 
-function Footer({ onOpenModal }: { onOpenModal: (type: RoleType) => void }) {
-  return (
-    <footer className="w-full">
-      {/* Zone B — Trust Sub-Strip */}
-      <div className="bg-[#f9f9f6] text-slate-800 py-10 px-4 md:px-10 border-t border-gray-100">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
 
-          {/* Left — Stay Connected */}
-          <div className="flex gap-4 items-start">
-            <div className="w-12 h-12 rounded-full bg-[#0b1f3b] text-white flex items-center justify-center shrink-0">
-              <Mail className="w-6 h-6 text-white" />
-            </div>
-            <div className="flex-1">
-              <h5 className="font-bold text-[#0b1f3b] text-base leading-tight">STAY CONNECTED</h5>
-              <p className="text-gray-600 text-sm mt-1">
-                Subscribe to our newsletter and stay updated with our latest activities and impact.
-              </p>
-              <form onSubmit={(e) => e.preventDefault()} className="flex items-center mt-3 shadow-sm rounded-md overflow-hidden border border-gray-200">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  required
-                  className="flex-1 bg-white px-4 py-2 text-sm text-slate-800 placeholder-slate-400 focus:outline-none border-0"
-                />
-                <button
-                  type="submit"
-                  className="bg-[#0b1f3b] hover:bg-brand-green text-white text-xs font-semibold px-5 py-2.5 transition-colors uppercase shrink-0 cursor-pointer"
-                >
-                  SUBSCRIBE
-                </button>
-              </form>
-            </div>
-          </div>
-
-          {/* Center — We Are A Trusted Organization */}
-          <div className="text-center">
-            <h5 className="font-bold text-[#0b1f3b] text-xs uppercase tracking-wide mb-6">
-              WE ARE A TRUSTED ORGANIZATION
-            </h5>
-            <div className="grid grid-cols-4 gap-2">
-              {[
-                { label: "Registered Trust", Icon: () => <Award className="w-5 h-5 text-[#0b1f3b]" /> },
-                { label: "12A & 80G Certified", Icon: () => <span className="text-[9px] font-black tracking-tighter text-[#0b1f3b]">12A 80G</span> },
-                { label: "Impact Driven", Icon: () => <BarChart2 className="w-5 h-5 text-[#0b1f3b]" /> },
-                { label: "Secure & Transparent", Icon: () => <Lock className="w-5 h-5 text-[#0b1f3b]" /> }
-              ].map((badge, i) => (
-                <div key={i} className="flex flex-col items-center">
-                  <div className="w-10 h-10 rounded-full border-2 border-[#0b1f3b] bg-white flex items-center justify-center">
-                    <badge.Icon />
-                  </div>
-                  <span className="text-[#0b1f3b] font-semibold text-[9px] text-center mt-2 leading-tight">
-                    {badge.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right — Quote Block */}
-          <div className="border-t lg:border-t-0 lg:border-l border-gray-200 pt-6 lg:pt-0 lg:pl-6 flex flex-col justify-center mt-4 lg:mt-0">
-            <span className="text-[#0b1f3b] text-5xl font-serif leading-none block h-5">“</span>
-            <p className="text-[#0b1f3b] font-medium text-sm italic leading-relaxed mt-2">
-              Alone we can do so little, together we can do so much.
-            </p>
-            <span className="text-xs font-semibold text-[#0b1f3b] mt-2 block">
-              – Helen Keller
-            </span>
-          </div>
-
-        </div>
-      </div>
-
-      {/* Zone C — Values Strip */}
-      <div className="bg-[#0b1f3b] text-white py-6 px-4 md:px-10 border-t border-white/10">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 items-center">
-          {[
-            { title: "Transparency", desc: "We are open and honest in all our actions.", Icon: ShieldCheck },
-            { title: "Accountability", desc: "We take responsibility for our commitments.", Icon: UserCheck },
-            { title: "Integrity", desc: "We operate with strong moral principles.", Icon: Scale },
-            { title: "Compassion", desc: "We care for people and the communities we serve.", Icon: Heart }
-          ].map((val, i) => (
-            <div key={i} className="flex items-start gap-3">
-              <val.Icon className="w-5 h-5 text-brand-green mt-0.5 shrink-0" />
-              <div>
-                <h6 className="font-bold text-white text-sm">{val.title}</h6>
-                <p className="text-white text-xs mt-0.5">{val.desc}</p>
-              </div>
-            </div>
-          ))}
-          {/* 5th Cell (Rightmost) */}
-          <div className="relative p-4 rounded bg-black/10 border border-white/5 flex items-center justify-end">
-            <div className="text-right">
-              <p className="text-white font-serif italic text-sm">
-                "Together, we build a better tomorrow"
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Zone A — Main Footer */}
-      <div className="bg-[#0b1f3b] text-white py-14 px-4 md:px-10 border-t border-white/10">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
-
-          {/* Column 1 — Organization Identity */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <img src={newLogo} alt="IWF Logo" className="h-14 w-auto object-contain shrink-0" />
-              <div className="flex flex-col">
-                <span className="font-extrabold text-2xl tracking-wide text-white leading-none">ISLAH</span>
-                <span className="font-light text-[10px] tracking-widest text-white mt-0.5">WELFARE FOUNDATION</span>
-              </div>
-            </div>
-            <div className="text-brand-orange font-medium text-sm">
-              Care | Empower | Uplift
-            </div>
-            <p className="text-white text-sm leading-relaxed">
-              Islah Welfare Foundation is committed to empowering underprivileged communities through education, skill development, healthcare and social welfare initiatives for a better tomorrow.
-            </p>
-            <hr className="border-white/20" />
-            <div>
-              <span className="block text-xs font-bold tracking-widest text-white uppercase mb-2">FOLLOW US</span>
-              <div className="flex gap-2">
-                {[
-                  { Icon: Facebook, href: "#" },
-                  { Icon: Instagram, href: "#" },
-                  { Icon: Youtube, href: "#" },
-                  { Icon: Linkedin, href: "#" },
-                  { Icon: Twitter, href: "#" }
-                ].map((social, i) => (
-                  <a
-                    key={i}
-                    href={social.href}
-                    className="w-7 h-7 rounded-full bg-white/10 hover:bg-brand-orange flex items-center justify-center text-white transition-all duration-200"
-                  >
-                    <social.Icon className="w-3.5 h-3.5" />
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Column 2 — Quick Links */}
-          <div className="space-y-4">
-            <h4 className="flex items-center gap-2 text-white font-semibold text-sm uppercase border-l-2 border-brand-orange pl-2 tracking-wide">
-              <Info className="w-4 h-4 text-brand-orange" />
-              QUICK LINKS
-            </h4>
-            <ul className="space-y-2.5">
-              {[
-                "About Us",
-                "What We Do",
-                "Our Programs",
-                "Impact Stories",
-                "Media Center",
-                "Careers",
-                "Get In Touch"
-              ].map((link) => (
-                <li key={link}>
-                  <a
-                    href="#"
-                    className="inline-flex items-center text-white text-sm hover:text-brand-orange hover:translate-x-1 transition-all duration-200"
-                  >
-                    <span className="text-brand-orange text-xs mr-2">►</span>
-                    {link}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Column 3 — Management */}
-          <div className="space-y-4">
-            <h4 className="flex items-center gap-2 text-white font-semibold text-sm uppercase border-l-2 border-brand-orange pl-2 tracking-wide">
-              <Building2 className="w-4 h-4 text-brand-orange" />
-              MANAGEMENT
-            </h4>
-            <ul className="space-y-2.5">
-              {[
-                "Board of Trustees",
-                "Executive Body",
-                "Advisory Board",
-                "Policies & Documents",
-                "Annual Reports"
-              ].map((link) => (
-                <li key={link}>
-                  <a
-                    href="#"
-                    className="inline-flex items-center text-white text-sm hover:text-brand-orange hover:translate-x-1 transition-all duration-200"
-                  >
-                    <span className="text-brand-orange text-xs mr-2">►</span>
-                    {link}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Column 4 — Legal */}
-          <div className="space-y-4">
-            <h4 className="flex items-center gap-2 text-white font-semibold text-sm uppercase border-l-2 border-brand-orange pl-2 tracking-wide">
-              <Scale className="w-4 h-4 text-brand-orange" />
-              LEGAL
-            </h4>
-            <ul className="space-y-2.5">
-              {[
-                "Certificates",
-                "FCRA",
-                "12A & 80G",
-                "Privacy Policy",
-                "Terms & Conditions",
-                "Refund Policy"
-              ].map((link) => (
-                <li key={link}>
-                  <a
-                    href="#"
-                    className="inline-flex items-center text-white text-sm hover:text-brand-orange hover:translate-x-1 transition-all duration-200"
-                  >
-                    <span className="text-brand-orange text-xs mr-2">►</span>
-                    {link}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Column 5 — Contact Us */}
-          <div className="space-y-4">
-            <h4 className="flex items-center gap-2 text-white font-semibold text-sm uppercase border-l-2 border-brand-orange pl-2 tracking-wide">
-              <Phone className="w-4 h-4 text-brand-orange" />
-              CONTACT US
-            </h4>
-            <div className="space-y-3 text-white text-sm">
-              <div className="flex gap-2 items-start">
-                <MapPin className="w-4 h-4 mt-0.5 text-brand-orange shrink-0" />
-                <span>Bathiya, Via- Putai Manigachhi, Darbhanga, Bihar – 847423, India</span>
-              </div>
-              <div className="flex gap-2 items-center">
-                <Phone className="w-4 h-4 text-brand-orange shrink-0" />
-                <span>+91 9811861633</span>
-              </div>
-              <div className="flex gap-2 items-center">
-                <Mail className="w-4 h-4 text-brand-orange shrink-0" />
-                <span>info@iwfindia.org</span>
-              </div>
-              <div className="flex gap-2 items-center">
-                <Globe className="w-4 h-4 text-brand-orange shrink-0" />
-                <span>www.islahwelfarefoundation.org</span>
-              </div>
-            </div>
-            <button
-              onClick={() => onOpenModal('sponsor')}
-              className="w-full mt-5 bg-[#f97316] hover:bg-orange-600 text-white font-bold py-3 rounded-md flex items-center justify-center gap-2 transition-all duration-200 hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] cursor-pointer"
-            >
-              <Heart className="w-4 h-4 fill-white" /> DONATE NOW
-            </button>
-            <div className="text-xs italic text-white text-center mt-2">
-              "Your support can change lives"
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      {/* Zone D — Copyright Bar */}
-      <div className="bg-[#091f12] py-4 px-4 md:px-10">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 text-xs text-white">
-          <div>
-            © 2026 Islah Welfare Foundation. All Rights Reserved.
-          </div>
-          <div className="flex gap-4">
-            <a href="#" className="hover:text-brand-orange transition-colors">Privacy Policy</a>
-            <span>|</span>
-            <a href="#" className="hover:text-brand-orange transition-colors">Terms &amp; Conditions</a>
-            <span>|</span>
-            <a href="#" className="hover:text-brand-orange transition-colors">Refund Policy</a>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
 
 // ─── Impact Statistics Dashboard ─────────────────────────────────────────────
 
@@ -1645,14 +1481,14 @@ function StatCard({ stat, visible, lang, index }: { stat: typeof IMPACT_STATS[0]
   const col = CHEERFUL_COLORS[index % 6];
   return (
     <ScrollReveal>
-      <div className={`bg-white rounded-xl p-4 h-36 flex flex-col items-center justify-center text-center shadow-sm border ${col.border} hover:shadow-md transition block group hover:-translate-y-0.5`}>
-        <div className={`w-11 h-11 mx-auto rounded-full ${col.bg} flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform`}>
-          <Icon className={`w-5 h-5 ${col.text}`} />
+      <div className={`bg-white rounded-xl py-3.5 px-3 min-h-[115px] flex flex-col items-center justify-center text-center shadow-sm border ${col.border} hover:shadow-md transition block group hover:-translate-y-0.5`}>
+        <div className={`w-9 h-9 mx-auto rounded-full ${col.bg} flex items-center justify-center mb-1.5 group-hover:scale-105 transition-transform`}>
+          <Icon className={`w-4 h-4 ${col.text}`} />
         </div>
-        <div className={`text-sm font-black ${col.text} leading-tight`}>
+        <div className={`text-xl font-extrabold ${col.text} leading-none mb-1`}>
           {count.toLocaleString("en-IN")}{stat.suffix}
         </div>
-        <div className="text-[11px] font-bold text-slate-500 mt-0.5 whitespace-nowrap overflow-hidden text-ellipsis w-full">
+        <div className="text-xs font-bold text-slate-700 leading-snug w-full">
           {STAT_TRANSLATIONS[lang][stat.label as keyof typeof STAT_TRANSLATIONS["en"]] || stat.label}
         </div>
       </div>
@@ -2029,6 +1865,90 @@ function VideoHeroSection({ lang }: LanguageProp) {
 
 // ─── Main Export ──────────────────────────────────────────────────────────────
 
+function PreFooterHomeSections() {
+  return (
+    <>
+      {/* Zone A — Stay Connected & Trusted Trust Strip */}
+      <div className="bg-[#f9f9f6] text-slate-800 py-6 px-4 md:px-10 border-t border-slate-200">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+          <div className="flex gap-4 items-start">
+            <div className="w-11 h-11 rounded-full bg-[#0b1f3b] text-white flex items-center justify-center shrink-0">
+              <Mail className="w-5 h-5 text-white" />
+            </div>
+            <div className="flex-1">
+              <h5 className="font-bold text-[#0b1f3b] text-base leading-tight">Stay Connected</h5>
+              <p className="text-gray-600 text-sm mt-1">
+                Subscribe to updates about IWF activities, campaigns and impact.
+              </p>
+              <form onSubmit={(e) => e.preventDefault()} className="flex items-center mt-2.5 shadow-sm rounded-md overflow-hidden border border-gray-200">
+                <input type="email" placeholder="Enter your email" required className="flex-1 bg-white px-3 py-2 text-sm text-slate-800 placeholder-slate-400 focus:outline-none border-0 min-w-0" />
+                <button type="submit" className="bg-[#0b1f3b] hover:bg-brand-green text-white text-xs font-semibold px-4 py-2.5 transition-colors uppercase shrink-0 cursor-pointer">
+                  Subscribe
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <h5 className="font-bold text-[#0b1f3b] text-sm uppercase tracking-wide mb-3">Trusted Organisation</h5>
+            <div className="grid grid-cols-4 gap-3">
+              {[
+                { label: "Registered Trust", Icon: Award },
+                { label: "12A & 80G", Icon: ShieldCheck },
+                { label: "Impact Driven", Icon: BarChart2 },
+                { label: "Transparent", Icon: Lock },
+              ].map(({ label, Icon }) => (
+                <div key={label} className="flex flex-col items-center">
+                  <div className="w-10 h-10 rounded-full border-2 border-[#0b1f3b] bg-white flex items-center justify-center">
+                    <Icon className="w-5 h-5 text-[#0b1f3b]" />
+                  </div>
+                  <span className="text-[#0b1f3b] font-semibold text-[11px] text-center mt-1.5 leading-tight">
+                    {label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="border-t lg:border-t-0 lg:border-l border-gray-200 pt-4 lg:pt-0 lg:pl-6">
+            <p className="text-[#0b1f3b] font-medium text-sm italic leading-relaxed">
+              "Alone we can do so little, together we can do so much."
+            </p>
+            <span className="text-xs font-semibold text-[#0b1f3b] mt-2 block">— Helen Keller</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Zone B — Transparency, Accountability, Integrity, Compassion (White Background) */}
+      <div className="bg-white text-slate-800 py-5 px-4 md:px-10 border-t border-slate-200">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5 items-center">
+          {[
+            { title: "Transparency", desc: "Open and honest in every action.", Icon: ShieldCheck },
+            { title: "Accountability", desc: "Responsible for every commitment.", Icon: UserCheck },
+            { title: "Integrity", desc: "Guided by strong ethical principles.", Icon: Scale },
+            { title: "Compassion", desc: "Sensitive to the needs of others.", Icon: Heart },
+          ].map(({ title, desc, Icon }) => (
+            <div key={title} className="flex items-start gap-3">
+              <div className="w-9 h-9 rounded-lg bg-orange-50 border border-orange-100 flex items-center justify-center shrink-0">
+                <Icon className="w-5 h-5 text-[#f97316]" />
+              </div>
+              <div>
+                <h6 className="font-extrabold text-slate-900 text-sm">{title}</h6>
+                <p className="text-slate-500 font-medium text-xs mt-0.5">{desc}</p>
+              </div>
+            </div>
+          ))}
+          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-center">
+            <p className="text-slate-700 font-serif italic text-sm leading-snug">
+              "Together, we build a better tomorrow"
+            </p>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
 export default function HomePage() {
   const [activeModal, setActiveModal] = useState<RoleType | null>(null);
   const [lang, setLang] = useState<"en" | "hi">("en");
@@ -2052,7 +1972,8 @@ export default function HomePage() {
       <ExploreIWF lang={lang} />
       <GallerySection lang={lang} />
       <GetInvolved lang={lang} onOpenModal={handleOpenModal} />
-      <Footer onOpenModal={handleOpenModal} />
+      <PreFooterHomeSections />
+      <HomeFooter onOpenModal={handleOpenModal} />
 
       {/* Unified Role Forms Modal */}
       <RoleFormModal type={activeModal} onClose={() => setActiveModal(null)} />

@@ -379,7 +379,7 @@ export type PolicySlug = keyof typeof POLICY_CONTENT;
 export const CONTACT_DETAILS = {
   phone: "+91 9811861633",
   email: "info@iwfindia.org",
-  address: "Bathiya, Via- Putai Manigachhi, Darbhanga, Bihar - 847423, India",
+  address: "Bathiya, Darbhanga, Bihar - 847423, India",
 };
 
 export const IMPACT_HIGHLIGHTS = [

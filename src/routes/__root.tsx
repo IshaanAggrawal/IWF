@@ -147,8 +147,8 @@ function RootComponent() {
         <Outlet />
       </PageTransition>
 
-      {/* Sticky Social Links Sidebar on Left Edge */}
-      <div className="fixed left-0 top-1/2 -translate-y-1/2 z-50 flex flex-col shadow-2xl rounded-r-lg overflow-hidden select-none">
+      {/* Sticky Social Links Sidebar on Right Edge */}
+      <div className="fixed right-0 top-1/2 -translate-y-1/2 z-50 flex flex-col shadow-2xl rounded-l-xl overflow-hidden select-none">
         {[
           { Icon: Facebook, color: "bg-[#1877f2] hover:bg-[#166fe5]", href: "https://facebook.com", name: "Facebook" },
           { Icon: Twitter, color: "bg-[#1da1f2] hover:bg-[#0d95e8]", href: "https://twitter.com", name: "Twitter" },
@@ -161,16 +161,16 @@ function RootComponent() {
             href={social.href}
             target="_blank"
             rel="noopener noreferrer"
-            className={`${social.color} w-10 h-10 md:w-11 md:h-11 flex items-center justify-center text-white transition-all duration-300 hover:pl-4 hover:w-14 group`}
+            className={`${social.color} w-8 h-8 md:w-9 md:h-9 flex items-center justify-center text-white transition-all duration-300 hover:w-11 group`}
             title={social.name}
           >
-            <social.Icon className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
+            <social.Icon className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
           </a>
         ))}
       </div>
 
-      {/* Sticky Message Box Floating Button & Panel on Bottom Left */}
-      <div className="fixed bottom-6 left-6 z-50 flex flex-col items-start select-none">
+      {/* Sticky Message Box Floating Button & Panel on Bottom Right */}
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end select-none">
         {/* Floating Message Card */}
         {msgOpen && (
           <div className="mb-4 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden transition-all duration-300 animate-in slide-in-from-bottom-5 fade-in">
@@ -275,13 +275,13 @@ function RootComponent() {
         {/* Float Toggle Button */}
         <button
           onClick={() => setMsgOpen(!msgOpen)}
-          className={`w-14 h-14 rounded-full flex items-center justify-center text-white shadow-2xl transition-all duration-300 hover:scale-110 cursor-pointer ${
+          className={`w-12 h-12 rounded-full flex items-center justify-center text-white shadow-2xl transition-all duration-300 hover:scale-110 cursor-pointer ${
             msgOpen ? "bg-[#0b1f3b] hover:bg-[#071629] rotate-90" : "bg-brand-orange hover:bg-brand-orange-dark hover:shadow-brand-orange/30"
           }`}
           aria-label="Toggle contact message popup"
           title="Send a message"
         >
-          {msgOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6 fill-white text-brand-orange" />}
+          {msgOpen ? <X className="w-5 h-5" /> : <MessageCircle className="w-5 h-5 fill-white text-brand-orange" />}
         </button>
       </div>
       <FloatingTranslateButton />
