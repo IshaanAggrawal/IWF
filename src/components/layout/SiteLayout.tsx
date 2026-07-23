@@ -175,7 +175,7 @@ export function NotificationTicker() {
   const loopItems = [...items, ...items];
 
   return (
-    <div className="bg-[#1b365d] text-white py-2 overflow-hidden flex items-center relative select-none border-b border-[#1b365d]/20 shadow-sm group">
+    <div className="bg-gradient-to-r from-[#0f1b2d] via-[#1c558c] to-[#2b88d8] text-white py-2 overflow-hidden flex items-center relative select-none border-b border-white/10 shadow-sm group">
       <div className="bg-red-600 text-[10px] uppercase px-2 py-0.5 rounded font-black tracking-wider shadow z-10 shrink-0 ml-4 mr-4 animate-pulse">
         NEW
       </div>
@@ -250,11 +250,6 @@ export function Header() {
 
   return (
     <>
-      <div
-        className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-250 ease-out pointer-events-none ${hasDropdown ? "opacity-100 pointer-events-auto" : "opacity-0"
-          }`}
-        onClick={() => setActiveMenu(null)}
-      />
       {/* White Branding Logo Banner (Scrolls away) */}
       <div className="bg-white py-4 border-b border-gray-100 relative">
         <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-center">
@@ -274,15 +269,31 @@ export function Header() {
           </a>
         </div>
       </div>
-
       {/* Dark Themed Menu Navbar (Sticky) */}
-      <header className="bg-[#1a365d] text-white sticky top-0 z-50 shadow-md transition-all duration-200 py-1">
+      <header className="bg-[#071527] text-white sticky top-0 z-50 shadow-md transition-all duration-200 py-1">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between relative">
 
+          {/* Left Group: Nav Links */}
           <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
-            {NAV_ITEMS.map((item) => {
+            {NAV_ITEMS.map((item, idx) => {
               const hasMega = !!MEGA_DATA[item];
-              const isOpen = activeMenu === item;
+              const isActive = activeMenu === item;
+              const label = item === "Home" ? (
+                <span className="flex items-center gap-1.5 font-bold">
+                  <Home className="w-4 h-4 text-[#f97316]" /> IWF
+                </span>
+              ) : (
+                item
+              );
+
+              // Dynamic width and alignment to prevent layout overflow
+              let dropdownWidth = "w-60";
+              if (hasMega) {
+                if (MEGA_DATA[item].cols === 2) dropdownWidth = "w-[360px]";
+                if (MEGA_DATA[item].cols === 3) dropdownWidth = "w-[540px]";
+              }
+              const alignClass = idx >= 5 ? "right-0" : "left-0";
+
               return (
                 <div
                   key={item}
@@ -292,33 +303,74 @@ export function Header() {
                 >
                   <a
                     href={getHeaderHref(item)}
-                    className={`relative flex items-center gap-1.5 font-semibold text-sm transition-all px-4 py-3 rounded-md group ${isRouteActive(item) ? "text-white bg-white/10" : "text-white/90 hover:text-white hover:bg-white/10"
-                      }`}
+                    className={`relative flex items-center gap-1.5 font-semibold text-sm transition-all px-4 py-3 rounded-md group ${
+                      isRouteActive(item) ? "text-white bg-white/10" : "text-white/90 hover:text-white hover:bg-white/10"
+                    }`}
                     onClick={(event) => {
                       handleHeaderClick(item, event);
-                      if (!hasMega) setActiveMenu(null);
+                      if (!hasMega) {
+                        setActiveMenu(null);
+                      }
                     }}
                   >
-                    {item === "Home" ? (
-                      <span className="flex items-center gap-1.5 font-bold">
-                        <Home className="w-4 h-4 text-[#f97316]" /> IWF
-                      </span>
-                    ) : (
-                      item
-                    )}
+                    {label}
                     {hasMega && (
                       <ChevronDown
-                        className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpen ? "rotate-180 text-white" : "text-white/60"
-                          }`}
+                        className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                          isActive ? "rotate-180 text-white" : "text-white/60"
+                        }`}
                       />
                     )}
+                    {/* Sliding underline */}
                     <span className="absolute bottom-1 left-4 right-4 h-[2px] bg-brand-orange scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-200 ease-out" />
                   </a>
+
+                  {/* Mega Menu Dropdown Window positioned under nav item */}
+                  {isActive && hasMega && (
+                    <div
+                      className={`absolute ${alignClass} top-full mt-1.5 bg-white border border-gray-200 shadow-2xl rounded-xl p-5 z-50 text-slate-800 animate-in fade-in slide-in-from-top-1 duration-150 ${dropdownWidth}`}
+                      onMouseEnter={cancelClose}
+                      onMouseLeave={scheduleClose}
+                    >
+                      <div
+                        className="grid gap-5"
+                        style={{ gridTemplateColumns: `repeat(${MEGA_DATA[item].cols}, minmax(0, 1fr))` }}
+                      >
+                        {Array.from({ length: MEGA_DATA[item].cols }).map((_, colIndex) => {
+                          const subItems = MEGA_DATA[item].items;
+                          const colsCount = MEGA_DATA[item].cols;
+                          const itemsPerCol = Math.ceil(subItems.length / colsCount);
+                          const colItems = subItems.slice(colIndex * itemsPerCol, (colIndex + 1) * itemsPerCol);
+                          return (
+                            <div key={colIndex} className="flex flex-col gap-2.5">
+                              {colItems.map((subItem, subIdx) => {
+                                return (
+                                  <a
+                                    key={subItem}
+                                    href={getMegaHref(item, subItem)}
+                                    className="flex items-center gap-1.5 text-slate-900 font-bold hover:text-[#0b1f3b] text-sm hover:translate-x-1 transition-all duration-200"
+                                    style={{
+                                      transitionDelay: `${(colIndex * 5 + subIdx) * 15}ms`,
+                                    }}
+                                    onClick={() => setActiveMenu(null)}
+                                  >
+                                    <span className="text-brand-orange text-sm font-semibold">→</span>
+                                    {subItem}
+                                  </a>
+                                );
+                              })}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
                 </div>
               );
             })}
           </nav>
 
+          {/* Right Group: Donate Button & Mobile Hamburger */}
           <div className="flex items-center gap-2 md:gap-3 shrink-0 py-1.5 ml-auto lg:ml-0">
             <a
               href="/donate"
@@ -334,56 +386,26 @@ export function Header() {
               {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
-
-          {/* Mega Menu Dropdown Window */}
-          {activeMenu && MEGA_DATA[activeMenu] && (
-            <div
-              className="absolute left-0 right-0 top-full bg-[#0b1f3b]/95 backdrop-blur-md border-t border-white/10 shadow-2xl z-50 text-white animate-in fade-in slide-in-from-top-2 duration-200"
-              onMouseEnter={cancelClose}
-              onMouseLeave={scheduleClose}
-            >
-              <div className="max-w-7xl mx-auto px-6 py-6">
-                <div
-                  className="grid gap-6"
-                  style={{ gridTemplateColumns: `repeat(${MEGA_DATA[activeMenu].cols}, minmax(0, 1fr))` }}
-                >
-                  {Array.from({ length: MEGA_DATA[activeMenu].cols }).map((_, colIndex) => {
-                    const items = MEGA_DATA[activeMenu].items;
-                    const itemsPerCol = Math.ceil(items.length / MEGA_DATA[activeMenu].cols);
-                    const colItems = items.slice(colIndex * itemsPerCol, (colIndex + 1) * itemsPerCol);
-                    return (
-                      <div key={colIndex} className="flex flex-col gap-2">
-                        {colItems.map((sub) => (
-                          <a
-                            key={sub}
-                            href={getMegaHref(activeMenu, sub)}
-                            className="flex items-center gap-2 text-sm text-white/80 hover:text-brand-orange hover:bg-white/5 px-3 py-2 rounded-md transition-all"
-                            onClick={() => setActiveMenu(null)}
-                          >
-                            <span className="w-1.5 h-1.5 rounded-full bg-brand-orange/60" />
-                            {sub}
-                          </a>
-                        ))}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </header>
 
       {/* Mobile Drawer */}
       {mobileOpen && (
         <div className="fixed inset-0 z-50 lg:hidden flex flex-col bg-white animate-in slide-in-from-right duration-200">
-          <div className="flex items-center justify-between p-4 border-b border-slate-100">
-            <span className="font-extrabold text-[#0b1f3b] text-base">Navigation</span>
+          <div className="flex items-center justify-between p-4 border-b border-slate-100 bg-[#0b1f3b] text-white">
+            <div className="flex items-center gap-2.5">
+              <Leaf className="w-6 h-6 text-brand-green fill-brand-green/20" />
+              <div className="flex flex-col leading-none">
+                <span className="font-extrabold text-white text-base">IWF</span>
+                <span className="font-semibold text-[8px] text-white/70 tracking-wider">ISLAH WELFARE FOUNDATION</span>
+              </div>
+            </div>
             <button
               onClick={() => setMobileOpen(false)}
-              className="p-2 text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"
+              className="p-1.5 text-white/80 hover:text-white transition-colors rounded cursor-pointer"
+              aria-label="Close navigation menu"
             >
-              <X className="w-6 h-6" />
+              <X className="w-5 h-5" />
             </button>
           </div>
 
