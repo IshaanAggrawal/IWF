@@ -6,11 +6,14 @@ import {
   BookOpen, Stethoscope, Hand, MapPin,
   ArrowRight, ArrowLeft, Award, ShieldCheck, Heart, HandHeart, Briefcase,
   Info, BarChart2, Newspaper, UserCheck, MessageCircle, Target,
-  ChevronDown, X, Menu, Globe, Building2, Scale, FileText, Send, Lock, Shield,
+  ChevronDown, ChevronLeft, ChevronRight, X, Menu, Globe, Building2, Scale, FileText, Send, Lock, Shield,
   TrendingUp, Home, Activity, Star, Zap, Leaf as LeafIcon,
   Megaphone, BookMarked, Wind, Sparkles
 } from "lucide-react";
-import hero from '@/assets/hero.png';
+import slide1 from "@/assets/hero-carousel/hero-slide-1.jpg";
+import slide2 from "@/assets/hero-carousel/hero-slide-2.jpg";
+import slide3 from "@/assets/hero-carousel/hero-slide-3.jpg";
+import slide4 from "@/assets/hero-carousel/hero-slide-4.jpg";
 import causeEdu from "@/assets/cause-education.jpg";
 import causeMed from "@/assets/cause-medical.png";
 import causeWomen from "@/assets/cause-women.jpg";
@@ -958,7 +961,7 @@ function HeroSection({ lang }: LanguageProp) {
   }, [newsList.length]);
 
   return (
-    <section id="welcome-hero" className="relative scroll-mt-20 bg-white py-8 border-b border-slate-100">
+    <section id="welcome-hero" className="relative scroll-mt-20 bg-white py-6 border-b border-slate-100">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
           {/* Left Column (50%): Welcome text & copy */}
@@ -1123,10 +1126,10 @@ function UrgentPatientsSection({ lang }: LanguageProp) {
     ? `Patients Needing Urgent Support — हर पल अनमोल है`
     : `मदद की तत्काल आवश्यकता वाले मरीज — हर पल अनमोल है`;
   return (
-    <section className="py-6 bg-white">
+    <section className="py-4 bg-white">
       <div className="max-w-7xl mx-auto px-4">
         <ScrollReveal>
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-4 border-b border-slate-100 pb-2">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-3 border-b border-slate-100 pb-2">
             <div className="flex-1">
               <SectionHeader
                 tag={t.urgentTag}
@@ -1141,12 +1144,12 @@ function UrgentPatientsSection({ lang }: LanguageProp) {
               {t.viewAllPatients} <ArrowRight className="w-4 h-4" />
             </a>
           </div>
-          <p className="text-slate-600 text-sm max-w-4xl mb-6 leading-relaxed">
+          <p className="text-slate-600 text-sm max-w-4xl mb-4 leading-relaxed">
             {t.urgentSub}
           </p>
         </ScrollReveal>
         <ScrollReveal stagger={0.08}>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
             {URGENT_PATIENTS.map((patient) => (
               <PatientCard key={patient.id} {...patient} />
             ))}
@@ -1850,15 +1853,171 @@ function VideoHeroSection({ lang }: LanguageProp) {
 
       {/* Scroll indicator */}
       <a
-        href="#welcome-hero"
+        href="#hero-carousel"
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 animate-bounce group cursor-pointer"
-        aria-label="Scroll to welcome section"
+        aria-label="Scroll to vision carousel"
       >
         <span className="text-[10px] uppercase tracking-widest text-white/70 font-bold group-hover:text-white transition-colors">{isHi ? "नीचे स्क्रॉल करें" : "Scroll Down"}</span>
         <div className="w-6 h-10 rounded-full border-2 border-white/50 flex items-start justify-center p-1.5 group-hover:border-white transition-colors">
           <div className="w-1.5 h-2.5 bg-brand-orange rounded-full" />
         </div>
       </a>
+    </section>
+  );
+}
+
+// ─── Hero Carousel Section Component ──────────────────────────────────────────
+
+function HeroCarouselSection() {
+  const slides = [
+    { id: 1, img: slide1, alt: "Education for Every Child" },
+    { id: 2, img: slide2, alt: "Building a Better India – Vision 2047" },
+    { id: 3, img: slide3, alt: "Healthcare That Reaches the Last Mile" },
+    { id: 4, img: slide4, alt: "Skills Today, Success Tomorrow" },
+  ];
+
+  const SLIDE_DURATION = 15000;
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  // Auto-play with smooth progress
+  useEffect(() => {
+    if (isPaused) return;
+    const tick = 50;
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        const next = prev + (tick / SLIDE_DURATION) * 100;
+        if (next >= 100) {
+          setCurrentSlide((s) => (s + 1) % slides.length);
+          return 0;
+        }
+        return next;
+      });
+    }, tick);
+    return () => clearInterval(interval);
+  }, [isPaused, slides.length]);
+
+  const goToSlide = (idx: number) => {
+    if (isTransitioning || idx === currentSlide) return;
+    setIsTransitioning(true);
+    setCurrentSlide(idx);
+    setProgress(0);
+    setTimeout(() => setIsTransitioning(false), 1200);
+  };
+
+  const nextSlide = () => goToSlide((currentSlide + 1) % slides.length);
+  const prevSlide = () => goToSlide((currentSlide - 1 + slides.length) % slides.length);
+
+  // Touch / swipe
+  const touchStart = useRef<number>(0);
+  const touchDelta = useRef<number>(0);
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStart.current = e.touches[0].clientX;
+    touchDelta.current = 0;
+  };
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchDelta.current = e.touches[0].clientX - touchStart.current;
+  };
+  const handleTouchEnd = () => {
+    if (Math.abs(touchDelta.current) > 50) {
+      if (touchDelta.current < 0) nextSlide();
+      else prevSlide();
+    }
+  };
+
+  return (
+    <section
+      id="hero-carousel"
+      className="relative w-full select-none scroll-mt-20 overflow-hidden bg-slate-950 group"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      {/* Slides — crossfade for ultra-smooth transition */}
+      {slides.map((slide, index) => (
+        <div
+          key={slide.id}
+          className="absolute inset-0 w-full h-full"
+          style={{
+            opacity: index === currentSlide ? 1 : 0,
+            transform: index === currentSlide ? "scale(1)" : "scale(1.04)",
+            transition: "opacity 1.2s cubic-bezier(0.4,0,0.2,1), transform 1.4s cubic-bezier(0.4,0,0.2,1)",
+            zIndex: index === currentSlide ? 2 : 1,
+          }}
+        >
+          <img
+            src={slide.img}
+            alt={slide.alt}
+            className="w-full h-full object-cover"
+            draggable={false}
+            loading="eager"
+          />
+        </div>
+      ))}
+
+      {/* Spacer to hold height (first image defines aspect ratio) */}
+      <img
+        src={slides[0].img}
+        alt=""
+        className="w-full h-auto block invisible"
+        aria-hidden="true"
+      />
+
+      {/* Subtle vignette overlay */}
+      <div className="absolute inset-0 z-[3] pointer-events-none bg-gradient-to-t from-black/20 via-transparent to-black/10" />
+
+      {/* Gradient overlays for arrow hover areas */}
+      <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-black/25 to-transparent z-[4] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-black/25 to-transparent z-[4] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+      {/* Navigation Arrows */}
+      <button
+        onClick={prevSlide}
+        aria-label="Previous slide"
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-[5] w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center backdrop-blur-md border border-white/15 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:scale-110 cursor-pointer shadow-2xl"
+      >
+        <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
+      </button>
+      <button
+        onClick={nextSlide}
+        aria-label="Next slide"
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-[5] w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center backdrop-blur-md border border-white/15 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:scale-110 cursor-pointer shadow-2xl"
+      >
+        <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
+      </button>
+
+      {/* Bottom Indicator */}
+      <div className="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 z-[5] flex items-center gap-3 bg-black/35 px-5 py-2.5 rounded-full backdrop-blur-2xl border border-white/10 shadow-2xl">
+        {slides.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => goToSlide(idx)}
+            aria-label={`Go to slide ${idx + 1}`}
+            className="relative cursor-pointer"
+          >
+            <div
+              className={`rounded-full transition-all duration-500 ${
+                currentSlide === idx
+                  ? "w-10 md:w-12 h-2 bg-white/20"
+                  : "w-2.5 h-2.5 bg-white/40 hover:bg-white/70"
+              }`}
+            />
+            {currentSlide === idx && (
+              <div
+                className="absolute top-0 left-0 h-2 rounded-full bg-brand-orange"
+                style={{
+                  width: `${progress}%`,
+                  transition: "width 50ms linear",
+                }}
+              />
+            )}
+          </button>
+        ))}
+      </div>
     </section>
   );
 }
@@ -1962,6 +2121,7 @@ export default function HomePage() {
       <NotificationTicker />
       <Header lang={lang} />
       <VideoHeroSection lang={lang} />
+      <HeroCarouselSection />
       <HeroSection lang={lang} />
       <UrgentPatientsSection lang={lang} />
       <WhatWeDo lang={lang} />
@@ -1970,8 +2130,8 @@ export default function HomePage() {
       <CampaignsSection lang={lang} />
       <ProgramsAndThematic lang={lang} />
       <ExploreIWF lang={lang} />
-      <GallerySection lang={lang} />
       <GetInvolved lang={lang} onOpenModal={handleOpenModal} />
+      <GallerySection lang={lang} />
       <PreFooterHomeSections />
       <HomeFooter onOpenModal={handleOpenModal} />
 
