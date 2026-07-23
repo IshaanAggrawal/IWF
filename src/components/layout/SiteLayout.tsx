@@ -10,6 +10,7 @@ import {
   Facebook,
   Globe,
   Heart,
+  Home,
   Instagram,
   Leaf,
   Linkedin,
