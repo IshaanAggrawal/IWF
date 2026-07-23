@@ -515,7 +515,7 @@ function Header({ lang }: HeaderProps) {
       </div>
 
       {/* Dark Themed Menu Navbar (Sticky) */}
-      <header className="bg-[#0b1f3b] text-white sticky top-0 z-50 shadow-md transition-all duration-200 py-1">
+      <header className="bg-[#071527] text-white sticky top-0 z-50 shadow-md transition-all duration-200 py-1">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between relative">
 
           {/* Left Group: Nav Links */}
@@ -1830,41 +1830,7 @@ function GallerySection({ lang }: LanguageProp) {
 
 // ─── Main Export ──────────────────────────────────────────────────────────────
 
-// ─── Video Hero Section Component ──────────────────────────────────────────
 
-function VideoHeroSection({ lang }: LanguageProp) {
-  const isHi = lang === "hi";
-
-  return (
-    <section className="relative w-full h-[calc(100vh-130px)] min-h-[500px] overflow-hidden flex items-center justify-center select-none bg-slate-950">
-      {/* Loop Background YouTube Video Embed */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
-        <iframe
-          src="https://www.youtube.com/embed/0CbFrom3Qkk?autoplay=1&mute=1&loop=1&playlist=0CbFrom3Qkk&controls=0&showinfo=0&rel=0&playsinline=1&enablejsapi=1&iv_load_policy=3&modestbranding=1"
-          className="absolute top-1/2 left-1/2 w-[100vw] h-[56.25vw] min-h-[100vh] min-w-[177.77vh] -translate-x-1/2 -translate-y-1/2 opacity-90"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          title="Background video"
-          frameBorder="0"
-        />
-      </div>
-
-      {/* Dark Gradient Overlay - Subtler since there is no text */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/70" />
-
-      {/* Scroll indicator */}
-      <a
-        href="#hero-carousel"
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 animate-bounce group cursor-pointer"
-        aria-label="Scroll to vision carousel"
-      >
-        <span className="text-[10px] uppercase tracking-widest text-white/70 font-bold group-hover:text-white transition-colors">{isHi ? "नीचे स्क्रॉल करें" : "Scroll Down"}</span>
-        <div className="w-6 h-10 rounded-full border-2 border-white/50 flex items-start justify-center p-1.5 group-hover:border-white transition-colors">
-          <div className="w-1.5 h-2.5 bg-brand-orange rounded-full" />
-        </div>
-      </a>
-    </section>
-  );
-}
 
 // ─── Hero Carousel Section Component ──────────────────────────────────────────
 
@@ -1876,28 +1842,33 @@ function HeroCarouselSection() {
     { id: 4, img: slide4, alt: "Skills Today, Success Tomorrow" },
   ];
 
-  const SLIDE_DURATION = 15000;
+  const SLIDE_DURATION = 7000;
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Auto-play with smooth progress
+  // Auto-play interval: triggers every 7 seconds
   useEffect(() => {
     if (isPaused) return;
-    const tick = 50;
     const interval = setInterval(() => {
-      setProgress((prev) => {
-        const next = prev + (tick / SLIDE_DURATION) * 100;
-        if (next >= 100) {
-          setCurrentSlide((s) => (s + 1) % slides.length);
-          return 0;
-        }
-        return next;
-      });
-    }, tick);
+      setCurrentSlide((s) => (s + 1) % slides.length);
+    }, SLIDE_DURATION);
     return () => clearInterval(interval);
   }, [isPaused, slides.length]);
+
+  // Smooth indicator progress: tracks elapsed time in current slide
+  useEffect(() => {
+    setProgress(0);
+    if (isPaused) return;
+    const startTime = Date.now();
+    const tick = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const pct = Math.min((elapsed / SLIDE_DURATION) * 100, 100);
+      setProgress(pct);
+    }, 40);
+    return () => clearInterval(tick);
+  }, [currentSlide, isPaused]);
 
   const goToSlide = (idx: number) => {
     if (isTransitioning || idx === currentSlide) return;
@@ -1926,7 +1897,6 @@ function HeroCarouselSection() {
       else prevSlide();
     }
   };
-
   return (
     <section
       id="hero-carousel"
@@ -2120,7 +2090,6 @@ export default function HomePage() {
     <div className="min-h-screen bg-white font-sans text-foreground">
       <NotificationTicker />
       <Header lang={lang} />
-      <VideoHeroSection lang={lang} />
       <HeroCarouselSection />
       <HeroSection lang={lang} />
       <UrgentPatientsSection lang={lang} />
