@@ -14,11 +14,11 @@ export function Footer() {
       </div>
       <div className="relative max-w-7xl mx-auto px-4 py-14 grid md:grid-cols-2 lg:grid-cols-5 gap-8">
         <div className="lg:col-span-1">
-          <div className="flex items-center gap-3 mb-4">
+          <div className="flex items-center gap-3 mb-4 bg-[#fdfbf7] p-3 rounded-2xl w-fit">
             <img src={newLogo} alt="IWF Logo" className="w-12 h-12 object-contain" />
             <div className="leading-tight">
-              <div className="font-extrabold">ISLAH</div>
-              <div className="text-[10px] tracking-wider">WELFARE FOUNDATION</div>
+              <div className="font-extrabold text-black">ISLAH</div>
+              <div className="text-[10px] tracking-wider text-black">WELFARE FOUNDATION</div>
             </div>
           </div>
           <p className="text-sm text-white/80">Islah Welfare Foundation is committed to empowering underprivileged communities through education, skill development, healthcare and social welfare initiatives for a better tomorrow.</p>
