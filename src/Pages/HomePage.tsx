@@ -211,11 +211,10 @@ const MEGA_DATA: Record<string, MegaSection> = {
       "Legal Status & Registration",
       "Members & Donors",
       "Our Partners & Donors",
-      "Membership Policy",
     ],
   },
   "What We Do": {
-    cols: 3,
+    cols: 4,
     items: [
       "Education",
       "Health Care",
@@ -234,7 +233,7 @@ const MEGA_DATA: Record<string, MegaSection> = {
     ],
   },
   "Impact": {
-    cols: 2,
+    cols: 3,
     items: [
       "Our Impact",
       "Outcomes",
@@ -245,7 +244,7 @@ const MEGA_DATA: Record<string, MegaSection> = {
     ],
   },
   "Media & Updates": {
-    cols: 2,
+    cols: 3,
     items: [
       "News & Events",
       "Latest Updates",
@@ -256,7 +255,7 @@ const MEGA_DATA: Record<string, MegaSection> = {
     ],
   },
   "Get Involved": {
-    cols: 2,
+    cols: 3,
     items: [
       "Volunteer With Us",
       "Partner With Us",
@@ -515,8 +514,9 @@ function Header({ lang }: HeaderProps) {
       </div>
 
       {/* Dark Themed Menu Navbar (Sticky) */}
-      <header className="bg-[#071527] text-white sticky top-0 z-50 shadow-md transition-all duration-200 py-1">
-        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between relative">
+      {/* Dark Themed Menu Navbar (Sticky) */}
+      <header className="bg-[#071527] text-white sticky top-0 z-50 shadow-md transition-all duration-200 py-1 relative">
+        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
 
           {/* Left Group: Nav Links */}
           <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
@@ -531,18 +531,9 @@ function Header({ lang }: HeaderProps) {
                 NAV_ITEMS_TRANSLATIONS[lang][idx] || item
               );
 
-              // Dynamic width and alignment to prevent layout overflow
-              let dropdownWidth = "w-60";
-              if (hasMega) {
-                if (MEGA_DATA[item].cols === 2) dropdownWidth = "w-[360px]";
-                if (MEGA_DATA[item].cols === 3) dropdownWidth = "w-[540px]";
-              }
-              const alignClass = idx >= 5 ? "right-0" : "left-0";
-
               return (
                 <div
                   key={item}
-                  className="relative"
                   onMouseEnter={() => hasMega && openMenu(item)}
                   onMouseLeave={hasMega ? scheduleClose : undefined}
                 >
@@ -590,95 +581,6 @@ function Header({ lang }: HeaderProps) {
                     {/* Sliding underline */}
                     <span className="absolute bottom-1 left-4 right-4 h-[2px] bg-brand-orange scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-200 ease-out" />
                   </a>
-
-                  {/* Mega Menu Dropdown Window positioned under nav item */}
-                  {isActive && hasMega && (
-                    <div
-                      className={`absolute ${alignClass} top-full mt-1.5 bg-white border border-gray-200 shadow-2xl rounded-xl p-5 z-50 text-slate-800 animate-in fade-in slide-in-from-top-1 duration-150 ${dropdownWidth}`}
-                      onMouseEnter={cancelClose}
-                      onMouseLeave={scheduleClose}
-                    >
-                      <div
-                        className="grid gap-5"
-                        style={{ gridTemplateColumns: `repeat(${MEGA_DATA[item].cols}, minmax(0, 1fr))` }}
-                      >
-                        {Array.from({ length: MEGA_DATA[item].cols }).map((_, colIndex) => {
-                          const subItems = MEGA_DATA[item].items;
-                          const colsCount = MEGA_DATA[item].cols;
-                          const itemsPerCol = Math.ceil(subItems.length / colsCount);
-                          const colItems = subItems.slice(colIndex * itemsPerCol, (colIndex + 1) * itemsPerCol);
-                          return (
-                            <div key={colIndex} className="flex flex-col gap-2.5">
-                              {colItems.map((subItem, subIdx) => {
-                                return (
-                                  <a
-                                    key={subItem}
-                                    href={
-                                      item === "About Us" && subItem === "Overview"
-                                        ? "/about"
-                                        : item === "About Us" && subItem === "Our Objective & Vision"
-                                          ? "/about/objective-and-vision"
-                                          : item === "About Us" && subItem === "Vision 2047"
-                                            ? "/about/vision-2047"
-                                            : item === "About Us" && subItem === "Leadership & Management"
-                                              ? "/about/leadership"
-                                              : item === "About Us" && subItem === "Governance & Transparency"
-                                                ? "/about/governance"
-                                                : item === "About Us" && subItem === "Legal Status & Registration"
-                                                  ? "/about/legal-status"
-                                                  : item === "About Us" && (subItem === "Members & Donors" || subItem === "Members & Supporters")
-                                                    ? "/membership"
-                                                    : item === "About Us" && subItem === "Our Partners & Donors"
-                                                      ? "/about/legal-status"
-                                                      : item === "About Us" && subItem === "Membership Policy"
-                                                        ? "/membership#status"
-                                                        : item === "What We Do" && subItem === "Health Care"
-                                                          ? "/programs/healthcare"
-                                                          : item === "What We Do" && subItem === "Education"
-                                                            ? "/programs/education"
-                                                            : item === "What We Do" && subItem === "Skills Development"
-                                                              ? "/programs/skills-development"
-                                                              : item === "What We Do" && subItem === "Women Empowerment"
-                                                                ? "/programs/women-empowerment"
-                                                                : item === "What We Do"
-                                                                  ? "/programs/healthcare"
-                                                                  : item === "Programs" && subItem === "View All Programs →"
-                                                                    ? "/programs/healthcare"
-                                                                    : item === "Impact"
-                                                                      ? "/#impact-stats"
-                                                                      : item === "Media & Updates" && subItem === "News & Events"
-                                                                        ? "/news-and-events"
-                                                                        : item === "Media & Updates" && subItem === "Latest Updates"
-                                                                          ? "/news-and-events"
-                                                                          : item === "Media & Updates" && subItem === "Gallery"
-                                                                            ? "/news-and-events"
-                                                                            : item === "Media & Updates" && subItem === "Press Release"
-                                                                              ? "/news-and-events"
-                                                                              : item === "Media & Updates"
-                                                                                ? "/news-and-events"
-                                                                                : item === "Get Involved" && subItem === "Donate & Support"
-                                                                                  ? "/donate"
-                                                                                  : item === "Get Involved"
-                                                                                    ? "/#get-involved"
-                                                                                    : "#"
-                                    }
-                                    className="flex items-center gap-1.5 text-slate-900 font-bold hover:text-[#0b1f3b] text-sm hover:translate-x-1 transition-all duration-200"
-                                    style={{
-                                      transitionDelay: `${(colIndex * 5 + subIdx) * 15}ms`,
-                                    }}
-                                    onClick={() => setActiveMenu(null)}
-                                  >
-                                    <span className="text-brand-orange text-sm font-semibold">→</span>
-                                    {subItem}
-                                  </a>
-                                );
-                              })}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
                 </div>
               );
             })}
@@ -698,6 +600,106 @@ function Header({ lang }: HeaderProps) {
             </button>
           </div>
         </div>
+
+        {/* Full-Width Mega Menu Dropdown Window */}
+        {activeMenu && MEGA_DATA[activeMenu] && (
+          <div
+            className="hidden lg:block absolute top-full left-0 right-0 w-full bg-white border-b-2 border-brand-orange shadow-2xl text-slate-800 z-50 animate-in fade-in slide-in-from-top-1 duration-150 py-6 px-4 md:px-8"
+            onMouseEnter={cancelClose}
+            onMouseLeave={scheduleClose}
+          >
+            <div className="max-w-7xl mx-auto">
+              <div className="flex items-center justify-between mb-4 pb-2 border-b border-gray-100">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-brand-orange"></span>
+                  <span className="text-xs font-extrabold uppercase tracking-widest text-[#0b1f3b]">
+                    {activeMenu}
+                  </span>
+                </div>
+                <span className="text-xs text-gray-400 font-medium">Quick Links</span>
+              </div>
+              <div
+                className="grid gap-6 md:gap-8"
+                style={{ gridTemplateColumns: `repeat(${MEGA_DATA[activeMenu].cols}, minmax(0, 1fr))` }}
+              >
+                {Array.from({ length: MEGA_DATA[activeMenu].cols }).map((_, colIndex) => {
+                  const subItems = MEGA_DATA[activeMenu].items;
+                  const colsCount = MEGA_DATA[activeMenu].cols;
+                  const itemsPerCol = Math.ceil(subItems.length / colsCount);
+                  const colItems = subItems.slice(colIndex * itemsPerCol, (colIndex + 1) * itemsPerCol);
+                  return (
+                    <div key={colIndex} className="flex flex-col gap-3">
+                      {colItems.map((subItem, subIdx) => {
+                        const href =
+                          activeMenu === "About Us" && subItem === "Overview"
+                            ? "/about"
+                            : activeMenu === "About Us" && subItem === "Our Objective & Vision"
+                              ? "/about/objective-and-vision"
+                              : activeMenu === "About Us" && subItem === "Vision 2047"
+                                ? "/about/vision-2047"
+                                : activeMenu === "About Us" && subItem === "Leadership & Management"
+                                  ? "/about/leadership"
+                                  : activeMenu === "About Us" && subItem === "Governance & Transparency"
+                                    ? "/about/governance"
+                                    : activeMenu === "About Us" && subItem === "Legal Status & Registration"
+                                      ? "/about/legal-status"
+                                      : activeMenu === "About Us" && (subItem === "Members & Donors" || subItem === "Members & Supporters")
+                                        ? "/membership"
+                                        : activeMenu === "About Us" && subItem === "Our Partners & Donors"
+                                          ? "/about/legal-status"
+                                          : activeMenu === "About Us" && subItem === "Membership Policy"
+                                            ? "/membership#status"
+                                            : activeMenu === "What We Do" && subItem === "Health Care"
+                                              ? "/programs/healthcare"
+                                              : activeMenu === "What We Do" && subItem === "Education"
+                                                ? "/programs/education"
+                                                : activeMenu === "What We Do" && subItem === "Skills Development"
+                                                  ? "/programs/skills-development"
+                                                  : activeMenu === "What We Do" && subItem === "Women Empowerment"
+                                                    ? "/programs/women-empowerment"
+                                                    : activeMenu === "What We Do"
+                                                      ? "/programs/healthcare"
+                                                      : activeMenu === "Programs" && subItem === "View All Programs →"
+                                                        ? "/programs/healthcare"
+                                                        : activeMenu === "Impact"
+                                                          ? "/#impact-stats"
+                                                          : activeMenu === "Media & Updates" && subItem === "News & Events"
+                                                            ? "/news-and-events"
+                                                            : activeMenu === "Media & Updates" && subItem === "Latest Updates"
+                                                              ? "/news-and-events"
+                                                              : activeMenu === "Media & Updates" && subItem === "Gallery"
+                                                                ? "/news-and-events"
+                                                                : activeMenu === "Media & Updates" && subItem === "Press Release"
+                                                                  ? "/news-and-events"
+                                                                  : activeMenu === "Media & Updates"
+                                                                    ? "/news-and-events"
+                                                                    : activeMenu === "Get Involved" && subItem === "Donate & Support"
+                                                                      ? "/donate"
+                                                                      : activeMenu === "Get Involved"
+                                                                        ? "/#get-involved"
+                                                                        : "#";
+                        return (
+                          <a
+                            key={subItem}
+                            href={href}
+                            className="flex items-center gap-2 text-slate-900 font-bold hover:text-brand-orange text-sm md:text-base hover:translate-x-1.5 transition-all duration-200 group"
+                            style={{
+                              transitionDelay: `${(colIndex * 3 + subIdx) * 15}ms`,
+                            }}
+                            onClick={() => setActiveMenu(null)}
+                          >
+                            <span className="text-brand-orange text-sm font-semibold group-hover:translate-x-0.5 transition-transform">→</span>
+                            {subItem}
+                          </a>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Mobile Drawer Slide-in Panel */}
@@ -1842,13 +1844,13 @@ function HeroCarouselSection() {
     { id: 4, img: slide4, alt: "Skills Today, Success Tomorrow" },
   ];
 
-  const SLIDE_DURATION = 7000;
+  const SLIDE_DURATION = 4000;
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Auto-play interval: triggers every 7 seconds
+  // Auto-play interval: triggers every 4 seconds
   useEffect(() => {
     if (isPaused) return;
     const interval = setInterval(() => {
