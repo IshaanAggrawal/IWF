@@ -107,7 +107,7 @@ function setGoogleLanguage(langCode: string, callback: () => void) {
     document.cookie = `googtrans=; ${past}; path=/`;
     document.cookie = `googtrans=; ${past}; path=/; domain=${hostname}`;
     document.cookie = `googtrans=; ${past}; path=/; domain=.${hostname}`;
-    try { window.location.reload(); } catch (_) {/* ignore */}
+    try { window.location.reload(); } catch (_) {/* ignore */ }
   } else {
     waitForCombo((select) => {
       select.value = langCode;
@@ -179,11 +179,10 @@ export function FloatingTranslateButton() {
             <button
               key={lang.code}
               onClick={() => selectLanguage(lang.code)}
-              className={`flex items-center justify-between w-full px-3 py-2 text-xs font-bold rounded-lg transition-colors text-left cursor-pointer ${
-                currentLang === lang.code
+              className={`flex items-center justify-between w-full px-3 py-2 text-xs font-bold rounded-lg transition-colors text-left cursor-pointer ${currentLang === lang.code
                   ? "bg-brand-orange text-white"
                   : "hover:bg-white/10 text-white/90"
-              }`}
+                }`}
             >
               <span>{lang.nativeName} ({lang.name})</span>
               {currentLang === lang.code && <Check className="w-3.5 h-3.5 shrink-0" />}
@@ -243,11 +242,10 @@ export function TranslateButton({ className = "" }: { className?: string }) {
             <button
               key={lang.code}
               onClick={() => selectLanguage(lang.code)}
-              className={`flex items-center justify-between w-full px-2.5 py-1.5 text-[11px] font-bold rounded-md transition-colors text-left cursor-pointer ${
-                currentLang === lang.code
+              className={`flex items-center justify-between w-full px-2.5 py-1.5 text-[11px] font-bold rounded-md transition-colors text-left cursor-pointer ${currentLang === lang.code
                   ? "bg-brand-orange text-white"
                   : "hover:bg-white/10 text-white/90"
-              }`}
+                }`}
             >
               <span>{lang.nativeName}</span>
               {currentLang === lang.code && <Check className="w-3 h-3 shrink-0" />}
