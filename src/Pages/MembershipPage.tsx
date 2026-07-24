@@ -656,7 +656,7 @@ function MembersTab({ onRenewClick }: { onRenewClick: () => void }) {
   }, [stateFilter]);
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-10">
+    <div className="max-w-6xl mx-auto px-4 pt-10">
 
       {/* ─ Info Banner */}
       <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-xl px-4 py-2.5 mb-5 text-xs text-amber-800 font-semibold">
@@ -1051,7 +1051,7 @@ function DonorsTab({ isTopDonors = false }: { isTopDonors?: boolean }) {
   }))).sort()];
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-10">
+    <div className="max-w-6xl mx-auto px-4 pt-10">
 
       {/* ─ Sub-hero */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8 p-6 md:p-8 rounded-2xl relative overflow-hidden"
@@ -2406,7 +2406,7 @@ function MemberStatusCheck({
   };
 
   return (
-    <section id="status" className="py-16 bg-white">
+    <section id="status" className="bg-white">
       <div className="max-w-2xl mx-auto px-4">
         <div className="text-center mb-10">
           <div className="flex items-center justify-center gap-3 mb-3">

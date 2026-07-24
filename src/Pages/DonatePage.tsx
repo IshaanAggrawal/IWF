@@ -28,6 +28,9 @@ import {
   IndianRupee,
   FileText,
   BadgeCheck,
+  User,
+  Briefcase,
+  Landmark,
 } from "lucide-react";
 import {
   Footer,
@@ -93,8 +96,9 @@ function getDonorTier(amount: number) {
 // ─── Schema ───────────────────────────────────────────────────────────────────
 
 const donorSchema = z.object({
+  donorType: z.enum(["individual", "corporate", "institution"], { required_error: "Please select donor type" }),
   citizenship: z.enum(["indian", "foreign"], { required_error: "Please select citizenship" }),
-  fullName: z.string().trim().min(2, "Full name is required"),
+  fullName: z.string().trim().min(2, "Full name / Organisation name is required"),
   email: z.string().trim().email("Enter a valid email address"),
   phone: z.string().trim().min(10, "Enter a valid phone number"),
   address: z.string().trim().min(5, "Address is required"),
@@ -169,6 +173,7 @@ function generateReceiptPDF(data: ReceiptData) {
     "<div class=meta><span><strong>Receipt No.:</strong> " + data.receiptNo + "</span><span><strong>Date:</strong> " + data.date + "</span></div>" +
     "<div class='sec sec-g'><div class=sec-title>Donor Information</div>" +
     "<div class=row><span class=lbl>Full Name:</span><span class=val>" + data.fullName + "</span></div>" +
+    "<div class=row><span class=lbl>Donor Type:</span><span class=val style='font-weight:700'>" + (data.donorType === "individual" ? "Individual" : data.donorType === "corporate" ? "Corporate" : "Institution") + "</span></div>" +
     "<div class=row><span class=lbl>Email Address:</span><span class=val>" + data.email + "</span></div>" +
     "<div class=row><span class=lbl>Phone Number:</span><span class=val>" + data.phone + "</span></div>" +
     "<div class=row><span class=lbl>Address:</span><span class=val>" + data.address + "</span></div>" +
@@ -341,9 +346,10 @@ function Step1DonorInfo({
 }) {
   const { register, formState: { errors }, watch, setValue, trigger } = form;
   const citizenship = watch("citizenship");
+  const donorType = watch("donorType");
 
   const handleNext = async () => {
-    const valid = await trigger(["citizenship", "fullName", "email", "phone", "address"]);
+    const valid = await trigger(["donorType", "citizenship", "fullName", "email", "phone", "address"]);
     if (valid) onNext();
   };
 
@@ -357,6 +363,35 @@ function Step1DonorInfo({
       </h3>
 
       <div className="space-y-4">
+        {/* Donor Type */}
+        <div>
+          <label className="block text-xs font-semibold text-slate-600 mb-2">
+            Donor Type <span className="text-red-500">*</span>
+          </label>
+          <div className="grid grid-cols-3 gap-3">
+            {([
+              { val: "individual" as const, label: "Individual", icon: User },
+              { val: "corporate" as const, label: "Corporate", icon: Briefcase },
+              { val: "institution" as const, label: "Institution", icon: Landmark },
+            ]).map(({ val, label, icon: Icon }) => (
+              <button
+                key={val}
+                type="button"
+                onClick={() => setValue("donorType", val, { shouldValidate: true })}
+                className={`h-14 rounded-xl border-2 font-semibold text-sm transition-all flex flex-col items-center justify-center gap-1 ${
+                  donorType === val
+                    ? "border-brand-green bg-brand-green/5 text-brand-green shadow-sm"
+                    : "border-slate-200 text-slate-500 hover:border-slate-300"
+                }`}
+              >
+                <Icon className="w-4 h-4" />
+                {label}
+              </button>
+            ))}
+          </div>
+          <FieldError msg={errors.donorType?.message} />
+        </div>
+
         {/* Citizenship */}
         <div>
           <label className="block text-xs font-semibold text-slate-600 mb-2">
@@ -382,8 +417,8 @@ function Step1DonorInfo({
 
         {/* Name + Email */}
         <div className="grid sm:grid-cols-2 gap-4">
-          <InputField label="Full Name" required error={errors.fullName?.message}>
-            <input {...register("fullName")} placeholder="Your full legal name" className={inputCls} />
+          <InputField label={donorType === "individual" ? "Full Name" : donorType === "corporate" ? "Company Name" : "Institution Name"} required error={errors.fullName?.message}>
+            <input {...register("fullName")} placeholder={donorType === "corporate" ? "ABC Pvt. Ltd." : donorType === "institution" ? "XYZ Trust / Foundation" : "Your full legal name"} className={inputCls} />
           </InputField>
           <InputField label="Email Address" required error={errors.email?.message}>
             <input {...register("email")} type="email" placeholder="you@example.com" className={inputCls} />
