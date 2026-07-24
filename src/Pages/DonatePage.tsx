@@ -107,9 +107,14 @@ const donorSchema = z.object({
 
 type DonorFormData = z.infer<typeof donorSchema>;
 
+type ReceiptData = DonorFormData & {
+  receiptNo: string;
+  date: string;
+};
+
 // --- Receipt & Donor Card - open as printable HTML in new window ---
 
-function generateReceiptPDF(data) {
+function generateReceiptPDF(data: ReceiptData) {
   const tier = getDonorTier(data.amount);
   const tierBg = tier.label === "Platinum" ? "#ede9fe" : tier.label === "Gold" ? "#fef3c7" : "#f1f5f9";
   const tierTxt = tier.label === "Platinum" ? "#5b21b6" : tier.label === "Gold" ? "#92400e" : "#334155";
@@ -191,7 +196,7 @@ function generateReceiptPDF(data) {
 
 // --- Donor Card Generator ---
 
-function generateDonorCardPDF(data) {
+function generateDonorCardPDF(data: ReceiptData) {
   const tier = getDonorTier(data.amount);
   const cardBg = tier.label === "Platinum" ? "linear-gradient(135deg,#5b21b6,#7c3aed)" : tier.label === "Gold" ? "linear-gradient(135deg,#b45309,#d97706)" : "linear-gradient(135deg,#374151,#4b5563)";
 

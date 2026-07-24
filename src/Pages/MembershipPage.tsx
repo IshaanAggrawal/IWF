@@ -18,6 +18,7 @@ import {
   Footer, Header, NotificationTicker, RoleFormModal, UtilityBar,
 } from "@/components/layout/SiteLayout";
 import type { RoleType } from "@/components/forms/RoleFormModal";
+import { MembershipPolicyModal } from "@/components/membership/MembershipPolicyModal";
 
 // ══════════════════════════════════════════════════════════════════
 //  TYPES
@@ -153,11 +154,11 @@ const INDIAN_STATES = [
 
 const STATE_DISTRICTS: Record<string, string[]> = {
   Bihar: [
-    "Araria","Arwal","Aurangabad","Banka","Begusarai","Bhagalpur","Bhojpur","Buxar",
-    "Darbhanga","East Champaran","Gaya","Gopalganj","Jamui","Jehanabad","Kaimur",
-    "Katihar","Khagaria","Kishanganj","Lakhisarai","Madhepura","Madhubani","Munger",
-    "Muzaffarpur","Nalanda","Nawada","Patna","Purnia","Rohtas","Saharsa","Samastipur",
-    "Saran","Sheikhpura","Sheohar","Sitamarhi","Siwan","Supaul","Vaishali","West Champaran"
+    "Araria", "Arwal", "Aurangabad", "Banka", "Begusarai", "Bhagalpur", "Bhojpur", "Buxar",
+    "Darbhanga", "East Champaran", "Gaya", "Gopalganj", "Jamui", "Jehanabad", "Kaimur",
+    "Katihar", "Khagaria", "Kishanganj", "Lakhisarai", "Madhepura", "Madhubani", "Munger",
+    "Muzaffarpur", "Nalanda", "Nawada", "Patna", "Purnia", "Rohtas", "Saharsa", "Samastipur",
+    "Saran", "Sheikhpura", "Sheohar", "Sitamarhi", "Siwan", "Supaul", "Vaishali", "West Champaran"
   ],
   Delhi: ["Central Delhi", "East Delhi", "New Delhi", "North Delhi", "North East Delhi", "North West Delhi", "Shahdara", "South Delhi", "South East Delhi", "South West Delhi", "West Delhi"],
   Jharkhand: ["Ranchi", "Dhanbad", "Jamshedpur", "Bokaro", "Hazaribagh", "Deoghar", "Giridih", "Dumka", "Palamu"],
@@ -462,16 +463,14 @@ function StepIndicator({ step }: { step: number }) {
         return (
           <div key={s} className="flex items-center">
             <div className="flex flex-col items-center">
-              <div className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-extrabold transition-all shrink-0 shadow-sm ${
-                isDone ? "bg-brand-green text-white shadow-green-200" :
+              <div className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-extrabold transition-all shrink-0 shadow-sm ${isDone ? "bg-brand-green text-white shadow-green-200" :
                 isActive ? "bg-brand-orange text-white scale-110 shadow-lg shadow-orange-200" :
-                "bg-slate-100 text-slate-400"
-              }`}>
+                  "bg-slate-100 text-slate-400"
+                }`}>
                 {isDone ? <Check className="w-4 h-4" /> : s}
               </div>
-              <span className={`text-[10px] mt-1.5 font-semibold whitespace-nowrap hidden sm:block ${
-                isActive ? "text-brand-orange" : isDone ? "text-brand-green" : "text-slate-400"
-              }`}>{label}</span>
+              <span className={`text-[10px] mt-1.5 font-semibold whitespace-nowrap hidden sm:block ${isActive ? "text-brand-orange" : isDone ? "text-brand-green" : "text-slate-400"
+                }`}>{label}</span>
             </div>
             {i < steps.length - 1 && (
               <div className={`w-8 sm:w-16 h-0.5 mb-5 mx-1 transition-all duration-500 ${isDone ? "bg-brand-green" : "bg-slate-200"}`} />
@@ -558,7 +557,6 @@ function MembersAndDonorsHero({ activeTab, setActiveTab }: { activeTab: PageTab;
     <section id="community-tabs" className="relative bg-[#0b1f3b] text-white pt-14 pb-8 overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-24 right-8 w-96 h-96 rounded-full bg-brand-orange/10 blur-3xl" />
-        <div className="absolute top-8 -left-20 w-64 h-64 rounded-full bg-green-400/10 blur-3xl" />
         <div className="absolute bottom-4 right-1/3 w-48 h-48 rounded-full bg-blue-400/8 blur-2xl" />
         {/* subtle dot pattern */}
         <div className="absolute inset-0 opacity-5" style={{
@@ -584,11 +582,10 @@ function MembersAndDonorsHero({ activeTab, setActiveTab }: { activeTab: PageTab;
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-6 sm:px-8 py-2.5 rounded-full text-sm font-bold transition-all duration-200 ${
-                activeTab === tab
-                  ? "bg-white text-[#0b1f3b] shadow-lg"
-                  : "text-white/70 hover:text-white hover:bg-white/10"
-              }`}
+              className={`px-6 sm:px-8 py-2.5 rounded-full text-sm font-bold transition-all duration-200 ${activeTab === tab
+                ? "bg-white text-[#0b1f3b] shadow-lg"
+                : "text-white/70 hover:text-white hover:bg-white/10"
+                }`}
             >
               {tab}
             </button>
@@ -865,11 +862,10 @@ function MembersTab({ onRenewClick }: { onRenewClick: () => void }) {
             </button>
             {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => i + 1).map(p => (
               <button key={p} onClick={() => setCurrentPage(p)}
-                className={`w-8 h-8 rounded-lg border text-xs font-bold transition ${
-                  currentPage === p
-                    ? "bg-brand-green border-brand-green text-white shadow-sm"
-                    : "border-slate-200 text-slate-600 hover:border-brand-green bg-white"
-                }`}>
+                className={`w-8 h-8 rounded-lg border text-xs font-bold transition ${currentPage === p
+                  ? "bg-brand-green border-brand-green text-white shadow-sm"
+                  : "border-slate-200 text-slate-600 hover:border-brand-green bg-white"
+                  }`}>
                 {p}
               </button>
             ))}
@@ -1035,7 +1031,7 @@ function DonorsTab({ isTopDonors = false }: { isTopDonors?: boolean }) {
 
   const sortedDonors = useMemo(() =>
     [...MOCK_DONORS].sort((a, b) => b.amount - a.amount),
-  []);
+    []);
 
   const filteredDonors = useMemo(() => sortedDonors.filter(d => {
     const matchSearch = !search || d.name.toLowerCase().includes(search.toLowerCase());
@@ -1193,11 +1189,9 @@ function DonorsTab({ isTopDonors = false }: { isTopDonors?: boolean }) {
 
 function BecomeMemberCTA({ onApplyNow }: { onApplyNow: (cat: MemberCategory) => void }) {
   return (
-    <section className="py-16 relative overflow-hidden"
-      style={{ background: "linear-gradient(180deg, #f8fafc 0%, #eef5f0 60%, #f8fafc 100%)" }}>
+    <section className="py-16 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-64 h-64 rounded-full bg-green-100/50 blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-48 h-48 rounded-full bg-blue-100/40 blur-3xl" />
+        {/* background blurs removed */}
       </div>
 
       <div className="max-w-5xl mx-auto px-4 relative z-10">
@@ -1444,9 +1438,8 @@ function Step2MembershipDetails({
             return (
               <button key={p} type="button"
                 onClick={() => setValue("membershipPeriod", p, { shouldValidate: true })}
-                className={`p-4 rounded-xl border-2 transition-all text-left ${
-                  isSelected ? "border-brand-green bg-brand-green/5" : "border-slate-200 bg-white hover:border-slate-300"
-                }`}>
+                className={`p-4 rounded-xl border-2 transition-all text-left ${isSelected ? "border-brand-green bg-brand-green/5" : "border-slate-200 bg-white hover:border-slate-300"
+                  }`}>
                 <p className={`font-extrabold text-base ${isSelected ? "text-brand-green" : "text-slate-700"}`}>
                   {p} Year{p === "2" ? "s" : ""}
                 </p>
@@ -1503,6 +1496,7 @@ function Step3ContributionDetails({
   photoPreview: string | null; setPhotoPreview: (v: string | null) => void;
 }) {
   const { register, watch, setValue, formState: { errors }, trigger } = form;
+  const [showTerms, setShowTerms] = useState(false);
   const category = watch("category");
   const period = watch("membershipPeriod") || "1";
   const consentDisplay = watch("consentDisplay");
@@ -1601,11 +1595,10 @@ function Step3ContributionDetails({
             {(["yes", "no"] as const).map(val => (
               <button key={val} type="button"
                 onClick={() => setValue("consentDisplay", val, { shouldValidate: true })}
-                className={`flex-1 py-2.5 rounded-xl border-2 text-sm font-bold transition-all ${
-                  consentDisplay === val
-                    ? val === "yes" ? "border-brand-green bg-brand-green text-white" : "border-slate-500 bg-slate-700 text-white"
-                    : "border-slate-200 bg-white text-slate-600 hover:border-slate-300"
-                }`}>
+                className={`flex-1 py-2.5 rounded-xl border-2 text-sm font-bold transition-all ${consentDisplay === val
+                  ? val === "yes" ? "border-brand-green bg-brand-green text-white" : "border-slate-500 bg-slate-700 text-white"
+                  : "border-slate-200 bg-white text-slate-600 hover:border-slate-300"
+                  }`}>
                 {val === "yes" ? "✓ Yes, you may display my name on the website." : "✗ No, do not display my name."}
               </button>
             ))}
@@ -1621,15 +1614,18 @@ function Step3ContributionDetails({
           <div className="flex items-start gap-2.5">
             <input id="disclaimer-cb" type="checkbox" checked={!!disclaimerAccepted}
               onChange={e => setValue("disclaimerAccepted", e.target.checked, { shouldValidate: true })}
-              className="mt-0.5 h-4 w-4 rounded border-slate-300 text-brand-green focus:ring-brand-green" />
+              className="mt-0.5 h-4 w-4 rounded border-slate-300 text-brand-green focus:ring-brand-green cursor-pointer" />
             <label htmlFor="disclaimer-cb" className="text-xs text-slate-700 leading-relaxed cursor-pointer select-none">
               I hereby declare that the information provided above is true and correct. I have read and agree to the{" "}
-              <span className="font-semibold text-slate-800">Membership Terms &amp; Conditions</span> of Islah Welfare Foundation (IWF). I understand that the membership fee is valid and non-refundable after 14 days.{" "}
+              <button type="button" onClick={(e) => { e.preventDefault(); setShowTerms(true); }} className="font-semibold text-brand-green hover:underline">Membership Terms &amp; Conditions</button> of Islah Welfare Foundation (IWF). I understand that the membership fee is valid and non-refundable after 14 days.{" "}
               <span className="text-red-500">*</span>
             </label>
           </div>
           <FieldError msg={errors.disclaimerAccepted?.message} />
         </div>
+
+        {/* Terms Modal */}
+        <MembershipPolicyModal isOpen={showTerms} onClose={() => setShowTerms(false)} />
       </div>
 
       <div className="mt-8 flex items-center justify-between">
@@ -1657,7 +1653,7 @@ function Step4ReviewPayment({
   memberId: string; joinDate: string; validTill: string;
   onBack: () => void; onSubmit: () => void;
 }) {
-  const { watch, setValue, register } = form;
+  const { watch, setValue, register, formState: { errors } } = form;
   const data = form.getValues();
   const category = watch("category");
   const paymentMode = watch("paymentMode");
@@ -1748,9 +1744,8 @@ function Step4ReviewPayment({
           ]).map(({ mode, Icon, label, sub }) => (
             <button key={mode} type="button"
               onClick={() => setValue("paymentMode", mode)}
-              className={`flex flex-col items-center gap-1.5 py-3.5 rounded-xl border-2 transition-all text-center ${
-                paymentMode === mode ? "border-brand-green bg-brand-green/5" : "border-slate-200 hover:border-slate-300 bg-white"
-              }`}>
+              className={`flex flex-col items-center gap-1.5 py-3.5 rounded-xl border-2 transition-all text-center ${paymentMode === mode ? "border-brand-green bg-brand-green/5" : "border-slate-200 hover:border-slate-300 bg-white"
+                }`}>
               <Icon className={`w-5 h-5 ${paymentMode === mode ? "text-brand-green" : "text-slate-400"}`} />
               <span className={`text-[10px] font-bold leading-tight ${paymentMode === mode ? "text-brand-green" : "text-slate-700"}`}>{label}</span>
               <span className="text-[9px] text-slate-400 leading-tight">{sub}</span>
@@ -2159,11 +2154,9 @@ function ApplicationFormSection({ preSelectedCategory, onViewMembership }: { pre
   const data = form.getValues();
 
   return (
-    <section id="register" className="py-16 relative overflow-hidden"
-      style={{ background: "linear-gradient(180deg, #f0f4f8 0%, #e8f4ec 50%, #f0f4f8 100%)" }}>
+    <section id="register" className="py-16 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/3 w-80 h-80 rounded-full bg-green-100/40 blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-64 h-64 rounded-full bg-blue-100/30 blur-3xl" />
+        {/* background blurs removed */}
       </div>
 
       <div className="max-w-6xl mx-auto px-4 relative z-10">
@@ -2303,9 +2296,8 @@ function MemberCardPreviewSection() {
               const isActive = activeCard === cat;
               return (
                 <button key={cat} onClick={() => setActiveCard(cat)}
-                  className={`flex items-center gap-3 px-5 py-3 rounded-xl border-2 transition-all text-left ${
-                    isActive ? "border-white/40 bg-white/10 shadow-lg" : "border-white/10 hover:border-white/20 hover:bg-white/5"
-                  }`}>
+                  className={`flex items-center gap-3 px-5 py-3 rounded-xl border-2 transition-all text-left ${isActive ? "border-white/40 bg-white/10 shadow-lg" : "border-white/10 hover:border-white/20 hover:bg-white/5"
+                    }`}>
                   <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
                     style={{ background: `linear-gradient(135deg, ${cfg.color}, ${cfg.darkColor})` }}>
                     <Icon className="w-4 h-4 text-white" />
@@ -2585,7 +2577,7 @@ function RenewalSection({
   };
 
   const handleProceedPayment = () => setStep("payment");
-  
+
   const handleComplete = () => {
     if (result) {
       const newValidTill = addYears(new Date().toISOString().split("T")[0], Number(selectedPeriod));
@@ -3011,11 +3003,13 @@ function YourMembershipTab({
 export default function MembershipPage() {
   const [activeTab, setActiveTab] = useState<PageTab>("Members");
   const [preSelectedCategory, setPreSelectedCategory] = useState<MemberCategory | null>(null);
+  const [showForm, setShowForm] = useState(false);
   const [activeModal, setActiveModal] = useState<RoleType | null>(null);
   const [loadedMember, setLoadedMember] = useState<MockMember | null>(null);
 
   const handleApplyNow = (cat: MemberCategory) => {
     setPreSelectedCategory(cat);
+    setShowForm(true);
     setTimeout(() => {
       document.getElementById("register")?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 50);
@@ -3077,10 +3071,25 @@ export default function MembershipPage() {
         <BecomeMemberCTA onApplyNow={handleApplyNow} />
 
         {/* ── Application Form */}
-        <ApplicationFormSection
-          preSelectedCategory={preSelectedCategory}
-          onViewMembership={() => handleTabChange("Your Membership")}
-        />
+        <AnimatePresence>
+          {showForm && (
+            <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.4 }}>
+              <div className="relative">
+                <button
+                  onClick={() => setShowForm(false)}
+                  className="absolute top-4 right-4 z-50 p-2 bg-white rounded-full shadow-md text-slate-500 hover:text-slate-800 hover:bg-slate-50 transition"
+                  title="Close Form"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+                <ApplicationFormSection
+                  preSelectedCategory={preSelectedCategory}
+                  onViewMembership={() => handleTabChange("Your Membership")}
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
 
       <Footer onOpenModal={setActiveModal} />
