@@ -61,11 +61,10 @@ export const MEGA_DATA: Record<string, MegaSection> = {
       "Legal Status & Registration",
       "Members & Donors",
       "Our Partners & Donors",
-      "Membership Policy",
     ],
   },
   "What We Do": {
-    cols: 3,
+    cols: 4,
     items: [
       "Education",
       "Health Care",
@@ -82,7 +81,7 @@ export const MEGA_DATA: Record<string, MegaSection> = {
     items: ["View All Programs"],
   },
   Impact: {
-    cols: 2,
+    cols: 3,
     items: [
       "Our Impact",
       "Outcomes",
@@ -93,11 +92,11 @@ export const MEGA_DATA: Record<string, MegaSection> = {
     ],
   },
   "Media & Updates": {
-    cols: 2,
+    cols: 3,
     items: ["News & Events", "Latest Updates", "Newsletters", "Publications", "Press Release", "Gallery"],
   },
   "Get Involved": {
-    cols: 2,
+    cols: 3,
     items: [
       "Volunteer With Us",
       "Partner With Us",
@@ -270,12 +269,12 @@ export function Header() {
         </div>
       </div>
       {/* Dark Themed Menu Navbar (Sticky) */}
-      <header className="bg-[#071527] text-white sticky top-0 z-50 shadow-md transition-all duration-200 py-1">
-        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between relative">
+      <header className="bg-[#071527] text-white sticky top-0 z-50 shadow-md transition-all duration-200 py-1 relative">
+        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
 
           {/* Left Group: Nav Links */}
           <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
-            {NAV_ITEMS.map((item, idx) => {
+            {NAV_ITEMS.map((item) => {
               const hasMega = !!MEGA_DATA[item];
               const isActive = activeMenu === item;
               const label = item === "Home" ? (
@@ -286,18 +285,9 @@ export function Header() {
                 item
               );
 
-              // Dynamic width and alignment to prevent layout overflow
-              let dropdownWidth = "w-60";
-              if (hasMega) {
-                if (MEGA_DATA[item].cols === 2) dropdownWidth = "w-[360px]";
-                if (MEGA_DATA[item].cols === 3) dropdownWidth = "w-[540px]";
-              }
-              const alignClass = idx >= 5 ? "right-0" : "left-0";
-
               return (
                 <div
                   key={item}
-                  className="relative"
                   onMouseEnter={() => hasMega && openMenu(item)}
                   onMouseLeave={hasMega ? scheduleClose : undefined}
                 >
@@ -324,47 +314,6 @@ export function Header() {
                     {/* Sliding underline */}
                     <span className="absolute bottom-1 left-4 right-4 h-[2px] bg-brand-orange scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-200 ease-out" />
                   </a>
-
-                  {/* Mega Menu Dropdown Window positioned under nav item */}
-                  {isActive && hasMega && (
-                    <div
-                      className={`absolute ${alignClass} top-full mt-1.5 bg-white border border-gray-200 shadow-2xl rounded-xl p-5 z-50 text-slate-800 animate-in fade-in slide-in-from-top-1 duration-150 ${dropdownWidth}`}
-                      onMouseEnter={cancelClose}
-                      onMouseLeave={scheduleClose}
-                    >
-                      <div
-                        className="grid gap-5"
-                        style={{ gridTemplateColumns: `repeat(${MEGA_DATA[item].cols}, minmax(0, 1fr))` }}
-                      >
-                        {Array.from({ length: MEGA_DATA[item].cols }).map((_, colIndex) => {
-                          const subItems = MEGA_DATA[item].items;
-                          const colsCount = MEGA_DATA[item].cols;
-                          const itemsPerCol = Math.ceil(subItems.length / colsCount);
-                          const colItems = subItems.slice(colIndex * itemsPerCol, (colIndex + 1) * itemsPerCol);
-                          return (
-                            <div key={colIndex} className="flex flex-col gap-2.5">
-                              {colItems.map((subItem, subIdx) => {
-                                return (
-                                  <a
-                                    key={subItem}
-                                    href={getMegaHref(item, subItem)}
-                                    className="flex items-center gap-1.5 text-slate-900 font-bold hover:text-[#0b1f3b] text-sm hover:translate-x-1 transition-all duration-200"
-                                    style={{
-                                      transitionDelay: `${(colIndex * 5 + subIdx) * 15}ms`,
-                                    }}
-                                    onClick={() => setActiveMenu(null)}
-                                  >
-                                    <span className="text-brand-orange text-sm font-semibold">→</span>
-                                    {subItem}
-                                  </a>
-                                );
-                              })}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
                 </div>
               );
             })}
@@ -387,6 +336,56 @@ export function Header() {
             </button>
           </div>
         </div>
+
+        {/* Full-Width Mega Menu Dropdown Window */}
+        {activeMenu && MEGA_DATA[activeMenu] && (
+          <div
+            className="hidden lg:block absolute top-full left-0 right-0 w-full bg-white border-b-2 border-brand-orange shadow-2xl text-slate-800 z-50 animate-in fade-in slide-in-from-top-1 duration-150 py-6 px-4 md:px-8"
+            onMouseEnter={cancelClose}
+            onMouseLeave={scheduleClose}
+          >
+            <div className="max-w-7xl mx-auto">
+              <div className="flex items-center justify-between mb-4 pb-2 border-b border-gray-100">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-brand-orange"></span>
+                  <span className="text-xs font-extrabold uppercase tracking-widest text-[#0b1f3b]">
+                    {activeMenu}
+                  </span>
+                </div>
+                <span className="text-xs text-gray-400 font-medium">Quick Links</span>
+              </div>
+              <div
+                className="grid gap-6 md:gap-8"
+                style={{ gridTemplateColumns: `repeat(${MEGA_DATA[activeMenu].cols}, minmax(0, 1fr))` }}
+              >
+                {Array.from({ length: MEGA_DATA[activeMenu].cols }).map((_, colIndex) => {
+                  const subItems = MEGA_DATA[activeMenu].items;
+                  const colsCount = MEGA_DATA[activeMenu].cols;
+                  const itemsPerCol = Math.ceil(subItems.length / colsCount);
+                  const colItems = subItems.slice(colIndex * itemsPerCol, (colIndex + 1) * itemsPerCol);
+                  return (
+                    <div key={colIndex} className="flex flex-col gap-3">
+                      {colItems.map((subItem, subIdx) => (
+                        <a
+                          key={subItem}
+                          href={getMegaHref(activeMenu, subItem)}
+                          className="flex items-center gap-2 text-slate-900 font-bold hover:text-brand-orange text-sm md:text-base hover:translate-x-1.5 transition-all duration-200 group"
+                          style={{
+                            transitionDelay: `${(colIndex * 3 + subIdx) * 15}ms`,
+                          }}
+                          onClick={() => setActiveMenu(null)}
+                        >
+                          <span className="text-brand-orange text-sm font-semibold group-hover:translate-x-0.5 transition-transform">→</span>
+                          {subItem}
+                        </a>
+                      ))}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Mobile Drawer */}
