@@ -40,10 +40,14 @@ export async function submitApplication(req: Request, res: Response): Promise<vo
 
     await application.save();
 
+    const shortId = application._id.toString().slice(-6).toUpperCase();
+    const formattedAppId = `ISLAH-${type.toUpperCase().slice(0, 3)}-${new Date().getFullYear()}-${shortId}`;
+
     res.status(201).json({
       success: true,
       message: `Your ${type} application has been submitted successfully. Our team will review and get in touch with you.`,
-      applicationId: application._id,
+      applicationId: formattedAppId,
+      id: application._id,
     });
   } catch (error) {
     console.error("submitApplication error:", error);
