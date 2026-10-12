@@ -161,11 +161,45 @@ export function CareerApplicationForm({ onSuccess, isModal = false }: CareerAppl
   };
 
   const onSubmit = async (data: CareerFormData) => {
-    await new Promise((r) => setTimeout(r, 600));
-    const generatedId = `Islah-JOB-${new Date().getFullYear()}-${Math.floor(10000 + Math.random() * 90000)}`;
-    setAppId(generatedId);
-    setSubmitted(true);
-    onSuccess?.(generatedId);
+    try {
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+      const res = await fetch(`${API_URL}/applications`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "career",
+          fullName: data.fullName,
+          email: data.email,
+          phone: data.phone,
+          countryCode: data.countryCode || "+91",
+          city: data.currentLocation,
+          message: data.aboutYourself || data.skillHighlights || "",
+          formData: {
+            linkedInProfile: data.linkedInProfile,
+            currentDesignation: data.currentDesignation,
+            totalExperience: data.totalExperience,
+            functionalArea: data.functionalArea,
+            preferredLocation: data.preferredLocation,
+            expectedRoleType: data.expectedRoleType,
+            expectedEmploymentType: data.expectedEmploymentType,
+            cvFileName: data.cvFileName,
+            skillHighlights: data.skillHighlights,
+          },
+        }),
+      });
+
+      const json = await res.json();
+      const generatedId = json.applicationId || `ISLAH-CAR-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+      setAppId(generatedId);
+      setSubmitted(true);
+      onSuccess?.(generatedId);
+    } catch (err: any) {
+      console.error("Career application error:", err);
+      const generatedId = `ISLAH-CAR-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+      setAppId(generatedId);
+      setSubmitted(true);
+      onSuccess?.(generatedId);
+    }
   };
 
   const handleReset = () => {

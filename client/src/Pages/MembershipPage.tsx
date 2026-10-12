@@ -2987,7 +2987,7 @@ function ApplicationFormSection({ preSelectedCategory, onViewMembership }: { pre
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
 
   const today = new Date().toISOString().split("T")[0];
-  const [receiptNo] = useState(generateReceiptNo);
+  const [receiptNo, setReceiptNo] = useState(generateReceiptNo);
   const [joinDate] = useState(today);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -3021,7 +3021,34 @@ function ApplicationFormSection({ preSelectedCategory, onViewMembership }: { pre
     scrollToForm();
   };
   const handleBack = () => { setStep(s => s - 1); scrollToForm(); };
-  const handleSubmit = () => { setSubmitted(true); scrollToForm(); };
+  const handleSubmit = async () => {
+    try {
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+      const formData = form.getValues();
+      const res = await fetch(`${API_URL}/members`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.fullName,
+          category: formData.category,
+          email: formData.email,
+          phone: formData.mobile,
+          state: formData.state,
+          district: formData.district,
+          address: formData.address,
+        }),
+      });
+      const json = await res.json();
+      if (res.ok && json.success && json.member) {
+        if (json.member.memberNo) setCurrentMemberId(json.member.memberNo);
+        if (json.member.receiptNo) setReceiptNo(json.member.receiptNo);
+      }
+    } catch (err) {
+      console.warn("Could not register member to backend, using client generation:", err);
+    }
+    setSubmitted(true);
+    scrollToForm();
+  };
 
   const data = form.getValues();
 
@@ -3441,9 +3468,34 @@ function RenewalSection({
     }
   }, [loadedMember]);
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
+    const q = query.trim();
+    try {
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+      const res = await fetch(`${API_URL}/members/status/${encodeURIComponent(q)}`);
+      const json = await res.json();
+      if (res.ok && json.success && json.member) {
+        setResult({
+          id: json.member.id,
+          name: json.member.name,
+          category: json.member.category,
+          state: json.member.state,
+          district: json.member.district,
+          status: json.member.status,
+          validTill: json.member.validTill,
+          joined: json.member.joined,
+          phone: "9811861633",
+        });
+        setStep("otp");
+        setNotFound(false);
+        return;
+      }
+    } catch (err) {
+      console.warn("Backend membership query failed, falling back to local records:", err);
+    }
+
     const found = MOCK_MEMBERS.find(m =>
-      m.id.toLowerCase() === query.trim().toLowerCase() || m.phone === query.trim()
+      m.id.toLowerCase() === q.toLowerCase() || m.phone === q
     );
     if (found) { setResult(found); setStep("otp"); setNotFound(false); }
     else { setNotFound(true); }

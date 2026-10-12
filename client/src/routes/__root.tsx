@@ -149,7 +149,7 @@ function RootComponent() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isHomepage = pathname === "/";
 
-  const handleMsgSubmit = (e: React.FormEvent) => {
+  const handleMsgSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const errors: { [k: string]: string } = {};
     if (!formData.name.trim() || /[0-9]/.test(formData.name)) {
@@ -170,11 +170,35 @@ function RootComponent() {
     }
     setFormErrors({});
     setFormStatus("loading");
-    // Simulate API submission
-    setTimeout(() => {
+
+    try {
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+      const res = await fetch(`${API_URL}/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          phone: formData.mobile.trim(),
+          countryCode: formData.countryCode || "+91",
+          subject: "Quick Float Message",
+          message: formData.message.trim(),
+          source: "Quick Float Modal",
+        }),
+      });
+
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        throw new Error(json.message || "Failed to submit message");
+      }
+
       setFormStatus("success");
       setFormData({ name: "", email: "", countryCode: "+91", mobile: "", message: "" });
-    }, 1200);
+    } catch (err: any) {
+      console.error("Float message error:", err);
+      setFormStatus("idle");
+      setFormErrors({ form: err.message || "Network error. Please try again." });
+    }
   };
 
   return (
@@ -275,6 +299,11 @@ function RootComponent() {
                 </div>
               ) : (
                 <form onSubmit={handleMsgSubmit} className="flex flex-col gap-2.5 notranslate" translate="no">
+                  {formErrors.form && (
+                    <div className="p-2 text-[11px] bg-red-50 text-red-600 border border-red-200 rounded-lg">
+                      {formErrors.form}
+                    </div>
+                  )}
                   <div>
                     <label htmlFor="msg-name" className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-1">
                       Your Name <span className="text-red-500">*</span>

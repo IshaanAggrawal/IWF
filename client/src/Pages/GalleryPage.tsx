@@ -27,6 +27,7 @@ import {
   RoleFormModal,
 } from "@/components/layout/SiteLayout";
 import type { RoleType } from "@/components/forms/RoleFormModal";
+import { useMedia } from "@/services/mediaService";
 
 // Assets
 import gallery1 from "@/assets/gallery-1.jpg";
@@ -231,6 +232,7 @@ export default function GalleryPage() {
   const [selectedCategory, setSelectedCategory] = useState<SectorCategory>("all");
   const [activeImage, setActiveImage] = useState<GalleryItem | null>(null);
   const [activeModal, setActiveModal] = useState<RoleType | null>(null);
+  const { getMedia } = useMedia("gallery");
 
   const filteredItems =
     selectedCategory === "all"
@@ -317,7 +319,7 @@ export default function GalleryPage() {
               >
                 <div className="relative h-52 overflow-hidden bg-slate-900">
                   <img
-                    src={item.image}
+                    src={getMedia(item.id, item.image)}
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
                   />
@@ -399,7 +401,7 @@ export default function GalleryPage() {
 
               <div className="relative max-h-[60vh] bg-black flex items-center justify-center overflow-hidden">
                 <img
-                  src={activeImage.image}
+                  src={getMedia(activeImage.id, activeImage.image)}
                   alt={activeImage.title}
                   className="w-full h-full object-contain max-h-[60vh]"
                 />

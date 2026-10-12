@@ -34,6 +34,7 @@ import { PatientCard } from "@/components/healthcare/PatientCard";
 import { URGENT_PATIENTS } from "@/content/patients";
 import newLogo from "@/assets/new logo.png";
 import { NotificationTicker, UtilityBar, Header, Footer } from "@/components/layout/SiteLayout";
+import { useMedia } from "@/services/mediaService";
 
 // ─── Shared Components ────────────────────────────────────────────────────────
 
@@ -351,12 +352,13 @@ function UrgentPatientsSection({ lang }: LanguageProp) {
 
 function FeaturedCauses({ lang }: LanguageProp) {
   const t = TRANSLATIONS[lang];
+  const { getMedia } = useMedia();
   const causes = [
-    { img: causeEdu, icon: BookOpen, title: "Education", desc: lang === "en" ? "Scholarships, school kits & learning centres keeping children in school." : "छात्रवृत्ति, स्कूल किट और लर्निंग सेंटर बच्चों को स्कूल से जोड़े रखने के लिए।", route: "/programs/education" },
-    { img: causeMed, icon: Stethoscope, title: "Health", desc: lang === "en" ? "Free health camps, essential medicines & emergency treatment." : "मुफ़्त स्वास्थ्य शिविर, आवश्यक दवाएं और आपातकालीन चिकित्सा सहायता।", route: "/programs/healthcare" },
-    { img: causeWomen, icon: Users, title: "Women Empower", desc: lang === "en" ? "Self-Help Groups, vocational skills & financial literacy programs." : "स्वयं सहायता समूह, व्यावसायिक कौशल और वित्तीय साक्षरता कार्यक्रम।", route: "/programs/women-empowerment" },
-    { img: thAgr, icon: Sprout, title: "Rural Livelihoods", desc: lang === "en" ? "Sanitation, clean water and agricultural empowerment for self-reliant villages." : "आत्मनिर्भर गांवों के लिए स्वच्छता, स्वच्छ पानी और कृषि सशक्तिकरण।", route: "/programs/agriculture" },
-    { img: thEnt, icon: Megaphone, title: "Relief & Rehabilitation", desc: lang === "en" ? "Disaster response, emergency humanitarian aid, and rehabilitation assistance." : "आपदा प्रतिक्रिया, आपातकालीन मानवीय सहायता और पुनर्वास सहायता।", route: "/programs/relief-and-rehabilitation" },
+    { img: getMedia("cause-education", causeEdu), icon: BookOpen, title: "Education", desc: lang === "en" ? "Scholarships, school kits & learning centres keeping children in school." : "छात्रवृत्ति, स्कूल किट और लर्निंग सेंटर बच्चों को स्कूल से जोड़े रखने के लिए।", route: "/programs/education" },
+    { img: getMedia("cause-medical", causeMed), icon: Stethoscope, title: "Health", desc: lang === "en" ? "Free health camps, essential medicines & emergency treatment." : "मुफ़्त स्वास्थ्य शिविर, आवश्यक दवाएं और आपातकालीन चिकित्सा सहायता।", route: "/programs/healthcare" },
+    { img: getMedia("cause-women", causeWomen), icon: Users, title: "Women Empower", desc: lang === "en" ? "Self-Help Groups, vocational skills & financial literacy programs." : "स्वयं सहायता समूह, व्यावसायिक कौशल और वित्तीय साक्षरता कार्यक्रम।", route: "/programs/women-empowerment" },
+    { img: getMedia("cause-agriculture", thAgr), icon: Sprout, title: "Rural Livelihoods", desc: lang === "en" ? "Sanitation, clean water and agricultural empowerment for self-reliant villages." : "आत्मनिर्भर गांवों के लिए स्वच्छता, स्वच्छ पानी और कृषि सशक्तिकरण।", route: "/programs/agriculture" },
+    { img: getMedia("cause-relief", thEnt), icon: Megaphone, title: "Relief & Rehabilitation", desc: lang === "en" ? "Disaster response, emergency humanitarian aid, and rehabilitation assistance." : "आपदा प्रतिक्रिया, आपातकालीन मानवीय सहायता और पुनर्वास सहायता।", route: "/programs/relief-and-rehabilitation" },
   ];
 
   return (
@@ -822,13 +824,14 @@ function OurPartnersSection({ lang }: LanguageProp) {
 
 function GallerySection({ lang }: LanguageProp) {
   const t = TRANSLATIONS[lang];
+  const { getMedia } = useMedia();
   const items = [
-    { type: "video", src: g1, title: lang === "en" ? "VISION ACADEMIC CITY" : "विज़न एकेडमिक सिटी" },
-    { type: "video", src: g2, title: lang === "en" ? "OPENING CEREMONY" : "उद्घाटन समारोह" },
-    { type: "photo", src: g3, title: lang === "en" ? "HEALTH DIAGNOSTIC CAMP" : "स्वास्थ्य जाँच शिविर" },
-    { type: "photo", src: g4, title: lang === "en" ? "ENVIRONMENT PLANTATION" : "पर्यावरण वृक्षारोपण" },
-    { type: "photo", src: g5, title: lang === "en" ? "SHIKSHA NA RUKE CAMPAIGN" : "शिक्षा न रुके अभियान" },
-    { type: "photo", src: g6, title: lang === "en" ? "VOCATIONAL TRAINING" : "व्यावसायिक प्रशिक्षण कार्यक्रम" },
+    { type: "video", src: getMedia("gallery-1", g1), title: lang === "en" ? "VISION ACADEMIC CITY" : "विज़न एकेडमिक सिटी" },
+    { type: "video", src: getMedia("gallery-2", g2), title: lang === "en" ? "OPENING CEREMONY" : "उद्घाटन समारोह" },
+    { type: "photo", src: getMedia("gallery-3", g3), title: lang === "en" ? "HEALTH DIAGNOSTIC CAMP" : "स्वास्थ्य जाँच शिविर" },
+    { type: "photo", src: getMedia("gallery-4", g4), title: lang === "en" ? "ENVIRONMENT PLANTATION" : "पर्यावरण वृक्षारोपण" },
+    { type: "photo", src: getMedia("gallery-5", g5), title: lang === "en" ? "SHIKSHA NA RUKE CAMPAIGN" : "शिक्षा न रुके अभियान" },
+    { type: "photo", src: getMedia("gallery-6", g6), title: lang === "en" ? "VOCATIONAL TRAINING" : "व्यावसायिक प्रशिक्षण कार्यक्रम" },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -1047,11 +1050,12 @@ function GallerySection({ lang }: LanguageProp) {
 // ─── Hero Carousel Section Component ──────────────────────────────────────────
 
 function HeroCarouselSection() {
+  const { getMedia } = useMedia();
   const slides = [
-    { id: 1, img: slide1, alt: "Education for Every Child" },
-    { id: 2, img: slide2, alt: "Building a Better India – Vision 2047" },
-    { id: 3, img: slide3, alt: "Healthcare That Reaches the Last Mile" },
-    { id: 4, img: slide4, alt: "Skills Today, Success Tomorrow" },
+    { id: 1, img: getMedia("hero-slide-1", slide1), alt: "Education for Every Child" },
+    { id: 2, img: getMedia("hero-slide-2", slide2), alt: "Building a Better India – Vision 2047" },
+    { id: 3, img: getMedia("hero-slide-3", slide3), alt: "Healthcare That Reaches the Last Mile" },
+    { id: 4, img: getMedia("hero-slide-4", slide4), alt: "Skills Today, Success Tomorrow" },
   ];
 
   const SLIDE_DURATION = 4000;

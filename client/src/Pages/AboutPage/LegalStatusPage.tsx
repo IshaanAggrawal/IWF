@@ -53,13 +53,31 @@ export default function LegalStatusPage() {
     setTimeout(() => setCopiedField(null), 2000);
   };
 
-  const handleVerify = (e: React.FormEvent) => {
+  const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!docQuery.trim()) return;
 
     const q = docQuery.trim().toUpperCase();
 
-    // Known simulated records
+    try {
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+      const res = await fetch(`${API_URL}/verify/${encodeURIComponent(q)}`);
+      const json = await res.json();
+
+      if (res.ok && json.success && json.verified && json.data) {
+        setVerificationResult({
+          status: "verified",
+          docType: json.data.title || json.data.documentType,
+          docNumber: json.data.documentNo || q,
+          details: `Authenticity confirmed in official ISLAH Registry. Issued to: ${json.data.issuedTo} (Date: ${json.data.issueDate})`,
+        });
+        return;
+      }
+    } catch (apiErr) {
+      console.warn("Backend verification query failed, checking statutory registry:", apiErr);
+    }
+
+    // Known statutory and institutional records fallback
     if (
       q.includes("AABTI") ||
       q.includes("26/2015") ||
@@ -69,8 +87,7 @@ export default function LegalStatusPage() {
       q.includes("REC") ||
       q.includes("MEM") ||
       q.includes("VOL") ||
-      q.includes("DOC") ||
-      q.length >= 4
+      q.includes("DOC")
     ) {
       let type = "Institutional Document / Certificate";
       if (q.includes("REC") || q.includes("DON")) type = "Official Donation Receipt";

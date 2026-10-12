@@ -174,18 +174,69 @@ export function VolunteerApplicationForm({ onSuccess, isModal = false }: Volunte
     }
   };
 
+  const [apiError, setApiError] = useState<string | null>(null);
+
   const onSubmit = async (data: VolunteerFormData) => {
     if (selectedBaseAreas.length === 0 && selectedSectors.length === 0 && otherText.trim().length === 0) {
       setSectorError("Please select at least one area of interest.");
       return;
     }
 
-    await new Promise((r) => setTimeout(r, 700));
-    const randomNum = Math.floor(1000 + Math.random() * 9000);
-    const newAppId = `ISLAH-VOL-${new Date().getFullYear()}-${randomNum}`;
-    setAppId(newAppId);
-    setSubmitted(true);
-    onSuccess?.(newAppId);
+    try {
+      setApiError(null);
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+
+      const combinedSectors = Array.from(new Set([...selectedBaseAreas, ...selectedSectors]));
+      const subclassFlat = Object.entries(selectedSubcategories).flatMap(([sec, subs]) =>
+        subs.map((sub) => `${sec}: ${sub}`)
+      );
+      if (otherText.trim()) {
+        subclassFlat.push(`Other: ${otherText.trim()}`);
+      }
+
+      const res = await fetch(`${API_URL}/applications`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "volunteer",
+          fullName: data.fullName,
+          email: data.email,
+          phone: data.phone,
+          countryCode: data.countryCode || "+91",
+          city: data.district,
+          state: data.state,
+          organization: data.organization || "",
+          selectedSectors: combinedSectors,
+          subclassifications: subclassFlat,
+          message: data.motivation || data.skills || "",
+          formData: {
+            dob: data.dob,
+            gender: data.gender,
+            address: data.address,
+            pincode: data.pincode,
+            qualification: data.qualification,
+            occupation: data.occupation,
+            availability: data.availability,
+            skills: data.skills,
+            previousExperience: data.previousExperience,
+            motivation: data.motivation,
+          },
+        }),
+      });
+
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        throw new Error(json.message || "Failed to submit application");
+      }
+
+      const newAppId = json.applicationId || `ISLAH-VOL-${new Date().getFullYear()}-${Date.now().toString().slice(-4)}`;
+      setAppId(newAppId);
+      setSubmitted(true);
+      onSuccess?.(newAppId);
+    } catch (err: any) {
+      console.error("Volunteer submission error:", err);
+      setApiError(err.message || "Could not submit application. Please try again.");
+    }
   };
 
   const handleResetForm = () => {
@@ -651,6 +702,13 @@ export function VolunteerApplicationForm({ onSuccess, isModal = false }: Volunte
         </div>
         <FieldError msg={errors.agreePolicy?.message} />
       </div>
+
+      {apiError && (
+        <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+          <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
+          <span>{apiError}</span>
+        </div>
+      )}
 
       {/* ── Action Buttons ── */}
       <div className="flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-3 pt-4 border-t border-slate-200">

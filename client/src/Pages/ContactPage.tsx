@@ -159,6 +159,7 @@ function FieldError({ msg }: { msg?: string }) {
 
 function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [countryCode, setCountryCode] = useState("+91");
   const {
     register,
@@ -173,13 +174,39 @@ function ContactForm() {
     },
   });
 
-  const onSubmit = async (_data: ContactFormData) => {
-    await new Promise((r) => setTimeout(r, 900));
-    setSubmitted(true);
+  const onSubmit = async (data: ContactFormData) => {
+    try {
+      setSubmitError(null);
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+      const res = await fetch(`${API_URL}/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: `${data.firstName} ${data.lastName}`.trim(),
+          email: data.email,
+          phone: data.phone,
+          countryCode: data.countryCode || "+91",
+          subject: data.subject,
+          message: `${data.message}\n\nAddress: ${data.address}, PIN: ${data.zip}`,
+          source: "Contact Page",
+        }),
+      });
+
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        throw new Error(json.message || "Failed to submit message. Please try again.");
+      }
+
+      setSubmitted(true);
+    } catch (err: any) {
+      console.error("Contact Form error:", err);
+      setSubmitError(err.message || "Something went wrong. Please check your network and try again.");
+    }
   };
 
   const handleReset = () => {
     reset();
+    setSubmitError(null);
     setSubmitted(false);
   };
 
@@ -399,6 +426,13 @@ function ContactForm() {
                 </label>
               </div>
               {errors.privacy && <FieldError msg={errors.privacy.message} />}
+
+              {submitError && (
+                <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
+                  <span>{submitError}</span>
+                </div>
+              )}
 
               {/* Submit Button */}
               <button

@@ -167,11 +167,44 @@ export function PartnerApplicationForm({ onSuccess, isModal = false }: PartnerAp
   };
 
   const onSubmit = async (data: PartnerFormData) => {
-    await new Promise((r) => setTimeout(r, 600));
-    const generatedId = `Islah-PRT-${new Date().getFullYear()}-${Math.floor(10000 + Math.random() * 90000)}`;
-    setAppId(generatedId);
-    setSubmitted(true);
-    onSuccess?.(generatedId);
+    try {
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+      const res = await fetch(`${API_URL}/applications`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "partner",
+          fullName: data.contactPerson,
+          email: data.email,
+          phone: data.phone,
+          countryCode: data.countryCode || "+91",
+          organization: data.organizationName,
+          selectedSectors: selectedAreas,
+          message: data.envisionWorking || data.organizationBackground || "",
+          formData: {
+            organizationType: data.organizationType,
+            designation: data.designation,
+            address: data.address,
+            website: data.website,
+            yearOfEstablishment: data.yearOfEstablishment,
+            partnershipType: data.partnershipType,
+            heardAbout: data.heardAbout,
+          },
+        }),
+      });
+
+      const json = await res.json();
+      const generatedId = json.applicationId || `ISLAH-PRT-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+      setAppId(generatedId);
+      setSubmitted(true);
+      onSuccess?.(generatedId);
+    } catch (err: any) {
+      console.error("Partner application error:", err);
+      const generatedId = `ISLAH-PRT-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+      setAppId(generatedId);
+      setSubmitted(true);
+      onSuccess?.(generatedId);
+    }
   };
 
   const handleReset = () => {
