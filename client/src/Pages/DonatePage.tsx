@@ -52,6 +52,7 @@ import {
   sanitizeDigits,
 } from "@/utils/formValidation";
 import { INDIAN_STATES, BIHAR_DISTRICTS } from "@/content/locations";
+import { openRazorpayModal } from "@/utils/razorpay";
 
 // ─── Financial Types from Page 70 & 71 of PDF ────────────────────────────────
 const FINANCIAL_TYPES = [
@@ -168,8 +169,11 @@ export default function DonatePage() {
   const [photoFileName, setPhotoFileName] = useState<string | null>(null);
   const [isCopied, setIsCopied] = useState<string | null>(null);
 
-  const [receiptNumber, setReceiptNumber] = useState("ISLAH/RCPT/2025-26/000125");
-  const [paymentDate, setPaymentDate] = useState("22 May 2025 | 10:45 AM");
+  const [receiptNumber, setReceiptNumber] = useState("ISLAH/RCPT/2026-27/000001");
+  const [paymentDate, setPaymentDate] = useState("12 Oct 2026 | 12:30 PM");
+  const [transactionId, setTransactionId] = useState("pay_sample_123");
+  const [paymentError, setPaymentError] = useState<string | null>(null);
+  const [isPaymentProcessing, setIsPaymentProcessing] = useState(false);
 
   // Read URL search params (e.g. ?patientId=mohammed-salim&amount=64000)
   const search = useSearch({ strict: false }) as { patientId?: string; amount?: string };
@@ -240,7 +244,7 @@ export default function DonatePage() {
 
   const receiptData: DonationReceiptData = {
     receiptNo: receiptNumber,
-    receiptDate: paymentDate ? paymentDate.split(" | ")[0] : "22 May 2025",
+    receiptDate: paymentDate ? paymentDate.split(" | ")[0] : "12 Oct 2026",
     donorName: watchFullName || "Md. Aftab Alam",
     mobileNo: watchPhone ? `${watchCountryCode || "+91"} ${watchPhone}` : "+91 9123456780",
     email: watchEmail || "aftabalam@email.com",
@@ -249,9 +253,9 @@ export default function DonatePage() {
     frequency: watchFrequency || "One Time",
     amount: Number(watchAmount) || 2500,
     contributionFor: contextPatient ? `Patient: ${contextPatient.name}` : "--",
-    paymentMode: "UPI / Online",
-    transactionId: "pay_QR12345abcde67890",
-    paymentDate: paymentDate || "22 May 2025 | 10:45 AM",
+    paymentMode: "Razorpay / Online",
+    transactionId: transactionId,
+    paymentDate: paymentDate || "12 Oct 2026 | 12:30 PM",
   };
 
   const handleDownloadNow = () => {
@@ -286,25 +290,116 @@ export default function DonatePage() {
   };
 
   const onSubmit = async (data: DonorFormData) => {
-    await new Promise((r) => setTimeout(r, 600));
-    const randomReceiptNum = String(Math.floor(100000 + Math.random() * 900000));
-    const now = new Date();
-    const formattedDate = now.toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    });
-    const formattedTime = now.toLocaleTimeString("en-IN", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    });
-    setReceiptNumber(`ISLAH/RCPT/${now.getFullYear()}-${(now.getFullYear() + 1).toString().slice(-2)}/${randomReceiptNum}`);
-    setPaymentDate(`${formattedDate} | ${formattedTime}`);
-    setSubmitted(true);
-    setTimeout(() => {
-      formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 100);
+    try {
+      setPaymentError(null);
+      setIsPaymentProcessing(true);
+
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+
+      // STEP 1: Create Razorpay Order with backend
+      const orderRes = await fetch(`${API_URL}/create-order`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: Number(data.amount),
+          receipt: `rcpt_${Date.now()}`,
+          notes: {
+            donorName: data.fullName,
+            email: data.email,
+            phone: data.phone,
+            cause: data.financialType,
+            patientSlug: contextPatient?.slug || "",
+          },
+        }),
+      });
+
+      const orderData = await orderRes.json();
+      if (!orderData.success) {
+        throw new Error(orderData.message || "Failed to create payment order. Please try again.");
+      }
+
+      // STEP 2: Open Razorpay Standard Checkout Modal
+      const paymentResult = await openRazorpayModal({
+        orderId: orderData.order_id,
+        amount: orderData.amount,
+        keyId: orderData.key_id,
+        name: "ISLAH Welfare Foundation",
+        description: `Donation: ${data.financialType}`,
+        prefill: {
+          name: data.fullName,
+          email: data.email,
+          contact: `${data.countryCode || "+91"}${data.phone}`,
+        },
+        notes: {
+          financialType: data.financialType,
+          pan: data.pan || "",
+        },
+      });
+
+      // STEP 3: Verify Payment Signature with backend
+      const verifyRes = await fetch(`${API_URL}/verify-payment`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          razorpay_order_id: paymentResult.razorpay_order_id,
+          razorpay_payment_id: paymentResult.razorpay_payment_id,
+          razorpay_signature: paymentResult.razorpay_signature,
+          donationData: {
+            donorName: data.fullName,
+            donorType: data.donorType,
+            email: data.email,
+            phone: data.phone,
+            countryCode: data.countryCode,
+            address: data.address,
+            city: data.city,
+            state: data.state,
+            pincode: data.pincode,
+            financialType: data.financialType,
+            frequency: data.frequency,
+            amount: data.amount,
+            taxExemption: data.taxExemption,
+            pan: data.pan,
+            patientSlug: contextPatient?.slug,
+          },
+        }),
+      });
+
+      const verifyData = await verifyRes.json();
+      if (!verifyData.success) {
+        throw new Error(verifyData.message || "Payment signature verification failed. Please contact support.");
+      }
+
+      const assignedReceiptNo =
+        verifyData.receiptNo ||
+        verifyData.entity?.receiptNo ||
+        `ISLAH/RCPT/${new Date().getFullYear()}/${Date.now()}`;
+
+      const now = new Date();
+      const formattedDate = now.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      });
+      const formattedTime = now.toLocaleTimeString("en-IN", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      });
+
+      setTransactionId(paymentResult.razorpay_payment_id);
+      setReceiptNumber(assignedReceiptNo);
+      setPaymentDate(`${formattedDate} | ${formattedTime}`);
+      setSubmitted(true);
+
+      setTimeout(() => {
+        formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
+    } catch (err: any) {
+      console.error("Donation Checkout Error:", err);
+      setPaymentError(err.message || "Payment processing was cancelled or failed.");
+    } finally {
+      setIsPaymentProcessing(false);
+    }
   };
 
   const printReceipt = () => {
@@ -957,15 +1052,25 @@ export default function DonatePage() {
                           <FieldError msg={errors.termsAgreement?.message} />
                         </div>
 
+                        {/* Payment Error Alert */}
+                        {paymentError && (
+                          <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+                            <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
+                            <span>{paymentError}</span>
+                          </div>
+                        )}
+
                         {/* Donate Securely Button */}
                         <div className="pt-2">
                           <button
                             type="submit"
-                            disabled={isSubmitting}
+                            disabled={isSubmitting || isPaymentProcessing}
                             className="w-full h-12 rounded-xl bg-brand-green hover:bg-brand-green-dark text-white font-extrabold text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-brand-green/30 transition-all hover:scale-[1.01] active:scale-98 cursor-pointer disabled:opacity-50"
                           >
                             <Lock className="w-4 h-4" />
-                            {isSubmitting ? "Processing..." : "Donate Securely Now"}
+                            {isSubmitting || isPaymentProcessing
+                              ? "Processing Payment with Razorpay..."
+                              : "Donate Securely Now"}
                           </button>
                           <p className="text-[11px] text-slate-400 text-center mt-2">
                             Your donation is 100% secure and encrypted.
