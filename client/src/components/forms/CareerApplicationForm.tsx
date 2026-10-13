@@ -542,6 +542,7 @@ export function CareerApplicationForm({ onSuccess, isModal = false }: CareerAppl
                   href="/privacy-policy"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
                   className="text-brand-green font-bold hover:underline"
                 >
                   Privacy Policy

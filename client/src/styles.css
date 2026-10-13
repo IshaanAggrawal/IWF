@@ -5,6 +5,14 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Universal protection: Ensure only genuine input/textarea elements are editable */
+*, *::before, *::after {
+  -webkit-user-modify: read-only;
+}
+input, textarea {
+  -webkit-user-modify: read-write;
+}
+
 /*
  * Design system definition.
  *

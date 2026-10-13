@@ -575,6 +575,7 @@ export function SponsorApplicationForm({ onSuccess, isModal = false }: SponsorAp
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-brand-green font-bold hover:underline"
+                onClick={(e) => e.stopPropagation()}
               >
                 Policy
               </a>{" "}
@@ -584,6 +585,7 @@ export function SponsorApplicationForm({ onSuccess, isModal = false }: SponsorAp
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-brand-green font-bold hover:underline"
+                onClick={(e) => e.stopPropagation()}
               >
                 Code of Conduct
               </a>

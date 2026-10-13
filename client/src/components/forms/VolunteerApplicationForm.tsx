@@ -646,6 +646,7 @@ export function VolunteerApplicationForm({ onSuccess, isModal = false }: Volunte
               target="_blank"
               rel="noopener noreferrer"
               className="text-brand-green font-bold hover:underline"
+              onClick={(e) => e.stopPropagation()}
             >
               Volunteer Policy
             </a>{" "}
@@ -655,6 +656,7 @@ export function VolunteerApplicationForm({ onSuccess, isModal = false }: Volunte
               target="_blank"
               rel="noopener noreferrer"
               className="text-brand-green font-bold hover:underline"
+              onClick={(e) => e.stopPropagation()}
             >
               Code of Conduct
             </a>
