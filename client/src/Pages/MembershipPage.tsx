@@ -2477,6 +2477,7 @@ function Step3ContributionDetails({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-semibold text-brand-green hover:underline"
+                onClick={(e) => e.stopPropagation()}
               >
                 Membership Terms &amp; Conditions
               </a>{" "}
@@ -2486,6 +2487,7 @@ function Step3ContributionDetails({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-semibold text-brand-green hover:underline"
+                onClick={(e) => e.stopPropagation()}
               >
                 Privacy Policy
               </a>{" "}

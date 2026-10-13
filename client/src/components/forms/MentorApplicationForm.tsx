@@ -854,6 +854,7 @@ export function MentorApplicationForm({ onSuccess, isModal = false }: MentorAppl
                 href="/mentorship-policy"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
                 className="text-brand-green font-bold hover:underline"
               >
                 Policy
@@ -863,6 +864,7 @@ export function MentorApplicationForm({ onSuccess, isModal = false }: MentorAppl
                 href="/code-of-conduct"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
                 className="text-brand-green font-bold hover:underline"
               >
                 Code of Conduct

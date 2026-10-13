@@ -595,6 +595,7 @@ function ContactForm() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-sky-700 font-bold hover:underline"
+                    onClick={(e) => e.stopPropagation()}
                   >
                     Privacy Policy
                   </a>{" "}

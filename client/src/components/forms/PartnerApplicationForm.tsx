@@ -565,6 +565,7 @@ export function PartnerApplicationForm({ onSuccess, isModal = false }: PartnerAp
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-brand-green font-bold hover:underline"
+                  onClick={(e) => e.stopPropagation()}
                 >
                   Policy
                 </a>{" "}
@@ -574,6 +575,7 @@ export function PartnerApplicationForm({ onSuccess, isModal = false }: PartnerAp
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-brand-green font-bold hover:underline"
+                  onClick={(e) => e.stopPropagation()}
                 >
                   Code of Conduct
                 </a>

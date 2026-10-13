@@ -105,11 +105,22 @@ const SUPPRESSION_CSS = `
   /* Hide the widget container itself */
   #${GOOGLE_TRANSLATE_ELEMENT_ID} { display: none !important; }
 
-  /* Lock all forms, inputs, labels, and placeholders to pure English LTR */
-  .notranslate, form, form input, form textarea, form select, form label, form button,
-  input, textarea, select, [translate="no"] {
-    -webkit-user-modify: read-write-plaintext-only;
+  /* Ensure form controls and notranslate elements stay LTR without making text editable */
+  .notranslate, [translate="no"] {
     direction: ltr !important;
+  }
+
+  input, textarea, select {
+    direction: ltr !important;
+  }
+
+  /* Prevent any unintentional content editing on text, labels, forms, or links throughout the site */
+  *, *:before, *:after {
+    -webkit-user-modify: read-only !important;
+  }
+
+  input, textarea {
+    -webkit-user-modify: read-write !important;
   }
 `;
 

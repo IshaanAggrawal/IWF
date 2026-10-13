@@ -1027,6 +1027,7 @@ export default function DonatePage() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-brand-green font-bold hover:underline"
+                                onClick={(e) => e.stopPropagation()}
                               >
                                 Terms of Use
                               </a>{" "}
@@ -1036,6 +1037,7 @@ export default function DonatePage() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-brand-green font-bold hover:underline"
+                                onClick={(e) => e.stopPropagation()}
                               >
                                 Donor Privacy
                               </a>{" "}
