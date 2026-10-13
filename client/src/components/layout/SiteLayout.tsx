@@ -43,7 +43,7 @@ export const NAV_ITEMS = [
   "About Us",
   "What We Do",
   "Our Campaigns",
-  "Impact",
+  "Become a Member",
   "Media",
   "Get Involved",
   "Contact Us",
@@ -91,20 +91,9 @@ export const MEGA_DATA: Record<string, MegaSection> = {
       "View All Campaigns",
     ],
   },
-  Impact: {
-    cols: 3,
-    items: [
-      "Our Impact",
-      "Outcomes",
-      "Where We Work",
-      "Success Stories",
-      "Annual Reports",
-      "Impact Statistics Dashboard",
-    ],
-  },
   Media: {
     cols: 3,
-    items: ["News & Events", "Latest Updates", "Newsletters", "Publications", "Press Release", "Gallery"],
+    items: ["News & Events", "Latest Updates", "Impact", "Publications", "Press Release", "Gallery"],
   },
   "Get Involved": {
     cols: 3,
@@ -127,8 +116,8 @@ function getTopNavHref(item: string) {
   if (item === "Our Campaigns" || item === "Campaigns") return "/campaign";
   if (item === "Programs") return "/programs";
   if (item === "Impact") return "/#impact-stats";
+  if (item === "Become a Member" || item === "Membership") return "/membership";
   if (item === "Media") return "/news-and-events";
-  if (item === "Membership") return "/membership";
   if (item === "Get Involved") return "/get-involved";
   if (item === "Contact Us") return "/contact";
   return "#";
@@ -166,10 +155,12 @@ function getMegaHref(menu: string, item: string) {
   // Programs
   if (menu === "Programs" && item === "View All Programs") return "/programs";
   // Media & Updates
+  if (menu === "Media" && (item === "Impact" || item === "Our Impact")) return "/#impact-stats";
   if (menu === "Media" && item === "News & Events") return "/news-and-events";
   if (menu === "Media" && item === "Latest Updates") return "/news-and-events";
   if (menu === "Media" && item === "Gallery") return "/gallery";
   if (menu === "Media" && item === "Publications") return "/news-and-events";
+  if (menu === "Media" && item === "Press Release") return "/news-and-events";
   if (menu === "Media" && item === "Press Releases") return "/news-and-events";
   if (menu === "Media" && item === "Annual Reports") return "/news-and-events";
   if (menu === "Media" && item === "Success Stories") return "/news-and-events";
@@ -262,7 +253,10 @@ export function Header() {
     (item === "Home" && pathname === "/") ||
     (item === "About Us" && pathname.startsWith("/about")) ||
     (item === "Our Campaigns" && pathname.startsWith("/campaign")) ||
-    (item === "Get Involved" && (pathname.startsWith("/get-involved") || pathname.startsWith("/volunteer") || pathname.startsWith("/membership"))) ||
+    (item === "Become a Member" && pathname.startsWith("/membership")) ||
+    (item === "Media" && (pathname.startsWith("/news-and-events") || pathname.startsWith("/gallery"))) ||
+    (item === "Get Involved" && (pathname.startsWith("/get-involved") || pathname.startsWith("/volunteer"))) ||
+    (item === "Contact Us" && pathname.startsWith("/contact")) ||
     (item === "What We Do" && pathname.startsWith("/programs"));
 
   const getHeaderHref = (item: string) => {
@@ -287,7 +281,7 @@ export function Header() {
               <span className="text-xs md:text-sm font-semibold italic text-brand-orange mt-1.5 leading-none text-center md:text-left">
                 Knowledge, Opportunity, A Better Future.
               </span>
-              <span className="text-[10px] md:text-xs text-gray-500 font-medium mt-1.5 leading-none text-center md:text-left notranslate" translate="no">
+              <span className="text-[10px] md:text-xs text-gray-500 font-medium mt-1.5 leading-none text-center md:text-left notranslate" dir="ltr" translate="no">
                 {localizedAddress}
               </span>
             </div>
@@ -615,9 +609,9 @@ export function Footer({ onOpenModal }: { onOpenModal?: (type: RoleType) => void
               <div className="flex gap-2">
                 {[
                   { Icon: Facebook, color: "bg-[#1877f2] hover:bg-[#166fe5]", href: "https://www.facebook.com/islahindia/", label: "Facebook" },
-                  { Icon: Instagram, color: "bg-gradient-to-tr from-[#f9cb2f] via-[#e5195f] to-[#8134af] hover:opacity-90", href: "https://www.instagram.com/islahwelfarefoundation/", label: "Instagram" },
+                  { Icon: Instagram, color: "bg-gradient-to-tr from-[#f9cb2f] via-[#e5195f] to-[#8134af] hover:opacity-90", href: "https://www.instagram.com/islahindia/", label: "Instagram" },
                   { Icon: Youtube, color: "bg-[#ff0000] hover:bg-[#e60000]", href: "https://www.youtube.com/channel/UC5sty9L25QQwC89JwGmEIVw/", label: "YouTube" },
-                  { Icon: Linkedin, color: "bg-[#0077b5] hover:bg-[#00669c]", href: "https://www.linkedin.com/in/islah-welfare-foundation-6a028b432/", label: "LinkedIn" },
+                  { Icon: Linkedin, color: "bg-[#0077b5] hover:bg-[#00669c]", href: "https://www.linkedin.com/in/islahindia/", label: "LinkedIn" },
                   { Icon: Twitter, color: "bg-[#1da1f2] hover:bg-[#0d95e8]", href: "https://x.com/islahindia/", label: "Twitter / X" },
                 ].map((s, i) => (
                   <a key={i} href={s.href} target="_blank" rel="noopener noreferrer" className={`w-7 h-7 rounded-full ${s.color} flex items-center justify-center text-white transition-all duration-200 shadow-sm`} aria-label={s.label}>
@@ -707,11 +701,11 @@ export function Footer({ onOpenModal }: { onOpenModal?: (type: RoleType) => void
             <div className="space-y-3 text-white text-sm">
               <div className="flex gap-2 items-start">
                 <MapPin className="w-4 h-4 mt-0.5 text-brand-orange shrink-0" />
-                <span className="notranslate" translate="no">{localizedAddress}</span>
+                <span className="notranslate" dir="ltr" translate="no">{localizedAddress}</span>
               </div>
               <div className="flex gap-2 items-center">
                 <Phone className="w-4 h-4 text-brand-orange shrink-0" />
-                <span>{CONTACT_DETAILS.phone}</span>
+                <span className="notranslate" dir="ltr" translate="no">{CONTACT_DETAILS.phone}</span>
               </div>
               <div className="flex gap-2 items-center">
                 <Mail className="w-4 h-4 text-brand-orange shrink-0" />
@@ -719,7 +713,7 @@ export function Footer({ onOpenModal }: { onOpenModal?: (type: RoleType) => void
               </div>
               <div className="flex gap-2 items-center">
                 <Globe className="w-4 h-4 text-brand-orange shrink-0" />
-                <span>www.islahwelfarefoundation.org</span>
+                <a href="https://www.iwfindia.org" target="_blank" rel="noopener noreferrer" className="hover:text-brand-orange transition-colors">www.iwfindia.org</a>
               </div>
             </div>
             <a

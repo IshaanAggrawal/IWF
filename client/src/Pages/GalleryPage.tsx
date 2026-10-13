@@ -28,6 +28,7 @@ import {
 } from "@/components/layout/SiteLayout";
 import type { RoleType } from "@/components/forms/RoleFormModal";
 import { useMedia } from "@/services/mediaService";
+import { StandardPageHero } from "@/components/layout/StandardPageHero";
 
 // Assets
 import gallery1 from "@/assets/gallery-1.jpg";
@@ -246,34 +247,23 @@ export default function GalleryPage() {
       <Header />
 
       <main className="pb-20">
-        {/* Breadcrumb */}
-        <div className="bg-white border-b border-slate-100 py-3 px-4 lg:px-12">
-          <div className="max-w-7xl mx-auto flex items-center gap-2 text-xs text-slate-500 font-medium">
-            <Link to="/" className="hover:text-[#0b1f3b] flex items-center gap-1">
-              <Home className="w-3.5 h-3.5" /> Home
-            </Link>
-            <ChevronRight className="w-3 h-3 text-slate-400" />
-            <span className="hover:text-[#0b1f3b]">Media</span>
-            <ChevronRight className="w-3 h-3 text-slate-400" />
-            <span className="text-slate-800 font-bold">Programme Gallery</span>
-          </div>
-        </div>
-
-        {/* Hero Banner */}
-        <section className="bg-gradient-to-r from-[#071527] via-[#0b1f3b] to-[#15803d] text-white min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex items-center py-16 px-4 md:px-8 border-b border-white/10">
-          <div className="max-w-7xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-brand-orange text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-4">
-              <Camera className="w-3.5 h-3.5" />
-              <span>FIELD PROGRAMMES &amp; IMPACT IN ACTION</span>
-            </div>
-            <h1 className="text-3xl md:text-5xl font-black text-white tracking-tight mb-4">
-              Programme Gallery
-            </h1>
-            <p className="text-white/80 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
-              Explore visual glimpses of Islah Welfare Foundation's field initiatives across all 8 sectors — from classrooms and health camps to rural livelihoods and relief responses.
-            </p>
-          </div>
-        </section>
+        {/* Standardized Hero Section */}
+        <StandardPageHero
+          badge="FIELD PROGRAMMES & IMPACT IN ACTION"
+          title="Programme Gallery"
+          description="Explore visual glimpses of Islah Welfare Foundation's field initiatives across all 8 sectors — from classrooms and health camps to rural livelihoods and relief responses."
+          breadcrumb={[
+            { label: "Media" },
+            { label: "Programme Gallery" },
+          ]}
+          image={gallery1}
+          cards={[
+            { title: "8 Sectors", subtitle: "Holistic Outreach", icon: Layers },
+            { title: "25,000+", subtitle: "Lives Touched", icon: Users },
+            { title: "Field Photos", subtitle: "Verified Action", icon: Camera },
+            { title: "Grassroots", subtitle: "Rural Impact", icon: Sprout },
+          ]}
+        />
 
         {/* Categories Bar */}
         <section className="bg-white border-b border-slate-200 sticky top-0 z-20 shadow-xs">

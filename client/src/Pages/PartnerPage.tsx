@@ -24,6 +24,8 @@ import {
 import { PartnerApplicationForm } from "@/components/forms/PartnerApplicationForm";
 import type { RoleType } from "@/components/forms/RoleFormModal";
 
+import { StandardPageHero } from "@/components/layout/StandardPageHero";
+
 export default function PartnerPage() {
   const [activeModal, setActiveModal] = useState<RoleType | null>(null);
 
@@ -41,80 +43,34 @@ export default function PartnerPage() {
       <Header />
 
       <main>
-        {/* ─── Hero Section (Pages 13 & 15 of PDF) ───────────────────────────── */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-[#07162c] via-[#0b1f3b] to-[#144272] text-white min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex items-center py-16 sm:py-20">
-          <div className="absolute inset-0 bg-[radial-gradient(#2b88d8_1px,transparent_1px)] [background-size:24px_24px] opacity-15" />
-
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-12 gap-10 items-center">
-              <div className="lg:col-span-7 space-y-4 text-left">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-orange/20 border border-brand-orange/40 text-brand-orange text-xs font-black uppercase tracking-wider">
-                  <Handshake className="w-3.5 h-3.5" /> PARTNER WITH US
-                </div>
-
-                <h1 className="text-3xl sm:text-5xl font-black text-white leading-tight">
-                  Partnership with Us <br />
-                  <span className="text-brand-orange text-2xl sm:text-4xl font-extrabold font-serif italic">
-                    Together, We Can Create Lasting Change
-                  </span>
-                </h1>
-
-                <p className="text-slate-200 text-sm sm:text-base leading-relaxed max-w-2xl pt-1">
-                  At <strong>ISLAH</strong>, we believe that meaningful and sustainable development is achieved through purposeful collaboration. No single organisation can solve complex social challenges alone. When institutions, corporations, civil society, and communities join hands, real transformation begins.
-                </p>
-
-                <p className="text-sky-200/90 text-xs sm:text-sm leading-relaxed max-w-xl">
-                  We invite CSR foundations, NGOs, academic institutions, and corporate leaders to co-create sustainable solutions for rural and underserved India.
-                </p>
-
-                <div className="flex flex-wrap gap-3 pt-2">
-                  <button
-                    onClick={scrollToForm}
-                    className="inline-flex items-center gap-2 bg-brand-orange hover:bg-orange-600 text-white font-bold px-7 py-3 rounded-xl shadow-lg shadow-brand-orange/30 transition-all hover:scale-[1.02] active:scale-95 text-xs sm:text-sm uppercase tracking-wider cursor-pointer"
-                  >
-                    Apply for Partnership <ArrowRight className="w-4 h-4" />
-                  </button>
-                  <a
-                    href="/partnership-policy"
-                    className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold px-6 py-3 rounded-xl transition text-xs sm:text-sm uppercase tracking-wider"
-                  >
-                    Partnership Policy
-                  </a>
-                </div>
-              </div>
-
-              {/* Right Poster / Badge Card */}
-              <div className="lg:col-span-5">
-                <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/15 bg-gradient-to-tr from-[#0b1f3b] to-[#1c558c] p-8 text-center flex flex-col justify-between min-h-[340px]">
-                  <div className="inline-block self-center px-4 py-1 rounded-full bg-brand-orange/20 text-brand-orange text-[11px] font-bold tracking-wider uppercase mb-3">
-                    Collaboration for Impact
-                  </div>
-
-                  <div className="my-auto space-y-3">
-                    <h3 className="text-2xl sm:text-3xl font-black text-white leading-tight">
-                      STRONGER TOGETHER. <br />
-                      <span className="text-brand-orange">MEASURABLE OUTCOMES.</span>
-                    </h3>
-                    <p className="text-slate-300 text-xs sm:text-sm max-w-xs mx-auto leading-relaxed">
-                      Transforming rural education, healthcare, and livelihood through structured institutional partnerships.
-                    </p>
-                  </div>
-
-                  <div className="pt-6 border-t border-white/15 grid grid-cols-2 gap-3 text-white">
-                    <div className="bg-white/10 rounded-xl p-2.5">
-                      <div className="text-lg font-black text-brand-orange">100%</div>
-                      <div className="text-[10px] text-white/80 font-bold uppercase">CSR-1 & 80G Certified</div>
-                    </div>
-                    <div className="bg-white/10 rounded-xl p-2.5">
-                      <div className="text-lg font-black text-brand-orange">Audited</div>
-                      <div className="text-[10px] text-white/80 font-bold uppercase">Transparent Books</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        {/* Standardized Hero Section */}
+        <StandardPageHero
+          badge="PARTNER WITH US"
+          title="Partnership with Us"
+          description="At ISLAH, we believe that meaningful and sustainable development is achieved through purposeful collaboration. We invite CSR foundations, NGOs, academic institutions, and corporate leaders to co-create sustainable solutions for rural and underserved India."
+          breadcrumb={[{ label: "Partner with Us" }]}
+          cards={[
+            { title: "100%", subtitle: "CSR-1 & 80G Certified", icon: Shield },
+            { title: "Audited", subtitle: "Transparent Books", icon: FileText },
+            { title: "Institutions & CSR", subtitle: "Co-created Impact", icon: Building2 },
+            { title: "Pan-India Reach", subtitle: "Measurable Change", icon: Globe },
+          ]}
+        >
+          <div className="flex flex-wrap gap-3 pt-2">
+            <button
+              onClick={scrollToForm}
+              className="inline-flex items-center gap-2 bg-brand-orange hover:bg-orange-600 text-white font-bold px-7 py-3 rounded-xl shadow-lg shadow-brand-orange/30 transition-all hover:scale-[1.02] active:scale-95 text-xs sm:text-sm uppercase tracking-wider cursor-pointer"
+            >
+              Apply for Partnership <ArrowRight className="w-4 h-4" />
+            </button>
+            <a
+              href="/partnership-policy"
+              className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold px-6 py-3 rounded-xl transition text-xs sm:text-sm uppercase tracking-wider"
+            >
+              Partnership Policy
+            </a>
           </div>
-        </section>
+        </StandardPageHero>
 
         {/* ─── Areas We Work In (Page 16 of PDF) ───────────────────────────────── */}
         <section className="py-16 bg-slate-50 border-b border-slate-200">

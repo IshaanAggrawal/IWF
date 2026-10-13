@@ -215,8 +215,8 @@ function RootComponent() {
         {[
           { Icon: Facebook, color: "bg-[#1877f2] hover:bg-[#166fe5]", href: "https://www.facebook.com/islahindia/", name: "Facebook" },
           { Icon: Twitter, color: "bg-[#1da1f2] hover:bg-[#0d95e8]", href: "https://x.com/islahindia/", name: "Twitter / X" },
-          { Icon: Instagram, color: "bg-gradient-to-tr from-[#f9cb2f] via-[#e5195f] to-[#8134af]", href: "https://www.instagram.com/islahwelfarefoundation/", name: "Instagram" },
-          { Icon: Linkedin, color: "bg-[#0077b5] hover:bg-[#00669c]", href: "https://www.linkedin.com/in/islah-welfare-foundation-6a028b432/", name: "LinkedIn" },
+          { Icon: Instagram, color: "bg-gradient-to-tr from-[#f9cb2f] via-[#e5195f] to-[#8134af]", href: "https://www.instagram.com/islahindia/", name: "Instagram" },
+          { Icon: Linkedin, color: "bg-[#0077b5] hover:bg-[#00669c]", href: "https://www.linkedin.com/in/islahindia/", name: "LinkedIn" },
           { Icon: Youtube, color: "bg-[#ff0000] hover:bg-[#e60000]", href: "https://www.youtube.com/channel/UC5sty9L25QQwC89JwGmEIVw/", name: "YouTube" },
         ].map((social, i) => (
           <a

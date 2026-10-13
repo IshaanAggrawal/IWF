@@ -13,9 +13,9 @@ export function TopBar() {
           {[
             { Icon: Facebook, href: "https://www.facebook.com/islahindia/", label: "Facebook" },
             { Icon: Twitter, href: "https://x.com/islahindia/", label: "Twitter / X" },
-            { Icon: Instagram, href: "https://www.instagram.com/islahwelfarefoundation/", label: "Instagram" },
+            { Icon: Instagram, href: "https://www.instagram.com/islahindia/", label: "Instagram" },
             { Icon: Youtube, href: "https://www.youtube.com/channel/UC5sty9L25QQwC89JwGmEIVw/", label: "YouTube" },
-            { Icon: Linkedin, href: "https://www.linkedin.com/in/islah-welfare-foundation-6a028b432/", label: "LinkedIn" },
+            { Icon: Linkedin, href: "https://www.linkedin.com/in/islahindia/", label: "LinkedIn" },
           ].map(({ Icon, href, label }, i) => (
             <a key={i} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="w-6 h-6 rounded-full bg-white/15 hover:bg-white/30 flex items-center justify-center"><Icon className="w-3 h-3" /></a>
           ))}

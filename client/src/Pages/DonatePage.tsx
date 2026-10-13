@@ -40,6 +40,7 @@ import {
   RoleFormModal,
   UtilityBar,
 } from "@/components/layout/SiteLayout";
+import { StandardPageHero } from "@/components/layout/StandardPageHero";
 import type { RoleType } from "@/components/forms/RoleFormModal";
 import { DonationReceipt, type DonationReceiptData } from "@/components/donation/DonationReceipt";
 import { DonationSummaryCard } from "@/components/donation/DonationSummaryCard";
@@ -413,50 +414,42 @@ export default function DonatePage() {
       <Header />
 
       <main>
-        {/* ─── Hero Header (Matching Top of Page 70) ─────────────────────────── */}
-        <section className="relative overflow-hidden bg-gradient-to-r from-[#00381e] via-[#005a30] to-[#014725] text-white min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex items-center py-16 sm:py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div className="grid lg:grid-cols-12 gap-8 items-center">
-              <div className="lg:col-span-8 text-left space-y-4">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-emerald-300 text-xs font-bold uppercase tracking-wider">
-                  <Heart className="w-3.5 h-3.5 fill-emerald-300" /> DONATE US
-                </div>
-                <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-tight">
-                  Donate &amp; Make a Difference
-                </h1>
-                <p className="text-emerald-100 text-sm sm:text-lg max-w-2xl leading-relaxed">
-                  Your contribution helps us empower lives and build stronger communities across rural and underserved areas.
-                </p>
-
-                {contextPatient && (
-                  <div className="mt-4 p-3 bg-white/10 border border-white/20 rounded-2xl flex items-center gap-3 max-w-md">
-                    <img
-                      src={contextPatient.image}
-                      alt={contextPatient.name}
-                      className="w-12 h-12 rounded-xl object-cover"
-                    />
-                    <div className="text-xs">
-                      <p className="font-bold text-white">Emergency Patient Support: {contextPatient.name}</p>
-                      <p className="text-emerald-200">{contextPatient.disease} • {contextPatient.hospital}</p>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <div className="lg:col-span-4 flex justify-center lg:justify-end">
-                <div className="bg-white/10 backdrop-blur-xs border border-white/20 p-4 rounded-3xl text-center shadow-xl max-w-xs">
-                  <div className="w-14 h-14 rounded-2xl bg-white/20 text-white flex items-center justify-center mx-auto mb-2">
-                    <Heart className="w-8 h-8 fill-brand-orange text-brand-orange" />
-                  </div>
-                  <h4 className="font-black text-white text-base">DONATE NOW</h4>
-                  <p className="text-emerald-200 text-xs mt-1 leading-snug">
-                    100% Tax Exempted under Section 80G of Income Tax Act 1961
-                  </p>
-                </div>
+        {/* ─── Hero Header: Standard Deep Navy Hero ─────────────────────────── */}
+        <StandardPageHero
+          badge="SUPPORT OUR MISSION • DONATE"
+          title={
+            <>
+              Donate &amp; <span className="text-brand-orange">Make a Difference</span>
+            </>
+          }
+          description="Your contribution empowers lives, provides emergency medical aid to impoverished patients, and educates vulnerable children. 100% Tax Exempted under Section 80G."
+          breadcrumb={[{ label: "Donate & Support" }]}
+          cards={[
+            { icon: Shield, title: "100% 80G", subtitle: "Tax Exemption", href: "#donation-form" },
+            { icon: Heart, title: "Direct Aid", subtitle: "Transparent Action", href: "#donation-form" },
+            { icon: Award, title: "Instant Receipt", subtitle: "Instant PDF Download", href: "#donation-form" },
+            { icon: Building2, title: "Audited NGO", subtitle: "Registered Trust", href: "#donation-form" },
+          ]}
+          taglineTop="Give Hope"
+          taglineMid="Save A Life"
+          taglineBot="Today"
+          verticalWords={["HOPE", "HEALTH", "DIGNITY", "IMPACT"]}
+          waveFill="#f8fafc"
+        >
+          {contextPatient && (
+            <div className="p-3 bg-white/10 border border-white/20 rounded-2xl flex items-center gap-3 max-w-md backdrop-blur-md mb-2">
+              <img
+                src={contextPatient.image}
+                alt={contextPatient.name}
+                className="w-12 h-12 rounded-xl object-cover shrink-0"
+              />
+              <div className="text-xs">
+                <p className="font-bold text-white">Emergency Patient Support: {contextPatient.name}</p>
+                <p className="text-emerald-200">{contextPatient.disease} • {contextPatient.hospital}</p>
               </div>
             </div>
-          </div>
-        </section>
+          )}
+        </StandardPageHero>
 
         {/* ─── Two-Column Donation Section (Exact Reproduction of Page 70) ──── */}
         <section ref={formRef} className="py-12 sm:py-16 bg-slate-50 border-b border-slate-200">

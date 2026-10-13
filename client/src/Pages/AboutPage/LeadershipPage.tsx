@@ -47,7 +47,7 @@ const BOARD_PRINCIPAL_OFFICERS = [
   },
   {
     sno: 2,
-    name: "Er. Ejazullah",
+    name: "Er. Md. Ejazullah",
     designation: "Secretary",
     portfolio: "Statutory Governance & Board Administration",
     email: "secretary@iwfindia.org",
@@ -65,7 +65,7 @@ const BOARD_PRINCIPAL_OFFICERS = [
   },
   {
     sno: 4,
-    name: "Md. Azizullah",
+    name: "Mr. Md. Azizullah",
     designation: "Treasurer",
     portfolio: "Financial Oversight & Fiduciary Compliance",
     email: "treasurer@iwfindia.org",

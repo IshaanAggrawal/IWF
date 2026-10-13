@@ -29,6 +29,8 @@ import type { RoleType } from "@/components/forms/RoleFormModal";
 import { VOLUNTEER_SECTORS } from "@/content/volunteerSectors";
 import { VolunteerApplicationForm } from "@/components/forms/VolunteerApplicationForm";
 
+import { StandardPageHero } from "@/components/layout/StandardPageHero";
+
 export default function VolunteerPage() {
   const [activeModal, setActiveModal] = useState<RoleType | null>(null);
   const formRef = useRef<HTMLElement>(null);
@@ -44,82 +46,43 @@ export default function VolunteerPage() {
       <Header />
 
       <main>
-        {/* ─── Hero Section (Page 3 Mockup) ────────────────────────────────────────── */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-[#072417] via-[#0d3f27] to-[#071d13] text-white min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex items-center py-16 sm:py-24">
-          <div className="absolute inset-0 bg-[radial-gradient(#15803d_1px,transparent_1px)] [background-size:24px_24px] opacity-15" />
-
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-12 gap-10 items-center">
-              <div className="lg:col-span-7 space-y-5 text-left">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-orange/20 border border-brand-orange/40 text-brand-orange text-xs font-black uppercase tracking-wider">
-                  <Heart className="w-3.5 h-3.5 fill-brand-orange" /> Get Involved
-                </div>
-
-                <h1 className="text-3xl sm:text-5xl font-black text-white leading-tight">
-                  VOLUNTEER <br />
-                  <span className="text-brand-orange">WITH US</span>
-                </h1>
-
-                <p className="text-xl sm:text-2xl font-serif italic text-emerald-200/90 font-light">
-                  Your Time. Their Future.
-                </p>
-
-                <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl">
-                  Be the change you wish to see in the world. At ISLAH, your time, skills, and compassion
-                  can directly transform lives and build self-reliant rural communities.
-                </p>
-
-                <div className="flex flex-wrap gap-4 pt-2">
-                  <button
-                    onClick={() => scrollToSection("volunteer-form")}
-                    className="inline-flex items-center gap-2 bg-brand-orange hover:bg-orange-600 text-white font-bold px-7 py-3 rounded-xl shadow-lg shadow-brand-orange/30 transition-all hover:scale-[1.02] active:scale-95 text-xs sm:text-sm uppercase tracking-wider"
-                  >
-                    Apply Now <ArrowRight className="w-4 h-4" />
-                  </button>
-
-                  <button
-                    onClick={() => scrollToSection("opportunities")}
-                    className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold px-6 py-3 rounded-xl transition text-xs sm:text-sm uppercase tracking-wider"
-                  >
-                    Explore Opportunities
-                  </button>
-                </div>
-              </div>
-
-              <div className="lg:col-span-5">
-                <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/10 bg-gradient-to-tr from-brand-green to-emerald-800 p-8 text-center flex flex-col justify-between min-h-[340px]">
-                  <div className="inline-block self-center px-4 py-1 rounded-full bg-white/20 text-white text-[11px] font-bold tracking-wider uppercase mb-4">
-                    Movement for Social Change
-                  </div>
-
-                  <div className="my-auto space-y-3">
-                    <h3 className="text-2xl sm:text-3xl font-black text-white leading-tight tracking-wide">
-                      TOGETHER WE CAN CREATE CHANGE
-                    </h3>
-                    <p className="text-emerald-100 text-xs sm:text-sm max-w-xs mx-auto">
-                      Join thousands of dedicated volunteers bringing education, healthcare, and livelihood support to underserved villages.
-                    </p>
-                  </div>
-
-                  <div className="pt-6 border-t border-white/20 grid grid-cols-3 gap-2 text-white">
-                    <div>
-                      <div className="text-xl font-extrabold text-brand-orange">5,800+</div>
-                      <div className="text-[10px] text-white/75 font-semibold uppercase">Volunteers</div>
-                    </div>
-                    <div>
-                      <div className="text-xl font-extrabold text-brand-orange">8</div>
-                      <div className="text-[10px] text-white/75 font-semibold uppercase">Sectors</div>
-                    </div>
-                    <div>
-                      <div className="text-xl font-extrabold text-brand-orange">120+</div>
-                      <div className="text-[10px] text-white/75 font-semibold uppercase">Villages</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        {/* ─── Hero Section: Standard Deep Navy Hero ────────────────────────────────────────── */}
+        <StandardPageHero
+          badge="GET INVOLVED • VOLUNTEER"
+          title={
+            <>
+              Volunteer <span className="text-brand-orange">With Us</span>
+            </>
+          }
+          description="Be the change you wish to see in the world. At ISLAH, your time, skills, and compassion can directly transform lives and build self-reliant rural communities."
+          breadcrumb={[{ label: "Volunteer With Us" }]}
+          cards={[
+            { icon: Users, title: "5,800+", subtitle: "Volunteers Network", href: "#volunteer-form" },
+            { icon: Award, title: "8 Sectors", subtitle: "Focus Areas", href: "#opportunities" },
+            { icon: Shield, title: "120+ Villages", subtitle: "Rural Reach", href: "#volunteer-form" },
+            { icon: Heart, title: "Grassroots", subtitle: "Real Change", href: "#volunteer-form" },
+          ]}
+          taglineTop="Your Time"
+          taglineMid="Their Future"
+          taglineBot="Change"
+          verticalWords={["EMPOWER", "SERVE", "UPLIFT", "TRANSFORM"]}
+          waveFill="#f8fafc"
+        >
+          <div className="flex flex-wrap gap-3 pt-2">
+            <button
+              onClick={() => scrollToSection("volunteer-form")}
+              className="inline-flex items-center gap-2 bg-brand-orange hover:bg-orange-600 text-white font-bold px-7 py-3 rounded-xl shadow-lg transition-all hover:scale-[1.02] active:scale-95 text-xs sm:text-sm uppercase tracking-wider cursor-pointer"
+            >
+              Apply Now <ArrowRight className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => scrollToSection("opportunities")}
+              className="inline-flex items-center gap-2 bg-[#0b1f36] border border-[#163559] hover:border-sky-400/80 text-white font-bold px-6 py-3 rounded-xl transition text-xs sm:text-sm uppercase tracking-wider cursor-pointer"
+            >
+              Explore Opportunities
+            </button>
           </div>
-        </section>
+        </StandardPageHero>
 
         {/* ─── Why Volunteer with ISLAH? ────────────────────────────────────────── */}
         <section className="py-14 bg-slate-50 border-b border-slate-200/80">

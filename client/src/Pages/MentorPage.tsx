@@ -20,6 +20,8 @@ import {
 import { MentorApplicationForm } from "@/components/forms/MentorApplicationForm";
 import type { RoleType } from "@/components/forms/RoleFormModal";
 
+import { StandardPageHero } from "@/components/layout/StandardPageHero";
+
 export default function MentorPage() {
   const [activeModal, setActiveModal] = useState<RoleType | null>(null);
 
@@ -37,80 +39,34 @@ export default function MentorPage() {
       <Header />
 
       <main>
-        {/* ─── Hero Section (Pages 41 & 43 of PDF) ───────────────────────────── */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-[#062419] via-[#0b1f3b] to-[#043422] text-white min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex items-center py-16 sm:py-20">
-          <div className="absolute inset-0 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:24px_24px] opacity-15" />
-
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-12 gap-10 items-center">
-              <div className="lg:col-span-7 space-y-4 text-left">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-black uppercase tracking-wider">
-                  <GraduationCap className="w-4 h-4" /> BECOME A MENTOR
-                </div>
-
-                <h1 className="text-3xl sm:text-5xl font-black text-white leading-tight">
-                  Become a Mentor <br />
-                  <span className="text-brand-orange text-2xl sm:text-4xl font-extrabold font-serif italic">
-                    Share Your Knowledge. Inspire Lives. Create Lasting Impact.
-                  </span>
-                </h1>
-
-                <p className="text-slate-200 text-sm sm:text-base leading-relaxed max-w-2xl pt-1">
-                  Mentorship is one of the most powerful ways to empower individuals and strengthen communities. At <strong>ISLAH</strong>, we connect passionate professionals, educators, entrepreneurs, and domain experts with aspiring youth, students, women, and community workers in rural and underserved areas.
-                </p>
-
-                <p className="text-emerald-200/90 text-xs sm:text-sm leading-relaxed max-w-xl">
-                  Whether online or on-site, one-to-one or through group sessions, your guidance can open new horizons for learners who lack professional networks.
-                </p>
-
-                <div className="flex flex-wrap gap-3 pt-2">
-                  <button
-                    onClick={scrollToForm}
-                    className="inline-flex items-center gap-2 bg-brand-orange hover:bg-orange-600 text-white font-bold px-7 py-3 rounded-xl shadow-lg shadow-brand-orange/30 transition-all hover:scale-[1.02] active:scale-95 text-xs sm:text-sm uppercase tracking-wider cursor-pointer"
-                  >
-                    Apply as a Mentor <ArrowRight className="w-4 h-4" />
-                  </button>
-                  <a
-                    href="/mentorship-policy"
-                    className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold px-6 py-3 rounded-xl transition text-xs sm:text-sm uppercase tracking-wider"
-                  >
-                    Mentorship Policy
-                  </a>
-                </div>
-              </div>
-
-              {/* Right Poster Card */}
-              <div className="lg:col-span-5">
-                <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/15 bg-gradient-to-tr from-brand-green via-[#0b1f3b] to-emerald-900 p-8 text-center flex flex-col justify-between min-h-[340px]">
-                  <div className="inline-block self-center px-4 py-1 rounded-full bg-white/15 text-white text-[11px] font-bold tracking-wider uppercase mb-3">
-                    Knowledge Sharing Initiative
-                  </div>
-
-                  <div className="my-auto space-y-3">
-                    <h3 className="text-2xl sm:text-3xl font-black text-white leading-tight">
-                      GUIDE. INSPIRE. <br />
-                      <span className="text-brand-orange">TRANSFORM FUTURES.</span>
-                    </h3>
-                    <p className="text-emerald-100 text-xs sm:text-sm max-w-xs mx-auto leading-relaxed">
-                      A few hours of your month can help a student find a career path, clear a competitive exam, or build a rural enterprise.
-                    </p>
-                  </div>
-
-                  <div className="pt-6 border-t border-white/20 grid grid-cols-2 gap-3 text-white">
-                    <div className="bg-white/10 rounded-xl p-2.5">
-                      <div className="text-lg font-black text-brand-orange">Flexible</div>
-                      <div className="text-[10px] text-white/80 font-bold uppercase">Online & Offline</div>
-                    </div>
-                    <div className="bg-white/10 rounded-xl p-2.5">
-                      <div className="text-lg font-black text-brand-orange">1-to-1</div>
-                      <div className="text-[10px] text-white/80 font-bold uppercase">Personalised Guidance</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        {/* Standardized Hero Section */}
+        <StandardPageHero
+          badge="BECOME A MENTOR"
+          title="Become a Mentor"
+          description="Share your knowledge, inspire lives, and create lasting impact. At ISLAH, we connect passionate professionals, educators, and domain experts with aspiring youth, students, and community workers in rural and underserved areas."
+          breadcrumb={[{ label: "Become a Mentor" }]}
+          cards={[
+            { title: "Flexible", subtitle: "Online & Offline", icon: GraduationCap },
+            { title: "1-to-1", subtitle: "Personalized", icon: Users },
+            { title: "Career Guidance", subtitle: "Skill Mentoring", icon: Lightbulb },
+            { title: "Youth Impact", subtitle: "Rural Development", icon: BookOpen },
+          ]}
+        >
+          <div className="flex flex-wrap gap-3 pt-2">
+            <button
+              onClick={scrollToForm}
+              className="inline-flex items-center gap-2 bg-brand-orange hover:bg-orange-600 text-white font-bold px-7 py-3 rounded-xl shadow-lg shadow-brand-orange/30 transition-all hover:scale-[1.02] active:scale-95 text-xs sm:text-sm uppercase tracking-wider cursor-pointer"
+            >
+              Apply as a Mentor <ArrowRight className="w-4 h-4" />
+            </button>
+            <a
+              href="/mentorship-policy"
+              className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold px-6 py-3 rounded-xl transition text-xs sm:text-sm uppercase tracking-wider"
+            >
+              Mentorship Policy
+            </a>
           </div>
-        </section>
+        </StandardPageHero>
 
         {/* ─── Who Can Benefit? (Page 46 of PDF) ──────────────────────────────── */}
         <section className="py-16 bg-slate-50 border-b border-slate-200">

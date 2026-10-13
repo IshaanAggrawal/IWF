@@ -177,8 +177,8 @@ export function VolunteerApplicationForm({ onSuccess, isModal = false }: Volunte
   const [apiError, setApiError] = useState<string | null>(null);
 
   const onSubmit = async (data: VolunteerFormData) => {
-    if (selectedBaseAreas.length === 0 && selectedSectors.length === 0 && otherText.trim().length === 0) {
-      setSectorError("Please select at least one area of interest.");
+    if (selectedSectors.length === 0 && otherText.trim().length === 0) {
+      setSectorError("Please select at least one sector or area of interest.");
       return;
     }
 
@@ -186,7 +186,7 @@ export function VolunteerApplicationForm({ onSuccess, isModal = false }: Volunte
       setApiError(null);
       const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
-      const combinedSectors = Array.from(new Set([...selectedBaseAreas, ...selectedSectors]));
+      const combinedSectors = Array.from(new Set(selectedSectors));
       const subclassFlat = Object.entries(selectedSubcategories).flatMap(([sec, subs]) =>
         subs.map((sub) => `${sec}: ${sub}`)
       );
@@ -516,55 +516,16 @@ export function VolunteerApplicationForm({ onSuccess, isModal = false }: Volunte
         </div>
       </div>
 
-      {/* ── Areas of Interest (Page 4 Exact Checkboxes + Subclassification) ── */}
+      {/* ── Areas of Interest (Canonical Focus Sectors) ── */}
       <div>
         <div className="border-b border-slate-200 pb-2 mb-3">
           <label className="text-sm sm:text-base font-extrabold text-slate-800 tracking-wide block">
             Areas of Interest
           </label>
           <p className="text-xs text-slate-600 mt-0.5">
-            I am interested in volunteering for: <span className="text-red-500">*</span>
+            Select one or more working sectors and specific initiatives you wish to contribute to: <span className="text-red-500">*</span>
           </p>
         </div>
-
-        {/* 8 Checkbox Grid matching Page 4 */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 mb-3">
-          {BASE_AREAS.map((area) => {
-            const isChecked = selectedBaseAreas.includes(area);
-            return (
-              <label
-                key={area}
-                onClick={() => toggleBaseArea(area)}
-                className={`flex items-center gap-2.5 p-2.5 rounded-xl border text-xs font-semibold cursor-pointer transition select-none ${
-                  isChecked
-                    ? "bg-brand-green/10 border-brand-green text-brand-green-dark"
-                    : "bg-slate-50 border-slate-200 text-slate-700 hover:border-slate-300"
-                }`}
-              >
-                <input
-                  type="checkbox"
-                  checked={isChecked}
-                  onChange={() => {}}
-                  className="rounded border-slate-300 text-brand-green focus:ring-brand-green cursor-pointer"
-                />
-                <span className="leading-tight">{area}</span>
-              </label>
-            );
-          })}
-        </div>
-
-        {/* Specify area of interest input if Other or custom */}
-        <div className="mb-4">
-          <input
-            {...register("specifyAreaOfInterest")}
-            placeholder="Specify area of interest"
-            className={inputCls}
-          />
-        </div>
-
-        <p className="text-xs text-red-600 font-bold mb-3">
-          Area of interest should be opted more than one and option for subclassified under different sector
-        </p>
 
         {/* Subclassified Sector Picker */}
         <SectorSubclassificationPicker

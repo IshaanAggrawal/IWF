@@ -7,7 +7,7 @@ import {
   Phone, Mail, MapPin, Building2, Send, CheckCircle2,
   AlertCircle, Clock, Globe, Users, MessageSquare, ArrowRight,
   Facebook, Twitter, Instagram, Youtube, Linkedin, Heart,
-  Sprout, Handshake, ChevronRight, Home
+  Sprout, Handshake, ChevronRight, Home, ExternalLink
 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Footer, Header, NotificationTicker, RoleFormModal, UtilityBar } from "@/components/layout/SiteLayout";
@@ -22,65 +22,82 @@ import {
   sanitizeDigits,
 } from "@/utils/formValidation";
 
-// ─── Data from Contact Us page.docx ──────────────────────────────────────────
+// ─── Data from Contact Page Structure Specification ───────────────────────────
 
 const OFFICES = [
   {
-    type: "Registered Office: Bathiya, Darbhanga, Bihar – 847423",
-    shortName: "Registered Office Headquarter",
-    badge: "HEADQUARTERS",
-    badgeCls: "bg-emerald-700 text-white",
-    iconBg: "bg-emerald-50 text-emerald-700 border-emerald-200",
-    themeColor: "#15803d",
-    address: "Bathiya, Darbhanga, Bihar – 847423",
+    number: "01",
+    type: "REGISTERED OFFICE",
+    city: "Darbhanga, Bihar",
+    address: "Bathiya, Darbhanga, Bihar – 847423, India",
+    role: "Official registered address of ISLAH Welfare Foundation.",
     inCharge: "Mr. Md. Azizullah",
     phone: "+91 9811861633",
     email: "info@iwfindia.org",
-    timing: "Mon–Sat: 10:00 AM – 4:00 PM",
-  },
-  {
-    type: "Patna Office",
-    shortName: "Patna Office",
-    badge: "BIHAR OFFICE",
-    badgeCls: "bg-blue-600 text-white",
-    iconBg: "bg-blue-50 text-blue-700 border-blue-200",
-    themeColor: "#1d4ed8",
-    address: "Sector-B, New Azimabad Colony, Patna, Bihar- 800006",
-    inCharge: "Mr. Md. Sharique",
-    phone: "+91 9811861633",
-    email: "info@iwfindia.org",
     timing: "Mon–Fri: 10:00 AM – 4:00 PM",
+    badge: "REGISTERED OFFICE",
+    badgeCls: "bg-emerald-700 text-white",
+    iconBg: "bg-emerald-50 text-emerald-700 border-emerald-200",
+    themeColor: "#15803d",
+    mapUrl:
+      "https://www.google.com/maps/place/26%C2%B009'43.0%22N+86%C2%B011'29.2%22E/@26.1619444,86.1888695,17z/data=!3m1!4b1!4m4!3m3!8m2!3d26.1619444!4d86.1914444?hl=en&entry=ttu&g_ep=EgoyMDI2MTAwNy4wIKXMDSoASAFQAw%3D%3D",
   },
   {
-    type: "Meerut Office",
-    shortName: "Meerut Office",
-    badge: "UP OFFICE",
-    badgeCls: "bg-amber-600 text-white",
-    iconBg: "bg-amber-50 text-amber-700 border-amber-200",
-    themeColor: "#d97706",
-    address: "Sisoli, Garh Road, Meerut, Uttar Pradesh- 250004",
-    inCharge: "Mr. Md. Irshad Ali",
-    phone: "+91 9811861633",
-    email: "info@iwfindia.org",
-    timing: "Mon–Fri: 10:00 AM – 4:00 PM",
-  },
-  {
-    type: "Delhi Office",
-    shortName: "Delhi Administrative Office",
-    badge: "ADMINISTRATIVE OFFICE",
-    badgeCls: "bg-purple-700 text-white",
-    iconBg: "bg-purple-50 text-purple-700 border-purple-200",
-    themeColor: "#7c3aed",
-    address: "B-144, Abul Fazal Enclave-II, Okhla, New Delhi, Delhi-110025",
+    number: "02",
+    type: "ADMINISTRATIVE OFFICE",
+    city: "New Delhi, Delhi",
+    address: "B-144, Abul Fazal Enclave-II, Okhla, New Delhi, Delhi – 110025, India",
+    role: "Central office for day-to-day administration, coordination and organisational operations.",
     inCharge: "Er. Nasera Firdausi",
     phone: "+91 9811861633",
     email: "info@iwfindia.org",
     timing: "Mon–Fri: 9:00 AM – 5:00 PM",
+    badge: "ADMINISTRATIVE OFFICE",
+    badgeCls: "bg-purple-700 text-white",
+    iconBg: "bg-purple-50 text-purple-700 border-purple-200",
+    themeColor: "#7c3aed",
+    mapUrl:
+      "https://www.google.com/maps/place/28%C2%B032'55.5%22N+77%C2%B018'10.3%22E/@28.54875,77.3002862,17z/data=!3m1!4b1!4m4!3m3!8m2!3d28.54875!4d77.3028611?hl=en&entry=ttu&g_ep=EgoyMDI2MTAwNy4wIKXMDSoASAFQAw%3D%3D",
+  },
+  {
+    number: "03",
+    type: "REGIONAL OFFICE – BIHAR",
+    city: "Patna, Bihar",
+    address: "Sector-B, New Azimabad Colony, Patna, Bihar – 800006, India",
+    role: "Regional coordination and programme support for Bihar.",
+    inCharge: "Mr. Md. Sharique",
+    phone: "+91 9811861633",
+    email: "info@iwfindia.org",
+    timing: "Mon–Fri: 10:00 AM – 4:00 PM",
+    badge: "REGIONAL OFFICE – BIHAR",
+    badgeCls: "bg-blue-600 text-white",
+    iconBg: "bg-blue-50 text-blue-700 border-blue-200",
+    themeColor: "#1d4ed8",
+    mapUrl:
+      "https://www.google.com/maps/place/25%C2%B036'35.4%22N+85%C2%B011'16.2%22E/@25.6098246,85.1852633,17z/data=!3m1!4b1!4m4!3m3!8m2!3d25.6098246!4d85.1878382?hl=en&entry=ttu&g_ep=EgoyMDI2MTAwNy4wIKXMDSoASAFQAw%3D%3D",
+  },
+  {
+    number: "04",
+    type: "REGIONAL OFFICE – UTTAR PRADESH",
+    city: "Meerut, Uttar Pradesh",
+    address: "Sisoli, Garh Road, Meerut, Uttar Pradesh – 250004, India",
+    role: "Regional coordination and programme support for Uttar Pradesh.",
+    inCharge: "Mr. Md. Irshad Ali",
+    phone: "+91 9811861633",
+    email: "info@iwfindia.org",
+    timing: "Mon–Fri: 10:00 AM – 4:00 PM",
+    badge: "REGIONAL OFFICE – U.P.",
+    badgeCls: "bg-amber-600 text-white",
+    iconBg: "bg-amber-50 text-amber-700 border-amber-200",
+    themeColor: "#d97706",
+    mapUrl:
+      "https://www.google.com/maps/place/28%C2%B055'01.0%22N+77%C2%B048'13.3%22E/@28.9169316,77.8011315,17z/data=!3m1!4b1!4m4!3m3!8m2!3d28.9169316!4d77.8037064?hl=en&entry=ttu&g_ep=EgoyMDI2MTAwNy4wIKXMDSoASAFQAw%3D%3D",
   },
 ];
 
 const CONTACT_PERSONS = [
   {
+    number: "01",
     name: "Er. Nasera Firdausi",
     title: "Acting Chairman",
     initials: "NF",
@@ -91,6 +108,7 @@ const CONTACT_PERSONS = [
     email: "chairman@iwfindia.org",
   },
   {
+    number: "02",
     name: "Er. Md. Ejazullah",
     title: "Secretary",
     initials: "ME",
@@ -101,6 +119,7 @@ const CONTACT_PERSONS = [
     email: "secretary@iwfindia.org",
   },
   {
+    number: "03",
     name: "Mr. Md. Azizullah",
     title: "Treasurer",
     initials: "MA",
@@ -112,34 +131,84 @@ const CONTACT_PERSONS = [
   },
 ];
 
-// ─── Schema ───────────────────────────────────────────────────────────────────
+const ENQUIRY_TYPES = [
+  "General Enquiry",
+  "Volunteer",
+  "Partnership",
+  "Sponsorship",
+  "Donation",
+  "Membership",
+  "Mentorship",
+  "Programme Information",
+  "Media",
+  "Careers",
+  "Regional Office Enquiry",
+  "Other",
+] as const;
 
-const contactSchema = z.object({
-  firstName: z
-    .string()
-    .trim()
-    .min(2, "First name is required")
-    .regex(/^[^0-9]+$/, "First name cannot contain numbers"),
-  lastName: z
-    .string()
-    .trim()
-    .min(1, "Last name is required")
-    .regex(/^[^0-9]+$/, "Last name cannot contain numbers"),
-  email: z.string().trim().email("Valid email required"),
-  countryCode: z.string().default("+91"),
-  phone: z
-    .string()
-    .trim()
-    .regex(/^\d{10}$/, "Enter a valid 10-digit phone number"),
-  address: z.string().trim().min(2, "Address is required"),
-  zip: z
-    .string()
-    .trim()
-    .regex(/^\d{6}$/, "Enter a valid 6-digit PIN code"),
-  subject: z.string().trim().min(2, "Subject is required"),
-  message: z.string().trim().min(10, "Message must be at least 10 characters"),
-  privacy: z.literal(true, { errorMap: () => ({ message: "Please agree to the privacy policy" }) }),
-});
+const REGIONAL_OFFICES_OPTIONS = [
+  "Registered Office — Darbhanga",
+  "Administrative Office — New Delhi",
+  "Regional Office — Patna",
+  "Regional Office — Meerut",
+];
+
+const VISUAL_SELECTOR_OPTIONS = [
+  { label: "Partnership", icon: "🤝", value: "Partnership" },
+  { label: "Donation", icon: "💙", value: "Donation" },
+  { label: "Volunteer", icon: "🙋", value: "Volunteer" },
+  { label: "Mentorship", icon: "🎓", value: "Mentorship" },
+  { label: "Programmes", icon: "🏫", value: "Programme Information" },
+  { label: "Membership", icon: "🪪", value: "Membership" },
+  { label: "Media", icon: "📰", value: "Media" },
+  { label: "General Enquiry", icon: "📩", value: "General Enquiry" },
+];
+
+// ─── Schema ───────────────────────────────────────────────────────────────────
+// Note: Subject is completely removed as explicitly mandated in the specification.
+
+const contactSchema = z
+  .object({
+    fullName: z
+      .string()
+      .trim()
+      .min(2, "Full name is required")
+      .regex(/^[^0-9]+$/, "Full name cannot contain numbers"),
+    email: z.string().trim().email("Valid email required"),
+    countryCode: z.string().default("+91"),
+    phone: z
+      .string()
+      .trim()
+      .regex(/^\d{10}$/, "Enter a valid 10-digit phone number"),
+    cityDistrict: z.string().trim().optional(),
+    state: z.string().trim().optional(),
+    pinCode: z
+      .string()
+      .trim()
+      .optional()
+      .refine((val) => !val || /^\d{6}$/.test(val), {
+        message: "PIN code must be 6 digits",
+      }),
+    enquiryType: z.string().min(1, "Please select an enquiry type"),
+    regionalOfficeTarget: z.string().optional(),
+    message: z.string().trim().min(10, "Message must be at least 10 characters"),
+    preferredContactMethod: z.enum(["Email", "Phone Call", "WhatsApp"]).default("Email"),
+    privacy: z.literal(true, {
+      errorMap: () => ({ message: "You must agree to the Privacy Policy to proceed" }),
+    }),
+  })
+  .refine(
+    (data) => {
+      if (data.enquiryType === "Regional Office Enquiry") {
+        return !!data.regionalOfficeTarget && data.regionalOfficeTarget.length > 0;
+      }
+      return true;
+    },
+    {
+      message: "Please choose which office you would like to contact",
+      path: ["regionalOfficeTarget"],
+    }
+  );
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
@@ -159,48 +228,80 @@ function FieldError({ msg }: { msg?: string }) {
 
 function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [submissionReference, setSubmissionReference] = useState("");
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [countryCode, setCountryCode] = useState("+91");
+
   const {
     register,
     handleSubmit,
     setValue,
+    watch,
     reset,
     formState: { errors, isSubmitting },
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
+      fullName: "",
+      email: "",
       countryCode: "+91",
+      phone: "",
+      cityDistrict: "",
+      state: "",
+      pinCode: "",
+      enquiryType: "General Enquiry",
+      regionalOfficeTarget: "",
+      message: "",
+      preferredContactMethod: "Email",
     },
   });
+
+  const selectedEnquiryType = watch("enquiryType");
+  const selectedPreferredMethod = watch("preferredContactMethod");
 
   const onSubmit = async (data: ContactFormData) => {
     try {
       setSubmitError(null);
+      const randomCode = Math.floor(10000 + Math.random() * 90000);
+      const generatedRef = `ISLAH-ENQ-2026-${randomCode}`;
+
       const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+
+      const addressLine = [data.cityDistrict, data.state, data.pinCode ? `PIN: ${data.pinCode}` : ""]
+        .filter(Boolean)
+        .join(", ");
+
+      const officeDetails =
+        data.enquiryType === "Regional Office Enquiry" && data.regionalOfficeTarget
+          ? `\nOffice Target: ${data.regionalOfficeTarget}`
+          : "";
+
       const res = await fetch(`${API_URL}/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: `${data.firstName} ${data.lastName}`.trim(),
+          name: data.fullName.trim(),
           email: data.email,
           phone: data.phone,
           countryCode: data.countryCode || "+91",
-          subject: data.subject,
-          message: `${data.message}\n\nAddress: ${data.address}, PIN: ${data.zip}`,
+          subject: data.enquiryType + (data.regionalOfficeTarget ? ` - ${data.regionalOfficeTarget}` : ""),
+          message: `${data.message}\n\n[Enquiry Type: ${data.enquiryType}${officeDetails}]\n[Address: ${addressLine || "Not specified"}]\n[Preferred Contact Method: ${data.preferredContactMethod || "Email"}]\n[Ref: ${generatedRef}]`,
           source: "Contact Page",
         }),
       });
 
       const json = await res.json();
       if (!res.ok || !json.success) {
-        throw new Error(json.message || "Failed to submit message. Please try again.");
+        throw new Error(json.message || "We couldn't submit your enquiry. Please check your details and try again.");
       }
 
+      setSubmissionReference(generatedRef);
       setSubmitted(true);
     } catch (err: any) {
       console.error("Contact Form error:", err);
-      setSubmitError(err.message || "Something went wrong. Please check your network and try again.");
+      setSubmitError(
+        err.message || "We couldn't submit your enquiry. Please check your details and try again."
+      );
     }
   };
 
@@ -208,17 +309,20 @@ function ContactForm() {
     reset();
     setSubmitError(null);
     setSubmitted(false);
+    setSubmissionReference("");
   };
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-slate-200/90 overflow-hidden">
       {/* Header bar styled with Deep Navy #071527 */}
-      <div className="bg-[#071527] px-6 py-4 border-b border-slate-800">
-        <h3 className="text-white font-bold text-lg flex items-center gap-2.5">
-          <MessageSquare className="w-5 h-5 text-sky-400" />
-          <span>Send Us a Message</span>
+      <div className="bg-[#071527] px-6 py-5 border-b border-slate-800">
+        <h3 className="text-white font-black text-lg md:text-xl flex items-center gap-2.5 uppercase tracking-wide">
+          <MessageSquare className="w-5 h-5 text-brand-orange" />
+          <span>SEND US A MESSAGE</span>
         </h3>
-        <p className="text-slate-300 text-xs mt-1">We typically respond within 24–48 hours.</p>
+        <p className="text-slate-300 text-xs sm:text-sm mt-1 leading-relaxed">
+          We'd love to hear from you. Whether you have a question, want to volunteer, explore a partnership, support our programmes, or learn more about ISLAH, send us a message and our team will get back to you.
+        </p>
       </div>
 
       <div className="p-5 sm:p-7">
@@ -228,21 +332,30 @@ function ContactForm() {
               key="success"
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="text-center py-8"
+              className="text-center py-8 px-4"
             >
-              <div className="w-14 h-14 rounded-full bg-emerald-50 border-2 border-emerald-200 flex items-center justify-center mx-auto mb-3.5">
-                <CheckCircle2 className="w-7 h-7 text-emerald-600" />
+              <div className="w-16 h-16 rounded-full bg-emerald-50 border-2 border-emerald-300 flex items-center justify-center mx-auto mb-4">
+                <CheckCircle2 className="w-8 h-8 text-emerald-600" />
               </div>
-              <h4 className="text-xl font-bold text-slate-800 mb-2">Thank You for Reaching Out!</h4>
-              <p className="text-slate-600 text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
-                Your message has been received. Our dedicated team will review your query and get in touch with you shortly.
+              <span className="inline-block text-xs font-black uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 mb-2">
+                Successful submission
+              </span>
+              <h4 className="text-xl sm:text-2xl font-black text-slate-900 mb-2">
+                Thank you for contacting ISLAH.
+              </h4>
+              <div className="my-3 py-2 px-4 rounded-xl bg-slate-100 border border-slate-200 inline-block font-mono text-xs sm:text-sm font-bold text-[#071527]">
+                Reference: <span className="text-brand-orange">{submissionReference}</span>
+              </div>
+              <p className="text-slate-600 text-xs sm:text-sm max-w-md mx-auto leading-relaxed mt-2">
+                Your enquiry has been received successfully. Our team will get back to you within 24–48 hours.
               </p>
               <button
                 type="button"
                 onClick={handleReset}
-                className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-xs sm:text-sm font-semibold transition shadow-sm"
+                className="mt-6 inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#0284c7] hover:bg-[#0369a1] text-white text-xs sm:text-sm font-bold transition shadow-sm cursor-pointer"
               >
-                Send Another Message <ArrowRight className="w-4 h-4" />
+                <span>Send Another Enquiry</span>
+                <ArrowRight className="w-4 h-4" />
               </button>
             </motion.div>
           ) : (
@@ -251,46 +364,57 @@ function ContactForm() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               onSubmit={handleSubmit(onSubmit)}
-              className="space-y-3.5 notranslate"
+              className="space-y-4 notranslate"
               translate="no"
             >
-              {/* Row 1: First Name & Last Name */}
-              <div className="grid sm:grid-cols-2 gap-3.5">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    First Name <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    {...register("firstName", {
-                      onChange: (e) => {
-                        e.target.value = sanitizeName(e.target.value);
-                      },
-                    })}
-                    onKeyDown={blockNumbersOnKeyDown}
-                    placeholder="Anjali"
-                    className={inputCls}
-                  />
-                  <FieldError msg={errors.firstName?.message} />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    Last Name <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    {...register("lastName", {
-                      onChange: (e) => {
-                        e.target.value = sanitizeName(e.target.value);
-                      },
-                    })}
-                    onKeyDown={blockNumbersOnKeyDown}
-                    placeholder="Verma"
-                    className={inputCls}
-                  />
-                  <FieldError msg={errors.lastName?.message} />
+              {/* Visual Selector: What can we help you with? */}
+              <div className="bg-slate-50/80 p-3.5 rounded-xl border border-slate-200/80">
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                  What can we help you with?
+                </label>
+                <div className="flex flex-wrap gap-1.5">
+                  {VISUAL_SELECTOR_OPTIONS.map((item) => {
+                    const isSelected = selectedEnquiryType === item.value;
+                    return (
+                      <button
+                        type="button"
+                        key={item.label}
+                        onClick={() => {
+                          setValue("enquiryType", item.value, { shouldValidate: true });
+                        }}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer border ${
+                          isSelected
+                            ? "bg-[#071527] text-white border-[#071527] shadow-xs"
+                            : "bg-white text-slate-700 border-slate-200 hover:border-slate-300 hover:bg-slate-100/70"
+                        }`}
+                      >
+                        <span>{item.icon}</span>
+                        <span>{item.label}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
-              {/* Row 2: Email Address & Phone Number */}
+              {/* Full Name */}
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  Full Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  {...register("fullName", {
+                    onChange: (e) => {
+                      e.target.value = sanitizeName(e.target.value);
+                    },
+                  })}
+                  onKeyDown={blockNumbersOnKeyDown}
+                  placeholder="Enter your full name"
+                  className={inputCls}
+                />
+                <FieldError msg={errors.fullName?.message} />
+              </div>
+
+              {/* Email Address & Phone Number */}
               <div className="grid sm:grid-cols-2 gap-3.5">
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
@@ -306,7 +430,7 @@ function ContactForm() {
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    Phone Number <span className="text-red-500">*</span>
+                    Phone / WhatsApp Number <span className="text-red-500">*</span>
                   </label>
                   <div className="flex rounded-lg border border-slate-200 bg-white overflow-hidden focus-within:border-sky-500 focus-within:ring-2 focus-within:ring-sky-500/20">
                     <select
@@ -331,7 +455,7 @@ function ContactForm() {
                         },
                       })}
                       type="tel"
-                      placeholder="98765 43210"
+                      placeholder="+91 XXXXX XXXXX"
                       maxLength={10}
                       onKeyDown={blockNonDigitsOnKeyDown}
                       className="h-10 w-full px-3 text-sm text-slate-800 outline-none placeholder:text-slate-400"
@@ -341,52 +465,84 @@ function ContactForm() {
                 </div>
               </div>
 
-              {/* Row 3: Address & PIN Code */}
-              <div className="grid sm:grid-cols-[1fr_140px] gap-3.5">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    Address <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    {...register("address")}
-                    placeholder="Your city / village"
-                    className={inputCls}
-                  />
-                  <FieldError msg={errors.address?.message} />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    PIN Code : <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    {...register("zip", {
-                      onChange: (e) => {
-                        e.target.value = sanitizeDigits(e.target.value, 6);
-                      },
-                    })}
-                    onKeyDown={blockNonDigitsOnKeyDown}
-                    placeholder="847423"
-                    maxLength={6}
-                    className={inputCls}
-                  />
-                  <FieldError msg={errors.zip?.message} />
-                </div>
-              </div>
-
-              {/* Row 4: Subject */}
+              {/* Address: City / District, State, PIN Code */}
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  Subject <span className="text-red-500">*</span>
+                  Address
                 </label>
-                <input
-                  {...register("subject")}
-                  placeholder="How can we help you?"
-                  className={inputCls}
-                />
-                <FieldError msg={errors.subject?.message} />
+                <div className="grid sm:grid-cols-3 gap-3">
+                  <div>
+                    <input
+                      {...register("cityDistrict")}
+                      placeholder="Enter your city or district"
+                      className={inputCls}
+                    />
+                  </div>
+                  <div>
+                    <input
+                      {...register("state")}
+                      placeholder="State"
+                      className={inputCls}
+                    />
+                  </div>
+                  <div>
+                    <input
+                      {...register("pinCode", {
+                        onChange: (e) => {
+                          e.target.value = sanitizeDigits(e.target.value, 6);
+                        },
+                      })}
+                      onKeyDown={blockNonDigitsOnKeyDown}
+                      placeholder="PIN Code"
+                      maxLength={6}
+                      className={inputCls}
+                    />
+                    <FieldError msg={errors.pinCode?.message} />
+                  </div>
+                </div>
               </div>
 
-              {/* Row 5: Message */}
+              {/* How can we help you? * (Dropdown) */}
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  How can we help you? <span className="text-red-500">*</span>
+                </label>
+                <select
+                  {...register("enquiryType")}
+                  className={inputCls + " cursor-pointer"}
+                >
+                  <option value="">Select an enquiry type</option>
+                  {ENQUIRY_TYPES.map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
+                <FieldError msg={errors.enquiryType?.message} />
+              </div>
+
+              {/* Conditional Field: Regional Office Enquiry */}
+              {selectedEnquiryType === "Regional Office Enquiry" && (
+                <div className="p-3.5 bg-blue-50/70 border border-blue-200 rounded-xl space-y-1 animate-in fade-in duration-200">
+                  <label className="block text-xs font-bold text-blue-900 mb-1">
+                    Which office would you like to contact? <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    {...register("regionalOfficeTarget")}
+                    className={inputCls + " cursor-pointer bg-white"}
+                  >
+                    <option value="">Select an office</option>
+                    {REGIONAL_OFFICES_OPTIONS.map((office) => (
+                      <option key={office} value={office}>
+                        {office}
+                      </option>
+                    ))}
+                  </select>
+                  <FieldError msg={errors.regionalOfficeTarget?.message} />
+                </div>
+              )}
+
+              {/* Message */}
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
                   Message <span className="text-red-500">*</span>
@@ -394,39 +550,61 @@ function ContactForm() {
                 <textarea
                   {...register("message")}
                   rows={4}
-                  placeholder="Tell us more about your query, suggestion, or collaboration idea..."
+                  placeholder="Please tell us how we can help you..."
                   className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 placeholder:text-slate-400 resize-none"
                 />
                 <FieldError msg={errors.message?.message} />
               </div>
 
-              {/* Privacy Policy Checkbox - explicitly opens in new tab as documented */}
-              <div className="flex items-start gap-2.5 p-2.5 bg-slate-50/80 rounded-lg border border-slate-200">
+              {/* Preferred Contact Method */}
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                  Preferred Contact Method
+                </label>
+                <div className="flex flex-wrap items-center gap-4 text-xs font-medium text-slate-700">
+                  {(["Email", "Phone Call", "WhatsApp"] as const).map((method) => (
+                    <label key={method} className="inline-flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        value={method}
+                        checked={selectedPreferredMethod === method}
+                        onChange={() => setValue("preferredContactMethod", method)}
+                        className="text-sky-600 focus:ring-sky-500"
+                      />
+                      <span>{method}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Privacy Consent Checkbox */}
+              <div className="flex items-start gap-2.5 p-3 bg-slate-50 rounded-xl border border-slate-200">
                 <input
                   id="contact-privacy-check"
                   type="checkbox"
                   {...register("privacy")}
-                  className="mt-0.5 h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-500 cursor-pointer"
+                  className="mt-0.5 h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-500 cursor-pointer shrink-0"
                 />
                 <label
                   htmlFor="contact-privacy-check"
-                  className="text-xs text-slate-600 leading-snug cursor-pointer"
+                  className="text-xs text-slate-700 leading-snug cursor-pointer select-none"
                 >
                   I agree to the{" "}
                   <a
                     href="/privacy-policy"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sky-700 font-semibold hover:underline"
+                    className="text-sky-700 font-bold hover:underline"
                   >
                     Privacy Policy
-                  </a>
-                  . Islah will use my information solely to respond to this inquiry.{" "}
+                  </a>{" "}
+                  and consent to ISLAH using the information provided to respond to my enquiry.{" "}
                   <span className="text-red-500">*</span>
                 </label>
               </div>
               {errors.privacy && <FieldError msg={errors.privacy.message} />}
 
+              {/* Error feedback */}
               {submitError && (
                 <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
                   <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
@@ -438,15 +616,29 @@ function ContactForm() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full flex items-center justify-center gap-2 bg-[#0284c7] hover:bg-[#0369a1] text-white font-bold py-3 px-6 rounded-xl shadow-md transition-all hover:scale-[1.008] disabled:opacity-60 text-sm mt-2"
+                className="w-full flex items-center justify-center gap-2 bg-[#0284c7] hover:bg-[#0369a1] text-white font-bold py-3 px-6 rounded-xl shadow-md transition-all hover:scale-[1.008] disabled:opacity-60 text-sm mt-1 cursor-pointer"
               >
                 {isSubmitting ? (
-                  <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <>
+                    <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <span>Sending…</span>
+                  </>
                 ) : (
-                  <Send className="w-4 h-4" />
+                  <>
+                    <span>Send Message →</span>
+                  </>
                 )}
-                <span>{isSubmitting ? "Sending..." : "Send Message"}</span>
               </button>
+
+              {/* Sub-button text & privacy reassurance */}
+              <div className="space-y-1 text-center pt-1">
+                <p className="text-[11px] font-semibold text-slate-500">
+                  We aim to respond to enquiries within 24–48 working hours.
+                </p>
+                <p className="text-[10px] text-slate-400">
+                  Your information is treated with care and used only for responding to your enquiry, in accordance with our Privacy Policy.
+                </p>
+              </div>
             </motion.form>
           )}
         </AnimatePresence>
@@ -468,7 +660,7 @@ export default function ContactPage() {
       <Header />
 
       <main className="flex-1">
-        {/* ─── Hero Section: 100% Native Vector & High-Res Build ───────────────── */}
+        {/* ─── Hero Section ──────────────────────────────────────────────────── */}
         <section className="bg-[#071527] text-white min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex flex-col justify-center py-10 md:py-14 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
             {/* Top Breadcrumb */}
@@ -481,7 +673,7 @@ export default function ContactPage() {
               <span className="text-brand-orange font-bold">Contact Us</span>
             </nav>
 
-            {/* Main Hero Grid: Left Content + Right Organic Composition */}
+            {/* Main Hero Grid: Left Content + Right Composition */}
             <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-12 items-center">
               {/* Left Column: Heading, Copy & 4 Cards */}
               <div className="space-y-4 sm:space-y-5">
@@ -491,16 +683,14 @@ export default function ContactPage() {
                 </div>
 
                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight">
-                  Contact Us
+                  Contact ISLAH
                 </h1>
 
                 <p className="text-slate-300 text-xs sm:text-sm md:text-base leading-relaxed max-w-xl font-normal">
-                  We're here to listen, collaborate and create a brighter tomorrow together. Whether you
-                  have a question, want to volunteer, explore a partnership, or simply learn more about
-                  our work — we'd love to hear from you.
+                  We're here to listen, collaborate and create meaningful change together.
                 </p>
 
-                {/* 4 Dark Rounded Quick Cards */}
+                {/* 4 Quick Action Links */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2">
                   {/* Card 1: Call Us */}
                   <a
@@ -514,8 +704,8 @@ export default function ContactPage() {
                       <h4 className="text-xs font-bold text-white group-hover:text-sky-200 transition-colors">
                         Call Us
                       </h4>
-                      <p className="text-[11px] text-slate-300 font-medium mt-0.5 whitespace-nowrap">
-                        +91 98118 61633
+                      <p className="text-[11px] text-slate-300 font-medium mt-0.5 whitespace-nowrap notranslate" dir="ltr" translate="no">
+                        +91 9811861633
                       </p>
                     </div>
                   </a>
@@ -551,7 +741,7 @@ export default function ContactPage() {
                         Visit Us
                       </h4>
                       <p className="text-[11px] text-slate-300 font-medium mt-0.5 whitespace-nowrap">
-                        New Delhi, India
+                        Our 4 Offices
                       </p>
                     </div>
                   </a>
@@ -566,20 +756,19 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h4 className="text-xs font-bold text-white group-hover:text-sky-200 transition-colors">
-                        Connect
+                        Connect Us
                       </h4>
                       <p className="text-[11px] text-slate-300 font-medium mt-0.5 whitespace-nowrap">
-                        Let's Make an Impact
+                        Send Message
                       </p>
                     </div>
                   </a>
                 </div>
               </div>
 
-              {/* Right Column: Native Organic Composition */}
+              {/* Right Column: Organic Composition */}
               <div className="relative flex items-center justify-center lg:justify-end">
                 <div className="relative w-full max-w-[440px] sm:max-w-[480px] aspect-[1.15/1]">
-                  {/* Background Soft Blue Organic Backdrop Layer */}
                   <div
                     className="absolute inset-2 bg-[#122e54] -rotate-3 scale-105 opacity-90 transition-transform pointer-events-none"
                     style={{
@@ -587,7 +776,6 @@ export default function ContactPage() {
                     }}
                   />
 
-                  {/* Organic Frame with Razor-Sharp High-Res Photograph */}
                   <div
                     className="relative w-full h-full overflow-hidden border-[5px] sm:border-[6px] border-white shadow-2xl z-10"
                     style={{
@@ -602,28 +790,7 @@ export default function ContactPage() {
                     />
                   </div>
 
-                  {/* Left Botanical Leaves SVG */}
-                  <div className="absolute -left-6 sm:-left-8 top-1/4 w-12 sm:w-16 h-24 sm:h-32 pointer-events-none z-20">
-                    <svg viewBox="0 0 60 120" fill="none" className="w-full h-full text-[#4a729e]">
-                      <path
-                        d="M50,110 Q35,80 15,60 Q5,40 10,15 Q30,20 40,40 Q48,60 50,110 Z"
-                        fill="currentColor"
-                        opacity="0.9"
-                      />
-                      <path
-                        d="M48,80 Q25,70 18,48 Q35,45 42,65 Z"
-                        fill="#385e88"
-                        opacity="0.95"
-                      />
-                      <path
-                        d="M52,45 Q38,30 35,10 Q50,15 52,45 Z"
-                        fill="currentColor"
-                        opacity="0.85"
-                      />
-                    </svg>
-                  </div>
-
-                  {/* Handwritten Note: Together We Can Do More ♡ */}
+                  {/* Handwritten Note */}
                   <div className="absolute -top-3 right-0 sm:right-2 z-20 select-none text-right">
                     <p className="font-['Caveat',cursive] text-2xl sm:text-3xl lg:text-[32px] font-bold text-white leading-tight rotate-[-6deg] drop-shadow-md">
                       Together<br />
@@ -632,42 +799,13 @@ export default function ContactPage() {
                     </p>
                     <div className="w-10 sm:w-12 h-[2px] bg-sky-300 ml-auto mt-0.5 rounded-full rotate-[-6deg]" />
                   </div>
-
-                  {/* Bottom Right Botanical Leaves & Tagline */}
-                  <div className="absolute -bottom-2 sm:bottom-1 right-0 sm:right-1 z-20 select-none flex flex-col items-end">
-                    {/* Small leaf motif */}
-                    <div className="w-10 h-10 mb-1 pointer-events-none">
-                      <svg viewBox="0 0 40 40" fill="none" className="w-full h-full text-[#4a729e]">
-                        <path
-                          d="M35,5 Q20,15 10,28 Q15,35 28,25 Q35,18 35,5 Z"
-                          fill="currentColor"
-                          opacity="0.85"
-                        />
-                        <path
-                          d="M25,20 Q12,25 5,38 Q18,36 25,20 Z"
-                          fill="#385e88"
-                          opacity="0.9"
-                        />
-                      </svg>
-                    </div>
-
-                    <div className="w-8 sm:w-10 h-[1.5px] bg-sky-400/60 mb-2" />
-
-                    <div className="text-[9px] sm:text-[10px] font-extrabold tracking-[0.22em] text-slate-300 uppercase space-y-0.5 text-right leading-tight">
-                      <p>PEOPLE</p>
-                      <p>SUPPORT</p>
-                      <p>CHANGE</p>
-                      <p>TOGETHER</p>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* ─── Curved Bottom Wave & 3 Core Values Pillar Bar ─────────────────── */}
+          {/* Curved Bottom Wave */}
           <div className="relative w-full overflow-hidden leading-none z-10">
-            {/* Multi-layered Organic Wave Transition in Vector SVG */}
             <svg
               viewBox="0 0 1440 90"
               fill="none"
@@ -691,7 +829,7 @@ export default function ContactPage() {
               />
             </svg>
 
-            {/* Core Values Strip sitting on the transition */}
+            {/* Core Values Strip */}
             <div className="bg-white pb-3 pt-0 border-b border-slate-200/80">
               <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-wrap items-center justify-center sm:justify-start gap-5 sm:gap-8 text-xs font-bold text-slate-700">
                 <div className="flex items-center gap-2">
@@ -719,33 +857,36 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* ─── Section 2: Our Offices ────────────────────────────────────────────── */}
-        <section id="offices" className="py-8 sm:py-10 bg-white">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6">
-            <div className="text-center mb-6 sm:mb-8">
-              <div className="inline-flex items-center justify-center gap-2 text-slate-800 mb-1.5">
-                <Building2 className="w-5 h-5 text-sky-700" />
-                <h2 className="text-xl sm:text-2xl font-black tracking-wider uppercase">OUR OFFICES</h2>
+        {/* ─── Section 2: Our Offices (Four Offices in Exact Order) ───────────── */}
+        <section id="offices" className="py-10 sm:py-14 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+            <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
+              <div className="inline-flex items-center justify-center gap-2 text-slate-800 mb-2">
+                <Building2 className="w-6 h-6 text-sky-700" />
+                <h2 className="text-2xl sm:text-3xl font-black tracking-wider uppercase">
+                  OUR OFFICES
+                </h2>
               </div>
-              <p className="text-xs sm:text-sm text-slate-500">
-                We are present across multiple locations to serve communities better.
+              <h3 className="text-base sm:text-lg font-bold text-brand-orange mt-1">
+                Connecting Communities. Coordinating Action. Serving with Purpose.
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+                ISLAH Welfare Foundation operates through a network of offices that support its administrative, regional and community-focused activities. While our Registered Office serves as the Foundation’s official registered address, our Administrative and Regional Offices help coordinate programmes, partnerships and field activities across different locations.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
               {OFFICES.map((office) => (
                 <div
-                  key={office.shortName}
-                  className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-4 sm:p-5 flex flex-col justify-between hover:shadow-md hover:-translate-y-0.5 transition-all"
+                  key={office.number}
+                  className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5 flex flex-col justify-between hover:shadow-md hover:-translate-y-0.5 transition-all"
                 >
                   <div>
-                    {/* Badge & Icon Row */}
+                    {/* Number Badge & Type */}
                     <div className="flex items-center justify-between gap-2 mb-3">
-                      <div
-                        className={`w-9 h-9 rounded-xl border flex items-center justify-center ${office.iconBg}`}
-                      >
-                        <Building2 className="w-4 h-4" />
-                      </div>
+                      <span className="font-mono font-black text-xs px-2.5 py-1 rounded-md bg-slate-100 text-slate-800 border border-slate-200">
+                        {office.number}
+                      </span>
                       <span
                         className={`text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${office.badgeCls}`}
                       >
@@ -753,30 +894,37 @@ export default function ContactPage() {
                       </span>
                     </div>
 
-                    {/* Title */}
-                    <h3 className="font-extrabold text-slate-900 text-sm leading-snug mb-2">
-                      {office.shortName}
+                    {/* City & Role */}
+                    <h3 className="font-extrabold text-slate-900 text-base mb-1">
+                      {office.city}
                     </h3>
+                    <p className="text-xs text-brand-orange font-semibold leading-snug mb-3">
+                      {office.role}
+                    </p>
 
                     {/* In-Charge & Address */}
-                    <div className="space-y-1.5 text-xs mb-3.5">
+                    <div className="space-y-2 text-xs mb-4">
                       <p className="text-[11px] text-slate-600 font-medium">
-                        Contact: <span className="font-bold text-slate-800 text-xs">{office.inCharge}</span>
+                        Contact Person: <span className="font-bold text-slate-900 text-xs block mt-0.5">{office.inCharge}</span>
                       </p>
                       <div className="flex items-start gap-1.5 text-slate-600">
                         <MapPin className="w-3.5 h-3.5 shrink-0 text-slate-400 mt-0.5" />
-                        <span className="leading-snug">{office.address}</span>
+                        <span className="leading-snug notranslate" dir="ltr" translate="no">
+                          {office.address}
+                        </span>
                       </div>
                     </div>
                   </div>
 
-                  {/* Contact Links & Timing */}
-                  <div className="pt-3 border-t border-slate-100 space-y-1.5 text-xs">
+                  {/* Contact Links, Timing & Directions Button */}
+                  <div className="pt-3 border-t border-slate-100 space-y-2 text-xs">
                     <div className="flex items-center gap-1.5">
                       <Phone className="w-3.5 h-3.5 text-sky-600 shrink-0" />
                       <a
                         href={`tel:${office.phone.replace(/\s+/g, "")}`}
-                        className="text-slate-700 font-semibold hover:text-sky-700 hover:underline"
+                        className="text-slate-700 font-semibold hover:text-sky-700 hover:underline notranslate"
+                        dir="ltr"
+                        translate="no"
                       >
                         {office.phone}
                       </a>
@@ -790,10 +938,20 @@ export default function ContactPage() {
                         {office.email}
                       </a>
                     </div>
-                    <div className="flex items-center gap-1.5 text-slate-500 pt-0.5">
+                    <div className="flex items-center gap-1.5 text-slate-500">
                       <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                       <span className="text-[11px]">{office.timing}</span>
                     </div>
+
+                    <a
+                      href={office.mapUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-2 w-full inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-slate-50 hover:bg-[#071527] text-slate-800 hover:text-white border border-slate-200 transition-all font-bold text-xs group"
+                    >
+                      <span>Get Directions →</span>
+                      <ExternalLink className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                    </a>
                   </div>
                 </div>
               ))}
@@ -802,9 +960,9 @@ export default function ContactPage() {
         </section>
 
         {/* ─── Section 3: Key Contact Persons ─────────────────────────────────────── */}
-        <section className="py-8 sm:py-10 bg-slate-50 border-y border-slate-200/80">
+        <section className="py-10 sm:py-12 bg-slate-50 border-y border-slate-200/80">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
-            <div className="text-center mb-6 sm:mb-8">
+            <div className="text-center mb-8">
               <div className="inline-flex items-center justify-center gap-2 text-slate-800 mb-1.5">
                 <Users className="w-5 h-5 text-emerald-700" />
                 <h2 className="text-xl sm:text-2xl font-black tracking-wider uppercase">
@@ -816,11 +974,11 @@ export default function ContactPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {CONTACT_PERSONS.map((person) => (
                 <div
                   key={person.name}
-                  className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5 hover:shadow-md hover:-translate-y-0.5 transition-all text-center flex flex-col items-center justify-between"
+                  className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-6 hover:shadow-md hover:-translate-y-0.5 transition-all text-center flex flex-col items-center justify-between"
                 >
                   <div className="w-full">
                     {/* Avatar Initials Circle */}
@@ -845,7 +1003,9 @@ export default function ContactPage() {
                   <div className="w-full pt-3 border-t border-slate-100 space-y-2 text-xs">
                     <a
                       href={`tel:${person.phone.replace(/\s+/g, "")}`}
-                      className="flex items-center justify-center gap-2 text-slate-700 font-semibold hover:text-sky-700 transition-colors"
+                      className="flex items-center justify-center gap-2 text-slate-700 font-semibold hover:text-sky-700 transition-colors notranslate"
+                      dir="ltr"
+                      translate="no"
                     >
                       <Phone className="w-3.5 h-3.5 text-sky-600" />
                       <span>{person.phone}</span>
@@ -865,20 +1025,20 @@ export default function ContactPage() {
         </section>
 
         {/* ─── Section 4: Send Us a Message + Sidebar ─────────────────────────────── */}
-        <section id="send-message" className="py-8 sm:py-10 bg-white">
+        <section id="send-message" className="py-10 sm:py-14 bg-white">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
-            <div className="grid lg:grid-cols-[1fr_340px] gap-6 sm:gap-8 items-start">
+            <div className="grid lg:grid-cols-[1fr_340px] gap-8 items-start">
               {/* Form Column */}
               <ContactForm />
 
               {/* Sidebar Column */}
               <div className="space-y-4">
                 {/* 1. Quick Contact */}
-                <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-4 sm:p-5">
+                <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5">
                   <h4 className="text-[11px] font-black uppercase tracking-wider text-slate-500 mb-3">
                     QUICK CONTACT
                   </h4>
-                  <div className="space-y-2.5">
+                  <div className="space-y-3">
                     <a
                       href="tel:+919811861633"
                       className="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 transition group"
@@ -888,7 +1048,7 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">PHONE</p>
-                        <p className="text-xs font-bold text-slate-800 group-hover:text-sky-700 transition-colors">
+                        <p className="text-xs font-bold text-slate-800 group-hover:text-sky-700 transition-colors notranslate" dir="ltr" translate="no">
                           +91 9811861633
                         </p>
                       </div>
@@ -909,8 +1069,10 @@ export default function ContactPage() {
                       </div>
                     </a>
 
-                    <Link
-                      to="/"
+                    <a
+                      href="https://www.iwfindia.org"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 transition group"
                     >
                       <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center shrink-0 border border-blue-100">
@@ -919,15 +1081,15 @@ export default function ContactPage() {
                       <div>
                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">WEBSITE</p>
                         <p className="text-xs font-bold text-slate-800 group-hover:text-blue-700 transition-colors">
-                          iwfindia.org
+                          www.iwfindia.org
                         </p>
                       </div>
-                    </Link>
+                    </a>
                   </div>
                 </div>
 
                 {/* 2. Follow Us */}
-                <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-4 sm:p-5">
+                <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5">
                   <h4 className="text-[11px] font-black uppercase tracking-wider text-slate-500 mb-3">
                     FOLLOW US
                   </h4>
@@ -935,9 +1097,9 @@ export default function ContactPage() {
                     {[
                       { Icon: Facebook, color: "#1877F2", label: "Facebook", href: "https://www.facebook.com/islahindia/" },
                       { Icon: Twitter, color: "#1DA1F2", label: "Twitter / X", href: "https://x.com/islahindia/" },
-                      { Icon: Instagram, color: "#E1306C", label: "Instagram", href: "https://www.instagram.com/islahwelfarefoundation/" },
+                      { Icon: Instagram, color: "#E1306C", label: "Instagram", href: "https://www.instagram.com/islahindia/" },
                       { Icon: Youtube, color: "#FF0000", label: "YouTube", href: "https://www.youtube.com/channel/UC5sty9L25QQwC89JwGmEIVw/" },
-                      { Icon: Linkedin, color: "#0A66C2", label: "LinkedIn", href: "https://www.linkedin.com/in/islah-welfare-foundation-6a028b432/" },
+                      { Icon: Linkedin, color: "#0A66C2", label: "LinkedIn", href: "https://www.linkedin.com/in/islahindia/" },
                     ].map(({ Icon, color, label, href }) => (
                       <a
                         key={label}
@@ -954,7 +1116,7 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                {/* 3. Support Our Mission (Deep Navy card #071527) */}
+                {/* 3. Support Our Mission */}
                 <div className="bg-[#071527] rounded-2xl p-5 text-white border border-slate-800 shadow-sm">
                   <h4 className="font-black text-sm mb-1.5 flex items-center gap-2">
                     <Heart className="w-4 h-4 text-red-400" />
@@ -972,7 +1134,7 @@ export default function ContactPage() {
                 </div>
 
                 {/* 4. Join as Volunteer */}
-                <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-4 sm:p-5">
+                <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5">
                   <div className="flex items-center gap-2.5 mb-2.5">
                     <div className="w-8 h-8 rounded-lg bg-sky-50 text-sky-700 flex items-center justify-center border border-sky-100">
                       <Users className="w-4 h-4" />
@@ -985,7 +1147,7 @@ export default function ContactPage() {
                   <button
                     type="button"
                     onClick={() => setActiveModal("volunteer")}
-                    className="w-full text-center bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold py-2 rounded-xl transition text-xs border border-slate-200/80"
+                    className="w-full text-center bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold py-2 rounded-xl transition text-xs border border-slate-200/80 cursor-pointer"
                   >
                     Get Involved
                   </button>
@@ -995,8 +1157,8 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* ─── Section 5: Bottom Community CTA Banner ──────────────────────────────── */}
-        <section className="py-6 sm:py-8 bg-white border-t border-slate-200/80">
+        {/* ─── Section 5: Get Involved / Together CTA ─────────────────────────── */}
+        <section className="py-8 bg-white border-t border-slate-200/80">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <div className="bg-gradient-to-r from-emerald-50/90 via-teal-50/50 to-emerald-50/90 rounded-2xl border border-emerald-200/70 p-5 sm:p-6 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-4 text-center md:text-left flex-col md:flex-row">
@@ -1008,19 +1170,32 @@ export default function ContactPage() {
                     TOGETHER, WE CAN CREATE STRONGER COMMUNITIES
                   </h3>
                   <p className="text-xs text-slate-600 max-w-xl mt-0.5 leading-relaxed">
-                    Your support and partnership help us bring hope, opportunity and positive change to those
-                    who need it most.
+                    Your support and partnership help us bring hope, opportunity and positive change to those who need it most.
                   </p>
                 </div>
               </div>
 
-              <div className="shrink-0 w-full md:w-auto">
+              <div className="flex flex-wrap items-center justify-center gap-2.5 shrink-0 w-full md:w-auto">
+                <button
+                  onClick={() => setActiveModal("volunteer")}
+                  className="inline-flex items-center justify-center gap-1.5 bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 text-xs font-bold py-2.5 px-4 rounded-xl transition-all shadow-xs cursor-pointer"
+                >
+                  <Users className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Volunteer</span>
+                </button>
                 <Link
                   to="/about/partners"
-                  className="w-full md:w-auto inline-flex items-center justify-center gap-2 bg-[#071527] hover:bg-[#0d223f] text-white text-xs sm:text-sm font-bold py-2.5 px-6 rounded-xl transition-all shadow-sm"
+                  className="inline-flex items-center justify-center gap-2 bg-[#071527] hover:bg-[#0d223f] text-white text-xs sm:text-sm font-bold py-2.5 px-5 rounded-xl transition-all shadow-sm"
                 >
                   <Handshake className="w-4 h-4 text-sky-400" />
                   <span>Partner With Us</span>
+                </Link>
+                <Link
+                  to="/donate"
+                  className="inline-flex items-center justify-center gap-1.5 bg-[#f97316] hover:bg-orange-600 text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-all shadow-sm"
+                >
+                  <Heart className="w-3.5 h-3.5 fill-white" />
+                  <span>Support our Mission</span>
                 </Link>
               </div>
             </div>

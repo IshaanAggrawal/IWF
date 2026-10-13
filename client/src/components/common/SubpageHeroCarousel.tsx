@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Home, ChevronRight as BreadcrumbArrow } from "lucide-react";
 import slide1 from "@/assets/hero-carousel/hero-slide-1.jpg";
 import slide2 from "@/assets/hero-carousel/hero-slide-2.jpg";
@@ -26,7 +26,7 @@ export default function SubpageHeroCarousel({
   tag = "ABOUT ISLAH",
   title,
   subtitle,
-  breadcrumbs = [{ label: "Home", href: "/" }, { label: "About Us", href: "/about" }],
+  breadcrumbs = [{ label: "About Us", href: "/about" }],
   images = DEFAULT_SLIDES,
   heightClass = "min-h-[480px] md:min-h-[520px] lg:min-h-[580px]",
 }: SubpageHeroCarouselProps) {
@@ -63,124 +63,222 @@ export default function SubpageHeroCarousel({
   const prevSlide = () => goToSlide((currentSlide - 1 + images.length) % images.length);
 
   return (
-    <div
-      className={`relative w-full overflow-hidden bg-slate-950 flex items-center select-none group ${heightClass}`}
+    <section
+      className={`bg-[#071527] text-white flex flex-col justify-center py-10 md:py-14 relative overflow-hidden select-none group ${heightClass}`}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Background Slides */}
-      {images.map((img, idx) => (
-        <div
-          key={idx}
-          className="absolute inset-0 w-full h-full"
-          style={{
-            opacity: idx === currentSlide ? 1 : 0,
-            transform: idx === currentSlide ? "scale(1)" : "scale(1.04)",
-            transition: "opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 1.4s cubic-bezier(0.4, 0, 0.2, 1)",
-            zIndex: idx === currentSlide ? 1 : 0,
-          }}
-        >
-          <img
-            src={img}
-            alt="Hero Background"
-            className="w-full h-full object-cover object-center"
-            loading={idx === 0 ? "eager" : "lazy"}
-          />
-        </div>
-      ))}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+        {/* Top Breadcrumb */}
+        {breadcrumbs.length > 0 && (
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-white/70 mb-4 flex-wrap select-none">
+            <a href="/" className="hover:text-white transition-colors flex items-center gap-1">
+              <Home className="w-3.5 h-3.5 text-brand-orange" />
+              <span>Home</span>
+            </a>
+            {breadcrumbs.map((crumb, idx) => {
+              const isLast = idx === breadcrumbs.length - 1;
+              return (
+                <div key={idx} className="flex items-center gap-1.5">
+                  <BreadcrumbArrow className="w-3 h-3 text-white/40" />
+                  {isLast || !crumb.href ? (
+                    <span className="text-brand-orange font-bold">{crumb.label}</span>
+                  ) : (
+                    <a href={crumb.href} className="hover:text-white transition-colors">
+                      {crumb.label}
+                    </a>
+                  )}
+                </div>
+              );
+            })}
+          </nav>
+        )}
 
-      {/* Dark Gradient Overlay for Readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#07162c]/95 via-[#0b1f3b]/85 to-[#0b1f3b]/70 z-[2]" />
-      <div className="absolute inset-0 bg-radial from-transparent via-transparent to-black/50 z-[2]" />
+        {/* Main Grid: Left Content + Right Organic Composition Slider */}
+        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-12 items-center">
+          {/* Left Column: Heading & Subtitle */}
+          <div className="space-y-4 sm:space-y-5 text-left">
+            {tag && (
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-widest text-brand-orange mb-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse" />
+                {tag}
+              </div>
+            )}
 
-      {/* Foreground Content */}
-      <div className="relative z-[3] max-w-7xl mx-auto px-4 md:px-8 py-14 md:py-24 w-full">
-        {/* Breadcrumb Navigation */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-white/70 mb-3 flex-wrap">
-          <a href="/" className="hover:text-white transition-colors flex items-center gap-1">
-            <Home className="w-3.5 h-3.5 text-brand-orange" />
-            <span>Home</span>
-          </a>
-          {breadcrumbs.map((crumb, idx) => (
-            <span key={idx} className="flex items-center gap-1.5">
-              <BreadcrumbArrow className="w-3 h-3 text-white/40 shrink-0" />
-              {crumb.href ? (
-                <a href={crumb.href} className="hover:text-white transition-colors">
-                  {crumb.label}
-                </a>
-              ) : (
-                <span className="text-brand-orange font-bold">{crumb.label}</span>
-              )}
-            </span>
-          ))}
-        </nav>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight">
+              {title}
+            </h1>
 
-        {/* Tagline Badge */}
-        {tag && (
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-widest text-brand-orange mb-2.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse" />
-            {tag}
+            {subtitle && (
+              <p className="text-slate-300 text-xs sm:text-sm md:text-base leading-relaxed max-w-xl font-normal">
+                {subtitle}
+              </p>
+            )}
+
+            {/* Slide Navigation Controls */}
+            {images.length > 1 && (
+              <div className="flex items-center gap-3 pt-2">
+                <div className="flex items-center gap-1.5 bg-[#0b1f36] px-3 py-1.5 rounded-full border border-[#163559]">
+                  {images.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => goToSlide(idx)}
+                      aria-label={`Slide ${idx + 1}`}
+                      className="relative cursor-pointer py-1"
+                    >
+                      <div
+                        className={`rounded-full transition-all duration-300 ${
+                          currentSlide === idx ? "w-6 h-1.5 bg-white/30" : "w-1.5 h-1.5 bg-white/40 hover:bg-white/70"
+                        }`}
+                      />
+                      {currentSlide === idx && (
+                        <div
+                          className="absolute top-1 left-0 h-1.5 rounded-full bg-brand-orange"
+                          style={{ width: `${progress}%`, transition: "width 50ms linear" }}
+                        />
+                      )}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="flex items-center gap-1">
+                  <button
+                    onClick={prevSlide}
+                    aria-label="Previous slide"
+                    className="w-8 h-8 rounded-full bg-[#0b1f36] hover:bg-[#163559] text-white flex items-center justify-center border border-[#163559] transition cursor-pointer"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={nextSlide}
+                    aria-label="Next slide"
+                    className="w-8 h-8 rounded-full bg-[#0b1f36] hover:bg-[#163559] text-white flex items-center justify-center border border-[#163559] transition cursor-pointer"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
-        )}
 
-        {/* Title */}
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight max-w-4xl">
-          {title}
-        </h1>
+          {/* Right Column: Native Organic Composition with Smooth Slider */}
+          <div className="relative flex items-center justify-center lg:justify-end">
+            <div className="relative w-full max-w-[440px] sm:max-w-[480px] aspect-[1.15/1]">
+              {/* Background Soft Blue Organic Backdrop Layer */}
+              <div
+                className="absolute inset-2 bg-[#122e54] -rotate-3 scale-105 opacity-90 transition-transform pointer-events-none"
+                style={{
+                  borderRadius: "50% 50% 65% 35% / 45% 45% 55% 55%",
+                }}
+              />
 
-        {/* Subtitle */}
-        {subtitle && (
-          <p className="text-white/85 text-xs sm:text-sm md:text-base font-medium max-w-3xl mt-2 leading-relaxed">
-            {subtitle}
-          </p>
-        )}
+              {/* Organic Frame with Razor-Sharp Photograph Slider */}
+              <div
+                className="relative w-full h-full overflow-hidden border-[5px] sm:border-[6px] border-white shadow-2xl z-10"
+                style={{
+                  borderRadius: "44% 56% 68% 32% / 42% 44% 56% 58%",
+                }}
+              >
+                {images.map((img, idx) => (
+                  <div
+                    key={idx}
+                    className="absolute inset-0 w-full h-full"
+                    style={{
+                      opacity: idx === currentSlide ? 1 : 0,
+                      transform: idx === currentSlide ? "scale(1.05)" : "scale(1.12)",
+                      transition: "opacity 1s cubic-bezier(0.4, 0, 0.2, 1), transform 1.2s cubic-bezier(0.4, 0, 0.2, 1)",
+                      zIndex: idx === currentSlide ? 1 : 0,
+                    }}
+                  >
+                    <img
+                      src={img}
+                      alt={title}
+                      className="w-full h-full object-cover object-[center_30%] select-none"
+                      loading={idx === 0 ? "eager" : "lazy"}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* Left Botanical Leaves SVG */}
+              <div className="absolute -left-6 sm:-left-8 top-1/4 w-12 sm:w-16 h-24 sm:h-32 pointer-events-none z-20">
+                <svg viewBox="0 0 60 120" fill="none" className="w-full h-full text-[#4a729e]">
+                  <path
+                    d="M50,110 Q35,80 15,60 Q5,40 10,15 Q30,20 40,40 Q48,60 50,110 Z"
+                    fill="currentColor"
+                    opacity="0.9"
+                  />
+                  <path
+                    d="M48,80 Q25,70 18,48 Q35,45 42,65 Z"
+                    fill="#385e88"
+                    opacity="0.95"
+                  />
+                  <path
+                    d="M52,45 Q38,30 35,10 Q50,15 52,45 Z"
+                    fill="currentColor"
+                    opacity="0.85"
+                  />
+                </svg>
+              </div>
+
+              {/* Handwritten Note: Together We Can Do More ♡ */}
+              <div className="absolute -top-3 right-0 sm:right-2 z-20 select-none text-right">
+                <p className="font-['Caveat',cursive] text-2xl sm:text-3xl lg:text-[32px] font-bold text-white leading-tight rotate-[-6deg] drop-shadow-md">
+                  Together<br />
+                  We Can Do<br />
+                  More <span className="inline-block text-sky-200">♡</span>
+                </p>
+                <div className="w-10 sm:w-12 h-[2px] bg-sky-300 ml-auto mt-0.5 rounded-full rotate-[-6deg]" />
+              </div>
+
+              {/* Bottom Right Botanical Leaves & Tagline */}
+              <div className="absolute -bottom-2 sm:bottom-1 right-0 sm:right-1 z-20 select-none flex flex-col items-end">
+                {/* Small leaf motif */}
+                <div className="w-10 h-10 mb-1 pointer-events-none">
+                  <svg viewBox="0 0 40 40" fill="none" className="w-full h-full text-[#4a729e]">
+                    <path
+                      d="M35,5 Q20,15 10,28 Q15,35 28,25 Q35,18 35,5 Z"
+                      fill="currentColor"
+                      opacity="0.85"
+                    />
+                    <path
+                      d="M25,20 Q12,25 5,38 Q18,36 25,20 Z"
+                      fill="#385e88"
+                      opacity="0.9"
+                    />
+                  </svg>
+                </div>
+
+                <div className="w-8 sm:w-10 h-[1.5px] bg-sky-400/60 mb-2" />
+
+                <div className="text-[9px] sm:text-[10px] font-extrabold tracking-[0.22em] text-slate-300 uppercase space-y-0.5 text-right leading-tight">
+                  <p>PEOPLE</p>
+                  <p>SUPPORT</p>
+                  <p>CHANGE</p>
+                  <p>TOGETHER</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Slide Navigation Arrows (visible on hover) */}
-      {images.length > 1 && (
-        <>
-          <button
-            onClick={prevSlide}
-            aria-label="Previous slide"
-            className="absolute left-3 top-1/2 -translate-y-1/2 z-[4] w-8 h-8 rounded-full bg-black/30 hover:bg-black/60 text-white flex items-center justify-center backdrop-blur-sm border border-white/10 opacity-0 group-hover:opacity-100 transition-all cursor-pointer"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-          <button
-            onClick={nextSlide}
-            aria-label="Next slide"
-            className="absolute right-3 top-1/2 -translate-y-1/2 z-[4] w-8 h-8 rounded-full bg-black/30 hover:bg-black/60 text-white flex items-center justify-center backdrop-blur-sm border border-white/10 opacity-0 group-hover:opacity-100 transition-all cursor-pointer"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        </>
-      )}
-
-      {/* Bottom Progress Indicators */}
-      {images.length > 1 && (
-        <div className="absolute bottom-3 right-4 md:right-8 z-[4] flex items-center gap-1.5 bg-black/40 px-3 py-1.5 rounded-full backdrop-blur-md border border-white/10">
-          {images.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => goToSlide(idx)}
-              aria-label={`Slide ${idx + 1}`}
-              className="relative cursor-pointer"
-            >
-              <div
-                className={`rounded-full transition-all duration-300 ${
-                  currentSlide === idx ? "w-6 h-1.5 bg-white/30" : "w-1.5 h-1.5 bg-white/40 hover:bg-white/70"
-                }`}
-              />
-              {currentSlide === idx && (
-                <div
-                  className="absolute top-0 left-0 h-1.5 rounded-full bg-brand-orange"
-                  style={{ width: `${progress}%`, transition: "width 50ms linear" }}
-                />
-              )}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
+      {/* Curved Bottom Wave Divider */}
+      <div className="relative w-full overflow-hidden leading-none z-10 mt-6 md:mt-8">
+        <svg
+          viewBox="0 0 1440 90"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-full h-12 sm:h-16 md:h-20 block"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0,0 C320,80 720,90 1080,45 C1240,25 1360,55 1440,75 L1440,90 L0,90 Z"
+            fill="#ffffff"
+          />
+        </svg>
+      </div>
+    </section>
   );
 }
+

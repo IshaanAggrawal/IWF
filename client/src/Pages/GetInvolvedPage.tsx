@@ -27,7 +27,7 @@ import {
   UtilityBar,
 } from "@/components/layout/SiteLayout";
 import type { RoleType } from "@/components/forms/RoleFormModal";
-import SubpageHeroCarousel from "@/components/common/SubpageHeroCarousel";
+import { StandardPageHero } from "@/components/layout/StandardPageHero";
 
 export default function GetInvolvedPage() {
   const [activeModal, setActiveModal] = useState<RoleType | null>(null);
@@ -43,103 +43,34 @@ export default function GetInvolvedPage() {
       <Header />
 
       <main>
-        {/* ─── Hero Section (Matching Page 1 of PDF) ────────────────────────────── */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-[#072417] via-[#0d3f27] to-[#0b1f3b] text-white min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex items-center py-16 sm:py-20">
-          <div className="absolute inset-0 bg-[radial-gradient(#15803d_1px,transparent_1px)] [background-size:24px_24px] opacity-15" />
-
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-12 gap-10 items-center">
-              <div className="lg:col-span-7 space-y-4 text-left">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-orange/20 border border-brand-orange/40 text-brand-orange text-xs font-black uppercase tracking-wider">
-                  <Heart className="w-3.5 h-3.5 fill-brand-orange" /> GET INVOLVED
-                </div>
-
-                <h1 className="text-3xl sm:text-5xl font-black text-white leading-tight">
-                  Get Involved <br />
-                  <span className="text-brand-orange text-2xl sm:text-4xl font-extrabold font-serif italic">
-                    Together, We Can Create Lasting Change
-                  </span>
-                </h1>
-
-                <p className="text-slate-200 text-sm sm:text-base leading-relaxed max-w-2xl pt-1">
-                  At <strong>ISLAH</strong>, we believe that meaningful social transformation is possible when individuals, organisations, and communities come together with a shared purpose. Every contribution of time, knowledge, skills, or resources helps create opportunities and improve the lives of rural and underserved communities.
-                </p>
-
-                <p className="text-emerald-200/90 text-xs sm:text-sm leading-relaxed max-w-xl">
-                  Whether you choose to volunteer, donate, partner with us, mentor aspiring youth, or become a member, your involvement can make a lasting difference.
-                </p>
-
-                <div className="flex flex-wrap gap-3 pt-2">
-                  <button
-                    onClick={scrollToWays}
-                    className="inline-flex items-center gap-2 bg-brand-orange hover:bg-orange-600 text-white font-bold px-7 py-3 rounded-xl shadow-lg shadow-brand-orange/30 transition-all hover:scale-[1.02] active:scale-95 text-xs sm:text-sm uppercase tracking-wider cursor-pointer"
-                  >
-                    Choose How to Join <ArrowRight className="w-4 h-4" />
-                  </button>
-                  <a
-                    href="/volunteer"
-                    className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold px-6 py-3 rounded-xl transition text-xs sm:text-sm uppercase tracking-wider"
-                  >
-                    Volunteer Page
-                  </a>
-                </div>
-              </div>
-
-              {/* Hero Right Visual / Card */}
-              <div className="lg:col-span-5">
-                <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/15 bg-gradient-to-tr from-brand-green to-[#0b1f3b] p-8 text-center flex flex-col justify-between min-h-[340px]">
-                  <div className="inline-block self-center px-4 py-1 rounded-full bg-white/15 text-white text-[11px] font-bold tracking-wider uppercase mb-3">
-                    Collective Action for Rural India
-                  </div>
-
-                  <div className="my-auto space-y-3">
-                    <h3 className="text-2xl sm:text-3xl font-black text-white leading-tight">
-                      EMPOWERING PEOPLE. <br />
-                      <span className="text-brand-orange">TRANSFORMING LIVES.</span>
-                    </h3>
-                    <p className="text-emerald-100 text-xs sm:text-sm max-w-xs mx-auto leading-relaxed">
-                      Every hand that joins strengthens rural livelihoods, healthcare, and education from the ground up.
-                    </p>
-                  </div>
-
-                  <div className="pt-6 border-t border-white/20 grid grid-cols-2 gap-3 text-white">
-                    <div className="bg-white/10 rounded-xl p-2.5">
-                      <div className="text-lg font-black text-brand-orange">25,000+</div>
-                      <div className="text-[10px] text-white/80 font-bold uppercase">Lives Impacted</div>
-                    </div>
-                    <div className="bg-white/10 rounded-xl p-2.5">
-                      <div className="text-lg font-black text-brand-orange">150+</div>
-                      <div className="text-[10px] text-white/80 font-bold uppercase">Projects Completed</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* 4 Stat Badges (Page 1 Top Strip) */}
-            <div className="mt-12 pt-8 border-t border-white/15 grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-              {[
-                { label: "Lives Impacted", val: "25,000+", icon: Users },
-                { label: "Projects Completed", val: "150+", icon: Briefcase },
-                { label: "Volunteers Engaged", val: "5,800+", icon: HandHeart },
-                { label: "Funds Utilized", val: "15 Cr+", icon: IndianRupee },
-              ].map((stat, i) => (
-                <div
-                  key={i}
-                  className="bg-white/10 backdrop-blur-xs border border-white/10 rounded-2xl p-4 flex items-center gap-3.5"
-                >
-                  <div className="w-11 h-11 rounded-xl bg-brand-orange/20 flex items-center justify-center text-brand-orange shrink-0">
-                    <stat.icon className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <div className="text-xl sm:text-2xl font-black text-white">{stat.val}</div>
-                    <div className="text-[11px] text-white/75 font-semibold uppercase tracking-wider">{stat.label}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
+        {/* Standardized Hero Section */}
+        <StandardPageHero
+          badge="GET INVOLVED"
+          title="Get Involved"
+          description="At ISLAH, we believe that meaningful social transformation is possible when individuals, organisations, and communities come together with a shared purpose. Whether you choose to volunteer, donate, partner with us, mentor aspiring youth, or become a member, your involvement makes a lasting difference."
+          breadcrumb={[{ label: "Get Involved" }]}
+          cards={[
+            { title: "25,000+", subtitle: "Lives Impacted", icon: Users },
+            { title: "150+", subtitle: "Projects Done", icon: Briefcase },
+            { title: "5,800+", subtitle: "Volunteers", icon: HandHeart },
+            { title: "15 Cr+", subtitle: "Funds Utilized", icon: IndianRupee },
+          ]}
+        >
+          <div className="flex flex-wrap gap-3 pt-2">
+            <button
+              onClick={scrollToWays}
+              className="inline-flex items-center gap-2 bg-brand-orange hover:bg-orange-600 text-white font-bold px-7 py-3 rounded-xl shadow-lg shadow-brand-orange/30 transition-all hover:scale-[1.02] active:scale-95 text-xs sm:text-sm uppercase tracking-wider cursor-pointer"
+            >
+              Choose How to Join <ArrowRight className="w-4 h-4" />
+            </button>
+            <a
+              href="/volunteer"
+              className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold px-6 py-3 rounded-xl transition text-xs sm:text-sm uppercase tracking-wider"
+            >
+              Volunteer Page
+            </a>
           </div>
-        </section>
+        </StandardPageHero>
 
         {/* ─── Main Two-Column Layout (Why Get Involved vs Ways to Get Involved) ── */}
         <section id="ways-to-get-involved" className="py-16 bg-slate-50 border-b border-slate-200">

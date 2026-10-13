@@ -22,6 +22,8 @@ import {
 import { SponsorApplicationForm } from "@/components/forms/SponsorApplicationForm";
 import type { RoleType } from "@/components/forms/RoleFormModal";
 
+import { StandardPageHero } from "@/components/layout/StandardPageHero";
+
 export default function SponsorPage() {
   const [activeModal, setActiveModal] = useState<RoleType | null>(null);
 
@@ -39,80 +41,34 @@ export default function SponsorPage() {
       <Header />
 
       <main>
-        {/* ─── Hero Section (Pages 26 & 29 of PDF) ───────────────────────────── */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-[#072417] via-[#0b1f3b] to-[#451a03] text-white min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex items-center py-16 sm:py-20">
-          <div className="absolute inset-0 bg-[radial-gradient(#f97316_1px,transparent_1px)] [background-size:24px_24px] opacity-15" />
-
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-12 gap-10 items-center">
-              <div className="lg:col-span-7 space-y-4 text-left">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-orange/20 border border-brand-orange/40 text-brand-orange text-xs font-black uppercase tracking-wider">
-                  <Heart className="w-3.5 h-3.5 fill-brand-orange" /> BE A SPONSOR
-                </div>
-
-                <h1 className="text-3xl sm:text-5xl font-black text-white leading-tight">
-                  Sponsor a Program <br />
-                  <span className="text-brand-orange text-2xl sm:text-4xl font-extrabold font-serif italic">
-                    Empower a Community, Sponsor a Future
-                  </span>
-                </h1>
-
-                <p className="text-slate-200 text-sm sm:text-base leading-relaxed max-w-2xl pt-1">
-                  At <strong>ISLAH</strong>, every program is designed to create sustainable and measurable change in the lives of rural and underserved communities. By sponsoring a program, project, or initiative, you help ensure that education, healthcare, livelihoods, and dignity reach those who need them the most.
-                </p>
-
-                <p className="text-amber-200/90 text-xs sm:text-sm leading-relaxed max-w-xl">
-                  Individuals, families, corporate partners, and foundations can sponsor specific programs or geographic clusters with transparent tracking and regular impact updates.
-                </p>
-
-                <div className="flex flex-wrap gap-3 pt-2">
-                  <button
-                    onClick={scrollToForm}
-                    className="inline-flex items-center gap-2 bg-brand-orange hover:bg-orange-600 text-white font-bold px-7 py-3 rounded-xl shadow-lg shadow-brand-orange/30 transition-all hover:scale-[1.02] active:scale-95 text-xs sm:text-sm uppercase tracking-wider cursor-pointer"
-                  >
-                    Apply for Sponsorship <ArrowRight className="w-4 h-4" />
-                  </button>
-                  <a
-                    href="/sponsorship-policy"
-                    className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold px-6 py-3 rounded-xl transition text-xs sm:text-sm uppercase tracking-wider"
-                  >
-                    Sponsorship Policy
-                  </a>
-                </div>
-              </div>
-
-              {/* Right Poster / Badge Card */}
-              <div className="lg:col-span-5">
-                <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/15 bg-gradient-to-tr from-[#0b1f3b] via-[#78350f] to-[#b45309] p-8 text-center flex flex-col justify-between min-h-[340px]">
-                  <div className="inline-block self-center px-4 py-1 rounded-full bg-white/15 text-white text-[11px] font-bold tracking-wider uppercase mb-3">
-                    Direct Impact Sponsorship
-                  </div>
-
-                  <div className="my-auto space-y-3">
-                    <h3 className="text-2xl sm:text-3xl font-black text-white leading-tight">
-                      YOUR SPONSORSHIP. <br />
-                      <span className="text-brand-orange">THEIR TRANSFORMATION.</span>
-                    </h3>
-                    <p className="text-amber-100 text-xs sm:text-sm max-w-xs mx-auto leading-relaxed">
-                      100% transparent fund utilization with verified beneficiary reporting and 80G tax benefits.
-                    </p>
-                  </div>
-
-                  <div className="pt-6 border-t border-white/20 grid grid-cols-2 gap-3 text-white">
-                    <div className="bg-white/10 rounded-xl p-2.5">
-                      <div className="text-lg font-black text-brand-orange">80G Tax</div>
-                      <div className="text-[10px] text-white/80 font-bold uppercase">Exempt Under IT Act</div>
-                    </div>
-                    <div className="bg-white/10 rounded-xl p-2.5">
-                      <div className="text-lg font-black text-brand-orange">Verified</div>
-                      <div className="text-[10px] text-white/80 font-bold uppercase">Quarterly Audits</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        {/* Standardized Hero Section */}
+        <StandardPageHero
+          badge="BE A SPONSOR"
+          title="Sponsor a Program"
+          description="At ISLAH, every program is designed to create sustainable and measurable change in the lives of rural and underserved communities. By sponsoring a program, project, or initiative, you help ensure that education, healthcare, livelihoods, and dignity reach those who need them the most."
+          breadcrumb={[{ label: "Sponsor a Program" }]}
+          cards={[
+            { title: "80G Benefit", subtitle: "IT Act Exempt", icon: Shield },
+            { title: "Audited", subtitle: "Quarterly Reports", icon: Award },
+            { title: "Direct Funding", subtitle: "Transparent Utilization", icon: CreditCard },
+            { title: "Grassroots", subtitle: "Lasting Outcomes", icon: Users },
+          ]}
+        >
+          <div className="flex flex-wrap gap-3 pt-2">
+            <button
+              onClick={scrollToForm}
+              className="inline-flex items-center gap-2 bg-brand-orange hover:bg-orange-600 text-white font-bold px-7 py-3 rounded-xl shadow-lg shadow-brand-orange/30 transition-all hover:scale-[1.02] active:scale-95 text-xs sm:text-sm uppercase tracking-wider cursor-pointer"
+            >
+              Apply for Sponsorship <ArrowRight className="w-4 h-4" />
+            </button>
+            <a
+              href="/sponsorship-policy"
+              className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold px-6 py-3 rounded-xl transition text-xs sm:text-sm uppercase tracking-wider"
+            >
+              Sponsorship Policy
+            </a>
           </div>
-        </section>
+        </StandardPageHero>
 
         {/* ─── Online & Offline Bank Details (Page 27 of PDF) ───────────────── */}
         <section className="py-12 bg-slate-50 border-b border-slate-200">

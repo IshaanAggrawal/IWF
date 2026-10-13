@@ -14,6 +14,7 @@ declare global {
     };
     googleTranslateElementInit: () => void;
     _iwfTranslateReady: boolean;
+    _iwfFormObserverInstalled?: boolean;
   }
 }
 
@@ -40,8 +41,8 @@ const LANGUAGES = [
 
 export const FOUNDATION_ADDRESSES: Record<string, string> = {
   en: "B-144, Abul Fazal Enclave-II, Okhla, New Delhi-110025, India",
-  ur: "بی-144، ابوالفضل انکلیو-II، اوکھلا، نئی دہلی-110025، ہندوستان",
-  ar: "بي-144، مجمع أبو الفضل الثاني، أوكلا، نيو دلهي - 110025، الهند",
+  ur: "بی-144، ابوالفضل انکلیو-II، اوکھلا، نئی دہلی، پن کوڈ: \u200E110025\u200E، ہندوستان",
+  ar: "بي-144، مجمع أبو الفضل الثاني، أوكلا، نيو دلهي، الرمز البريدي: \u200E110025\u200E، الهند",
   hi: "बी-144, अबुल फज़ल एन्क्लेव-II, ओखला, नई दिल्ली-110025, भारत",
   bn: "বি-১৪৪, আবুল ফজল এনক্লেভ-২, ওখলা, নতুন দিল্লি-১১০0২৫, ভারত",
 };
@@ -104,19 +105,38 @@ const SUPPRESSION_CSS = `
   /* Hide the widget container itself */
   #${GOOGLE_TRANSLATE_ELEMENT_ID} { display: none !important; }
 
-  /* Ensure all forms and inputs remain untranslated in English */
-  .notranslate, form, form input, form textarea, form select, form label, form button {
+  /* Lock all forms, inputs, labels, and placeholders to pure English LTR */
+  .notranslate, form, form input, form textarea, form select, form label, form button,
+  input, textarea, select, [translate="no"] {
     -webkit-user-modify: read-write-plaintext-only;
+    direction: ltr !important;
   }
 `;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
+function initFormProtection() {
+  if (typeof document === "undefined") return;
+  const protect = () => {
+    document.querySelectorAll("form, input, textarea, select, .form-container").forEach((el) => {
+      el.setAttribute("translate", "no");
+      el.classList.add("notranslate");
+    });
+  };
+  protect();
+  if (!window._iwfFormObserverInstalled) {
+    const observer = new MutationObserver(protect);
+    observer.observe(document.body, { childList: true, subtree: true });
+    window._iwfFormObserverInstalled = true;
+  }
+}
+
 function injectSuppressionStyle() {
   if (document.getElementById(SUPPRESSION_STYLE_ID)) return;
   const style = document.createElement("style");
   style.id = SUPPRESSION_STYLE_ID;
   style.textContent = SUPPRESSION_CSS;
   document.head.appendChild(style);
+  initFormProtection();
 }
 
 function injectTranslateContainer() {

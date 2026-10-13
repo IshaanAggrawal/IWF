@@ -19,6 +19,7 @@ import {
 } from "@/components/layout/SiteLayout";
 import type { RoleType } from "@/components/forms/RoleFormModal";
 import { MembershipPolicyModal } from "@/components/membership/MembershipPolicyModal";
+import { StandardPageHero } from "@/components/layout/StandardPageHero";
 
 // ══════════════════════════════════════════════════════════════════
 //  TYPES
@@ -1354,45 +1355,45 @@ function MemberCardVisual({ category, name, memberId, validTill, district, state
 function MembersAndDonorsHero({ activeTab, setActiveTab }: { activeTab: PageTab; setActiveTab: (t: PageTab) => void }) {
   const tabs: PageTab[] = ["Members", "Donors", "Your Membership"];
   return (
-    <section id="community-tabs" className="relative bg-[#0b1f3b] text-white min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex flex-col justify-center pt-16 sm:pt-20 pb-12 sm:pb-16 overflow-hidden">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-24 right-8 w-96 h-96 rounded-full bg-brand-orange/10 blur-3xl" />
-        <div className="absolute bottom-4 right-1/3 w-48 h-48 rounded-full bg-blue-400/8 blur-2xl" />
-        {/* subtle dot pattern */}
-        <div className="absolute inset-0 opacity-5" style={{
-          backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)",
-          backgroundSize: "32px 32px"
-        }} />
-      </div>
-
-      <div className="max-w-4xl mx-auto px-4 text-center relative z-10 w-full">
-        <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="h-px w-12 bg-brand-orange/40" />
-          <span className="text-brand-orange text-xs font-bold uppercase tracking-widest">Islah Community</span>
-          <div className="h-px w-12 bg-brand-orange/40" />
-        </div>
-        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight">Our Members &amp; Donors</h1>
-        <p className="text-white/75 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed mb-10">
-          Our members and donors are the strength behind our mission. Their support helps us build stronger communities and create lasting social impact.
-        </p>
-
-        {/* Tab pills */}
-        <div className="inline-flex bg-white/10 backdrop-blur-sm rounded-full p-1.5 border border-white/15 shadow-xl">
+    <div id="community-tabs">
+      <StandardPageHero
+        badge="ISLAH COMMUNITY • MEMBERSHIP"
+        title={
+          <>
+            Become a <span className="text-brand-orange">Member</span>
+          </>
+        }
+        description="Our members and donors are the strength behind our mission. Join a transparent network of changemakers dedicated to uplifting marginalized communities across India."
+        breadcrumb={[{ label: "Become a Member" }]}
+        cards={[
+          { icon: Award, title: "Official Card", subtitle: "Verified Identity", href: "#register" },
+          { icon: Users, title: "100% Direct", subtitle: "Grassroots Support", href: "#register" },
+          { icon: Shield, title: "80G Benefit", subtitle: "Tax Exemption", href: "#register" },
+          { icon: FileText, title: "Transparency", subtitle: "Annual Audits", href: "#register" },
+        ]}
+        taglineTop="Uplifting"
+        taglineMid="Communities"
+        taglineBot="Together"
+        verticalWords={["HONOUR", "SUPPORT", "EMPOWER", "SERVE"]}
+        waveFill="#ffffff"
+      >
+        <div className="inline-flex bg-white/10 backdrop-blur-md rounded-full p-1.5 border border-white/20 shadow-xl mt-1">
           {tabs.map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-6 sm:px-8 py-2.5 rounded-full text-sm font-bold transition-all duration-200 ${activeTab === tab
-                ? "bg-white text-[#0b1f3b] shadow-lg"
-                : "text-white/70 hover:text-white hover:bg-white/10"
-                }`}
+              className={`px-5 sm:px-7 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
+                activeTab === tab
+                  ? "bg-white text-[#0b1f3b] shadow-lg"
+                  : "text-white/80 hover:text-white hover:bg-white/10"
+              }`}
             >
               {tab}
             </button>
           ))}
         </div>
-      </div>
-    </section>
+      </StandardPageHero>
+    </div>
   );
 }
 

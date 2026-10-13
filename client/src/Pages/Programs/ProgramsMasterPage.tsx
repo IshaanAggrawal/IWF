@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { Footer, Header, NotificationTicker, RoleFormModal, UtilityBar } from "@/components/layout/SiteLayout";
 import ScrollReveal from "@/components/healthcare/ScrollReveal";
+import { StandardPageHero } from "@/components/layout/StandardPageHero";
 
 import causeEducationImg from "@/assets/cause-education.jpg";
 import causeMedicalImg from "@/assets/cause-medical.png";
@@ -230,52 +231,20 @@ export default function ProgramsMasterPage() {
 
       <main>
         {/* Hero Header */}
-        <section className="bg-gradient-to-r from-[#071527] via-[#0b1f3b] to-[#15803d] text-white min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex items-center py-10 md:py-14 px-4 border-b border-white/10">
-          <div className="max-w-7xl mx-auto w-full">
-            {/* Breadcrumb */}
-            <nav className="flex items-center gap-1.5 text-xs text-white/70 mb-4 font-medium flex-wrap" aria-label="Breadcrumb">
-              <a href="/" className="hover:text-white transition-colors flex items-center gap-1">
-                <Home className="w-3.5 h-3.5 text-brand-orange" /> Home
-              </a>
-              <ChevronRight className="w-3 h-3 text-white/40" />
-              <span className="text-brand-orange font-bold">Our Programs</span>
-            </nav>
-
-            <div className="grid lg:grid-cols-12 gap-8 items-center">
-              <div className="lg:col-span-7 space-y-3">
-                <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-widest text-brand-orange mb-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse" />
-                  WHAT WE DO • PROGRAM CATALOG
-                </div>
-                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight">
-                  Our Programs &amp; Initiatives
-                </h1>
-                <p className="text-white/85 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl">
-                  Empowering individuals and communities through sustainable, structured development initiatives across education, healthcare, skills, environment, and rural livelihoods.
-                </p>
-              </div>
-
-              <div className="lg:col-span-5 grid grid-cols-2 gap-4">
-                <div className="bg-white/10 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/15 text-center">
-                  <span className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-brand-orange block">36</span>
-                  <span className="text-[11px] font-semibold text-white/80 uppercase tracking-wider">Key Initiatives</span>
-                </div>
-                <div className="bg-white/10 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/15 text-center">
-                  <span className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-emerald-400 block">1,25,000+</span>
-                  <span className="text-[11px] font-semibold text-white/80 uppercase tracking-wider">Beneficiaries</span>
-                </div>
-                <div className="bg-white/10 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/15 text-center">
-                  <span className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-emerald-400 block">250+</span>
-                  <span className="text-[11px] font-semibold text-white/80 uppercase tracking-wider">Villages</span>
-                </div>
-                <div className="bg-white/10 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/15 text-center">
-                  <span className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-brand-orange block">8</span>
-                  <span className="text-[11px] font-semibold text-white/80 uppercase tracking-wider">Focus Sectors</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Standardized Hero Header */}
+        <StandardPageHero
+          badge="WHAT WE DO • PROGRAM CATALOG"
+          title="Our Programs & Initiatives"
+          description="Empowering individuals and communities through sustainable, structured development initiatives across education, healthcare, skills, environment, and rural livelihoods."
+          breadcrumb={[{ label: "Our Programs" }]}
+          image={programsHeroImg}
+          cards={[
+            { title: "36", subtitle: "Key Initiatives", icon: Heart },
+            { title: "1,25,000+", subtitle: "Beneficiaries", icon: Users },
+            { title: "250+", subtitle: "Villages Reached", icon: Wheat },
+            { title: "8", subtitle: "Focus Sectors", icon: BookOpen },
+          ]}
+        />
 
         {/* Master Catalog Section */}
         <section className="py-14 px-4">
