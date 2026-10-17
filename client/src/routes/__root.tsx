@@ -8,7 +8,8 @@ import {
   Scripts,
   useRouterState,
 } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { initGoogleTranslate } from "@/components/TranslateButton";
 import {
   Facebook,
   Twitter,
@@ -135,6 +136,10 @@ function RootShell({ children }: { children: React.ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const [msgOpen, setMsgOpen] = useState(false);
+
+  useEffect(() => {
+    initGoogleTranslate();
+  }, []);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
