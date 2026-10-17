@@ -29,6 +29,7 @@ import {
   Activity,
 } from "lucide-react";
 import ScrollReveal from "@/components/healthcare/ScrollReveal";
+import SubpageHeroCarousel from "@/components/common/SubpageHeroCarousel";
 import heroImg from "@/assets/sector_relief_1.png";
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
@@ -209,62 +210,41 @@ export default function ReliefLanding() {
       <UtilityBar />
       <Header />
 
-      {/* Hero Section */}
-      <section className="relative bg-[#07162c] text-white min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex items-center py-10 md:py-14 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#07162c] via-[#0b2246]/95 to-transparent z-10" />
-        <img
-          src={heroImg}
-          alt="Humanitarian Relief & Rehabilitation"
-          className="absolute inset-0 w-full h-full object-cover object-center opacity-30"
-        />
-        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          {/* Breadcrumbs */}
-          <nav className="flex items-center gap-1.5 text-xs text-white/70 mb-4 flex-wrap" aria-label="Breadcrumb">
-            <Link to="/" className="hover:text-white transition-colors flex items-center gap-1">
-              <Home className="w-3.5 h-3.5 text-brand-orange" />
-              <span>Home</span>
-            </Link>
-            <ChevronRight className="w-3 h-3 text-white/40" />
-            <Link to="/programs" className="hover:text-white transition-colors">
-              Our Programs
-            </Link>
-            <ChevronRight className="w-3 h-3 text-white/40" />
-            <span className="text-brand-orange font-bold">Humanitarian Relief &amp; Rehabilitation</span>
-          </nav>
+      {/* Hero Section with Subpage Carousel (Matching About Us Page) */}
+      <SubpageHeroCarousel
+        tag="WHAT WE DO • SECTOR 08"
+        title="Humanitarian Relief & Rehabilitation"
+        subtitle="Responding with Compassion. Restoring Dignity. Rebuilding Lives and Resilience for vulnerable families affected by emergencies and seasonal crises."
+        breadcrumbs={[
+          { label: "Our Programs", href: "/programs" },
+          { label: "Humanitarian Relief & Rehabilitation" },
+        ]}
+        images={[heroImg]}
+      />
 
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-widest text-brand-orange mb-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse" />
-              What We Do • Sector 08
-            </div>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight mb-3">
-              Humanitarian Relief &amp; Rehabilitation
-            </h1>
-            <p className="text-sm md:text-base text-white/90 font-medium mb-2">
-              Responding with Compassion. Restoring Dignity. Rebuilding Lives and Resilience.
-            </p>
-            <p className="text-xs sm:text-sm text-white/75 leading-relaxed max-w-2xl mb-6">
-              Supporting vulnerable individuals, families, and communities through emergency response, essential necessities,
-              seasonal relief, and livelihood rehabilitation to transform immediate assistance into durable resilience.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <button
-                onClick={() => setModalRole("sponsor")}
-                className="inline-flex items-center gap-2 bg-brand-green text-white font-semibold text-xs sm:text-sm px-5 py-2.5 rounded-lg hover:bg-brand-green-dark transition-colors shadow-sm cursor-pointer"
-              >
-                Support Emergency Relief Kits
-                <ArrowRight className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => setModalRole("partner")}
-                className="inline-flex items-center gap-2 border border-white/30 text-white font-semibold text-xs sm:text-sm px-5 py-2.5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
-              >
-                Partner for Relief Action
-              </button>
-            </div>
+      {/* Floating Action Strip */}
+      <div className="max-w-7xl mx-auto px-4 md:px-8 -mt-6 relative z-20 mb-8">
+        <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-md flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              onClick={() => setModalRole("sponsor")}
+              className="inline-flex items-center gap-2 bg-[#15803d] hover:bg-[#166534] text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md transition uppercase tracking-wider cursor-pointer"
+            >
+              <span>Support Emergency Relief Kits</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={() => setModalRole("partner")}
+              className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md transition uppercase tracking-wider cursor-pointer"
+            >
+              <span>Partner for Relief Action</span>
+            </button>
+          </div>
+          <div className="text-xs font-semibold text-slate-500">
+            Emergency Response • Dignity • Long-Term Resilience
           </div>
         </div>
-      </section>
+      </div>
 
       {/* Overview & Objective */}
       <section className="py-16 bg-white border-b border-slate-100">

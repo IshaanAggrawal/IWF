@@ -176,7 +176,7 @@ export default function CareerGuidance() {
 
       <main>
         {/* HERO SECTION */}
-        <section className="relative min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex items-center overflow-hidden bg-slate-900">
+        <section className="relative min-h-[300px] sm:min-h-[330px] md:min-h-[360px] lg:min-h-[390px] flex items-center overflow-hidden bg-slate-900">
           <img
             src={heroImg}
             alt="Career Guidance & Mentorship"
@@ -184,7 +184,7 @@ export default function CareerGuidance() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#00381c]/95 via-[#004724]/85 to-slate-950/80" />
 
-          <div className="relative z-10 max-w-7xl mx-auto px-4 py-16 w-full">
+          <div className="relative z-10 max-w-7xl mx-auto px-4 py-8 sm:py-10 w-full">
             <nav className="flex items-center gap-2 text-xs text-emerald-200/80 mb-6 font-medium flex-wrap">
               <Link to="/" className="hover:text-white flex items-center gap-1">
                 <Home className="w-3.5 h-3.5" /> Home

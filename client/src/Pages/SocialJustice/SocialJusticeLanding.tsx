@@ -29,6 +29,7 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 import ScrollReveal from "@/components/healthcare/ScrollReveal";
+import SubpageHeroCarousel from "@/components/common/SubpageHeroCarousel";
 import heroImg from "@/assets/contact-hands-hero.jpg";
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
@@ -200,61 +201,41 @@ export default function SocialJusticeLanding() {
       <UtilityBar />
       <Header />
 
-      {/* Hero Section */}
-      <section className="relative bg-[#07162c] text-white min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex items-center py-10 md:py-14 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#07162c] via-[#0b2246]/95 to-transparent z-10" />
-        <img
-          src={heroImg}
-          alt="Social Justice & Legal Empowerment"
-          className="absolute inset-0 w-full h-full object-cover object-center opacity-25"
-        />
-        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumbs */}
-          <nav className="flex items-center gap-2 text-xs text-white/60 mb-4" aria-label="Breadcrumb">
-            <Link to="/" className="hover:text-white transition-colors flex items-center gap-1">
-              <Home className="w-3.5 h-3.5" />
-              <span>Home</span>
-            </Link>
-            <ChevronRight className="w-3 h-3 text-white/40" />
-            <Link to="/programs" className="hover:text-white transition-colors">
-              Our Programs
-            </Link>
-            <ChevronRight className="w-3 h-3 text-white/40" />
-            <span className="text-brand-orange font-medium">Social Justice &amp; Legal Empowerment</span>
-          </nav>
+      {/* Hero Section with Subpage Carousel (Matching About Us Page) */}
+      <SubpageHeroCarousel
+        tag="WHAT WE DO • SECTOR 05"
+        title="Social Justice & Legal Empowerment"
+        subtitle="Creating Awareness. Pursuing Justice. Protecting Dignity. Combining constitutional literacy and lawful remedies to promote equality in vulnerable communities."
+        breadcrumbs={[
+          { label: "Our Programs", href: "/programs" },
+          { label: "Social Justice & Legal Empowerment" },
+        ]}
+        images={[heroImg]}
+      />
 
-          <div className="max-w-3xl">
-            <span className="inline-block bg-brand-orange/20 border border-brand-orange/40 text-brand-orange text-xs font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full mb-4">
-              What We Do • Sector 05
-            </span>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight mb-4">
-              Social Justice &amp; Legal Empowerment
-            </h1>
-            <p className="text-lg md:text-xl text-white/80 font-medium mb-4">
-              Creating Awareness. Pursuing Justice. Protecting Dignity.
-            </p>
-            <p className="text-sm md:text-base text-white/70 leading-relaxed max-w-2xl mb-8">
-              Combining constitutional rights awareness, legal literacy, institutional engagement,
-              and lawful judicial action to protect dignity, combat exploitation, and promote equality in rural communities.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <button
-                onClick={() => setModalRole("partner")}
-                className="inline-flex items-center gap-2 bg-brand-green text-white font-semibold text-sm px-6 py-3 rounded-lg hover:bg-brand-green-dark transition-colors shadow-sm"
-              >
-                Partner With Us
-                <ArrowRight className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => setModalRole("volunteer")}
-                className="inline-flex items-center gap-2 border border-white/30 text-white font-semibold text-sm px-6 py-3 rounded-lg hover:bg-white/10 transition-colors"
-              >
-                Volunteer as Legal Counsel / Educator
-              </button>
-            </div>
+      {/* Floating Action Strip */}
+      <div className="max-w-7xl mx-auto px-4 md:px-8 -mt-6 relative z-20 mb-8">
+        <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-md flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              onClick={() => setModalRole("partner")}
+              className="inline-flex items-center gap-2 bg-[#15803d] hover:bg-[#166534] text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md transition uppercase tracking-wider cursor-pointer"
+            >
+              <span>Partner With Us</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={() => setModalRole("volunteer")}
+              className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md transition uppercase tracking-wider cursor-pointer"
+            >
+              <span>Volunteer as Legal Counsel / Educator</span>
+            </button>
+          </div>
+          <div className="text-xs font-semibold text-slate-500">
+            Legal Literacy • Constitutional Aid • Rights Awareness
           </div>
         </div>
-      </section>
+      </div>
 
       {/* Overview & The Need */}
       <section className="py-16 bg-white border-b border-slate-100">

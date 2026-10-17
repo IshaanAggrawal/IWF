@@ -156,7 +156,7 @@ export default function RuralEntrepreneurship() {
       <Header />
 
       {/* Hero Banner */}
-      <section className="relative bg-[#07162c] text-white min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex items-center py-10 md:py-14 overflow-hidden">
+      <section className="relative bg-[#07162c] text-white min-h-[300px] sm:min-h-[330px] md:min-h-[360px] lg:min-h-[390px] flex items-center py-6 sm:py-8 md:py-10 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-[#07162c] via-[#0b2246]/95 to-transparent z-10" />
         <img
           src={heroImg}

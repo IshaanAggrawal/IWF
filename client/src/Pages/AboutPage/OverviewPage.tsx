@@ -213,30 +213,30 @@ export default function OverviewPage() {
       <main className="space-y-16 py-12 px-4 md:px-8 max-w-7xl mx-auto">
         {/* Section 1: Introduction & Identity */}
         <ScrollReveal>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            <div className="lg:col-span-7 flex flex-col justify-between space-y-5">
-              <div className="space-y-3">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div className="lg:col-span-7 flex flex-col justify-between space-y-4">
+              <div className="space-y-2.5">
                 <span className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest text-[#f97316]">
                   <Sparkles className="w-3.5 h-3.5 text-[#f97316]" />
                   Integrated Community Development
                 </span>
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#0b1f3b] tracking-tight leading-tight">
-                  Public Identity of Islah Welfare Foundation
+                  ISLAH
                 </h2>
-                <p className="text-slate-700 text-sm sm:text-base leading-relaxed font-normal">
+                <p className="text-slate-700 text-xs sm:text-sm leading-relaxed font-normal">
                   <strong className="text-[#0b1f3b] font-bold">ISLAH</strong> is the public identity of{" "}
-                  <strong>Islah Welfare Foundation</strong>, a non-profit organisation committed to
+                  <strong className="text-slate-900 font-semibold">Islah Welfare Foundation</strong>, a non-profit organisation committed to
                   advancing the well-being, dignity, and resilience of rural and underserved
                   communities.
                 </p>
-                <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+                <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
                   We believe that meaningful development cannot be achieved by addressing problems in
                   isolation. Education without livelihood, healthcare without awareness, infrastructure
                   without participation, or economic support without dignity cannot create lasting
                   change.
                 </p>
-                <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                  ISLAH therefore follows an <strong>integrated and community-centred approach</strong>,
+                <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                  ISLAH therefore follows an <strong className="text-slate-800 font-semibold">integrated and community-centred approach</strong>,
                   bringing together education, healthcare, livelihoods, agriculture, women and youth
                   empowerment, environmental sustainability, humanitarian assistance, and community
                   development.
@@ -244,39 +244,39 @@ export default function OverviewPage() {
               </div>
 
               {/* Purpose Callout Card */}
-              <div className="p-5 rounded-2xl bg-gradient-to-r from-orange-50 via-amber-50 to-orange-50 border border-orange-200/80 shadow-xs">
-                <div className="flex items-center gap-2.5 mb-2">
-                  <div className="w-8 h-8 rounded-full bg-brand-orange text-white flex items-center justify-center font-black text-sm shrink-0">
-                    <Target className="w-4 h-4" />
+              <div className="p-4 rounded-2xl bg-gradient-to-r from-orange-50 via-amber-50 to-orange-50 border border-orange-200/80 shadow-xs">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <div className="w-7 h-7 rounded-full bg-brand-orange text-white flex items-center justify-center font-black text-xs shrink-0">
+                    <Target className="w-3.5 h-3.5" />
                   </div>
-                  <h3 className="font-extrabold text-[#0b1f3b] text-base">Our Purpose is Simple</h3>
+                  <h3 className="font-extrabold text-[#0b1f3b] text-sm sm:text-base">Our Purpose is Simple</h3>
                 </div>
-                <p className="text-slate-800 text-sm font-semibold italic leading-relaxed pl-10">
+                <p className="text-slate-800 text-xs sm:text-sm font-semibold italic leading-relaxed pl-9">
                   “To create the conditions in which individuals can become empowered, families can
                   become resilient, and communities can become self-reliant.”
                 </p>
               </div>
             </div>
 
-            {/* Right Column: Welfare Foundation Video extending vertically */}
-            <div className="lg:col-span-5 h-full min-h-[380px] sm:min-h-[440px] flex flex-col">
-              <div className="relative w-full h-full flex-1 rounded-3xl overflow-hidden shadow-2xl border border-slate-200/90 bg-slate-950 group">
+            {/* Right Column: Welfare Foundation Video with compact length */}
+            <div className="lg:col-span-5 flex flex-col justify-center">
+              <div className="relative w-full h-[240px] sm:h-[280px] md:h-[300px] rounded-2xl overflow-hidden shadow-xl border border-slate-200/90 bg-slate-950 group">
                 {isVideoPlaying ? (
                   <iframe
-                    className="absolute -top-14 left-0 w-full h-[calc(100%+64px)] object-cover"
-                    src="https://www.youtube-nocookie.com/embed/ScMzIvxBSi4?autoplay=1&rel=0&modestbranding=1&controls=1&showinfo=0"
-                    title="Islah Welfare Foundation Video"
+                    className="w-full h-full object-cover"
+                    src="https://www.youtube-nocookie.com/embed/ScMzIvxBSi4?autoplay=1&rel=0&modestbranding=1&controls=1"
+                    title="ISLAH Community Work in Action"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowFullScreen
                   />
                 ) : (
                   <div
                     onClick={() => setIsVideoPlaying(true)}
-                    className="relative w-full h-full min-h-[380px] sm:min-h-[440px] cursor-pointer"
+                    className="relative w-full h-full cursor-pointer"
                   >
                     <img
                       src={overviewHero}
-                      alt="Islah Welfare Foundation in Action"
+                      alt="ISLAH in Action"
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-black/30 transition-opacity duration-300 group-hover:bg-black/40" />
@@ -284,10 +284,10 @@ export default function OverviewPage() {
                     {/* Centered Pulse Play Button */}
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="relative flex items-center justify-center">
-                        <span className="absolute w-20 h-20 rounded-full bg-brand-orange/40 animate-ping" />
-                        <span className="absolute w-16 h-16 rounded-full bg-brand-orange/60" />
-                        <div className="relative w-16 h-16 rounded-full bg-brand-orange text-white flex items-center justify-center shadow-2xl transition-transform duration-300 group-hover:scale-110">
-                          <Play className="w-7 h-7 fill-white text-white ml-1" />
+                        <span className="absolute w-16 h-16 rounded-full bg-brand-orange/40 animate-ping" />
+                        <span className="absolute w-12 h-12 rounded-full bg-brand-orange/60" />
+                        <div className="relative w-12 h-12 rounded-full bg-brand-orange text-white flex items-center justify-center shadow-xl transition-transform duration-300 group-hover:scale-110">
+                          <Play className="w-5 h-5 fill-white text-white ml-0.5" />
                         </div>
                       </div>
                     </div>
@@ -363,28 +363,7 @@ export default function OverviewPage() {
               );
             })()}
 
-            {/* Quick 5 Pillars Preview Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 pt-2">
-              {standsFor.map((item) => (
-                <div
-                  key={item.letter}
-                  onClick={() => setActiveTab(item.letter as "I" | "S" | "L" | "A" | "H")}
-                  className={`p-3.5 rounded-xl border transition-all cursor-pointer ${
-                    activeTab === item.letter
-                      ? "bg-orange-50/70 border-brand-orange shadow-xs"
-                      : "bg-white border-slate-200 hover:border-slate-300"
-                  }`}
-                >
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="font-black text-brand-orange text-sm">{item.letter}</span>
-                    <span className="font-extrabold text-slate-900 text-xs truncate">{item.word}</span>
-                  </div>
-                  <p className="text-[11px] text-slate-500 line-clamp-2 leading-tight">
-                    {item.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
+
           </div>
         </ScrollReveal>
 

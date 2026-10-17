@@ -1,7 +1,14 @@
+import { useState, useEffect } from "react";
 import type { ReactNode } from "react";
-import { Link } from "@tanstack/react-router";
-import { Home, ChevronRight } from "lucide-react";
+import { Home, ChevronRight, ChevronLeft, Pause, Play } from "lucide-react";
 import defaultHeroImg from "@/assets/contact-hands-hero.jpg";
+import aboutHero from "@/assets/about-hero.jpg";
+import slide1 from "@/assets/hero-carousel/hero-slide-1.jpg";
+import slide2 from "@/assets/hero-carousel/hero-slide-2.jpg";
+import slide3 from "@/assets/hero-carousel/hero-slide-3.jpg";
+import slide4 from "@/assets/hero-carousel/hero-slide-4.jpg";
+
+const DEFAULT_SLIDES = [aboutHero, slide1, slide2, slide3, slide4];
 
 export interface HeroCardItem {
   icon?: any;
@@ -24,6 +31,7 @@ export interface StandardPageHeroProps {
   cards?: HeroCardItem[];
   children?: ReactNode;
   image?: string;
+  images?: string[];
   imageAlt?: string;
   taglineTop?: string;
   taglineMid?: string;
@@ -40,6 +48,7 @@ export function StandardPageHero({
   cards,
   children,
   image = defaultHeroImg,
+  images,
   imageAlt = "Islah Welfare Foundation — Together We Can Do More",
   taglineTop = "Together",
   taglineMid = "We Can Do",
@@ -47,8 +56,67 @@ export function StandardPageHero({
   verticalWords = ["PEOPLE", "SUPPORT", "CHANGE", "TOGETHER"],
   waveFill = "#ffffff",
 }: StandardPageHeroProps) {
+  const resolvedImages =
+    images && images.length > 0
+      ? images
+      : image && image !== defaultHeroImg
+      ? [image, aboutHero, slide1, slide2]
+      : DEFAULT_SLIDES;
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isManualPaused, setIsManualPaused] = useState(false);
+  const [isPressed, setIsPressed] = useState(false);
+  const isPaused = isManualPaused || isPressed;
+  const [progress, setProgress] = useState(0);
+  const SLIDE_DURATION = 4500;
+
+  useEffect(() => {
+    if (isPaused || resolvedImages.length <= 1) return;
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % resolvedImages.length);
+    }, SLIDE_DURATION);
+    return () => clearInterval(timer);
+  }, [currentSlide, isPaused, resolvedImages.length]);
+
+  useEffect(() => {
+    setProgress(0);
+    if (isPaused || resolvedImages.length <= 1) return;
+    const start = Date.now();
+    const tick = setInterval(() => {
+      const elapsed = Date.now() - start;
+      setProgress(Math.min((elapsed / SLIDE_DURATION) * 100, 100));
+    }, 40);
+    return () => clearInterval(tick);
+  }, [currentSlide, isPaused, resolvedImages.length]);
+
+  const goToSlide = (idx: number) => {
+    setCurrentSlide(idx);
+    setProgress(0);
+  };
+
+  const nextSlide = () => goToSlide((currentSlide + 1) % resolvedImages.length);
+  const prevSlide = () => goToSlide((currentSlide - 1 + resolvedImages.length) % resolvedImages.length);
+
+  // Touch swipe support
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStart === null) return;
+    const touchEnd = e.changedTouches[0].clientX;
+    const diff = touchStart - touchEnd;
+    if (diff > 50) nextSlide();
+    else if (diff < -50) prevSlide();
+    setTouchStart(null);
+  };
+
   return (
-    <section className="bg-[#071527] text-white min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex flex-col justify-center py-10 md:py-14 relative overflow-hidden select-none">
+    <section
+      className="bg-[#071527] text-white min-h-[300px] sm:min-h-[330px] md:min-h-[360px] lg:min-h-[390px] flex flex-col justify-center py-6 sm:py-8 md:py-10 relative overflow-hidden select-none"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         {/* Top Breadcrumb */}
         {breadcrumb.length > 0 && (
@@ -96,6 +164,61 @@ export function StandardPageHero({
               </p>
             ) : (
               description
+            )}
+
+            {/* Slide Navigation Controls */}
+            {resolvedImages.length > 1 && (
+              <div className="flex items-center gap-3 pt-1">
+                <div className="flex items-center gap-1.5 bg-[#0b1f36] px-3 py-1.5 rounded-full border border-[#163559]">
+                  {/* Play/Pause Button */}
+                  <button
+                    onClick={() => setIsManualPaused((p) => !p)}
+                    aria-label={isPaused ? "Play slider" : "Pause slider"}
+                    title={isPaused ? "Play slider" : "Pause slider"}
+                    className="w-5 h-5 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition cursor-pointer mr-0.5"
+                  >
+                    {isPaused ? <Play className="w-2.5 h-2.5 fill-white text-white ml-0.5" /> : <Pause className="w-2.5 h-2.5 fill-white text-white" />}
+                  </button>
+
+                  {resolvedImages.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => goToSlide(idx)}
+                      aria-label={`Slide ${idx + 1}`}
+                      className="relative cursor-pointer py-1"
+                    >
+                      <div
+                        className={`rounded-full transition-all duration-300 ${
+                          currentSlide === idx ? "w-6 h-1.5 bg-white/30" : "w-1.5 h-1.5 bg-white/40 hover:bg-white/70"
+                        }`}
+                      />
+                      {currentSlide === idx && (
+                        <div
+                          className="absolute top-1 left-0 h-1.5 rounded-full bg-brand-orange"
+                          style={{ width: `${progress}%`, transition: "width 40ms linear" }}
+                        />
+                      )}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="flex items-center gap-1">
+                  <button
+                    onClick={prevSlide}
+                    aria-label="Previous slide"
+                    className="w-8 h-8 rounded-full bg-[#0b1f36] hover:bg-[#163559] text-white flex items-center justify-center border border-[#163559] transition cursor-pointer"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={nextSlide}
+                    aria-label="Next slide"
+                    className="w-8 h-8 rounded-full bg-[#0b1f36] hover:bg-[#163559] text-white flex items-center justify-center border border-[#163559] transition cursor-pointer"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
             )}
 
             {/* Quick Cards Grid */}
@@ -151,7 +274,7 @@ export function StandardPageHero({
             {children && <div className="pt-2">{children}</div>}
           </div>
 
-          {/* Right Column: Native Organic Composition */}
+          {/* Right Column: Native Organic Composition with Smooth Slider */}
           <div className="relative flex items-center justify-center lg:justify-end">
             <div className="relative w-full max-w-[440px] sm:max-w-[480px] aspect-[1.15/1]">
               {/* Background Soft Blue Organic Backdrop Layer */}
@@ -162,19 +285,39 @@ export function StandardPageHero({
                 }}
               />
 
-              {/* Organic Frame with Razor-Sharp Photograph */}
+              {/* Organic Frame with Razor-Sharp Photograph Slider */}
               <div
-                className="relative w-full h-full overflow-hidden border-[5px] sm:border-[6px] border-white shadow-2xl z-10"
+                className={`relative w-full h-full overflow-hidden border-[5px] sm:border-[6px] border-white shadow-2xl z-10 ${
+                  isPressed ? "cursor-grabbing" : "cursor-default"
+                }`}
                 style={{
                   borderRadius: "44% 56% 68% 32% / 42% 44% 56% 58%",
                 }}
+                onMouseDown={() => setIsPressed(true)}
+                onMouseUp={() => setIsPressed(false)}
+                onMouseLeave={() => setIsPressed(false)}
+                onTouchStart={() => setIsPressed(true)}
+                onTouchEnd={() => setIsPressed(false)}
               >
-                <img
-                  src={image}
-                  alt={imageAlt}
-                  className="w-full h-full object-cover object-[center_30%] select-none scale-105"
-                  loading="eager"
-                />
+                {resolvedImages.map((img, idx) => (
+                  <div
+                    key={idx}
+                    className="absolute inset-0 w-full h-full"
+                    style={{
+                      opacity: idx === currentSlide ? 1 : 0,
+                      transform: idx === currentSlide ? "scale(1.05)" : "scale(1.12)",
+                      transition: "opacity 1s cubic-bezier(0.4, 0, 0.2, 1), transform 1.2s cubic-bezier(0.4, 0, 0.2, 1)",
+                      zIndex: idx === currentSlide ? 1 : 0,
+                    }}
+                  >
+                    <img
+                      src={img}
+                      alt={typeof title === "string" ? title : imageAlt}
+                      className="w-full h-full object-cover object-[center_30%] select-none"
+                      loading={idx === 0 ? "eager" : "lazy"}
+                    />
+                  </div>
+                ))}
               </div>
 
               {/* Left Botanical Leaves SVG */}
@@ -240,12 +383,12 @@ export function StandardPageHero({
       </div>
 
       {/* ── Curved Bottom Wave Divider ── */}
-      <div className="relative w-full overflow-hidden leading-none z-10 mt-6 md:mt-8">
+      <div className="relative w-full overflow-hidden leading-none z-10 mt-3 md:mt-4">
         <svg
           viewBox="0 0 1440 90"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-12 sm:h-16 md:h-20 block"
+          className="w-full h-8 sm:h-10 md:h-12 block"
           preserveAspectRatio="none"
         >
           <path

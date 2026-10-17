@@ -37,6 +37,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import ScrollReveal from "@/components/healthcare/ScrollReveal";
+import SubpageHeroCarousel from "@/components/common/SubpageHeroCarousel";
 import causeMedImg from "@/assets/cause-medical.png";
 import overviewHero from "@/assets/overview-hero.jpg";
 
@@ -301,111 +302,44 @@ export default function HealthcareLanding() {
       <Header />
 
       <main>
-        {/* 1. HERO SECTION */}
-        <section className="relative min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex items-center overflow-hidden bg-slate-900">
-          <img
-            src={overviewHero}
-            alt="Islah Healthcare & Well-Being Initiatives"
-            className="absolute inset-0 h-full w-full object-cover opacity-35 filter saturate-110"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#00381c]/95 via-[#004724]/85 to-slate-950/80" />
+        {/* 1. HERO SECTION (Matching About Us SubpageHeroCarousel) */}
+        <SubpageHeroCarousel
+          tag="WHAT WE DO • SECTOR 02"
+          title="Healthcare & Well-Being"
+          subtitle="We are committed to improving healthcare access in rural and underserved communities through preventive care, awareness, medical support, and emergency services."
+          breadcrumbs={[
+            { label: "What We Do", href: "/programs" },
+            { label: "Healthcare & Well-Being" },
+          ]}
+          images={[causeMedImg, overviewHero]}
+        />
 
-          <div className="relative z-10 max-w-7xl mx-auto px-4 py-10 md:py-14 w-full">
-            <nav className="flex items-center gap-1.5 text-xs text-white/70 mb-4 font-medium flex-wrap">
-              <Link to="/" className="hover:text-white flex items-center gap-1">
-                <Home className="w-3.5 h-3.5 text-brand-orange" /> Home
-              </Link>
-              <ChevronRight className="w-3 h-3 text-white/40" />
-              <Link to="/programs" className="hover:text-white">What We Do</Link>
-              <ChevronRight className="w-3 h-3 text-white/40" />
-              <span className="text-brand-orange font-bold">
-                Healthcare &amp; Well-Being
-              </span>
-            </nav>
-
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-widest text-brand-orange mb-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse" />
-              Accessible Healthcare. Healthier Communities.
-            </div>
-
-            <div className="grid lg:grid-cols-12 gap-8 items-center mb-6">
-              <div className="lg:col-span-8">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight mb-3 tracking-tight">
-                  Healthcare &amp; Well-Being
-                </h1>
-                <p className="text-sm md:text-base text-white/90 max-w-3xl leading-relaxed font-normal mb-3">
-                  We are committed to improving healthcare access in rural and
-                  underserved communities through preventive care, awareness,
-                  medical support, and emergency services.
-                </p>
-                <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed italic border-l-2 border-brand-orange pl-3">
-                  “Ensuring healthcare reaches the last mile—because no life
-                  should be lost due to lack of access to timely medical care.”
-                </p>
-              </div>
-
-              {/* Stats Card */}
-              <div className="lg:col-span-4">
-                <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 shadow-xl text-white">
-                  <div className="text-xs font-bold uppercase tracking-wider text-amber-300 mb-3">
-                    Impact at a Glance
+        {/* 4 Feature Cards Floating Bar */}
+        <div className="max-w-7xl mx-auto px-4 md:px-8 -mt-6 relative z-20 mb-6">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-md">
+            {HERO_FEATURE_CARDS.map((card, idx) => {
+              const Icon = card.icon;
+              return (
+                <div
+                  key={idx}
+                  className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-3"
+                >
+                  <div className="w-9 h-9 rounded-lg bg-emerald-50 text-[#004724] flex items-center justify-center shrink-0">
+                    <Icon className="w-5 h-5 text-emerald-600" />
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <div className="text-3xl font-black text-white">8</div>
-                      <div className="text-xs text-emerald-100/80">
-                        Specialized Initiatives
-                      </div>
+                  <div>
+                    <div className="text-xs font-bold text-slate-900 leading-tight">
+                      {card.title}
                     </div>
-                    <div>
-                      <div className="text-3xl font-black text-amber-400">100+</div>
-                      <div className="text-xs text-emerald-100/80">
-                        Health Check-up Camps
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-3xl font-black text-white">624+</div>
-                      <div className="text-xs text-emerald-100/80">
-                        Critical Patients Saved
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-3xl font-black text-emerald-300">100%</div>
-                      <div className="text-xs text-emerald-100/80">
-                        Transparent Care
-                      </div>
+                    <div className="text-[10px] text-slate-500 leading-tight hidden sm:block">
+                      {card.desc}
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            {/* 4 Feature Cards Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-white/15">
-              {HERO_FEATURE_CARDS.map((card, idx) => {
-                const Icon = card.icon;
-                return (
-                  <div
-                    key={idx}
-                    className="p-3 rounded-xl bg-white/10 backdrop-blur-sm border border-white/15 text-white flex items-center gap-3"
-                  >
-                    <div className="w-9 h-9 rounded-lg bg-emerald-500/20 flex items-center justify-center shrink-0">
-                      <Icon className="w-5 h-5 text-amber-300" />
-                    </div>
-                    <div>
-                      <div className="text-xs font-bold leading-tight">
-                        {card.title}
-                      </div>
-                      <div className="text-[10px] text-emerald-200/80 leading-tight hidden sm:block">
-                        {card.desc}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+              );
+            })}
           </div>
-        </section>
+        </div>
 
         {/* 4 PILLARS RIBBON */}
         <section className="bg-white border-b border-slate-200 py-4 shadow-sm">

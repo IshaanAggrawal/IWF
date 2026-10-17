@@ -13,13 +13,19 @@ import {
   Lock, UserCheck, Clock, XCircle, Trophy,
   Heart, Upload, User, Wallet, Copy, RotateCcw,
   IndianRupee, Info, Star,
+  Handshake, GraduationCap, Compass, Briefcase, Globe, Target, TrendingUp,
 } from "lucide-react";
 import {
   Footer, Header, NotificationTicker, RoleFormModal, UtilityBar,
 } from "@/components/layout/SiteLayout";
 import type { RoleType } from "@/components/forms/RoleFormModal";
 import { MembershipPolicyModal } from "@/components/membership/MembershipPolicyModal";
-import { StandardPageHero } from "@/components/layout/StandardPageHero";
+import SubpageHeroCarousel from "@/components/common/SubpageHeroCarousel";
+import aboutHero from "@/assets/about-hero.jpg";
+import slide1 from "@/assets/hero-carousel/hero-slide-1.jpg";
+import slide2 from "@/assets/hero-carousel/hero-slide-2.jpg";
+import slide3 from "@/assets/hero-carousel/hero-slide-3.jpg";
+import slide4 from "@/assets/hero-carousel/hero-slide-4.jpg";
 
 // ══════════════════════════════════════════════════════════════════
 //  TYPES
@@ -27,7 +33,7 @@ import { StandardPageHero } from "@/components/layout/StandardPageHero";
 
 type MemberCategory = "Blue" | "Yellow" | "Green";
 type DonorTier = "Platinum" | "Gold" | "Silver";
-type PageTab = "Members" | "Donors" | "Your Membership";
+type PageTab = "Member" | "Members" | "Donor" | "Donors" | "Partner / Sponsor" | "Volunteer / Mentor" | "Your Membership";
 
 // ══════════════════════════════════════════════════════════════════
 //  CATEGORY CONFIG
@@ -1349,50 +1355,85 @@ function MemberCardVisual({ category, name, memberId, validTill, district, state
 }
 
 // ══════════════════════════════════════════════════════════════════
-//  MEMBERS & DONORS HERO (tabbed dark header)
+//  COMMUNITY HERO & SELECTIVE BAR
 // ══════════════════════════════════════════════════════════════════
 
-function MembersAndDonorsHero({ activeTab, setActiveTab }: { activeTab: PageTab; setActiveTab: (t: PageTab) => void }) {
-  const tabs: PageTab[] = ["Members", "Donors", "Your Membership"];
+function CommunityHero() {
   return (
-    <div id="community-tabs">
-      <StandardPageHero
-        badge="ISLAH COMMUNITY • MEMBERSHIP"
-        title={
-          <>
-            Become a <span className="text-brand-orange">Member</span>
-          </>
-        }
-        description="Our members and donors are the strength behind our mission. Join a transparent network of changemakers dedicated to uplifting marginalized communities across India."
-        breadcrumb={[{ label: "Become a Member" }]}
-        cards={[
-          { icon: Award, title: "Official Card", subtitle: "Verified Identity", href: "#register" },
-          { icon: Users, title: "100% Direct", subtitle: "Grassroots Support", href: "#register" },
-          { icon: Shield, title: "80G Benefit", subtitle: "Tax Exemption", href: "#register" },
-          { icon: FileText, title: "Transparency", subtitle: "Annual Audits", href: "#register" },
-        ]}
-        taglineTop="Uplifting"
-        taglineMid="Communities"
-        taglineBot="Together"
-        verticalWords={["HONOUR", "SUPPORT", "EMPOWER", "SERVE"]}
-        waveFill="#ffffff"
-      >
-        <div className="inline-flex bg-white/10 backdrop-blur-md rounded-full p-1.5 border border-white/20 shadow-xl mt-1">
-          {tabs.map((tab) => (
+    <SubpageHeroCarousel
+      tag="ABOUT US • ISLAH COMMUNITY"
+      title="ISLAH Community"
+      subtitle="Our members, donors, partners, and volunteers are the heartbeat of ISLAH. Together, we form an impact-driven collective dedicated to uplifting vulnerable communities across India."
+      breadcrumbs={[
+        { label: "About Us", href: "/about" },
+        { label: "ISLAH Community" },
+      ]}
+      images={[aboutHero, slide1, slide2, slide3, slide4]}
+    />
+  );
+}
+
+function CommunitySelectiveBar({
+  activeTab,
+  setActiveTab,
+}: {
+  activeTab: PageTab;
+  setActiveTab: (t: PageTab) => void;
+}) {
+  const pillars: { id: PageTab; label: string; icon: typeof Users }[] = [
+    { id: "Member", label: "Member", icon: Users },
+    { id: "Donor", label: "Donor", icon: Heart },
+    { id: "Partner / Sponsor", label: "Partner / Sponsor", icon: Handshake },
+    { id: "Volunteer / Mentor", label: "Volunteer / Mentor", icon: GraduationCap },
+  ];
+
+  return (
+    <div id="community-tabs" className="sticky top-[58px] z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 py-3 shadow-xs">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+          {/* Main 4 Pillars Segmented Control */}
+          <div className="w-full sm:w-auto overflow-x-auto no-scrollbar py-0.5">
+            <div className="inline-flex items-center gap-1 bg-slate-100 p-1 rounded-2xl sm:rounded-full border border-slate-200/80 shadow-inner">
+              {pillars.map((p) => {
+                const Icon = p.icon;
+                const isSelected =
+                  activeTab === p.id ||
+                  (p.id === "Member" && activeTab === "Members") ||
+                  (p.id === "Donor" && activeTab === "Donors");
+                return (
+                  <button
+                    key={p.id}
+                    onClick={() => setActiveTab(p.id)}
+                    className={`flex items-center gap-2 px-4 sm:px-5 py-2 rounded-xl sm:rounded-full text-xs sm:text-sm font-extrabold transition-all duration-200 whitespace-nowrap cursor-pointer ${
+                      isSelected
+                        ? "bg-[#0b1f3b] text-white shadow-md scale-[1.02]"
+                        : "text-slate-600 hover:text-slate-900 hover:bg-white/70"
+                    }`}
+                  >
+                    <Icon className={`w-4 h-4 ${isSelected ? "text-brand-orange" : "text-slate-500"}`} />
+                    <span>{p.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Distinct Secondary Action: Verify Member ID */}
+          <div className="w-full sm:w-auto flex justify-end shrink-0">
             <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-5 sm:px-7 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
-                activeTab === tab
-                  ? "bg-white text-[#0b1f3b] shadow-lg"
-                  : "text-white/80 hover:text-white hover:bg-white/10"
+              onClick={() => setActiveTab("Your Membership")}
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl sm:rounded-full text-xs sm:text-sm font-bold border transition-all duration-200 cursor-pointer shadow-xs ${
+                activeTab === "Your Membership"
+                  ? "bg-brand-orange text-white border-brand-orange shadow-md"
+                  : "bg-white text-slate-700 border-slate-200 hover:border-brand-orange/60 hover:text-brand-orange"
               }`}
             >
-              {tab}
+              <Search className="w-3.5 h-3.5" />
+              <span>Verify Member ID</span>
             </button>
-          ))}
+          </div>
         </div>
-      </StandardPageHero>
+      </div>
     </div>
   );
 }
@@ -3936,11 +3977,442 @@ function YourMembershipTab({
 }
 
 // ══════════════════════════════════════════════════════════════════
+//  PARTNER / SPONSOR TAB
+// ══════════════════════════════════════════════════════════════════
+
+function PartnerSponsorTab({ onOpenModal }: { onOpenModal: (type: RoleType) => void }) {
+  const models = [
+    {
+      num: "01",
+      title: "Corporate CSR Partnerships",
+      badge: "Schedule VII Compliant",
+      desc: "Structured corporate social responsibility collaborations aligned with Ministry of Corporate Affairs norms. We provide real-time utilization reports, high-resolution documentation, and full 80G tax benefits.",
+      icon: Building2,
+      points: [
+        "100% Tax Exemption certificate under 80G",
+        "Quarterly field audit reports with GPS tracking",
+        "Co-branded CSR awareness initiatives",
+      ],
+      ctaText: "Apply as Corporate Partner",
+      ctaRole: "partner" as RoleType,
+    },
+    {
+      num: "02",
+      title: "Cause & Program Sponsorship",
+      badge: "Targeted Grassroots Impact",
+      desc: "Directly sponsor a targeted initiative: fund complete health camps, underwrite girl child scholarship batches, sponsor women micro-enterprise kits, or finance emergency relief distribution.",
+      icon: Heart,
+      points: [
+        "Select specific thematic focus or district",
+        "Direct beneficiary impact metrics & testimonials",
+        "Certificate of Appreciation & donor roll honor",
+      ],
+      ctaText: "Sponsor an Initiative",
+      ctaRole: "sponsor" as RoleType,
+    },
+    {
+      num: "03",
+      title: "Institutional & NGO Alliances",
+      badge: "Collaborative Scale",
+      desc: "Collaborate with ISLAH to implement large-scale rural development projects. We work with national philanthropic trusts, civil society organisations, and research institutions.",
+      icon: Handshake,
+      points: [
+        "Joint project design and field monitoring",
+        "Access to ISLAH's verified grassroots volunteer network",
+        "Shared knowledge, research papers & policy briefs",
+      ],
+      ctaText: "Connect with Alliances Desk",
+      ctaRole: "partner" as RoleType,
+    },
+    {
+      num: "04",
+      title: "Knowledge & Technology Partners",
+      badge: "Innovation & Capacity",
+      desc: "Share your technology, educational content, diagnostic equipment, or vocational expertise to help modernize rural education, digital skill centers, and telemedicine camps.",
+      icon: Globe,
+      points: [
+        "Provide software, hardware, or medical gear",
+        "Curriculum design for rural skill academies",
+        "Pro-bono professional services & advisory",
+      ],
+      ctaText: "Become a Knowledge Partner",
+      ctaRole: "partner" as RoleType,
+    },
+  ];
+
+  const sponsorPackages = [
+    {
+      title: "Rural Health Camp",
+      cost: "₹50,000",
+      scope: "500+ Patients",
+      desc: "Provides free doctor consultations, diagnostic screenings, and essential medicines to remote villages.",
+      role: "sponsor" as RoleType,
+    },
+    {
+      title: "Girl Child Scholarship Batch",
+      cost: "₹25,000",
+      scope: "10 Students / Year",
+      desc: "Covers annual school fees, uniform, books, and mentor support for high-potential underprivileged girls.",
+      role: "sponsor" as RoleType,
+    },
+    {
+      title: "Women SHG Enterprise Kit",
+      cost: "₹35,000",
+      scope: "1 Self-Help Group",
+      desc: "Supplies sewing machines, raw materials, and digital bookkeeping tools for village micro-enterprises.",
+      role: "sponsor" as RoleType,
+    },
+    {
+      title: "Community Skill Centre Lab",
+      cost: "₹1,50,000",
+      scope: "100+ Trainees / Batch",
+      desc: "Equips rural computer and vocational training labs with refurbished workstations and internet access.",
+      role: "sponsor" as RoleType,
+    },
+  ];
+
+  return (
+    <div className="py-12 bg-slate-50 border-b border-slate-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        {/* Intro */}
+        <div className="text-center max-w-3xl mx-auto space-y-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand-green/10 text-brand-green-dark text-xs font-bold rounded-full uppercase tracking-wider">
+            <Handshake className="w-3.5 h-3.5" /> Institutional Collaboration & Sponsorship
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-black text-[#0b1f3b] tracking-tight">
+            Partner With Purpose. Sponsor Real Change.
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            ISLAH bridges corporate vision, institutional resources, and verified grassroots action. Join our network of forward-thinking partners building lasting self-reliance across India.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3 pt-2">
+            <button
+              onClick={() => onOpenModal("partner")}
+              className="inline-flex items-center gap-2 bg-[#0b1f3b] hover:bg-[#163a69] text-white text-xs sm:text-sm font-bold px-6 py-2.5 rounded-xl shadow-md transition hover:scale-[1.02] cursor-pointer"
+            >
+              <Handshake className="w-4 h-4 text-brand-orange" /> Apply as Partner
+            </button>
+            <button
+              onClick={() => onOpenModal("sponsor")}
+              className="inline-flex items-center gap-2 bg-brand-orange hover:bg-orange-600 text-white text-xs sm:text-sm font-bold px-6 py-2.5 rounded-xl shadow-md transition hover:scale-[1.02] cursor-pointer"
+            >
+              <Heart className="w-4 h-4" /> Sponsor an Initiative
+            </button>
+          </div>
+        </div>
+
+        {/* 4 Models Grid */}
+        <div className="grid md:grid-cols-2 gap-6">
+          {models.map((m) => {
+            const Icon = m.icon;
+            return (
+              <div
+                key={m.num}
+                className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-7 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-5"
+              >
+                <div className="space-y-4">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-700 font-extrabold text-sm shrink-0">
+                        <Icon className="w-5 h-5 text-brand-green-dark" />
+                      </div>
+                      <div>
+                        <span className="text-[10px] font-bold tracking-widest uppercase text-slate-400">
+                          Model {m.num}
+                        </span>
+                        <h3 className="text-base sm:text-lg font-bold text-[#0b1f3b]">
+                          {m.title}
+                        </h3>
+                      </div>
+                    </div>
+                    <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200 shrink-0">
+                      {m.badge}
+                    </span>
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    {m.desc}
+                  </p>
+
+                  <ul className="space-y-2 pt-2 border-t border-slate-100">
+                    {m.points.map((pt, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs text-slate-700">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                        <span>{pt}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+                  <span className="text-[11px] font-semibold text-slate-500">
+                    Verified Execution & Audits
+                  </span>
+                  <button
+                    onClick={() => onOpenModal(m.ctaRole)}
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-orange hover:text-orange-700 cursor-pointer transition"
+                  >
+                    {m.ctaText} <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Sponsorship Catalog Section */}
+        <div className="bg-gradient-to-br from-[#0b1f3b] via-[#112d53] to-[#0b1f3b] rounded-3xl p-6 sm:p-10 text-white shadow-xl space-y-8">
+          <div className="max-w-2xl space-y-2">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-orange">
+              Immediate Grassroots Need
+            </span>
+            <h3 className="text-xl sm:text-2xl font-black">
+              High-Impact Cause Sponsorship Opportunities
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              Choose an initiative to sponsor directly. Receive customized impact reports with photos, GPS markers, and beneficiary feedback.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {sponsorPackages.map((pkg, i) => (
+              <div
+                key={i}
+                className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/15 p-5 flex flex-col justify-between hover:bg-white/15 transition space-y-4"
+              >
+                <div className="space-y-2">
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-brand-orange/20 text-brand-orange border border-brand-orange/30">
+                    {pkg.scope}
+                  </span>
+                  <h4 className="text-base font-bold text-white pt-1">{pkg.title}</h4>
+                  <p className="text-xs text-slate-300 leading-relaxed">{pkg.desc}</p>
+                </div>
+                <div className="pt-4 border-t border-white/10 flex items-center justify-between">
+                  <span className="text-sm font-black text-amber-300">{pkg.cost}</span>
+                  <button
+                    onClick={() => onOpenModal(pkg.role)}
+                    className="text-xs font-bold bg-white text-[#0b1f3b] hover:bg-amber-300 px-3 py-1.5 rounded-lg transition cursor-pointer shadow"
+                  >
+                    Sponsor
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/10 text-xs text-slate-300">
+            <div className="flex items-center gap-4">
+              <span className="flex items-center gap-1.5"><Shield className="w-4 h-4 text-emerald-400" /> 80G Tax Exemption</span>
+              <span className="flex items-center gap-1.5"><FileText className="w-4 h-4 text-sky-400" /> Verified Utilization</span>
+            </div>
+            <a
+              href="/partnership-policy"
+              className="text-white hover:text-brand-orange underline font-semibold transition"
+            >
+              Read our full Partnership & CSR Policy →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════════════════════════════════════
+//  VOLUNTEER / MENTOR TAB
+// ══════════════════════════════════════════════════════════════════
+
+function VolunteerMentorTab({ onOpenModal }: { onOpenModal: (type: RoleType) => void }) {
+  const steps = [
+    {
+      num: "1",
+      title: "Online Registration",
+      desc: "Fill our simple 2-minute application form specifying your background, location, and areas of interest.",
+      icon: FileText,
+    },
+    {
+      num: "2",
+      title: "Orientation & Briefing",
+      desc: "Attend a brief virtual or field orientation with ISLAH's community coordinators and project leaders.",
+      icon: Users,
+    },
+    {
+      num: "3",
+      title: "Active Field or Virtual Action",
+      desc: "Participate in local health drives, relief distribution, girl-child coaching, or career webinars.",
+      icon: Target,
+    },
+    {
+      num: "4",
+      title: "Recognition & Certificate",
+      desc: "Receive official volunteer hour certificates, digital badges, and recognition in ISLAH's annual review.",
+      icon: Award,
+    },
+  ];
+
+  return (
+    <div className="py-12 bg-slate-50 border-b border-slate-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        {/* Header */}
+        <div className="text-center max-w-3xl mx-auto space-y-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded-full uppercase tracking-wider">
+            <Users className="w-3.5 h-3.5 text-amber-700" /> Grassroots Heroes & Knowledge Mentors
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-black text-[#0b1f3b] tracking-tight">
+            Serve On Ground. Mentor For Tomorrow.
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            Every transformation begins with dedicated individuals who give their time, energy, and knowledge. Choose your path to create lasting social impact with ISLAH.
+          </p>
+        </div>
+
+        {/* Two Main Cards: Volunteer vs Mentor */}
+        <div className="grid md:grid-cols-2 gap-8 items-stretch">
+          {/* Volunteer Card */}
+          <div className="bg-white rounded-3xl border border-slate-200 p-7 sm:p-8 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-6 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-bl-full -z-0 pointer-events-none" />
+            <div className="relative z-10 space-y-5">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-black">
+                  <Users className="w-6 h-6 text-emerald-700" />
+                </div>
+                <div>
+                  <span className="text-[10px] font-bold tracking-widest uppercase text-emerald-700">
+                    On-Ground Action
+                  </span>
+                  <h3 className="text-xl font-black text-[#0b1f3b]">Join as a Volunteer</h3>
+                </div>
+              </div>
+
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Be the hands and feet of ISLAH. Work side-by-side with our grassroots coordinators to deliver real, visible relief and upliftment across villages and neighborhoods.
+              </p>
+
+              <div className="space-y-2.5 pt-2 border-t border-slate-100">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                  Key Volunteer Activities:
+                </span>
+                <ul className="space-y-2">
+                  {[
+                    "Free Medical & Diagnostic Health Camps execution",
+                    "Disaster & Emergency Relief kit packaging and distribution",
+                    "Blood donation, health awareness, and hygiene drives",
+                    "Community surveys, photography, and field reporting",
+                  ].map((act, i) => (
+                    <li key={i} className="flex items-start gap-2 text-xs text-slate-700">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                      <span>{act}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="relative z-10 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
+              <span className="text-xs font-semibold text-slate-500">
+                Flexible hours • Weekend field drives
+              </span>
+              <button
+                onClick={() => onOpenModal("volunteer")}
+                className="inline-flex items-center gap-2 bg-brand-green hover:bg-brand-green-dark text-white text-xs sm:text-sm font-bold px-6 py-2.5 rounded-xl shadow-md transition hover:scale-[1.02] cursor-pointer"
+              >
+                Apply as Volunteer <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
+          {/* Mentor Card */}
+          <div className="bg-white rounded-3xl border border-slate-200 p-7 sm:p-8 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-6 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-bl-full -z-0 pointer-events-none" />
+            <div className="relative z-10 space-y-5">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-blue-100 text-blue-800 flex items-center justify-center font-black">
+                  <GraduationCap className="w-6 h-6 text-blue-700" />
+                </div>
+                <div>
+                  <span className="text-[10px] font-bold tracking-widest uppercase text-blue-700">
+                    Knowledge & Guidance
+                  </span>
+                  <h3 className="text-xl font-black text-[#0b1f3b]">Become a Mentor</h3>
+                </div>
+              </div>
+
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Empower first-generation scholars, budding rural entrepreneurs, and young women through your professional expertise, academic wisdom, and life experience.
+              </p>
+
+              <div className="space-y-2.5 pt-2 border-t border-slate-100">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                  Key Mentorship Streams:
+                </span>
+                <ul className="space-y-2">
+                  {[
+                    "1-on-1 Academic & Career guidance for high-school & college youth",
+                    "English communication & digital literacy coaching",
+                    "Entrepreneurship coaching for rural women self-help groups",
+                    "Resume building, career counseling & mock interviews",
+                  ].map((act, i) => (
+                    <li key={i} className="flex items-start gap-2 text-xs text-slate-700">
+                      <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+                      <span>{act}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="relative z-10 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
+              <span className="text-xs font-semibold text-slate-500">
+                1-2 hours / week • Virtual or In-Person
+              </span>
+              <button
+                onClick={() => onOpenModal("mentor")}
+                className="inline-flex items-center gap-2 bg-[#0b1f3b] hover:bg-[#163a69] text-white text-xs sm:text-sm font-bold px-6 py-2.5 rounded-xl shadow-md transition hover:scale-[1.02] cursor-pointer"
+              >
+                Apply as Mentor <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* 4-Step Process */}
+        <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
+          <div className="text-center max-w-xl mx-auto space-y-1">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
+              Simple 4-Step Onboarding
+            </span>
+            <h3 className="text-lg sm:text-xl font-bold text-[#0b1f3b]">How You Get Started</h3>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {steps.map((st) => {
+              const Icon = st.icon;
+              return (
+                <div key={st.num} className="flex flex-col space-y-3 p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                  <div className="flex items-center justify-between">
+                    <div className="w-8 h-8 rounded-lg bg-white shadow-sm flex items-center justify-center text-brand-green-dark">
+                      <Icon className="w-4 h-4" />
+                    </div>
+                    <span className="text-xs font-black text-slate-400">0{st.num}</span>
+                  </div>
+                  <h4 className="text-sm font-bold text-slate-800">{st.title}</h4>
+                  <p className="text-xs text-slate-600 leading-relaxed">{st.desc}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════════════════════════════════════
 //  MAIN PAGE
 // ══════════════════════════════════════════════════════════════════
 
 export default function MembershipPage() {
-  const [activeTab, setActiveTab] = useState<PageTab>("Members");
+  const [activeTab, setActiveTab] = useState<PageTab>("Member");
   const [preSelectedCategory, setPreSelectedCategory] = useState<MemberCategory | null>(null);
   const [showForm, setShowForm] = useState(true);
   const [activeModal, setActiveModal] = useState<RoleType | null>(null);
@@ -3975,6 +4447,12 @@ export default function MembershipPage() {
     setTimeout(tryScroll, 50);
   };
 
+  const isMemberTab = activeTab === "Member" || activeTab === "Members";
+  const isDonorTab = activeTab === "Donor" || activeTab === "Donors";
+  const isPartnerTab = activeTab === "Partner / Sponsor";
+  const isVolunteerTab = activeTab === "Volunteer / Mentor";
+  const isVerifyTab = activeTab === "Your Membership";
+
   return (
     <div className="min-h-screen bg-white font-sans">
       <NotificationTicker />
@@ -3982,23 +4460,36 @@ export default function MembershipPage() {
       <Header />
 
       <main>
-        {/* ── Hero with Tab bar */}
-        <MembersAndDonorsHero activeTab={activeTab} setActiveTab={handleTabChange} />
+        {/* ── Subpage Hero Carousel matching About Us Page */}
+        <CommunityHero />
+
+        {/* ── Sleek Community Selective Bar */}
+        <CommunitySelectiveBar activeTab={activeTab} setActiveTab={handleTabChange} />
 
         {/* ── Tab Content */}
         <section className="bg-white">
           <AnimatePresence mode="wait">
-            {activeTab === "Members" && (
+            {isMemberTab && (
               <motion.div key="members" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.25 }}>
                 <MembersTab onRenewClick={handleRenewClick} />
               </motion.div>
             )}
-            {activeTab === "Donors" && (
+            {isDonorTab && (
               <motion.div key="donors" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.25 }}>
                 <DonorsTab />
               </motion.div>
             )}
-            {activeTab === "Your Membership" && (
+            {isPartnerTab && (
+              <motion.div key="partnersponsor" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.25 }}>
+                <PartnerSponsorTab onOpenModal={(role) => setActiveModal(role)} />
+              </motion.div>
+            )}
+            {isVolunteerTab && (
+              <motion.div key="volunteermentor" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.25 }}>
+                <VolunteerMentorTab onOpenModal={(role) => setActiveModal(role)} />
+              </motion.div>
+            )}
+            {isVerifyTab && (
               <motion.div key="yourmembership" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.25 }}>
                 <YourMembershipTab loadedMember={loadedMember} setLoadedMember={setLoadedMember} />
               </motion.div>
@@ -4006,12 +4497,14 @@ export default function MembershipPage() {
           </AnimatePresence>
         </section>
 
-        {/* ── Become a Member / Donor CTA */}
-        <BecomeMemberCTA onApplyNow={handleApplyNow} />
+        {/* ── Become a Member / Donor CTA (show on Member tab or Verify tab) */}
+        {(isMemberTab || isVerifyTab) && (
+          <BecomeMemberCTA onApplyNow={handleApplyNow} />
+        )}
 
         {/* ── Application Form */}
         <AnimatePresence>
-          {showForm && (
+          {showForm && (isMemberTab || isVerifyTab) && (
             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.4 }}>
               <div className="relative">
                 <button

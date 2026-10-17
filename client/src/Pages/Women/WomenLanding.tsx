@@ -32,6 +32,7 @@ import {
   Zap,
 } from "lucide-react";
 import ScrollReveal from "@/components/healthcare/ScrollReveal";
+import SubpageHeroCarousel from "@/components/common/SubpageHeroCarousel";
 import causeWomenImg from "@/assets/cause-women.jpg";
 import sectorWomenImg from "@/assets/sector_women_1.png";
 import thematicWomenImg from "@/assets/thematic-women.jpg";
@@ -238,69 +239,40 @@ export default function WomenLanding() {
       <Header />
 
       <main>
-        {/* ── 1. HERO SECTION ── */}
-        <section className="relative min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex items-center overflow-hidden bg-slate-900">
-          <img
-            src={thematicWomenImg}
-            alt="Women & Youth Empowerment"
-            className="absolute inset-0 h-full w-full object-cover object-center opacity-30"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/80 to-transparent" />
+        {/* ── 1. HERO SECTION (Matching About Us SubpageHeroCarousel) ── */}
+        <SubpageHeroCarousel
+          tag="WHAT WE DO • SECTOR 03"
+          title="Women & Youth Empowerment"
+          subtitle="Creating Opportunity. Building Confidence. Strengthening Communities. Unlocking capability, financial self-reliance, leadership, and equality."
+          breadcrumbs={[
+            { label: "Our Programs", href: "/programs" },
+            { label: "Women & Youth Empowerment" },
+          ]}
+          images={[causeWomenImg, sectorWomenImg, thematicWomenImg]}
+        />
 
-          <div className="relative z-10 max-w-7xl mx-auto px-4 py-10 md:py-14 w-full">
-            {/* Breadcrumb */}
-            <nav className="flex items-center gap-1.5 text-xs text-white/70 mb-4 font-medium flex-wrap">
-              <Link to="/" className="hover:text-white transition-colors flex items-center gap-1">
-                <Home className="w-3.5 h-3.5 text-brand-orange" /> Home
-              </Link>
-              <ChevronRight className="w-3 h-3 text-white/40" />
-              <Link to="/programs" className="hover:text-white transition-colors">What We Do</Link>
-              <ChevronRight className="w-3 h-3 text-white/40" />
-              <span className="text-brand-orange font-bold">Women &amp; Youth Empowerment</span>
-            </nav>
-
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-widest text-brand-orange mb-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse" />
-              Sector 03 • Capability, Dignity &amp; Livelihood
-            </div>
-
-            {/* Heading */}
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight tracking-tight mb-3 max-w-4xl">
-              Women &amp; Youth Empowerment
-            </h1>
-
-            {/* Tagline / Subtitle */}
-            <p className="text-sm md:text-base text-white/90 font-medium tracking-wide mb-2 max-w-2xl">
-              Creating Opportunity. Building Confidence. Strengthening Communities.
-            </p>
-
-            <p className="text-xs sm:text-sm text-white/75 max-w-2xl leading-relaxed mb-6">
-              Unlocking capability, financial self-reliance, leadership, and equality for rural women and young people across Bihar.
-            </p>
-
-            {/* 4 Feature Cards */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-4xl">
-              {HERO_FEATURE_CARDS.map((card, idx) => {
-                const Icon = card.icon;
-                return (
-                  <div
-                    key={idx}
-                    className="bg-white/10 backdrop-blur-sm border border-white/15 rounded-xl p-3.5 hover:bg-white/15 transition-all duration-200"
-                  >
-                    <div className="flex items-center gap-2.5 mb-1.5">
-                      <div className="w-7 h-7 rounded-lg bg-brand-orange/30 flex items-center justify-center shrink-0">
-                        <Icon className="w-4 h-4 text-brand-orange" />
-                      </div>
-                      <span className="text-xs font-bold text-white leading-tight">{card.title}</span>
-                    </div>
-                    <p className="text-[11px] text-white/60 leading-tight">{card.desc}</p>
+        {/* 4 Feature Cards Floating Bar */}
+        <div className="max-w-7xl mx-auto px-4 md:px-8 -mt-6 relative z-20 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-md">
+            {HERO_FEATURE_CARDS.map((card, idx) => {
+              const Icon = card.icon;
+              return (
+                <div
+                  key={idx}
+                  className="bg-slate-50 border border-slate-100 rounded-xl p-3.5 flex items-center gap-3"
+                >
+                  <div className="w-8 h-8 rounded-lg bg-orange-50 text-brand-orange flex items-center justify-center shrink-0">
+                    <Icon className="w-4 h-4 text-brand-orange" />
                   </div>
-                );
-              })}
-            </div>
+                  <div>
+                    <span className="text-xs font-bold text-slate-900 leading-tight block">{card.title}</span>
+                    <p className="text-[10px] text-slate-500 leading-tight hidden sm:block">{card.desc}</p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-        </section>
+        </div>
 
         {/* ── 2. 4-PILLAR RIBBON ── */}
         <section className="bg-brand-green-dark text-white py-4 border-y border-brand-green/30">

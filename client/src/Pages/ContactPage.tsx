@@ -13,6 +13,10 @@ import { Link } from "@tanstack/react-router";
 import { Footer, Header, NotificationTicker, RoleFormModal, UtilityBar } from "@/components/layout/SiteLayout";
 import type { RoleType } from "@/components/forms/RoleFormModal";
 import contactHandsImg from "@/assets/contact-hands-hero.jpg";
+import SubpageHeroCarousel from "@/components/common/SubpageHeroCarousel";
+import aboutHero from "@/assets/about-hero.jpg";
+import slide1 from "@/assets/hero-carousel/hero-slide-1.jpg";
+import slide2 from "@/assets/hero-carousel/hero-slide-2.jpg";
 
 import {
   COUNTRY_CODES,
@@ -661,174 +665,72 @@ export default function ContactPage() {
       <Header />
 
       <main className="flex-1">
-        {/* ─── Hero Section ──────────────────────────────────────────────────── */}
-        <section className="bg-[#071527] text-white min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex flex-col justify-center py-10 md:py-14 relative overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-            {/* Top Breadcrumb */}
-            <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-white/70 mb-4 flex-wrap select-none">
-              <Link to="/" className="hover:text-white transition-colors flex items-center gap-1">
-                <Home className="w-3.5 h-3.5 text-brand-orange" />
-                <span>Home</span>
-              </Link>
-              <ChevronRight className="w-3 h-3 text-white/40" />
-              <span className="text-brand-orange font-bold">Contact Us</span>
-            </nav>
+        {/* ─── Subpage Hero Carousel (Matching About Us Page) ──────────────── */}
+        <SubpageHeroCarousel
+          tag="LET'S STAY CONNECTED"
+          title="Contact ISLAH"
+          subtitle="We're here to listen, collaborate and create meaningful change together. Reach out to our offices or leave us a message."
+          breadcrumbs={[{ label: "Contact Us" }]}
+          images={[contactHandsImg, aboutHero, slide1, slide2]}
+        />
 
-            {/* Main Hero Grid: Left Content + Right Composition */}
-            <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-12 items-center">
-              {/* Left Column: Heading, Copy & 4 Cards */}
-              <div className="space-y-4 sm:space-y-5">
-                <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-widest text-brand-orange mb-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse" />
-                  LET'S STAY CONNECTED
-                </div>
-
-                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight">
-                  Contact ISLAH
-                </h1>
-
-                <p className="text-slate-300 text-xs sm:text-sm md:text-base leading-relaxed max-w-xl font-normal">
-                  We're here to listen, collaborate and create meaningful change together.
-                </p>
-
-                {/* 4 Quick Action Links */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2">
-                  {/* Card 1: Call Us */}
-                  <a
-                    href="tel:+919811861633"
-                    className="bg-[#0b1f36] border border-[#163559] hover:border-sky-400/80 hover:bg-[#0f2947] rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between transition group shadow-sm"
-                  >
-                    <div className="w-9 h-9 rounded-full bg-[#1b4478] text-sky-300 flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
-                      <Phone className="w-4 h-4 text-sky-300" />
-                    </div>
-                    <div>
-                      <h4 className="text-xs font-bold text-white group-hover:text-sky-200 transition-colors">
-                        Call Us
-                      </h4>
-                      <p className="text-[11px] text-slate-300 font-medium mt-0.5 whitespace-nowrap notranslate" dir="ltr" translate="no">
-                        +91 9811861633
-                      </p>
-                    </div>
-                  </a>
-
-                  {/* Card 2: Email Us */}
-                  <a
-                    href="mailto:info@iwfindia.org"
-                    className="bg-[#0b1f36] border border-[#163559] hover:border-sky-400/80 hover:bg-[#0f2947] rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between transition group shadow-sm"
-                  >
-                    <div className="w-9 h-9 rounded-full bg-[#1b4478] text-sky-300 flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
-                      <Mail className="w-4 h-4 text-sky-300" />
-                    </div>
-                    <div>
-                      <h4 className="text-xs font-bold text-white group-hover:text-sky-200 transition-colors">
-                        Email Us
-                      </h4>
-                      <p className="text-[11px] text-slate-300 font-medium mt-0.5 truncate" title="info@iwfindia.org">
-                        info@iwfindia.org
-                      </p>
-                    </div>
-                  </a>
-
-                  {/* Card 3: Visit Us */}
-                  <a
-                    href="#offices"
-                    className="bg-[#0b1f36] border border-[#163559] hover:border-sky-400/80 hover:bg-[#0f2947] rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between transition group shadow-sm"
-                  >
-                    <div className="w-9 h-9 rounded-full bg-[#1b4478] text-sky-300 flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
-                      <MapPin className="w-4 h-4 text-sky-300" />
-                    </div>
-                    <div>
-                      <h4 className="text-xs font-bold text-white group-hover:text-sky-200 transition-colors">
-                        Visit Us
-                      </h4>
-                      <p className="text-[11px] text-slate-300 font-medium mt-0.5 whitespace-nowrap">
-                        Our 4 Offices
-                      </p>
-                    </div>
-                  </a>
-
-                  {/* Card 4: Connect */}
-                  <a
-                    href="#send-message"
-                    className="bg-[#0b1f36] border border-[#163559] hover:border-sky-400/80 hover:bg-[#0f2947] rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between transition group shadow-sm"
-                  >
-                    <div className="w-9 h-9 rounded-full bg-[#1b4478] text-sky-300 flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
-                      <Users className="w-4 h-4 text-sky-300" />
-                    </div>
-                    <div>
-                      <h4 className="text-xs font-bold text-white group-hover:text-sky-200 transition-colors">
-                        Connect Us
-                      </h4>
-                      <p className="text-[11px] text-slate-300 font-medium mt-0.5 whitespace-nowrap">
-                        Send Message
-                      </p>
-                    </div>
-                  </a>
-                </div>
-              </div>
-
-              {/* Right Column: Organic Composition */}
-              <div className="relative flex items-center justify-center lg:justify-end">
-                <div className="relative w-full max-w-[440px] sm:max-w-[480px] aspect-[1.15/1]">
-                  <div
-                    className="absolute inset-2 bg-[#122e54] -rotate-3 scale-105 opacity-90 transition-transform pointer-events-none"
-                    style={{
-                      borderRadius: "50% 50% 65% 35% / 45% 45% 55% 55%",
-                    }}
-                  />
-
-                  <div
-                    className="relative w-full h-full overflow-hidden border-[5px] sm:border-[6px] border-white shadow-2xl z-10"
-                    style={{
-                      borderRadius: "44% 56% 68% 32% / 42% 44% 56% 58%",
-                    }}
-                  >
-                    <img
-                      src={contactHandsImg}
-                      alt="Together We Can Do More — Hands Reaching with Care and Compassion"
-                      className="w-full h-full object-cover object-[center_30%] select-none scale-105"
-                      loading="eager"
-                    />
-                  </div>
-
-                  {/* Handwritten Note */}
-                  <div className="absolute -top-3 right-0 sm:right-2 z-20 select-none text-right">
-                    <p className="font-['Caveat',cursive] text-2xl sm:text-3xl lg:text-[32px] font-bold text-white leading-tight rotate-[-6deg] drop-shadow-md">
-                      Together<br />
-                      We Can Do<br />
-                      More <span className="inline-block text-sky-200">♡</span>
-                    </p>
-                    <div className="w-10 sm:w-12 h-[2px] bg-sky-300 ml-auto mt-0.5 rounded-full rotate-[-6deg]" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Curved Bottom Wave */}
-          <div className="relative w-full overflow-hidden leading-none z-10">
-            <svg
-              viewBox="0 0 1440 90"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-full h-12 sm:h-16 md:h-20 block"
-              preserveAspectRatio="none"
+        {/* ─── 4 Quick Action Links Bar ──────────────────────────────────────── */}
+        <div className="max-w-7xl mx-auto px-4 md:px-8 -mt-6 relative z-20 mb-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-md">
+            {/* Card 1: Call Us */}
+            <a
+              href="tel:+919811861633"
+              className="bg-slate-50 hover:bg-orange-50 border border-slate-200/80 hover:border-brand-orange/40 rounded-xl p-3 flex items-center gap-3 transition group"
             >
-              <path
-                d="M0,60 C380,85 760,25 1440,65 L1440,90 L0,90 Z"
-                fill="#122e54"
-                opacity="0.35"
-              />
-              <path
-                d="M0,68 C420,95 820,35 1440,75 L1440,90 L0,90 Z"
-                fill="#1e4675"
-                opacity="0.45"
-              />
-              <path
-                d="M0,50 C400,80 840,15 1440,60 L1440,90 L0,90 Z"
-                fill="#ffffff"
-              />
-            </svg>
+              <div className="w-9 h-9 rounded-full bg-brand-orange/10 text-brand-orange flex items-center justify-center shrink-0">
+                <Phone className="w-4 h-4" />
+              </div>
+              <div>
+                <h4 className="text-xs font-bold text-slate-900 group-hover:text-brand-orange transition-colors">Call Us</h4>
+                <p className="text-[11px] text-slate-500 font-medium notranslate" dir="ltr" translate="no">+91 9811861633</p>
+              </div>
+            </a>
+            {/* Card 2: Email Us */}
+            <a
+              href="mailto:info@iwfindia.org"
+              className="bg-slate-50 hover:bg-sky-50 border border-slate-200/80 hover:border-sky-400/40 rounded-xl p-3 flex items-center gap-3 transition group"
+            >
+              <div className="w-9 h-9 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center shrink-0">
+                <Mail className="w-4 h-4" />
+              </div>
+              <div className="min-w-0">
+                <h4 className="text-xs font-bold text-slate-900 group-hover:text-sky-700 transition-colors">Email Us</h4>
+                <p className="text-[11px] text-slate-500 font-medium truncate" title="info@iwfindia.org">info@iwfindia.org</p>
+              </div>
+            </a>
+            {/* Card 3: Visit Us */}
+            <a
+              href="#offices"
+              className="bg-slate-50 hover:bg-emerald-50 border border-slate-200/80 hover:border-emerald-400/40 rounded-xl p-3 flex items-center gap-3 transition group"
+            >
+              <div className="w-9 h-9 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                <MapPin className="w-4 h-4" />
+              </div>
+              <div>
+                <h4 className="text-xs font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">Visit Us</h4>
+                <p className="text-[11px] text-slate-500 font-medium">Our 4 Offices</p>
+              </div>
+            </a>
+            {/* Card 4: Connect */}
+            <a
+              href="#send-message"
+              className="bg-slate-50 hover:bg-purple-50 border border-slate-200/80 hover:border-purple-400/40 rounded-xl p-3 flex items-center gap-3 transition group"
+            >
+              <div className="w-9 h-9 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center shrink-0">
+                <Users className="w-4 h-4" />
+              </div>
+              <div>
+                <h4 className="text-xs font-bold text-slate-900 group-hover:text-purple-700 transition-colors">Connect Us</h4>
+                <p className="text-[11px] text-slate-500 font-medium">Send Message</p>
+              </div>
+            </a>
+          </div>
+        </div>
 
             {/* Core Values Strip */}
             <div className="bg-white pb-3 pt-0 border-b border-slate-200/80">
@@ -855,8 +757,6 @@ export default function ContactPage() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
 
         {/* ─── Section 2: Our Offices (Four Offices in Exact Order) ───────────── */}
         <section id="offices" className="py-10 sm:py-14 bg-white">

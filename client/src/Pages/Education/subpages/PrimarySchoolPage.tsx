@@ -44,7 +44,7 @@ export default function PrimarySchoolPage() {
 
       <main>
         {/* ─── Hero Section ────────────────────────────────────────────────────── */}
-        <section className="relative overflow-hidden bg-gradient-to-r from-[#00381e] via-[#005a30] to-[#014725] text-white min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex items-center py-10 md:py-14">
+        <section className="relative overflow-hidden bg-gradient-to-r from-[#00381e] via-[#005a30] to-[#014725] text-white min-h-[300px] sm:min-h-[330px] md:min-h-[360px] lg:min-h-[390px] flex items-center py-6 sm:py-8 md:py-10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
             {/* Standardized Breadcrumb */}
             <nav className="flex items-center gap-1.5 text-xs text-emerald-200/80 mb-4 font-medium flex-wrap">
