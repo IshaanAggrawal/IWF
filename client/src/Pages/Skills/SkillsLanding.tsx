@@ -30,6 +30,7 @@ import {
   Zap,
 } from "lucide-react";
 import ScrollReveal from "@/components/healthcare/ScrollReveal";
+import SubpageHeroCarousel from "@/components/common/SubpageHeroCarousel";
 import entrepreneurImg from "@/assets/thematic-entrepreneur.jpg";
 import sectorSkillsImg from "@/assets/sector_skills_1.png";
 import sectorEntrepreneurImg from "@/assets/sector_entrepreneur_1.png";
@@ -238,68 +239,40 @@ export default function SkillsLanding() {
       <Header />
 
       <main>
-        {/* ── 1. HERO SECTION ── */}
-        <section className="relative min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex items-center overflow-hidden bg-slate-900">
-          <img
-            src={entrepreneurImg}
-            alt="Skills, Livelihoods & Entrepreneurship"
-            className="absolute inset-0 h-full w-full object-cover object-center opacity-30"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/80 to-transparent" />
+        {/* ── 1. HERO SECTION (Matching About Us SubpageHeroCarousel) ── */}
+        <SubpageHeroCarousel
+          tag="WHAT WE DO • SECTOR 04"
+          title="Skills & Entrepreneurship"
+          subtitle="Building Skills. Creating Livelihoods. Enabling Self-Reliance. Transforming potential into prepared capability through technical training and micro-enterprise support."
+          breadcrumbs={[
+            { label: "Our Programs", href: "/programs" },
+            { label: "Skills & Entrepreneurship" },
+          ]}
+          images={[entrepreneurImg, sectorSkillsImg, sectorEntrepreneurImg]}
+        />
 
-          <div className="relative z-10 max-w-7xl mx-auto px-4 py-16 w-full">
-            <nav className="flex items-center gap-2 text-xs text-white/60 mb-6 font-medium flex-wrap">
-              <Link to="/" className="hover:text-white transition-colors flex items-center gap-1">
-                <Home className="w-3 h-3" /> Home
-              </Link>
-              <ChevronRight className="w-3 h-3" />
-              <Link to="/programs" className="hover:text-white transition-colors">What We Do</Link>
-              <ChevronRight className="w-3 h-3" />
-              <span className="text-white/80">Skills, Livelihoods &amp; Entrepreneurship</span>
-            </nav>
-
-            <div className="inline-flex items-center gap-2 bg-brand-orange/20 border border-brand-orange/40 text-brand-orange px-3.5 py-1.5 rounded-full mb-5 backdrop-blur-sm">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span className="text-xs font-bold tracking-widest uppercase text-white/90">
-                Sector 04 • From Learning to Earning
-              </span>
-            </div>
-
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight mb-4 max-w-4xl">
-              Skills, Livelihoods &amp;<br />
-              <span className="text-brand-orange">Entrepreneurship</span>
-            </h1>
-
-            <p className="text-lg md:text-xl text-white/90 font-medium tracking-wide mb-3 max-w-2xl">
-              Building Skills. Creating Livelihoods. Enabling Self-Reliance.
-            </p>
-
-            <p className="text-sm md:text-base text-white/75 max-w-2xl leading-relaxed mb-8">
-              Transforming potential into prepared capability through technical training, market linkages, and rural micro-enterprise support.
-            </p>
-
-            {/* 4 Feature Cards */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-4xl">
-              {HERO_FEATURE_CARDS.map((card, idx) => {
-                const Icon = card.icon;
-                return (
-                  <div
-                    key={idx}
-                    className="bg-white/10 backdrop-blur-sm border border-white/15 rounded-xl p-3.5 hover:bg-white/15 transition-all duration-200"
-                  >
-                    <div className="flex items-center gap-2.5 mb-1.5">
-                      <div className="w-7 h-7 rounded-lg bg-brand-orange/30 flex items-center justify-center shrink-0">
-                        <Icon className="w-4 h-4 text-brand-orange" />
-                      </div>
-                      <span className="text-xs font-bold text-white leading-tight">{card.title}</span>
-                    </div>
-                    <p className="text-[11px] text-white/60 leading-tight">{card.desc}</p>
+        {/* 4 Feature Cards Floating Bar */}
+        <div className="max-w-7xl mx-auto px-4 md:px-8 -mt-6 relative z-20 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-md">
+            {HERO_FEATURE_CARDS.map((card, idx) => {
+              const Icon = card.icon;
+              return (
+                <div
+                  key={idx}
+                  className="bg-slate-50 border border-slate-100 rounded-xl p-3.5 flex items-center gap-3"
+                >
+                  <div className="w-8 h-8 rounded-lg bg-orange-50 text-brand-orange flex items-center justify-center shrink-0">
+                    <Icon className="w-4 h-4 text-brand-orange" />
                   </div>
-                );
-              })}
-            </div>
+                  <div>
+                    <span className="text-xs font-bold text-slate-900 leading-tight block">{card.title}</span>
+                    <p className="text-[10px] text-slate-500 leading-tight hidden sm:block">{card.desc}</p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-        </section>
+        </div>
 
         {/* ── 2. 4-PILLAR RIBBON ── */}
         <section className="bg-brand-green-dark text-white py-4 border-y border-brand-green/30">

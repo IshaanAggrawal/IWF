@@ -24,7 +24,6 @@ import {
   Mail,
 } from "lucide-react";
 import PageTransition, { ScrollProgressBar } from "@/components/PageTransition";
-import { FloatingTranslateButton } from "@/components/TranslateButton";
 import {
   blockNumbersOnKeyDown,
   sanitizeName,
@@ -426,7 +425,6 @@ function RootComponent() {
           </button>
         </div>
       </div>
-      <FloatingTranslateButton />
     </QueryClientProvider>
   );
 }

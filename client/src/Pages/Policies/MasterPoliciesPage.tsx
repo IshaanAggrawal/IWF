@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { Footer, Header, NotificationTicker, RoleFormModal, UtilityBar } from "@/components/layout/SiteLayout";
 import ScrollReveal from "@/components/healthcare/ScrollReveal";
+import SubpageHeroCarousel from "@/components/common/SubpageHeroCarousel";
 
 type RoleType = "volunteer" | "partner" | "sponsor" | "mentor" | "employee";
 
@@ -204,21 +205,16 @@ export default function MasterPoliciesPage() {
       <Header />
 
       <main>
-        {/* Hero Header */}
-        <section className="bg-gradient-to-r from-[#071527] via-[#0b1f3b] to-[#15803d] text-white py-16 px-4 border-b border-white/10">
-          <div className="max-w-7xl mx-auto text-center space-y-4">
-            <div className="inline-flex items-center gap-2 bg-brand-orange/20 text-brand-orange text-xs font-extrabold uppercase tracking-widest px-3.5 py-1.5 rounded-md border border-brand-orange/30">
-              <ShieldCheck className="w-4 h-4" />
-              <span>Transparency & Accountability</span>
-            </div>
-            <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
-              ORGANIZATIONAL POLICIES & GOVERNANCE
-            </h1>
-            <p className="text-white/85 text-base md:text-lg max-w-3xl mx-auto leading-relaxed">
-              Explore the complete directory of official policies, operational codes, legal disclaimers, and governance frameworks governing Islah Welfare Foundation.
-            </p>
-          </div>
-        </section>
+        {/* Hero Section with Subpage Carousel (Matching About Us Page) */}
+        <SubpageHeroCarousel
+          tag="TRANSPARENCY & ACCOUNTABILITY"
+          title="Organizational Policies & Governance"
+          subtitle="Explore the complete directory of official policies, operational codes, legal disclaimers, and governance frameworks governing Islah Welfare Foundation."
+          breadcrumbs={[
+            { label: "Governance & Transparency", href: "/about/governance" },
+            { label: "Official Policies" },
+          ]}
+        />
 
         {/* Master Policy Catalog */}
         <section className="py-14 px-4">

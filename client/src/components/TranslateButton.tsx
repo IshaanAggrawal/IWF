@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { Languages, ChevronDown, Check } from "lucide-react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -203,6 +204,15 @@ function setGoogleLanguage(langCode: string, callback: () => void) {
   }
 }
 
+// ─── Crisp Google Translate 文A Icon ─────────────────────────────────────────
+export function TranslateIcon({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+      <path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
+    </svg>
+  );
+}
+
 // ─── Floating Translate Widget (Bottom Left / Top Right) ───────────────────────
 export function FloatingTranslateButton() {
   const [currentLang, setCurrentLang] = useState("en");
@@ -250,7 +260,7 @@ export function FloatingTranslateButton() {
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#f97316] opacity-75"></span>
           <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#f97316]"></span>
         </span>
-        <Languages className="w-5 h-5 shrink-0 text-white" />
+        <TranslateIcon className="w-5 h-5 shrink-0 text-white" />
       </button>
 
       {/* Dropdown Menu */}
@@ -280,22 +290,76 @@ export function FloatingTranslateButton() {
   );
 }
 
-// ─── Inline Translate Button (Backward Compatible Header Pill) ────────────────
+// ─── Inline Translate Button (Header Pill & Dropdown Matching Screenshot) ─────
 export function TranslateButton({ className = "" }: { className?: string }) {
   const [currentLang, setCurrentLang] = useState("en");
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const dropdownMenuRef = useRef<HTMLDivElement>(null);
+  const [menuCoords, setMenuCoords] = useState<{ top: number; right: number; maxHeight: number }>({
+    top: 0,
+    right: 0,
+    maxHeight: 320,
+  });
+
+  const updatePosition = useCallback(() => {
+    if (!buttonRef.current) return;
+    const rect = buttonRef.current.getBoundingClientRect();
+    const spaceBelow = window.innerHeight - rect.bottom;
+    const spaceAbove = rect.top;
+
+    let top = rect.bottom + 6;
+    let maxHeight = Math.min(340, spaceBelow - 16);
+
+    // If bottom space is constrained (< 180px) and top space has more room, flip above
+    if (spaceBelow < 180 && spaceAbove > spaceBelow) {
+      const calculatedHeight = Math.min(340, spaceAbove - 16);
+      top = Math.max(10, rect.top - calculatedHeight - 6);
+      maxHeight = calculatedHeight;
+    }
+
+    setMenuCoords({
+      top,
+      right: Math.max(8, window.innerWidth - rect.right),
+      maxHeight: Math.max(140, maxHeight),
+    });
+  }, []);
 
   useEffect(() => {
     setCurrentLang(getCookieLang());
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    updatePosition();
+
     const handleOutsideClick = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+      const target = e.target as Node;
+      if (
+        buttonRef.current &&
+        !buttonRef.current.contains(target) &&
+        dropdownMenuRef.current &&
+        !dropdownMenuRef.current.contains(target)
+      ) {
         setIsOpen(false);
       }
     };
+
+    const handleScrollOrResize = () => {
+      updatePosition();
+    };
+
     document.addEventListener("mousedown", handleOutsideClick);
-    return () => document.removeEventListener("mousedown", handleOutsideClick);
-  }, []);
+    window.addEventListener("scroll", handleScrollOrResize, true);
+    window.addEventListener("resize", handleScrollOrResize);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+      window.removeEventListener("scroll", handleScrollOrResize, true);
+      window.removeEventListener("resize", handleScrollOrResize);
+    };
+  }, [isOpen, updatePosition]);
 
   const selectLanguage = (code: string) => {
     setIsOpen(false);
@@ -307,41 +371,73 @@ export function TranslateButton({ className = "" }: { className?: string }) {
   const activeLangObj = LANGUAGES.find((l) => l.code === currentLang) || LANGUAGES[0];
 
   return (
-    <div ref={dropdownRef} className="notranslate relative inline-block text-left" translate="no">
+    <div className="notranslate relative inline-block text-left" translate="no">
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        ref={buttonRef}
+        type="button"
+        onClick={() => {
+          if (!isOpen) updatePosition();
+          setIsOpen((prev) => !prev);
+        }}
         className={`
-          notranslate flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/30
-          bg-white/10 hover:bg-white/20 text-white text-[11px] font-bold
+          notranslate inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-300
+          bg-white hover:bg-slate-50 text-slate-800 text-xs font-semibold shadow-xs
           transition-all duration-200 cursor-pointer select-none
           ${className}
         `}
         translate="no"
+        aria-label="Change language"
+        aria-expanded={isOpen}
       >
-        <Languages className="w-3.5 h-3.5 shrink-0" />
-        <span className="notranslate" translate="no">{activeLangObj.nativeName}</span>
-        <ChevronDown className="w-3 h-3 opacity-60" />
+        <TranslateIcon className="w-4 h-4 text-slate-800 shrink-0" />
+        <span className="notranslate" translate="no">{activeLangObj.name}</span>
+        <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
       </button>
 
-      {isOpen && (
-        <div className="notranslate absolute right-0 mt-2 z-50 bg-[#0b1f3b]/95 backdrop-blur-md border border-white/10 rounded-xl shadow-2xl p-1.5 w-36 flex flex-col gap-0.5 text-white" translate="no">
-          {LANGUAGES.map((lang) => (
-            <button
-              key={lang.code}
-              onClick={() => selectLanguage(lang.code)}
-              className={`notranslate flex items-center justify-between w-full px-2.5 py-1.5 text-[11px] font-bold rounded-md transition-colors text-left cursor-pointer ${
-                currentLang === lang.code
-                  ? "bg-brand-orange text-white"
-                  : "hover:bg-white/10 text-white/90"
-              }`}
-              translate="no"
-            >
-              <span className="notranslate" translate="no">{lang.nativeName}</span>
-              {currentLang === lang.code && <Check className="w-3.5 h-3.5 shrink-0" />}
-            </button>
-          ))}
-        </div>
-      )}
+      {isOpen && typeof document !== "undefined" &&
+        createPortal(
+          <div
+            ref={dropdownMenuRef}
+            style={{
+              position: "fixed",
+              top: `${menuCoords.top}px`,
+              right: `${menuCoords.right}px`,
+              maxHeight: `${menuCoords.maxHeight}px`,
+              zIndex: 99999,
+            }}
+            className="notranslate bg-white border border-slate-200/90 rounded-xl shadow-2xl p-1.5 w-52 flex flex-col gap-0.5 text-slate-800 animate-in fade-in zoom-in-95 duration-150 overflow-y-auto ring-1 ring-black/5"
+            translate="no"
+          >
+            <div className="px-2.5 py-1 text-[10px] font-bold tracking-wider text-slate-400 uppercase border-b border-slate-100 mb-0.5 notranslate select-none sticky top-0 bg-white z-10" translate="no">
+              Select Language
+            </div>
+            {LANGUAGES.map((lang) => {
+              const isSelected = currentLang === lang.code;
+              return (
+                <button
+                  key={lang.code}
+                  type="button"
+                  onClick={() => selectLanguage(lang.code)}
+                  className={`notranslate flex items-center justify-between w-full px-2.5 py-1.5 text-xs font-medium rounded-lg transition-colors text-left cursor-pointer ${
+                    isSelected
+                      ? "bg-orange-50 text-brand-orange font-bold"
+                      : "hover:bg-slate-100 text-slate-700"
+                  }`}
+                  translate="no"
+                >
+                  <span className="notranslate flex items-center gap-1.5" translate="no">
+                    {isSelected && <Check className="w-3.5 h-3.5 text-brand-orange shrink-0" />}
+                    <span className={isSelected ? "font-bold" : ""}>
+                      {lang.nativeName} {lang.nativeName !== lang.name && `(${lang.name})`}
+                    </span>
+                  </span>
+                </button>
+              );
+            })}
+          </div>,
+          document.body
+        )
+      }
     </div>
   );
 }

@@ -217,7 +217,7 @@ function AccordionPanel({ area, isOpen, onToggle }: {
 
 function HeroSection() {
   return (
-    <section className="relative min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex items-center overflow-hidden">
+    <section className="relative min-h-[300px] sm:min-h-[330px] md:min-h-[360px] lg:min-h-[390px] flex items-center overflow-hidden">
       {/* Background Image */}
       <img
         src={ruralHealthCentreHero}
@@ -227,7 +227,7 @@ function HeroSection() {
       {/* Modern dark/green gradient overlay for rich premium feel and high text contrast */}
       <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/80 to-transparent" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 py-16 w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 py-8 sm:py-10 w-full">
         <nav className="flex items-center gap-2 text-xs text-white/60 mb-6 font-medium flex-wrap">
           <Link to="/" className="hover:text-white transition-colors flex items-center gap-1">
             <Home className="w-3 h-3" /> Home

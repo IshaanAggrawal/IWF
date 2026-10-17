@@ -31,6 +31,12 @@ import {
 } from "@/components/layout/SiteLayout";
 import type { RoleType } from "@/components/forms/RoleFormModal";
 import ScrollReveal from "@/components/healthcare/ScrollReveal";
+import SubpageHeroCarousel from "@/components/common/SubpageHeroCarousel";
+import aboutHero from "@/assets/about-hero.jpg";
+import slide1 from "@/assets/hero-carousel/hero-slide-1.jpg";
+import slide2 from "@/assets/hero-carousel/hero-slide-2.jpg";
+import slide3 from "@/assets/hero-carousel/hero-slide-3.jpg";
+import slide4 from "@/assets/hero-carousel/hero-slide-4.jpg";
 
 // ─── Data from CollegProject/ISLAH.docx ───────────────────────────────────────
 
@@ -320,83 +326,51 @@ export default function LeadershipPage() {
       <UtilityBar />
       <Header />
 
-      {/* ─── Hero Section (Navy Split Banner) ───────────────────────────────── */}
-      <section className="relative bg-gradient-to-b from-[#0b1f3b] via-[#0f284e] to-[#0b1f3b] text-white min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex items-center py-10 md:py-14 overflow-hidden border-b border-slate-800">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
+      {/* ─── Hero Section with Subpage Carousel (Matching About Us Page) ─── */}
+      <SubpageHeroCarousel
+        tag="GOVERNANCE & STEWARDSHIP"
+        title="Leadership & Management"
+        subtitle="Guided by Integrity. Driven by Community Impact. ISLAH is governed by a dedicated Board of Trustees, managed by experienced executive professionals, guided by eminent domain advisors, and powered by an active frontline field force."
+        breadcrumbs={[
+          { label: "About Us", href: "/about" },
+          { label: "Leadership & Management" },
+        ]}
+        images={[aboutHero, slide1, slide2, slide3, slide4]}
+      />
 
-        <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
-            {/* Left Col (Text & CTAs) */}
-            <div className="lg:col-span-7 space-y-4 text-left">
-              <div>
-                <span className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest text-[#f97316] mb-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-[#f97316]" />
-                  GOVERNANCE & STEWARDSHIP
-                </span>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-none">
-                  Leadership <span className="text-[#38bdf8]">&</span> Management
-                </h1>
-                <p className="text-xs sm:text-sm font-bold text-emerald-400 mt-1.5 flex items-center gap-1.5">
-                  <span>Guided by Integrity. Driven by Community Impact.</span>
-                  <span className="text-sm">🌿</span>
-                </p>
-              </div>
-
-              <p className="text-slate-200 text-xs sm:text-sm leading-relaxed font-normal">
-                <strong className="text-white font-semibold">ISLAH (Islah Welfare Foundation)</strong> is governed by a dedicated Board of Trustees, managed by experienced executive professionals, guided by eminent domain advisors, and powered by an active frontline field force.
-              </p>
-
-              <div className="flex flex-wrap items-center gap-3 pt-1">
-                <a
-                  href="/contact"
-                  className="inline-flex items-center gap-2 bg-[#15803d] hover:bg-[#166534] text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md transition uppercase tracking-wider"
-                >
-                  <Phone className="w-3.5 h-3.5" />
-                  <span>Connect with Leadership</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </a>
-                <button
-                  onClick={() => setActiveModal("volunteer")}
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md transition uppercase tracking-wider cursor-pointer backdrop-blur-xs"
-                >
-                  <Users className="w-3.5 h-3.5 text-emerald-300" />
-                  <span>Join Our Team</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
+      {/* ─── 4 Key Tiers Counter Bar ────────────────────────────────────────── */}
+      <div className="max-w-7xl mx-auto px-4 md:px-8 -mt-6 relative z-20">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-md">
+          <div className="bg-slate-50 rounded-xl p-3 border border-slate-100 flex items-center justify-between">
+            <div>
+              <h4 className="font-extrabold text-xs text-slate-900">Board of Trustees</h4>
+              <p className="text-[10px] text-slate-500">Fiduciary & Governance</p>
             </div>
-
-            {/* Right Col (4 Key Tiers Counter) */}
-            <div className="lg:col-span-5">
-              <div className="grid grid-cols-2 gap-3">
-                <div className="bg-white/10 backdrop-blur-md rounded-xl p-3.5 border border-white/15 shadow-sm">
-                  <div className="text-2xl font-black text-emerald-400 leading-tight">07</div>
-                  <h4 className="font-extrabold text-xs text-white">Board of Trustees</h4>
-                  <p className="text-[10px] text-slate-300">Fiduciary & Governance</p>
-                </div>
-
-                <div className="bg-white/10 backdrop-blur-md rounded-xl p-3.5 border border-white/15 shadow-sm">
-                  <div className="text-2xl font-black text-[#38bdf8] leading-tight">06</div>
-                  <h4 className="font-extrabold text-xs text-white">Executive Body</h4>
-                  <p className="text-[10px] text-slate-300">Operations & Programs</p>
-                </div>
-
-                <div className="bg-white/10 backdrop-blur-md rounded-xl p-3.5 border border-white/15 shadow-sm">
-                  <div className="text-2xl font-black text-amber-400 leading-tight">06</div>
-                  <h4 className="font-extrabold text-xs text-white">Advisory Panel</h4>
-                  <p className="text-[10px] text-slate-300">Domain Specialists</p>
-                </div>
-
-                <div className="bg-white/10 backdrop-blur-md rounded-xl p-3.5 border border-white/15 shadow-sm">
-                  <div className="text-2xl font-black text-[#f97316] leading-tight">06</div>
-                  <h4 className="font-extrabold text-xs text-white">Field Operations</h4>
-                  <p className="text-[10px] text-slate-300">Community Mobilizers</p>
-                </div>
-              </div>
+            <div className="text-2xl font-black text-emerald-600">07</div>
+          </div>
+          <div className="bg-slate-50 rounded-xl p-3 border border-slate-100 flex items-center justify-between">
+            <div>
+              <h4 className="font-extrabold text-xs text-slate-900">Executive Body</h4>
+              <p className="text-[10px] text-slate-500">Operations & Programs</p>
             </div>
+            <div className="text-2xl font-black text-blue-600">06</div>
+          </div>
+          <div className="bg-slate-50 rounded-xl p-3 border border-slate-100 flex items-center justify-between">
+            <div>
+              <h4 className="font-extrabold text-xs text-slate-900">Advisory Panel</h4>
+              <p className="text-[10px] text-slate-500">Domain Specialists</p>
+            </div>
+            <div className="text-2xl font-black text-amber-600">06</div>
+          </div>
+          <div className="bg-slate-50 rounded-xl p-3 border border-slate-100 flex items-center justify-between">
+            <div>
+              <h4 className="font-extrabold text-xs text-slate-900">Field Operations</h4>
+              <p className="text-[10px] text-slate-500">Community Mobilizers</p>
+            </div>
+            <div className="text-2xl font-black text-brand-orange">06</div>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* ─── Global View Mode Bar ────────────────────────────────────────────── */}
       <div className="max-w-7xl mx-auto px-4 md:px-8 pt-6">

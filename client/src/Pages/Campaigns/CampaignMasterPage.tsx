@@ -26,6 +26,7 @@ import {
   UtilityBar,
 } from "@/components/layout/SiteLayout";
 import ScrollReveal from "@/components/healthcare/ScrollReveal";
+import SubpageHeroCarousel from "@/components/common/SubpageHeroCarousel";
 import { ALL_CAMPAIGNS_LIST, type CampaignData } from "@/content/campaigns";
 
 type RoleType = "volunteer" | "partner" | "sponsor" | "mentor" | "employee";
@@ -64,51 +65,38 @@ export default function CampaignMasterPage() {
       <Header />
 
       {/* ─── Hero Section ─────────────────────────────────────────────────── */}
-      <section className="relative bg-gradient-to-b from-[#0b1f3b] via-[#0f284e] to-[#0b1f3b] text-white min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex items-center py-10 md:py-14 overflow-hidden border-b border-slate-800">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
+      <SubpageHeroCarousel
+        tag="OUR FLAGSHIP INITIATIVES"
+        title="Five Pillars of Change"
+        subtitle="Five Campaigns. Multiple Pathways. One Shared Purpose. 🌿"
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Our Campaigns" },
+        ]}
+      />
 
-        <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10 w-full">
-          {/* Breadcrumb */}
-          <nav className="flex items-center gap-1.5 text-xs text-white/70 mb-4 font-medium flex-wrap" aria-label="Breadcrumb">
-            <a href="/" className="hover:text-white transition-colors flex items-center gap-1">
-              <Home className="w-3.5 h-3.5 text-brand-orange" /> Home
+      {/* Floating Action Bar */}
+      <div className="max-w-7xl mx-auto px-4 md:px-8 -mt-6 relative z-20 mb-4 w-full">
+        <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-lg border border-slate-200/80 p-4 flex flex-wrap items-center justify-between gap-4">
+          <p className="text-xs sm:text-sm text-slate-600 max-w-2xl font-medium leading-relaxed">
+            ISLAH’s five flagship campaigns translate our broader development vision into focused, actionable commitments for community dignity.
+          </p>
+          <div className="flex items-center gap-3 shrink-0">
+            <a
+              href="/donate"
+              className="bg-[#15803d] hover:bg-[#166534] text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md transition uppercase tracking-wider cursor-pointer flex items-center gap-1.5"
+            >
+              Donate to a Campaign →
             </a>
-            <ChevronRight className="w-3 h-3 text-white/40" />
-            <span className="text-brand-orange font-bold">Our Campaigns</span>
-          </nav>
-
-          <div className="max-w-3xl space-y-3 text-left">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-widest text-brand-orange mb-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse" />
-              OUR FLAGSHIP INITIATIVES
-            </div>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
-              Five Pillars of Change
-            </h1>
-            <p className="text-xs sm:text-sm md:text-base font-bold text-emerald-300">
-              Five Campaigns. Multiple Pathways. One Shared Purpose. 🌿
-            </p>
-            <p className="text-slate-200 text-xs sm:text-sm leading-relaxed font-normal">
-              ISLAH’s five flagship campaigns translate our broader development vision into focused, actionable commitments. From keeping children in school and supporting emergency healthcare, to empowering girls, advancing social justice, and preparing communities for tomorrow—each campaign responds to a distinct dimension of human dignity.
-            </p>
-
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <a
-                href="/donate"
-                className="bg-[#15803d] hover:bg-[#166534] text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md transition uppercase tracking-wider cursor-pointer"
-              >
-                DONATE TO A CAMPAIGN →
-              </a>
-              <button
-                onClick={() => setActiveModal("partner")}
-                className="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md transition uppercase tracking-wider cursor-pointer backdrop-blur-xs"
-              >
-                PARTNER WITH US →
-              </button>
-            </div>
+            <button
+              onClick={() => setActiveModal("partner")}
+              className="bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-xs transition uppercase tracking-wider cursor-pointer"
+            >
+              Partner With Us →
+            </button>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* ─── Search & Filter Toolbar ────────────────────────────────────────── */}
       <section className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-2xs">

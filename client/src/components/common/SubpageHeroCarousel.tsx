@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, Home, ChevronRight as BreadcrumbArrow } from "lucide-react";
+import { ChevronLeft, ChevronRight, Home, ChevronRight as BreadcrumbArrow, Pause, Play } from "lucide-react";
 import slide1 from "@/assets/hero-carousel/hero-slide-1.jpg";
 import slide2 from "@/assets/hero-carousel/hero-slide-2.jpg";
 import slide3 from "@/assets/hero-carousel/hero-slide-3.jpg";
@@ -28,21 +28,25 @@ export default function SubpageHeroCarousel({
   subtitle,
   breadcrumbs = [{ label: "About Us", href: "/about" }],
   images = DEFAULT_SLIDES,
-  heightClass = "min-h-[480px] md:min-h-[520px] lg:min-h-[580px]",
+  heightClass = "min-h-[300px] sm:min-h-[330px] md:min-h-[360px] lg:min-h-[390px]",
 }: SubpageHeroCarouselProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+  const [isManualPaused, setIsManualPaused] = useState(false);
+  const [isPressed, setIsPressed] = useState(false);
+  const isPaused = isManualPaused || isPressed;
   const [progress, setProgress] = useState(0);
-  const SLIDE_DURATION = 5000;
+  const SLIDE_DURATION = 4500;
 
+  // Auto-play interval that properly resets when slide changes
   useEffect(() => {
     if (isPaused || images.length <= 1) return;
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % images.length);
     }, SLIDE_DURATION);
     return () => clearInterval(timer);
-  }, [isPaused, images.length]);
+  }, [currentSlide, isPaused, images.length]);
 
+  // Smooth progress bar indicator
   useEffect(() => {
     setProgress(0);
     if (isPaused || images.length <= 1) return;
@@ -50,7 +54,7 @@ export default function SubpageHeroCarousel({
     const tick = setInterval(() => {
       const elapsed = Date.now() - start;
       setProgress(Math.min((elapsed / SLIDE_DURATION) * 100, 100));
-    }, 50);
+    }, 40);
     return () => clearInterval(tick);
   }, [currentSlide, isPaused, images.length]);
 
@@ -62,16 +66,30 @@ export default function SubpageHeroCarousel({
   const nextSlide = () => goToSlide((currentSlide + 1) % images.length);
   const prevSlide = () => goToSlide((currentSlide - 1 + images.length) % images.length);
 
+  // Touch swipe support
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStart === null) return;
+    const touchEnd = e.changedTouches[0].clientX;
+    const diff = touchStart - touchEnd;
+    if (diff > 50) nextSlide();
+    else if (diff < -50) prevSlide();
+    setTouchStart(null);
+  };
+
   return (
     <section
-      className={`bg-[#071527] text-white flex flex-col justify-center py-10 md:py-14 relative overflow-hidden select-none group ${heightClass}`}
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+      className={`bg-[#071527] text-white flex flex-col justify-center py-6 sm:py-8 md:py-10 relative overflow-hidden select-none group ${heightClass}`}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         {/* Top Breadcrumb */}
         {breadcrumbs.length > 0 && (
-          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-white/70 mb-4 flex-wrap select-none">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-white/70 mb-3 sm:mb-4 flex-wrap select-none">
             <a href="/" className="hover:text-white transition-colors flex items-center gap-1">
               <Home className="w-3.5 h-3.5 text-brand-orange" />
               <span>Home</span>
@@ -95,9 +113,9 @@ export default function SubpageHeroCarousel({
         )}
 
         {/* Main Grid: Left Content + Right Organic Composition Slider */}
-        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-12 items-center">
+        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-6 lg:gap-10 items-center">
           {/* Left Column: Heading & Subtitle */}
-          <div className="space-y-4 sm:space-y-5 text-left">
+          <div className="space-y-3 sm:space-y-4 text-left">
             {tag && (
               <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-widest text-brand-orange mb-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse" />
@@ -119,6 +137,16 @@ export default function SubpageHeroCarousel({
             {images.length > 1 && (
               <div className="flex items-center gap-3 pt-2">
                 <div className="flex items-center gap-1.5 bg-[#0b1f36] px-3 py-1.5 rounded-full border border-[#163559]">
+                  {/* Play/Pause Button */}
+                  <button
+                    onClick={() => setIsManualPaused((p) => !p)}
+                    aria-label={isPaused ? "Play slider" : "Pause slider"}
+                    title={isPaused ? "Play slider" : "Pause slider"}
+                    className="w-5 h-5 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition cursor-pointer mr-0.5"
+                  >
+                    {isPaused ? <Play className="w-2.5 h-2.5 fill-white text-white ml-0.5" /> : <Pause className="w-2.5 h-2.5 fill-white text-white" />}
+                  </button>
+
                   {images.map((_, idx) => (
                     <button
                       key={idx}
@@ -134,7 +162,7 @@ export default function SubpageHeroCarousel({
                       {currentSlide === idx && (
                         <div
                           className="absolute top-1 left-0 h-1.5 rounded-full bg-brand-orange"
-                          style={{ width: `${progress}%`, transition: "width 50ms linear" }}
+                          style={{ width: `${progress}%`, transition: "width 40ms linear" }}
                         />
                       )}
                     </button>
@@ -163,7 +191,7 @@ export default function SubpageHeroCarousel({
 
           {/* Right Column: Native Organic Composition with Smooth Slider */}
           <div className="relative flex items-center justify-center lg:justify-end">
-            <div className="relative w-full max-w-[440px] sm:max-w-[480px] aspect-[1.15/1]">
+            <div className="relative w-full max-w-[340px] sm:max-w-[380px] md:max-w-[420px] aspect-[1.15/1]">
               {/* Background Soft Blue Organic Backdrop Layer */}
               <div
                 className="absolute inset-2 bg-[#122e54] -rotate-3 scale-105 opacity-90 transition-transform pointer-events-none"
@@ -174,10 +202,17 @@ export default function SubpageHeroCarousel({
 
               {/* Organic Frame with Razor-Sharp Photograph Slider */}
               <div
-                className="relative w-full h-full overflow-hidden border-[5px] sm:border-[6px] border-white shadow-2xl z-10"
+                className={`relative w-full h-full overflow-hidden border-[4px] sm:border-[5px] border-white shadow-2xl z-10 ${
+                  isPressed ? "cursor-grabbing" : "cursor-default"
+                }`}
                 style={{
                   borderRadius: "44% 56% 68% 32% / 42% 44% 56% 58%",
                 }}
+                onMouseDown={() => setIsPressed(true)}
+                onMouseUp={() => setIsPressed(false)}
+                onMouseLeave={() => setIsPressed(false)}
+                onTouchStart={() => setIsPressed(true)}
+                onTouchEnd={() => setIsPressed(false)}
               >
                 {images.map((img, idx) => (
                   <div
@@ -201,7 +236,7 @@ export default function SubpageHeroCarousel({
               </div>
 
               {/* Left Botanical Leaves SVG */}
-              <div className="absolute -left-6 sm:-left-8 top-1/4 w-12 sm:w-16 h-24 sm:h-32 pointer-events-none z-20">
+              <div className="absolute -left-5 sm:-left-7 top-1/4 w-10 sm:w-14 h-20 sm:h-28 pointer-events-none z-20">
                 <svg viewBox="0 0 60 120" fill="none" className="w-full h-full text-[#4a729e]">
                   <path
                     d="M50,110 Q35,80 15,60 Q5,40 10,15 Q30,20 40,40 Q48,60 50,110 Z"
@@ -223,7 +258,7 @@ export default function SubpageHeroCarousel({
 
               {/* Handwritten Note: Together We Can Do More ♡ */}
               <div className="absolute -top-3 right-0 sm:right-2 z-20 select-none text-right">
-                <p className="font-['Caveat',cursive] text-2xl sm:text-3xl lg:text-[32px] font-bold text-white leading-tight rotate-[-6deg] drop-shadow-md">
+                <p className="font-['Caveat',cursive] text-xl sm:text-2xl lg:text-[28px] font-bold text-white leading-tight rotate-[-6deg] drop-shadow-md">
                   Together<br />
                   We Can Do<br />
                   More <span className="inline-block text-sky-200">♡</span>
@@ -234,7 +269,7 @@ export default function SubpageHeroCarousel({
               {/* Bottom Right Botanical Leaves & Tagline */}
               <div className="absolute -bottom-2 sm:bottom-1 right-0 sm:right-1 z-20 select-none flex flex-col items-end">
                 {/* Small leaf motif */}
-                <div className="w-10 h-10 mb-1 pointer-events-none">
+                <div className="w-8 h-8 mb-1 pointer-events-none">
                   <svg viewBox="0 0 40 40" fill="none" className="w-full h-full text-[#4a729e]">
                     <path
                       d="M35,5 Q20,15 10,28 Q15,35 28,25 Q35,18 35,5 Z"
@@ -249,9 +284,9 @@ export default function SubpageHeroCarousel({
                   </svg>
                 </div>
 
-                <div className="w-8 sm:w-10 h-[1.5px] bg-sky-400/60 mb-2" />
+                <div className="w-8 sm:w-10 h-[1.5px] bg-sky-400/60 mb-1.5" />
 
-                <div className="text-[9px] sm:text-[10px] font-extrabold tracking-[0.22em] text-slate-300 uppercase space-y-0.5 text-right leading-tight">
+                <div className="text-[8px] sm:text-[9px] font-extrabold tracking-[0.22em] text-slate-300 uppercase space-y-0.5 text-right leading-tight">
                   <p>PEOPLE</p>
                   <p>SUPPORT</p>
                   <p>CHANGE</p>
@@ -264,12 +299,12 @@ export default function SubpageHeroCarousel({
       </div>
 
       {/* Curved Bottom Wave Divider */}
-      <div className="relative w-full overflow-hidden leading-none z-10 mt-6 md:mt-8">
+      <div className="relative w-full overflow-hidden leading-none z-10 mt-3 md:mt-4">
         <svg
           viewBox="0 0 1440 90"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-12 sm:h-16 md:h-20 block"
+          className="w-full h-8 sm:h-10 md:h-12 block"
           preserveAspectRatio="none"
         >
           <path

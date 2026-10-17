@@ -8,7 +8,7 @@ import {
   Info, BarChart2, Newspaper, UserCheck, MessageCircle, Target,
   ChevronDown, ChevronLeft, ChevronRight, X, Menu, Globe, Building2, Scale, FileText, Send, Lock, Shield,
   TrendingUp, Home, Activity, Star, Zap, Leaf as LeafIcon,
-  Megaphone, BookMarked, Wind, Sparkles
+  Megaphone, BookMarked, Wind, Sparkles, Pause, Play
 } from "lucide-react";
 import slide1 from "@/assets/hero-carousel/hero-slide-1.jpg";
 import slide2 from "@/assets/hero-carousel/hero-slide-2.jpg";
@@ -1060,7 +1060,9 @@ function HeroCarouselSection() {
 
   const SLIDE_DURATION = 4000;
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+  const [isManualPaused, setIsManualPaused] = useState(false);
+  const [isPressed, setIsPressed] = useState(false);
+  const isPaused = isManualPaused || isPressed;
   const [progress, setProgress] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
@@ -1116,12 +1118,21 @@ function HeroCarouselSection() {
   return (
     <section
       id="hero-carousel"
-      className="relative w-full select-none scroll-mt-20 overflow-hidden bg-slate-950 group"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-      onTouchStart={handleTouchStart}
+      className={`relative w-full select-none scroll-mt-20 overflow-hidden bg-slate-950 group ${
+        isPressed ? "cursor-grabbing" : "cursor-default"
+      }`}
+      onMouseDown={() => setIsPressed(true)}
+      onMouseUp={() => setIsPressed(false)}
+      onMouseLeave={() => setIsPressed(false)}
+      onTouchStart={(e) => {
+        handleTouchStart(e);
+        setIsPressed(true);
+      }}
       onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
+      onTouchEnd={() => {
+        handleTouchEnd();
+        setIsPressed(false);
+      }}
     >
       {/* Slides — crossfade for ultra-smooth transition */}
       {slides.map((slide, index) => (
@@ -1160,24 +1171,49 @@ function HeroCarouselSection() {
       <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-black/25 to-transparent z-[4] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-black/25 to-transparent z-[4] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
+      {/* Visual indicator when user presses mouse to hold/pause */}
+      {isPressed && (
+        <div className="absolute top-4 right-4 z-[10] bg-black/75 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1.5 rounded-full border border-white/20 flex items-center gap-1.5 shadow-xl pointer-events-none animate-in fade-in zoom-in-95 duration-100">
+          <Pause className="w-3 h-3 fill-white text-white" />
+          <span>Paused</span>
+        </div>
+      )}
+
       {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
         aria-label="Previous slide"
-        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-[5] w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center backdrop-blur-md border border-white/15 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:scale-110 cursor-pointer shadow-2xl"
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-[5] w-9 h-9 md:w-11 md:h-11 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center backdrop-blur-md border border-white/15 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:scale-110 cursor-pointer shadow-2xl"
       >
         <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
       </button>
       <button
         onClick={nextSlide}
         aria-label="Next slide"
-        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-[5] w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center backdrop-blur-md border border-white/15 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:scale-110 cursor-pointer shadow-2xl"
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-[5] w-9 h-9 md:w-11 md:h-11 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center backdrop-blur-md border border-white/15 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:scale-110 cursor-pointer shadow-2xl"
       >
         <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
       </button>
 
       {/* Bottom Indicator */}
-      <div className="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 z-[5] flex items-center gap-3 bg-black/35 px-5 py-2.5 rounded-full backdrop-blur-2xl border border-white/10 shadow-2xl">
+      <div className="absolute bottom-3 sm:bottom-4 md:bottom-5 left-1/2 -translate-x-1/2 z-[5] flex items-center gap-2.5 sm:gap-3 bg-black/40 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full backdrop-blur-2xl border border-white/10 shadow-2xl">
+        {/* Toggle Pause / Resume Button */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsManualPaused((prev) => !prev);
+          }}
+          aria-label={isPaused ? "Resume auto-slider" : "Pause auto-slider"}
+          title={isPaused ? "Resume auto-slider" : "Pause auto-slider"}
+          className="w-6 h-6 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center transition-all cursor-pointer mr-0.5"
+        >
+          {isPaused ? (
+            <Play className="w-3 h-3 fill-white text-white ml-0.5" />
+          ) : (
+            <Pause className="w-3 h-3 fill-white text-white" />
+          )}
+        </button>
+
         {slides.map((_, idx) => (
           <button
             key={idx}

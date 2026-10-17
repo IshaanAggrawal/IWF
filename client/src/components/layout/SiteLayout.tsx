@@ -43,7 +43,6 @@ export const NAV_ITEMS = [
   "About Us",
   "What We Do",
   "Our Campaigns",
-  "Become a Member",
   "Media",
   "Get Involved",
   "Contact Us",
@@ -62,8 +61,8 @@ export const MEGA_DATA: Record<string, MegaSection> = {
       "Legal Status & Registration",
       "Governance & Transparency",
       "Leadership & Management",
-      "Member & Donor",
-      "Partner & Sponsor",
+      "ISLAH Community",
+      "Vision 2047",
     ],
   },
   "What We Do": {
@@ -116,7 +115,7 @@ function getTopNavHref(item: string) {
   if (item === "Our Campaigns" || item === "Campaigns") return "/campaign";
   if (item === "Programs") return "/programs";
   if (item === "Impact") return "/#impact-stats";
-  if (item === "Become a Member" || item === "Membership") return "/membership";
+  if (item === "Become a Member" || item === "Membership" || item === "ISLAH Community") return "/about/community";
   if (item === "Media") return "/news-and-events";
   if (item === "Get Involved") return "/get-involved";
   if (item === "Contact Us") return "/contact";
@@ -124,16 +123,17 @@ function getTopNavHref(item: string) {
 }
 
 function getMegaHref(menu: string, item: string) {
-  // About Us
+  // About Us (6 canonical sub-pages)
   if (menu === "About Us" && item === "Overview") return "/about";
   if (menu === "About Us" && item === "Legal Status & Registration") return "/about/legal-status";
   if (menu === "About Us" && item === "Governance & Transparency") return "/about/governance";
   if (menu === "About Us" && item === "Leadership & Management") return "/about/leadership";
-  if (menu === "About Us" && (item === "Member & Donor" || item === "Members & Donors" || item === "Members & Supporters")) return "/members-and-donors";
-  if (menu === "About Us" && (item === "Partner & Sponsor" || item === "Our Partners & Donors" || item === "Partners & Donors" || item === "Our Partners & Sponsors")) return "/about/partners";
-  if (menu === "About Us" && item === "Our Objective & Vision") return "/about/objective-and-vision";
+  if (menu === "About Us" && (item === "ISLAH Community" || item === "Community" || item === "Become a Member")) return "/about/community";
   if (menu === "About Us" && item === "Vision 2047") return "/about/vision-2047";
-  if (menu === "About Us" && item === "Membership Policy") return "/membership#status";
+  if (menu === "About Us" && (item === "Member & Donor" || item === "Members & Donors" || item === "Members & Supporters")) return "/about/community";
+  if (menu === "About Us" && (item === "Partner & Sponsor" || item === "Our Partners & Donors" || item === "Partners & Donors" || item === "Our Partners & Sponsors")) return "/about/community";
+  if (menu === "About Us" && item === "Our Objective & Vision") return "/about/objective-and-vision";
+  if (menu === "About Us" && item === "Membership Policy") return "/about/community#status";
   // What We Do (Canonical 8 Focus Sectors + View All)
   if (menu === "What We Do" && (item === "View All Programs" || item === "All Programs" || item === "Our Programs")) return "/programs";
   if (menu === "What We Do" && (item === "Education & Learning" || item === "Education")) return "/programs/education";
@@ -270,8 +270,8 @@ export function Header() {
   return (
     <>
       {/* White Branding Logo Banner (Scrolls away) */}
-      <div className="bg-white py-4 border-b border-gray-100 relative">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-center">
+      <div className="bg-white py-4 border-b border-gray-100 relative z-30">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-center relative">
           <a href="/" className="flex flex-col md:flex-row items-center gap-4 md:gap-6 group text-center md:text-left" aria-label="Islah Home">
             <img src={newLogo} alt="Islah Logo" className="h-16 md:h-20 w-auto object-contain transition-transform group-hover:scale-105 shrink-0" />
             <div className="flex flex-col items-center md:items-start">
@@ -286,6 +286,11 @@ export function Header() {
               </span>
             </div>
           </a>
+
+          {/* Top-Right Language Dropdown as shown in Screenshot 1 */}
+          <div className="hidden md:flex items-center absolute right-4 md:right-6 top-1/2 -translate-y-1/2 z-30">
+            <TranslateButton />
+          </div>
         </div>
       </div>
       {/* Dark Themed Menu Navbar (Sticky) */}
@@ -339,8 +344,11 @@ export function Header() {
             })}
           </nav>
 
-          {/* Right Group: Donate Button & Mobile Hamburger */}
+          {/* Right Group: Translate on mobile, Donate Button & Mobile Hamburger */}
           <div className="flex items-center gap-2 md:gap-3 shrink-0 py-1.5 ml-auto lg:ml-0">
+            <div className="md:hidden">
+              <TranslateButton />
+            </div>
             <a
               href="/donate"
               className="bg-[#f97316] hover:bg-orange-600 text-white font-bold text-xs md:text-sm px-4 py-2 rounded-md shadow-md transition-all hover:scale-105 active:scale-95 uppercase tracking-wide"
@@ -426,6 +434,12 @@ export function Header() {
             >
               <X className="w-5 h-5" />
             </button>
+          </div>
+
+          {/* Language Selector Row inside Mobile Menu */}
+          <div className="px-5 py-2.5 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
+            <span className="text-xs font-bold text-slate-600">Language</span>
+            <TranslateButton />
           </div>
 
           <nav className="flex-1 py-2 overflow-y-auto" aria-label="Mobile navigation items">

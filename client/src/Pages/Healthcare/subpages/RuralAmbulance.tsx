@@ -161,7 +161,7 @@ function SectionTitle({ label, title, subtitle }: { label: string; title: string
 
 function HeroSection() {
   return (
-    <section className="relative min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex items-center overflow-hidden">
+    <section className="relative min-h-[300px] sm:min-h-[330px] md:min-h-[360px] lg:min-h-[390px] flex items-center overflow-hidden">
       {/* Background Image */}
       <img
         src={ambulanceHero}
@@ -182,7 +182,7 @@ function HeroSection() {
         </div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 py-16 w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 py-8 sm:py-10 w-full">
         <nav className="flex items-center gap-2 text-xs text-white/60 mb-6 font-medium flex-wrap">
           <Link to="/" className="hover:text-white transition-colors flex items-center gap-1">
             <Home className="w-3 h-3" /> Home

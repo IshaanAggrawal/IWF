@@ -19,6 +19,7 @@ import {
   UtilityBar,
 } from "@/components/layout/SiteLayout";
 import ScrollReveal from "@/components/healthcare/ScrollReveal";
+import SubpageHeroCarousel from "@/components/common/SubpageHeroCarousel";
 import type { SectorContent } from "@/content/siteContent";
 
 type RoleType = "volunteer" | "partner" | "sponsor" | "mentor" | "employee";
@@ -375,18 +376,7 @@ function SectorIdentity({ content }: { content: SectorContent }) {
 
 export default function SectorLandingPage({ content }: { content: SectorContent }) {
   const [activeModal, setActiveModal] = useState<RoleType | null>(null);
-  const [slideIndex, setSlideIndex] = useState(0);
   const slides = content.heroSlides ?? [{ image: content.heroImage, caption: content.title }];
-  const Icon = content.icon;
-
-  const goTo = useCallback((i: number) => setSlideIndex((i + slides.length) % slides.length), [slides.length]);
-  const next = useCallback(() => goTo(slideIndex + 1), [goTo, slideIndex]);
-  const prev = useCallback(() => goTo(slideIndex - 1), [goTo, slideIndex]);
-
-  useEffect(() => {
-    const t = setInterval(next, 4500);
-    return () => clearInterval(t);
-  }, [next]);
 
   return (
     <div className="min-h-screen bg-white font-sans text-foreground">
@@ -394,101 +384,41 @@ export default function SectorLandingPage({ content }: { content: SectorContent 
       <UtilityBar />
       <Header />
       <main>
-        {/* Hero Slideshow */}
-        <section className="relative min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex items-center overflow-hidden">
-          {/* Slides */}
-          {slides.map((slide, idx) => (
-            <div
-              key={idx}
-              className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-                slideIndex === idx ? "opacity-100 z-10" : "opacity-0 z-0"
-              }`}
-            >
-              <img
-                src={slide.image}
-                alt={slide.caption}
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/70 to-slate-900/20" />
-            </div>
-          ))}
+        {/* Hero Section with Subpage Carousel (Matching About Us Page) */}
+        <SubpageHeroCarousel
+          tag={content.eyebrow}
+          title={content.title}
+          subtitle={content.subtitle}
+          breadcrumbs={[
+            { label: "What We Do", href: "/programs" },
+            { label: content.title },
+          ]}
+          images={slides.map((s) => s.image)}
+        />
 
-          {/* Content overlay */}
-          <div className="relative z-20 max-w-7xl mx-auto px-4 py-16 w-full">
-            <nav className="flex items-center gap-2 text-xs text-white/65 mb-6 font-medium flex-wrap">
-              <a href="/" className="hover:text-white transition-colors flex items-center gap-1">
-                <Home className="w-3 h-3" /> Home
-              </a>
-              <ChevronRight className="w-3 h-3" />
-              <span>What We Do</span>
-              <ChevronRight className="w-3 h-3" />
-              <span className="text-white/85">{content.title}</span>
-            </nav>
-            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 px-3.5 py-1.5 rounded-full mb-6">
-              <Icon className="w-4 h-4 text-brand-orange" />
-              <span className="text-xs font-semibold uppercase tracking-wider text-white/90">
-                {content.eyebrow}
-              </span>
-            </div>
-            <h1 className="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-5">
-              {content.title}
-            </h1>
-            <p className="text-base md:text-lg text-white/80 max-w-3xl leading-relaxed">
-              {content.subtitle}
-            </p>
-            <div className="flex flex-wrap gap-3 mt-8">
+        {/* Floating Quick Action Bar */}
+        <div className="max-w-7xl mx-auto px-4 md:px-8 -mt-6 relative z-20 mb-8">
+          <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-md flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               <a
                 href="#initiatives"
-                className="inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white font-bold text-sm px-5 py-3 rounded-md shadow transition-colors"
+                className="inline-flex items-center gap-2 bg-[#15803d] hover:bg-[#166534] text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md transition uppercase tracking-wider"
               >
-                Explore Initiatives <ArrowRight className="w-4 h-4" />
+                <span>Explore Initiatives</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </a>
               <button
                 onClick={() => setActiveModal("partner")}
-                className="inline-flex items-center gap-2 border border-white/30 bg-white/10 hover:bg-white/20 text-white font-bold text-sm px-5 py-3 rounded-md transition-colors cursor-pointer"
+                className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md transition uppercase tracking-wider cursor-pointer"
               >
-                Partner With Us
+                <span>Partner With Us</span>
               </button>
             </div>
-          </div>
-
-          {/* Prev / Next arrows */}
-          {slides.length > 1 && (
-            <>
-              <button
-                onClick={prev}
-                className="absolute left-3 top-1/2 -translate-y-1/2 z-30 w-9 h-9 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center transition-colors cursor-pointer"
-                aria-label="Previous slide"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button
-                onClick={next}
-                className="absolute right-3 top-1/2 -translate-y-1/2 z-30 w-9 h-9 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center transition-colors cursor-pointer"
-                aria-label="Next slide"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </>
-          )}
-
-          {/* Dots + caption */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2">
-            <p className="text-white/70 text-xs font-medium">{slides[slideIndex]?.caption}</p>
-            <div className="flex gap-2">
-              {slides.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => goTo(idx)}
-                  className={`rounded-full transition-all duration-300 ${
-                    slideIndex === idx ? "w-6 h-2 bg-brand-orange" : "w-2 h-2 bg-white/40 hover:bg-white/70"
-                  }`}
-                  aria-label={`Go to slide ${idx + 1}`}
-                />
-              ))}
+            <div className="text-xs font-semibold text-slate-500">
+              {content.eyebrow}
             </div>
           </div>
-        </section>
+        </div>
 
         <SignatureSection content={content} />
         <SectorIdentity content={content} />

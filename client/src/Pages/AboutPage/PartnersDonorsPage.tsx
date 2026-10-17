@@ -39,6 +39,7 @@ import {
   UtilityBar,
 } from "@/components/layout/SiteLayout";
 import ScrollReveal from "@/components/healthcare/ScrollReveal";
+import SubpageHeroCarousel from "@/components/common/SubpageHeroCarousel";
 import type { RoleType } from "@/components/forms/RoleFormModal";
 
 export default function PartnersDonorsPage() {
@@ -120,101 +121,59 @@ export default function PartnersDonorsPage() {
       <UtilityBar />
       <Header />
 
-      {/* ─── Hero Section (Navy Split Banner) ───────────────────────────────── */}
-      <section className="relative bg-gradient-to-b from-[#0b1f3b] via-[#0f284e] to-[#0b1f3b] text-white min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex items-center py-10 md:py-14 overflow-hidden border-b border-slate-800">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
+      {/* ─── Hero Section with Subpage Carousel (Matching About Us Page) ─── */}
+      <SubpageHeroCarousel
+        tag="PARTNERS & SPONSORS"
+        title="Together, We Create Lasting Impact"
+        subtitle="When strengths come together, communities grow stronger. Join ISLAH in building opportunities, empowering lives, and shaping a sustainable tomorrow."
+        breadcrumbs={[
+          { label: "About Us", href: "/about" },
+          { label: "Partners & Sponsors" },
+        ]}
+      />
 
-        <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
-            {/* Left Col (Text & CTAs) */}
-            <div className="lg:col-span-7 space-y-4 text-left">
-              <div>
-                <span className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest text-emerald-400 mb-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-                  PARTNERS & SPONSORS
-                </span>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-none">
-                  Together, We Create <br />
-                  <span className="text-white">Lasting </span>
-                  <span className="text-emerald-400">Impact</span>
-                </h1>
-                <p className="text-xs sm:text-sm font-bold text-slate-300 mt-1.5 flex items-center gap-1.5">
-                  <span>One Mission. Shared Responsibility. Greater Impact.</span>
-                  <span className="text-sm">🌿</span>
-                </p>
-              </div>
+      {/* ─── Quick Actions & 4 Pillars Floating Bar ─────────────────────────── */}
+      <div className="max-w-7xl mx-auto px-4 md:px-8 -mt-6 relative z-20 mb-8">
+        <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-md flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              onClick={() => setActiveModal("partner")}
+              className="inline-flex items-center gap-2 bg-[#15803d] hover:bg-[#166534] text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md transition uppercase tracking-wider cursor-pointer"
+            >
+              <Handshake className="w-3.5 h-3.5" />
+              <span>PARTNER WITH ISLAH</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={() => setActiveModal("sponsor")}
+              className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md transition uppercase tracking-wider cursor-pointer"
+            >
+              <Award className="w-3.5 h-3.5 text-amber-300" />
+              <span>SPONSOR A PROGRAMME</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
 
-              <p className="text-slate-200 text-xs sm:text-sm leading-relaxed font-normal max-w-2xl">
-                When strengths come together, communities grow stronger. Join <strong className="text-white font-semibold">ISLAH</strong> in building opportunities, empowering lives and shaping a better tomorrow.
-              </p>
-
-              <div className="flex flex-wrap items-center gap-3 pt-1">
-                <button
-                  onClick={() => setActiveModal("partner")}
-                  className="inline-flex items-center gap-2 bg-[#15803d] hover:bg-[#166534] text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md transition uppercase tracking-wider cursor-pointer"
-                >
-                  <Handshake className="w-3.5 h-3.5" />
-                  <span>PARTNER WITH ISLAH</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-                <button
-                  onClick={() => setActiveModal("sponsor")}
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md transition uppercase tracking-wider cursor-pointer backdrop-blur-xs"
-                >
-                  <Award className="w-3.5 h-3.5 text-amber-300" />
-                  <span>SPONSOR A PROGRAMME</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full md:w-auto">
+            <div className="bg-slate-50 px-3 py-2 rounded-lg border border-slate-100 text-center">
+              <span className="text-[11px] font-bold text-slate-800 block truncate">Shared Purpose</span>
+              <span className="text-[10px] text-slate-500">Real Needs</span>
             </div>
-
-            {/* Right Col (2x2 Pillars Grid) */}
-            <div className="lg:col-span-5">
-              <div className="grid grid-cols-2 gap-3">
-                <div className="bg-white/10 backdrop-blur-md rounded-xl p-3.5 border border-white/15 shadow-sm hover:bg-white/15 transition group">
-                  <div className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-300 flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
-                    <Users className="w-4 h-4" />
-                  </div>
-                  <h4 className="font-extrabold text-xs text-white mb-0.5">Shared Purpose</h4>
-                  <p className="text-[10px] text-slate-300 leading-snug">
-                    Working together around real community needs and aspirations.
-                  </p>
-                </div>
-
-                <div className="bg-white/10 backdrop-blur-md rounded-xl p-3.5 border border-white/15 shadow-sm hover:bg-white/15 transition group">
-                  <div className="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-300 flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
-                    <Building2 className="w-4 h-4" />
-                  </div>
-                  <h4 className="font-extrabold text-xs text-white mb-0.5">Stronger Communities</h4>
-                  <p className="text-[10px] text-slate-300 leading-snug">
-                    Resources, knowledge and networks create lasting change.
-                  </p>
-                </div>
-
-                <div className="bg-white/10 backdrop-blur-md rounded-xl p-3.5 border border-white/15 shadow-sm hover:bg-white/15 transition group">
-                  <div className="w-8 h-8 rounded-lg bg-[#f97316]/20 text-[#f97316] flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
-                    <Sprout className="w-4 h-4" />
-                  </div>
-                  <h4 className="font-extrabold text-xs text-white mb-0.5">Sustainable Impact</h4>
-                  <p className="text-[10px] text-slate-300 leading-snug">
-                    Solutions that empower communities to become self-reliant.
-                  </p>
-                </div>
-
-                <div className="bg-white/10 backdrop-blur-md rounded-xl p-3.5 border border-white/15 shadow-sm hover:bg-white/15 transition group">
-                  <div className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
-                    <ShieldCheck className="w-4 h-4" />
-                  </div>
-                  <h4 className="font-extrabold text-xs text-white mb-0.5">Transparent Governance</h4>
-                  <p className="text-[10px] text-slate-300 leading-snug">
-                    Built on governance, accountability and mutual respect.
-                  </p>
-                </div>
-              </div>
+            <div className="bg-slate-50 px-3 py-2 rounded-lg border border-slate-100 text-center">
+              <span className="text-[11px] font-bold text-slate-800 block truncate">Stronger Impact</span>
+              <span className="text-[10px] text-slate-500">Deep Reach</span>
+            </div>
+            <div className="bg-slate-50 px-3 py-2 rounded-lg border border-slate-100 text-center">
+              <span className="text-[11px] font-bold text-slate-800 block truncate">Sustainability</span>
+              <span className="text-[10px] text-slate-500">Long-term</span>
+            </div>
+            <div className="bg-slate-50 px-3 py-2 rounded-lg border border-slate-100 text-center">
+              <span className="text-[11px] font-bold text-slate-800 block truncate">Accountability</span>
+              <span className="text-[10px] text-slate-500">100% Verified</span>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
 
       {/* ─── Section: Our Partners & Supporters Logo Marquee ────────────────── */}

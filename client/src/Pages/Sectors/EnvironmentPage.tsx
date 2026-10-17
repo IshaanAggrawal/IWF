@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { Footer, Header, NotificationTicker, RoleFormModal, UtilityBar } from "@/components/layout/SiteLayout";
 import ScrollReveal from "@/components/healthcare/ScrollReveal";
+import SubpageHeroCarousel from "@/components/common/SubpageHeroCarousel";
 import environmentImg from "@/assets/thematic-environment.jpg";
 import sectorEnvironment1 from "@/assets/sector_environment_1.png";
 import { ChevronLeft, ChevronRight as ChevronRight2 } from "lucide-react";
@@ -63,37 +64,41 @@ export default function EnvironmentPage() {
       <Header />
 
       <main>
-        {/* Hero Slideshow */}
-        <section className="relative min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex items-center overflow-hidden">
-          {slides.map((slide, idx) => (
-            <div key={idx} className={`absolute inset-0 transition-opacity duration-700 ${slideIndex === idx ? "opacity-100 z-10" : "opacity-0 z-0"}`}>
-              <img src={slide.image} alt={slide.caption} className="absolute inset-0 h-full w-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/70 to-slate-900/20" />
-            </div>
-          ))}
-          <div className="relative z-20 max-w-7xl mx-auto px-4 py-16 w-full">
-            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 px-3.5 py-1.5 rounded-full mb-6">
-              <Leaf className="w-4 h-4 text-brand-orange" />
-              <span className="text-xs font-semibold uppercase tracking-wider text-white/90">What We Do • Environment</span>
-            </div>
-            <h1 className="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-5">Environment &amp; Sustainability</h1>
-            <p className="text-base md:text-lg text-white/80 max-w-3xl leading-relaxed">Protecting nature, preserving natural resources, and empowering communities—because a greener environment creates a healthier and more sustainable future for all.</p>
-            <div className="flex flex-wrap gap-3 mt-8">
-              <button onClick={() => setActiveModal("volunteer")} className="inline-flex items-center gap-2 bg-brand-orange hover:bg-orange-600 text-white font-bold text-sm px-5 py-3 rounded-md shadow transition-colors">
-                Plant a Tree With Us <ArrowRight className="w-4 h-4" />
+        {/* Hero Section with Subpage Carousel (Matching About Us Page) */}
+        <SubpageHeroCarousel
+          tag="WHAT WE DO • ENVIRONMENT"
+          title="Environment & Sustainability"
+          subtitle="Protecting nature, preserving natural resources, and empowering communities—because a greener environment creates a healthier and more sustainable future for all."
+          breadcrumbs={[
+            { label: "Our Programs", href: "/programs" },
+            { label: "Environment & Sustainability" },
+          ]}
+          images={slides.map((s) => s.image)}
+        />
+
+        {/* Floating Action Strip */}
+        <div className="max-w-7xl mx-auto px-4 md:px-8 -mt-6 relative z-20 mb-8">
+          <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-md flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                onClick={() => setActiveModal("volunteer")}
+                className="inline-flex items-center gap-2 bg-[#15803d] hover:bg-[#166534] text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md transition uppercase tracking-wider cursor-pointer"
+              >
+                <span>Plant a Tree With Us</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
-              <button onClick={() => setActiveModal("partner")} className="inline-flex items-center gap-2 border border-white/30 bg-white/10 hover:bg-white/20 text-white font-bold text-sm px-5 py-3 rounded-md transition-colors">
-                CSR Sustainability Partnerships
+              <button
+                onClick={() => setActiveModal("partner")}
+                className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md transition uppercase tracking-wider cursor-pointer"
+              >
+                <span>CSR Sustainability Partnerships</span>
               </button>
+            </div>
+            <div className="text-xs font-semibold text-slate-500">
+              Afforestation • Clean Villages • Climate Action
             </div>
           </div>
-          <button onClick={prev} className="absolute left-3 top-1/2 -translate-y-1/2 z-30 w-9 h-9 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center cursor-pointer"><ChevronLeft className="w-5 h-5" /></button>
-          <button onClick={next} className="absolute right-3 top-1/2 -translate-y-1/2 z-30 w-9 h-9 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center cursor-pointer"><ChevronRight2 className="w-5 h-5" /></button>
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2">
-            <p className="text-white/70 text-xs font-medium">{slides[slideIndex]?.caption}</p>
-            <div className="flex gap-2">{slides.map((_, idx) => (<button key={idx} onClick={() => goTo(idx)} className={`rounded-full transition-all duration-300 ${slideIndex === idx ? "w-6 h-2 bg-brand-orange" : "w-2 h-2 bg-white/40"}`} />))}</div>
-          </div>
-        </section>
+        </div>
 
         {/* Overview */}
         <section className="py-14 px-4">

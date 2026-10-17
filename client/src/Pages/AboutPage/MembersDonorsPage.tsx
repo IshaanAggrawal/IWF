@@ -34,6 +34,7 @@ import {
   UtilityBar,
 } from "@/components/layout/SiteLayout";
 import ScrollReveal from "@/components/healthcare/ScrollReveal";
+import SubpageHeroCarousel from "@/components/common/SubpageHeroCarousel";
 import type { RoleType } from "@/components/forms/RoleFormModal";
 import plantingTreeImg from "@/assets/vision2047/planting-tree.webp";
 
@@ -193,100 +194,59 @@ export default function MembersDonorsPage() {
       <UtilityBar />
       <Header />
 
-      {/* ─── Hero Section (Split Banner) ────────────────────────────────────── */}
-      <section className="relative bg-gradient-to-b from-[#0b1f3b] via-[#0f284e] to-[#0b1f3b] text-white min-h-[480px] md:min-h-[520px] lg:min-h-[580px] flex items-center py-12 md:py-16 overflow-hidden border-b border-slate-800">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
-        
-        <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Left Col (Text & CTAs) */}
-            <div className="lg:col-span-7 space-y-5 text-left">
-              <div>
-                <span className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest text-[#f97316] mb-2">
-                  <Sparkles className="w-3.5 h-3.5 text-[#f97316]" />
-                  PEOPLE WHO MAKE THE MISSION POSSIBLE
-                </span>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-none">
-                  MEMBERS <span className="text-[#38bdf8]">&</span> DONORS
-                </h1>
-                <p className="text-sm md:text-base font-bold text-emerald-400 mt-2 flex items-center gap-1.5">
-                  <span>Different Ways to Contribute. One Shared Purpose.</span>
-                  <span className="text-base">🌿</span>
-                </p>
-              </div>
+      {/* ─── Hero Section with Subpage Carousel (Matching About Us Page) ─── */}
+      <SubpageHeroCarousel
+        tag="PEOPLE WHO MAKE THE MISSION POSSIBLE"
+        title="Members & Donors"
+        subtitle="Different Ways to Contribute. One Shared Purpose. Lasting social change is a collective responsibility powered by active members and visionary donors."
+        breadcrumbs={[
+          { label: "About Us", href: "/about" },
+          { label: "Members & Donors" },
+        ]}
+      />
 
-              <div className="space-y-3 text-slate-200 text-xs sm:text-sm leading-relaxed font-normal">
-                <p>
-                  <strong className="text-white font-semibold">ISLAH</strong> is built on a simple belief: lasting social change is a collective responsibility.
-                </p>
-                <p>
-                  Our members contribute through participation, time, knowledge, skills and engagement. Our donors provide financial support that helps turn ideas and programmes into practical opportunities for communities.
-                </p>
-                <p>
-                  Together, they form an important part of the ISLAH ecosystem—helping us advance education, healthcare, empowerment, livelihoods, social justice, agriculture, environmental sustainability and humanitarian action.
-                </p>
-              </div>
+      {/* ─── Quick Actions & 4 Pillars Floating Bar ─────────────────────────── */}
+      <div className="max-w-7xl mx-auto px-4 md:px-8 -mt-6 relative z-20 mb-8">
+        <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-md flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center gap-3">
+            <a
+              href="/membership"
+              className="inline-flex items-center gap-2 bg-[#15803d] hover:bg-[#166534] text-white font-extrabold text-xs md:text-sm px-6 py-2.5 rounded-xl shadow-md transition uppercase tracking-wider"
+            >
+              <Users className="w-4 h-4" />
+              <span>BECOME A MEMBER</span>
+              <ArrowRight className="w-4 h-4" />
+            </a>
+            <a
+              href="/donate"
+              className="inline-flex items-center gap-2 bg-[#0284c7] hover:bg-[#0369a1] text-white font-extrabold text-xs md:text-sm px-6 py-2.5 rounded-xl shadow-md transition uppercase tracking-wider"
+            >
+              <Heart className="w-4 h-4" />
+              <span>DONATE NOW</span>
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
 
-              <div className="flex flex-wrap items-center gap-3 pt-2">
-                <a
-                  href="/membership"
-                  className="inline-flex items-center gap-2 bg-[#15803d] hover:bg-[#166534] text-white font-extrabold text-xs md:text-sm px-6 py-3 rounded-xl shadow-lg transition-all transform hover:scale-[1.02] active:scale-95 uppercase tracking-wider"
-                >
-                  <Users className="w-4 h-4" />
-                  <span>BECOME A MEMBER</span>
-                  <ArrowRight className="w-4 h-4" />
-                </a>
-                <a
-                  href="/donate"
-                  className="inline-flex items-center gap-2 bg-[#0284c7] hover:bg-[#0369a1] text-white font-extrabold text-xs md:text-sm px-6 py-3 rounded-xl shadow-lg transition-all transform hover:scale-[1.02] active:scale-95 uppercase tracking-wider"
-                >
-                  <Heart className="w-4 h-4" />
-                  <span>DONATE NOW</span>
-                  <ArrowRight className="w-4 h-4" />
-                </a>
-              </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full md:w-auto">
+            <div className="bg-slate-50 px-3 py-2 rounded-lg border border-slate-100 text-center">
+              <span className="text-[11px] font-bold text-slate-800 block truncate">Stronger</span>
+              <span className="text-[10px] text-slate-500">Together</span>
             </div>
-
-            {/* Right Col (Visual & 4 Feature Pillars) */}
-            <div className="lg:col-span-5 flex flex-col items-center">
-              <div className="relative w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 group">
-                <img
-                  src={plantingTreeImg}
-                  alt="Nurturing community growth"
-                  className="w-full h-64 sm:h-72 object-cover object-center group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0b1f3b] via-[#0b1f3b]/50 to-transparent" />
-                
-                {/* 4 Feature Cards Overlaid */}
-                <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4">
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-black/40 backdrop-blur-md p-2.5 rounded-xl border border-white/15">
-                    <div className="text-center p-1.5">
-                      <Users className="w-5 h-5 mx-auto text-[#38bdf8] mb-1" />
-                      <div className="text-[11px] font-black text-white leading-tight">Stronger</div>
-                      <div className="text-[9px] text-slate-300 font-medium">Together</div>
-                    </div>
-                    <div className="text-center p-1.5">
-                      <Target className="w-5 h-5 mx-auto text-emerald-400 mb-1" />
-                      <div className="text-[11px] font-black text-white leading-tight">Shared</div>
-                      <div className="text-[9px] text-slate-300 font-medium">Purpose</div>
-                    </div>
-                    <div className="text-center p-1.5">
-                      <Sprout className="w-5 h-5 mx-auto text-[#f97316] mb-1" />
-                      <div className="text-[11px] font-black text-white leading-tight">Sustainable</div>
-                      <div className="text-[9px] text-slate-300 font-medium">Impact</div>
-                    </div>
-                    <div className="text-center p-1.5">
-                      <Award className="w-5 h-5 mx-auto text-amber-400 mb-1" />
-                      <div className="text-[11px] font-black text-white leading-tight">Better Future</div>
-                      <div className="text-[9px] text-slate-300 font-medium">for All</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div className="bg-slate-50 px-3 py-2 rounded-lg border border-slate-100 text-center">
+              <span className="text-[11px] font-bold text-slate-800 block truncate">Shared</span>
+              <span className="text-[10px] text-slate-500">Purpose</span>
+            </div>
+            <div className="bg-slate-50 px-3 py-2 rounded-lg border border-slate-100 text-center">
+              <span className="text-[11px] font-bold text-slate-800 block truncate">Sustainable</span>
+              <span className="text-[10px] text-slate-500">Impact</span>
+            </div>
+            <div className="bg-slate-50 px-3 py-2 rounded-lg border border-slate-100 text-center">
+              <span className="text-[11px] font-bold text-slate-800 block truncate">Better Future</span>
+              <span className="text-[10px] text-slate-500">For All</span>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
       <main className="space-y-16 py-12 px-4 md:px-8 max-w-7xl mx-auto">
         {/* ─── Section: BECOME A MEMBER (Intro Callout) ────────────────────── */}
