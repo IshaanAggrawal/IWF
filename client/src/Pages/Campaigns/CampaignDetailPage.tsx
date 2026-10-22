@@ -27,8 +27,12 @@ import {
   ALL_CAMPAIGNS_LIST,
   type CampaignData,
 } from "@/content/campaigns";
-import { URGENT_PATIENTS } from "@/content/patients";
-import { PatientCard } from "@/components/healthcare/PatientCard";
+import SubpageHeroCarousel from "@/components/common/SubpageHeroCarousel";
+import slide1 from "@/assets/hero-carousel/hero-slide-1.jpg";
+import slide2 from "@/assets/hero-carousel/hero-slide-2.jpg";
+import slide3 from "@/assets/hero-carousel/hero-slide-3.jpg";
+import slide4 from "@/assets/hero-carousel/hero-slide-4.jpg";
+import aboutHero from "@/assets/about-hero.jpg";
 
 type RoleType = "volunteer" | "partner" | "sponsor" | "mentor" | "employee";
 
@@ -56,105 +60,50 @@ export default function CampaignDetailPage({
       <UtilityBar />
       <Header />
 
-      {/* ─── Breadcrumb Navigation ────────────────────────────────────────── */}
-      <div className="bg-slate-100 border-b border-slate-200 py-2 px-4 md:px-8 text-xs font-semibold text-slate-600">
-        <div className="max-w-7xl mx-auto flex items-center gap-1.5 flex-wrap">
-          <a href="/" className="hover:text-[#15803d]">
-            Home
-          </a>
-          <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-          <a href="/campaign" className="hover:text-[#15803d]">
-            Our Campaigns
-          </a>
-          <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-          <span className="text-slate-900 font-bold">{campaign.name}</span>
-        </div>
-      </div>
+      {/* ─── Subpage Hero Carousel (Matching Contact Us / About Us) ──────── */}
+      <SubpageHeroCarousel
+        tag={`CAMPAIGN ${campaign.num} • ${campaign.badge.toUpperCase()}`}
+        title={campaign.name}
+        subtitle={`${campaign.tagline ? campaign.tagline + " — " : ""}${campaign.intro}`}
+        breadcrumbs={[
+          { label: "Our Campaigns", href: "/campaign" },
+          { label: campaign.name },
+        ]}
+        images={[campaign.heroImage, aboutHero, slide1, slide2, slide3, slide4].filter(Boolean)}
+      />
 
-      {/* ─── Hero Section (Theme-Specific Gradient) ───────────────────────── */}
-      <section
-        className={`relative bg-gradient-to-b ${campaign.bgGradient} text-white min-h-[300px] sm:min-h-[330px] md:min-h-[360px] lg:min-h-[390px] flex items-center py-8 md:py-10 overflow-hidden border-b border-slate-800`}
-      >
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Left Column (Details & CTAs) */}
-            <div className="lg:col-span-7 space-y-4 text-left">
-              <div className="flex items-center gap-2">
-                <span className="px-2.5 py-1 rounded-md bg-white/15 text-emerald-300 border border-white/20 text-[10px] font-black uppercase tracking-wider backdrop-blur-xs">
-                  CAMPAIGN {campaign.num} • {campaign.badge}
-                </span>
-              </div>
-
-              <div>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
-                  {campaign.name}
-                </h1>
-                {campaign.hindiName && (
-                  <p className="text-lg font-bold text-slate-300 mt-1">
-                    {campaign.hindiName}
-                  </p>
-                )}
-                <p className="text-sm md:text-base font-extrabold text-emerald-300 mt-2 flex items-center gap-1.5">
-                  <span>{campaign.tagline}</span>
-                  <span className="text-sm">🌿</span>
-                </p>
-              </div>
-
-              <p className="text-slate-200 text-xs sm:text-sm leading-relaxed font-normal max-w-2xl">
-                {campaign.intro}
+      {/* ─── Floating Action Bar (Matching Contact Us & Campaign Master) ─── */}
+      <div className="max-w-7xl mx-auto px-4 md:px-8 -mt-6 relative z-20 mb-6 w-full">
+        <div className="bg-white rounded-2xl shadow-md border border-slate-200/90 p-4 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <span className="w-2.5 h-2.5 rounded-full bg-brand-orange animate-pulse" />
+            <div>
+              <p className="text-xs sm:text-sm font-bold text-slate-900">
+                {campaign.motto || campaign.tagline}
               </p>
-
-              <div className="flex flex-wrap items-center gap-3 pt-2">
-                <a
-                  href="#donate-section"
-                  className="bg-[#15803d] hover:bg-[#166534] text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md transition uppercase tracking-wider cursor-pointer"
-                >
-                  SUPPORT THIS CAMPAIGN →
-                </a>
-                <button
-                  onClick={() => setActiveModal("partner")}
-                  className="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md transition uppercase tracking-wider cursor-pointer backdrop-blur-xs"
-                >
-                  PARTNER / SPONSOR →
-                </button>
-              </div>
-            </div>
-
-            {/* Right Column (Hero Media Card & Quote) */}
-            <div className="lg:col-span-5">
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/15 shadow-xl space-y-4">
-                <div className="relative rounded-xl overflow-hidden aspect-video border border-white/20">
-                  <img
-                    src={campaign.heroImage}
-                    alt={campaign.name}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-                  <div className="absolute bottom-2.5 left-3 right-3 text-white">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-emerald-300">
-                      MISSION MOTTO
-                    </span>
-                    <h4 className="font-extrabold text-xs text-white">
-                      {campaign.motto}
-                    </h4>
-                  </div>
-                </div>
-
-                <div className="bg-black/20 border-l-4 border-emerald-400 p-3 rounded-r-xl text-xs text-slate-200 italic leading-relaxed">
-                  “{campaign.quote.text}”
-                  {campaign.quote.author && (
-                    <span className="block not-italic font-bold text-[10px] text-emerald-300 mt-1">
-                      — {campaign.quote.author}
-                    </span>
-                  )}
-                </div>
-              </div>
+              {campaign.hindiName && (
+                <p className="text-[11px] font-semibold text-slate-500">
+                  {campaign.hindiName}
+                </p>
+              )}
             </div>
           </div>
+          <div className="flex items-center gap-3 shrink-0">
+            <a
+              href="#donate-section"
+              className="bg-[#15803d] hover:bg-[#166534] text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md transition uppercase tracking-wider cursor-pointer"
+            >
+              SUPPORT THIS CAMPAIGN →
+            </a>
+            <button
+              onClick={() => setActiveModal("partner")}
+              className="bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-xs transition uppercase tracking-wider cursor-pointer"
+            >
+              PARTNER / SPONSOR →
+            </button>
+          </div>
         </div>
-      </section>
+      </div>
 
       {/* ─── Main Content Body ──────────────────────────────────────────────── */}
       <main className="max-w-7xl mx-auto px-4 md:px-8 py-10 space-y-12">
@@ -174,8 +123,19 @@ export default function CampaignDetailPage({
               </p>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-200 text-xs text-emerald-950 font-medium">
-              <span className="font-bold block mb-1">
+            {campaign.quote?.text && (
+              <div className="bg-emerald-50/90 border-l-4 border-[#15803d] p-3.5 rounded-r-xl text-xs text-slate-800 italic leading-relaxed">
+                “{campaign.quote.text}”
+                {campaign.quote.author && (
+                  <span className="block not-italic font-bold text-[10px] text-emerald-800 mt-1">
+                    — {campaign.quote.author}
+                  </span>
+                )}
+              </div>
+            )}
+
+            <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 font-medium">
+              <span className="font-bold block mb-1 text-slate-900">
                 Connected with the Wider ISLAH Ecosystem
               </span>
               This campaign works hand-in-hand with our education, health,
