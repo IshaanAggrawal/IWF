@@ -70,7 +70,6 @@ export default function CampaignMasterPage() {
         title="Five Pillars of Change"
         subtitle="Five Campaigns. Multiple Pathways. One Shared Purpose. 🌿"
         breadcrumbs={[
-          { label: "Home", href: "/" },
           { label: "Our Campaigns" },
         ]}
       />
