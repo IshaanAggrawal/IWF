@@ -11,7 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AnnualReportsRouteImport } from './routes/annual-reports'
 import { Route as AntiFraudPolicyRouteImport } from './routes/anti-fraud-policy'
+import { Route as BrandAssetsRouteImport } from './routes/brand-assets'
 import { Route as CareersRouteImport } from './routes/careers'
 import { Route as ChildProtectionPolicyRouteImport } from './routes/child-protection-policy'
 import { Route as CodeOfConductRouteImport } from './routes/code-of-conduct'
@@ -26,6 +28,8 @@ import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as GetInvolvedRouteImport } from './routes/get-involved'
 import { Route as GovernancePolicyRouteImport } from './routes/governance-policy'
 import { Route as GrievancePolicyRouteImport } from './routes/grievance-policy'
+import { Route as ImpactStatisticsRouteImport } from './routes/impact-statistics'
+import { Route as LatestUpdatesRouteImport } from './routes/latest-updates'
 import { Route as MedicalTreatmentPolicyRouteImport } from './routes/medical-treatment-policy'
 import { Route as MembersAndDonorsRouteImport } from './routes/members-and-donors'
 import { Route as MembershipRouteImport } from './routes/membership'
@@ -33,13 +37,18 @@ import { Route as MembershipPolicyRouteImport } from './routes/membership-policy
 import { Route as MentorRouteImport } from './routes/mentor'
 import { Route as MentorshipPolicyRouteImport } from './routes/mentorship-policy'
 import { Route as NewsAndEventsRouteImport } from './routes/news-and-events'
+import { Route as NewslettersRouteImport } from './routes/newsletters'
+import { Route as OutcomesRouteImport } from './routes/outcomes'
 import { Route as PartnerRouteImport } from './routes/partner'
 import { Route as PartnershipPolicyRouteImport } from './routes/partnership-policy'
 import { Route as PoliciesRouteImport } from './routes/policies'
+import { Route as PressReleasesRouteImport } from './routes/press-releases'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
+import { Route as PublicationsRouteImport } from './routes/publications'
 import { Route as RefundPolicyRouteImport } from './routes/refund-policy'
 import { Route as SponsorRouteImport } from './routes/sponsor'
 import { Route as SponsorshipPolicyRouteImport } from './routes/sponsorship-policy'
+import { Route as SuccessStoriesRouteImport } from './routes/success-stories'
 import { Route as TermsAndConditionsRouteImport } from './routes/terms-and-conditions'
 import { Route as VolunteerRouteImport } from './routes/volunteer'
 import { Route as VolunteerPolicyRouteImport } from './routes/volunteer-policy'
@@ -52,6 +61,18 @@ import { Route as AboutPartnersRouteImport } from './routes/about_/partners'
 import { Route as AboutVision2047RouteImport } from './routes/about_/vision-2047'
 import { Route as CampaignIndexRouteImport } from './routes/campaign/index'
 import { Route as CampaignCampaignSlugRouteImport } from './routes/campaign/$campaignSlug'
+import { Route as MediaIndexRouteImport } from './routes/media/index'
+import { Route as MediaAnnualReportsRouteImport } from './routes/media/annual-reports'
+import { Route as MediaBrandAssetsRouteImport } from './routes/media/brand-assets'
+import { Route as MediaGalleryRouteImport } from './routes/media/gallery'
+import { Route as MediaImpactStatisticsRouteImport } from './routes/media/impact-statistics'
+import { Route as MediaLatestUpdatesRouteImport } from './routes/media/latest-updates'
+import { Route as MediaNewsAndEventsRouteImport } from './routes/media/news-and-events'
+import { Route as MediaNewslettersRouteImport } from './routes/media/newsletters'
+import { Route as MediaOutcomesRouteImport } from './routes/media/outcomes'
+import { Route as MediaPressReleasesRouteImport } from './routes/media/press-releases'
+import { Route as MediaPublicationsRouteImport } from './routes/media/publications'
+import { Route as MediaSuccessStoriesRouteImport } from './routes/media/success-stories'
 import { Route as PatientsPatientSlugRouteImport } from './routes/patients/$patientSlug'
 import { Route as ProgramsIndexRouteImport } from './routes/programs/index'
 import { Route as ProgramsEntrepreneurDevelopmentRouteImport } from './routes/programs/entrepreneur-development'
@@ -139,9 +160,19 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AnnualReportsRoute = AnnualReportsRouteImport.update({
+  id: '/annual-reports',
+  path: '/annual-reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AntiFraudPolicyRoute = AntiFraudPolicyRouteImport.update({
   id: '/anti-fraud-policy',
   path: '/anti-fraud-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrandAssetsRoute = BrandAssetsRouteImport.update({
+  id: '/brand-assets',
+  path: '/brand-assets',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CareersRoute = CareersRouteImport.update({
@@ -215,6 +246,16 @@ const GrievancePolicyRoute = GrievancePolicyRouteImport.update({
   path: '/grievance-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ImpactStatisticsRoute = ImpactStatisticsRouteImport.update({
+  id: '/impact-statistics',
+  path: '/impact-statistics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LatestUpdatesRoute = LatestUpdatesRouteImport.update({
+  id: '/latest-updates',
+  path: '/latest-updates',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MedicalTreatmentPolicyRoute = MedicalTreatmentPolicyRouteImport.update({
   id: '/medical-treatment-policy',
   path: '/medical-treatment-policy',
@@ -250,6 +291,16 @@ const NewsAndEventsRoute = NewsAndEventsRouteImport.update({
   path: '/news-and-events',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NewslettersRoute = NewslettersRouteImport.update({
+  id: '/newsletters',
+  path: '/newsletters',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OutcomesRoute = OutcomesRouteImport.update({
+  id: '/outcomes',
+  path: '/outcomes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PartnerRoute = PartnerRouteImport.update({
   id: '/partner',
   path: '/partner',
@@ -265,9 +316,19 @@ const PoliciesRoute = PoliciesRouteImport.update({
   path: '/policies',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PressReleasesRoute = PressReleasesRouteImport.update({
+  id: '/press-releases',
+  path: '/press-releases',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
   id: '/privacy-policy',
   path: '/privacy-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PublicationsRoute = PublicationsRouteImport.update({
+  id: '/publications',
+  path: '/publications',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RefundPolicyRoute = RefundPolicyRouteImport.update({
@@ -283,6 +344,11 @@ const SponsorRoute = SponsorRouteImport.update({
 const SponsorshipPolicyRoute = SponsorshipPolicyRouteImport.update({
   id: '/sponsorship-policy',
   path: '/sponsorship-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SuccessStoriesRoute = SuccessStoriesRouteImport.update({
+  id: '/success-stories',
+  path: '/success-stories',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TermsAndConditionsRoute = TermsAndConditionsRouteImport.update({
@@ -343,6 +409,66 @@ const CampaignIndexRoute = CampaignIndexRouteImport.update({
 const CampaignCampaignSlugRoute = CampaignCampaignSlugRouteImport.update({
   id: '/campaign/$campaignSlug',
   path: '/campaign/$campaignSlug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaIndexRoute = MediaIndexRouteImport.update({
+  id: '/media/',
+  path: '/media/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaAnnualReportsRoute = MediaAnnualReportsRouteImport.update({
+  id: '/media/annual-reports',
+  path: '/media/annual-reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaBrandAssetsRoute = MediaBrandAssetsRouteImport.update({
+  id: '/media/brand-assets',
+  path: '/media/brand-assets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaGalleryRoute = MediaGalleryRouteImport.update({
+  id: '/media/gallery',
+  path: '/media/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaImpactStatisticsRoute = MediaImpactStatisticsRouteImport.update({
+  id: '/media/impact-statistics',
+  path: '/media/impact-statistics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaLatestUpdatesRoute = MediaLatestUpdatesRouteImport.update({
+  id: '/media/latest-updates',
+  path: '/media/latest-updates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaNewsAndEventsRoute = MediaNewsAndEventsRouteImport.update({
+  id: '/media/news-and-events',
+  path: '/media/news-and-events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaNewslettersRoute = MediaNewslettersRouteImport.update({
+  id: '/media/newsletters',
+  path: '/media/newsletters',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaOutcomesRoute = MediaOutcomesRouteImport.update({
+  id: '/media/outcomes',
+  path: '/media/outcomes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaPressReleasesRoute = MediaPressReleasesRouteImport.update({
+  id: '/media/press-releases',
+  path: '/media/press-releases',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaPublicationsRoute = MediaPublicationsRouteImport.update({
+  id: '/media/publications',
+  path: '/media/publications',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaSuccessStoriesRoute = MediaSuccessStoriesRouteImport.update({
+  id: '/media/success-stories',
+  path: '/media/success-stories',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PatientsPatientSlugRoute = PatientsPatientSlugRouteImport.update({
@@ -801,7 +927,9 @@ const ProgramsWomenEmpowermentYouthCareerEntrepreneurshipRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/annual-reports': typeof AnnualReportsRoute
   '/anti-fraud-policy': typeof AntiFraudPolicyRoute
+  '/brand-assets': typeof BrandAssetsRoute
   '/careers': typeof CareersRoute
   '/child-protection-policy': typeof ChildProtectionPolicyRoute
   '/code-of-conduct': typeof CodeOfConductRoute
@@ -816,6 +944,8 @@ export interface FileRoutesByFullPath {
   '/get-involved': typeof GetInvolvedRoute
   '/governance-policy': typeof GovernancePolicyRoute
   '/grievance-policy': typeof GrievancePolicyRoute
+  '/impact-statistics': typeof ImpactStatisticsRoute
+  '/latest-updates': typeof LatestUpdatesRoute
   '/medical-treatment-policy': typeof MedicalTreatmentPolicyRoute
   '/members-and-donors': typeof MembersAndDonorsRoute
   '/membership': typeof MembershipRoute
@@ -823,13 +953,18 @@ export interface FileRoutesByFullPath {
   '/mentor': typeof MentorRoute
   '/mentorship-policy': typeof MentorshipPolicyRoute
   '/news-and-events': typeof NewsAndEventsRoute
+  '/newsletters': typeof NewslettersRoute
+  '/outcomes': typeof OutcomesRoute
   '/partner': typeof PartnerRoute
   '/partnership-policy': typeof PartnershipPolicyRoute
   '/policies': typeof PoliciesRoute
+  '/press-releases': typeof PressReleasesRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
+  '/publications': typeof PublicationsRoute
   '/refund-policy': typeof RefundPolicyRoute
   '/sponsor': typeof SponsorRoute
   '/sponsorship-policy': typeof SponsorshipPolicyRoute
+  '/success-stories': typeof SuccessStoriesRoute
   '/terms-and-conditions': typeof TermsAndConditionsRoute
   '/volunteer': typeof VolunteerRoute
   '/volunteer-policy': typeof VolunteerPolicyRoute
@@ -841,9 +976,21 @@ export interface FileRoutesByFullPath {
   '/about/partners': typeof AboutPartnersRoute
   '/about/vision-2047': typeof AboutVision2047Route
   '/campaign/$campaignSlug': typeof CampaignCampaignSlugRoute
+  '/media/annual-reports': typeof MediaAnnualReportsRoute
+  '/media/brand-assets': typeof MediaBrandAssetsRoute
+  '/media/gallery': typeof MediaGalleryRoute
+  '/media/impact-statistics': typeof MediaImpactStatisticsRoute
+  '/media/latest-updates': typeof MediaLatestUpdatesRoute
+  '/media/news-and-events': typeof MediaNewsAndEventsRoute
+  '/media/newsletters': typeof MediaNewslettersRoute
+  '/media/outcomes': typeof MediaOutcomesRoute
+  '/media/press-releases': typeof MediaPressReleasesRoute
+  '/media/publications': typeof MediaPublicationsRoute
+  '/media/success-stories': typeof MediaSuccessStoriesRoute
   '/patients/$patientSlug': typeof PatientsPatientSlugRoute
   '/programs/entrepreneur-development': typeof ProgramsEntrepreneurDevelopmentRoute
   '/campaign/': typeof CampaignIndexRoute
+  '/media/': typeof MediaIndexRoute
   '/programs/': typeof ProgramsIndexRoute
   '/programs/agriculture/farmer-livelihood': typeof ProgramsAgricultureFarmerLivelihoodRoute
   '/programs/agriculture/farmer-training': typeof ProgramsAgricultureFarmerTrainingRoute
@@ -922,7 +1069,9 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/annual-reports': typeof AnnualReportsRoute
   '/anti-fraud-policy': typeof AntiFraudPolicyRoute
+  '/brand-assets': typeof BrandAssetsRoute
   '/careers': typeof CareersRoute
   '/child-protection-policy': typeof ChildProtectionPolicyRoute
   '/code-of-conduct': typeof CodeOfConductRoute
@@ -937,6 +1086,8 @@ export interface FileRoutesByTo {
   '/get-involved': typeof GetInvolvedRoute
   '/governance-policy': typeof GovernancePolicyRoute
   '/grievance-policy': typeof GrievancePolicyRoute
+  '/impact-statistics': typeof ImpactStatisticsRoute
+  '/latest-updates': typeof LatestUpdatesRoute
   '/medical-treatment-policy': typeof MedicalTreatmentPolicyRoute
   '/members-and-donors': typeof MembersAndDonorsRoute
   '/membership': typeof MembershipRoute
@@ -944,13 +1095,18 @@ export interface FileRoutesByTo {
   '/mentor': typeof MentorRoute
   '/mentorship-policy': typeof MentorshipPolicyRoute
   '/news-and-events': typeof NewsAndEventsRoute
+  '/newsletters': typeof NewslettersRoute
+  '/outcomes': typeof OutcomesRoute
   '/partner': typeof PartnerRoute
   '/partnership-policy': typeof PartnershipPolicyRoute
   '/policies': typeof PoliciesRoute
+  '/press-releases': typeof PressReleasesRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
+  '/publications': typeof PublicationsRoute
   '/refund-policy': typeof RefundPolicyRoute
   '/sponsor': typeof SponsorRoute
   '/sponsorship-policy': typeof SponsorshipPolicyRoute
+  '/success-stories': typeof SuccessStoriesRoute
   '/terms-and-conditions': typeof TermsAndConditionsRoute
   '/volunteer': typeof VolunteerRoute
   '/volunteer-policy': typeof VolunteerPolicyRoute
@@ -962,9 +1118,21 @@ export interface FileRoutesByTo {
   '/about/partners': typeof AboutPartnersRoute
   '/about/vision-2047': typeof AboutVision2047Route
   '/campaign/$campaignSlug': typeof CampaignCampaignSlugRoute
+  '/media/annual-reports': typeof MediaAnnualReportsRoute
+  '/media/brand-assets': typeof MediaBrandAssetsRoute
+  '/media/gallery': typeof MediaGalleryRoute
+  '/media/impact-statistics': typeof MediaImpactStatisticsRoute
+  '/media/latest-updates': typeof MediaLatestUpdatesRoute
+  '/media/news-and-events': typeof MediaNewsAndEventsRoute
+  '/media/newsletters': typeof MediaNewslettersRoute
+  '/media/outcomes': typeof MediaOutcomesRoute
+  '/media/press-releases': typeof MediaPressReleasesRoute
+  '/media/publications': typeof MediaPublicationsRoute
+  '/media/success-stories': typeof MediaSuccessStoriesRoute
   '/patients/$patientSlug': typeof PatientsPatientSlugRoute
   '/programs/entrepreneur-development': typeof ProgramsEntrepreneurDevelopmentRoute
   '/campaign': typeof CampaignIndexRoute
+  '/media': typeof MediaIndexRoute
   '/programs': typeof ProgramsIndexRoute
   '/programs/agriculture/farmer-livelihood': typeof ProgramsAgricultureFarmerLivelihoodRoute
   '/programs/agriculture/farmer-training': typeof ProgramsAgricultureFarmerTrainingRoute
@@ -1044,7 +1212,9 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/annual-reports': typeof AnnualReportsRoute
   '/anti-fraud-policy': typeof AntiFraudPolicyRoute
+  '/brand-assets': typeof BrandAssetsRoute
   '/careers': typeof CareersRoute
   '/child-protection-policy': typeof ChildProtectionPolicyRoute
   '/code-of-conduct': typeof CodeOfConductRoute
@@ -1059,6 +1229,8 @@ export interface FileRoutesById {
   '/get-involved': typeof GetInvolvedRoute
   '/governance-policy': typeof GovernancePolicyRoute
   '/grievance-policy': typeof GrievancePolicyRoute
+  '/impact-statistics': typeof ImpactStatisticsRoute
+  '/latest-updates': typeof LatestUpdatesRoute
   '/medical-treatment-policy': typeof MedicalTreatmentPolicyRoute
   '/members-and-donors': typeof MembersAndDonorsRoute
   '/membership': typeof MembershipRoute
@@ -1066,13 +1238,18 @@ export interface FileRoutesById {
   '/mentor': typeof MentorRoute
   '/mentorship-policy': typeof MentorshipPolicyRoute
   '/news-and-events': typeof NewsAndEventsRoute
+  '/newsletters': typeof NewslettersRoute
+  '/outcomes': typeof OutcomesRoute
   '/partner': typeof PartnerRoute
   '/partnership-policy': typeof PartnershipPolicyRoute
   '/policies': typeof PoliciesRoute
+  '/press-releases': typeof PressReleasesRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
+  '/publications': typeof PublicationsRoute
   '/refund-policy': typeof RefundPolicyRoute
   '/sponsor': typeof SponsorRoute
   '/sponsorship-policy': typeof SponsorshipPolicyRoute
+  '/success-stories': typeof SuccessStoriesRoute
   '/terms-and-conditions': typeof TermsAndConditionsRoute
   '/volunteer': typeof VolunteerRoute
   '/volunteer-policy': typeof VolunteerPolicyRoute
@@ -1084,9 +1261,21 @@ export interface FileRoutesById {
   '/about_/partners': typeof AboutPartnersRoute
   '/about_/vision-2047': typeof AboutVision2047Route
   '/campaign/$campaignSlug': typeof CampaignCampaignSlugRoute
+  '/media/annual-reports': typeof MediaAnnualReportsRoute
+  '/media/brand-assets': typeof MediaBrandAssetsRoute
+  '/media/gallery': typeof MediaGalleryRoute
+  '/media/impact-statistics': typeof MediaImpactStatisticsRoute
+  '/media/latest-updates': typeof MediaLatestUpdatesRoute
+  '/media/news-and-events': typeof MediaNewsAndEventsRoute
+  '/media/newsletters': typeof MediaNewslettersRoute
+  '/media/outcomes': typeof MediaOutcomesRoute
+  '/media/press-releases': typeof MediaPressReleasesRoute
+  '/media/publications': typeof MediaPublicationsRoute
+  '/media/success-stories': typeof MediaSuccessStoriesRoute
   '/patients/$patientSlug': typeof PatientsPatientSlugRoute
   '/programs/entrepreneur-development': typeof ProgramsEntrepreneurDevelopmentRoute
   '/campaign/': typeof CampaignIndexRoute
+  '/media/': typeof MediaIndexRoute
   '/programs/': typeof ProgramsIndexRoute
   '/programs/agriculture/farmer-livelihood': typeof ProgramsAgricultureFarmerLivelihoodRoute
   '/programs/agriculture/farmer-training': typeof ProgramsAgricultureFarmerTrainingRoute
@@ -1167,7 +1356,9 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/annual-reports'
     | '/anti-fraud-policy'
+    | '/brand-assets'
     | '/careers'
     | '/child-protection-policy'
     | '/code-of-conduct'
@@ -1182,6 +1373,8 @@ export interface FileRouteTypes {
     | '/get-involved'
     | '/governance-policy'
     | '/grievance-policy'
+    | '/impact-statistics'
+    | '/latest-updates'
     | '/medical-treatment-policy'
     | '/members-and-donors'
     | '/membership'
@@ -1189,13 +1382,18 @@ export interface FileRouteTypes {
     | '/mentor'
     | '/mentorship-policy'
     | '/news-and-events'
+    | '/newsletters'
+    | '/outcomes'
     | '/partner'
     | '/partnership-policy'
     | '/policies'
+    | '/press-releases'
     | '/privacy-policy'
+    | '/publications'
     | '/refund-policy'
     | '/sponsor'
     | '/sponsorship-policy'
+    | '/success-stories'
     | '/terms-and-conditions'
     | '/volunteer'
     | '/volunteer-policy'
@@ -1207,9 +1405,21 @@ export interface FileRouteTypes {
     | '/about/partners'
     | '/about/vision-2047'
     | '/campaign/$campaignSlug'
+    | '/media/annual-reports'
+    | '/media/brand-assets'
+    | '/media/gallery'
+    | '/media/impact-statistics'
+    | '/media/latest-updates'
+    | '/media/news-and-events'
+    | '/media/newsletters'
+    | '/media/outcomes'
+    | '/media/press-releases'
+    | '/media/publications'
+    | '/media/success-stories'
     | '/patients/$patientSlug'
     | '/programs/entrepreneur-development'
     | '/campaign/'
+    | '/media/'
     | '/programs/'
     | '/programs/agriculture/farmer-livelihood'
     | '/programs/agriculture/farmer-training'
@@ -1288,7 +1498,9 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/annual-reports'
     | '/anti-fraud-policy'
+    | '/brand-assets'
     | '/careers'
     | '/child-protection-policy'
     | '/code-of-conduct'
@@ -1303,6 +1515,8 @@ export interface FileRouteTypes {
     | '/get-involved'
     | '/governance-policy'
     | '/grievance-policy'
+    | '/impact-statistics'
+    | '/latest-updates'
     | '/medical-treatment-policy'
     | '/members-and-donors'
     | '/membership'
@@ -1310,13 +1524,18 @@ export interface FileRouteTypes {
     | '/mentor'
     | '/mentorship-policy'
     | '/news-and-events'
+    | '/newsletters'
+    | '/outcomes'
     | '/partner'
     | '/partnership-policy'
     | '/policies'
+    | '/press-releases'
     | '/privacy-policy'
+    | '/publications'
     | '/refund-policy'
     | '/sponsor'
     | '/sponsorship-policy'
+    | '/success-stories'
     | '/terms-and-conditions'
     | '/volunteer'
     | '/volunteer-policy'
@@ -1328,9 +1547,21 @@ export interface FileRouteTypes {
     | '/about/partners'
     | '/about/vision-2047'
     | '/campaign/$campaignSlug'
+    | '/media/annual-reports'
+    | '/media/brand-assets'
+    | '/media/gallery'
+    | '/media/impact-statistics'
+    | '/media/latest-updates'
+    | '/media/news-and-events'
+    | '/media/newsletters'
+    | '/media/outcomes'
+    | '/media/press-releases'
+    | '/media/publications'
+    | '/media/success-stories'
     | '/patients/$patientSlug'
     | '/programs/entrepreneur-development'
     | '/campaign'
+    | '/media'
     | '/programs'
     | '/programs/agriculture/farmer-livelihood'
     | '/programs/agriculture/farmer-training'
@@ -1409,7 +1640,9 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/annual-reports'
     | '/anti-fraud-policy'
+    | '/brand-assets'
     | '/careers'
     | '/child-protection-policy'
     | '/code-of-conduct'
@@ -1424,6 +1657,8 @@ export interface FileRouteTypes {
     | '/get-involved'
     | '/governance-policy'
     | '/grievance-policy'
+    | '/impact-statistics'
+    | '/latest-updates'
     | '/medical-treatment-policy'
     | '/members-and-donors'
     | '/membership'
@@ -1431,13 +1666,18 @@ export interface FileRouteTypes {
     | '/mentor'
     | '/mentorship-policy'
     | '/news-and-events'
+    | '/newsletters'
+    | '/outcomes'
     | '/partner'
     | '/partnership-policy'
     | '/policies'
+    | '/press-releases'
     | '/privacy-policy'
+    | '/publications'
     | '/refund-policy'
     | '/sponsor'
     | '/sponsorship-policy'
+    | '/success-stories'
     | '/terms-and-conditions'
     | '/volunteer'
     | '/volunteer-policy'
@@ -1449,9 +1689,21 @@ export interface FileRouteTypes {
     | '/about_/partners'
     | '/about_/vision-2047'
     | '/campaign/$campaignSlug'
+    | '/media/annual-reports'
+    | '/media/brand-assets'
+    | '/media/gallery'
+    | '/media/impact-statistics'
+    | '/media/latest-updates'
+    | '/media/news-and-events'
+    | '/media/newsletters'
+    | '/media/outcomes'
+    | '/media/press-releases'
+    | '/media/publications'
+    | '/media/success-stories'
     | '/patients/$patientSlug'
     | '/programs/entrepreneur-development'
     | '/campaign/'
+    | '/media/'
     | '/programs/'
     | '/programs/agriculture/farmer-livelihood'
     | '/programs/agriculture/farmer-training'
@@ -1531,7 +1783,9 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AnnualReportsRoute: typeof AnnualReportsRoute
   AntiFraudPolicyRoute: typeof AntiFraudPolicyRoute
+  BrandAssetsRoute: typeof BrandAssetsRoute
   CareersRoute: typeof CareersRoute
   ChildProtectionPolicyRoute: typeof ChildProtectionPolicyRoute
   CodeOfConductRoute: typeof CodeOfConductRoute
@@ -1546,6 +1800,8 @@ export interface RootRouteChildren {
   GetInvolvedRoute: typeof GetInvolvedRoute
   GovernancePolicyRoute: typeof GovernancePolicyRoute
   GrievancePolicyRoute: typeof GrievancePolicyRoute
+  ImpactStatisticsRoute: typeof ImpactStatisticsRoute
+  LatestUpdatesRoute: typeof LatestUpdatesRoute
   MedicalTreatmentPolicyRoute: typeof MedicalTreatmentPolicyRoute
   MembersAndDonorsRoute: typeof MembersAndDonorsRoute
   MembershipRoute: typeof MembershipRoute
@@ -1553,13 +1809,18 @@ export interface RootRouteChildren {
   MentorRoute: typeof MentorRoute
   MentorshipPolicyRoute: typeof MentorshipPolicyRoute
   NewsAndEventsRoute: typeof NewsAndEventsRoute
+  NewslettersRoute: typeof NewslettersRoute
+  OutcomesRoute: typeof OutcomesRoute
   PartnerRoute: typeof PartnerRoute
   PartnershipPolicyRoute: typeof PartnershipPolicyRoute
   PoliciesRoute: typeof PoliciesRoute
+  PressReleasesRoute: typeof PressReleasesRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
+  PublicationsRoute: typeof PublicationsRoute
   RefundPolicyRoute: typeof RefundPolicyRoute
   SponsorRoute: typeof SponsorRoute
   SponsorshipPolicyRoute: typeof SponsorshipPolicyRoute
+  SuccessStoriesRoute: typeof SuccessStoriesRoute
   TermsAndConditionsRoute: typeof TermsAndConditionsRoute
   VolunteerRoute: typeof VolunteerRoute
   VolunteerPolicyRoute: typeof VolunteerPolicyRoute
@@ -1571,9 +1832,21 @@ export interface RootRouteChildren {
   AboutPartnersRoute: typeof AboutPartnersRoute
   AboutVision2047Route: typeof AboutVision2047Route
   CampaignCampaignSlugRoute: typeof CampaignCampaignSlugRoute
+  MediaAnnualReportsRoute: typeof MediaAnnualReportsRoute
+  MediaBrandAssetsRoute: typeof MediaBrandAssetsRoute
+  MediaGalleryRoute: typeof MediaGalleryRoute
+  MediaImpactStatisticsRoute: typeof MediaImpactStatisticsRoute
+  MediaLatestUpdatesRoute: typeof MediaLatestUpdatesRoute
+  MediaNewsAndEventsRoute: typeof MediaNewsAndEventsRoute
+  MediaNewslettersRoute: typeof MediaNewslettersRoute
+  MediaOutcomesRoute: typeof MediaOutcomesRoute
+  MediaPressReleasesRoute: typeof MediaPressReleasesRoute
+  MediaPublicationsRoute: typeof MediaPublicationsRoute
+  MediaSuccessStoriesRoute: typeof MediaSuccessStoriesRoute
   PatientsPatientSlugRoute: typeof PatientsPatientSlugRoute
   ProgramsEntrepreneurDevelopmentRoute: typeof ProgramsEntrepreneurDevelopmentRoute
   CampaignIndexRoute: typeof CampaignIndexRoute
+  MediaIndexRoute: typeof MediaIndexRoute
   ProgramsIndexRoute: typeof ProgramsIndexRoute
   ProgramsAgricultureFarmerLivelihoodRoute: typeof ProgramsAgricultureFarmerLivelihoodRoute
   ProgramsAgricultureFarmerTrainingRoute: typeof ProgramsAgricultureFarmerTrainingRoute
@@ -1666,11 +1939,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/annual-reports': {
+      id: '/annual-reports'
+      path: '/annual-reports'
+      fullPath: '/annual-reports'
+      preLoaderRoute: typeof AnnualReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/anti-fraud-policy': {
       id: '/anti-fraud-policy'
       path: '/anti-fraud-policy'
       fullPath: '/anti-fraud-policy'
       preLoaderRoute: typeof AntiFraudPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/brand-assets': {
+      id: '/brand-assets'
+      path: '/brand-assets'
+      fullPath: '/brand-assets'
+      preLoaderRoute: typeof BrandAssetsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/careers': {
@@ -1771,6 +2058,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GrievancePolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/impact-statistics': {
+      id: '/impact-statistics'
+      path: '/impact-statistics'
+      fullPath: '/impact-statistics'
+      preLoaderRoute: typeof ImpactStatisticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/latest-updates': {
+      id: '/latest-updates'
+      path: '/latest-updates'
+      fullPath: '/latest-updates'
+      preLoaderRoute: typeof LatestUpdatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/medical-treatment-policy': {
       id: '/medical-treatment-policy'
       path: '/medical-treatment-policy'
@@ -1820,6 +2121,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NewsAndEventsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/newsletters': {
+      id: '/newsletters'
+      path: '/newsletters'
+      fullPath: '/newsletters'
+      preLoaderRoute: typeof NewslettersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/outcomes': {
+      id: '/outcomes'
+      path: '/outcomes'
+      fullPath: '/outcomes'
+      preLoaderRoute: typeof OutcomesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/partner': {
       id: '/partner'
       path: '/partner'
@@ -1841,11 +2156,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PoliciesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/press-releases': {
+      id: '/press-releases'
+      path: '/press-releases'
+      fullPath: '/press-releases'
+      preLoaderRoute: typeof PressReleasesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy-policy': {
       id: '/privacy-policy'
       path: '/privacy-policy'
       fullPath: '/privacy-policy'
       preLoaderRoute: typeof PrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/publications': {
+      id: '/publications'
+      path: '/publications'
+      fullPath: '/publications'
+      preLoaderRoute: typeof PublicationsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/refund-policy': {
@@ -1867,6 +2196,13 @@ declare module '@tanstack/react-router' {
       path: '/sponsorship-policy'
       fullPath: '/sponsorship-policy'
       preLoaderRoute: typeof SponsorshipPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/success-stories': {
+      id: '/success-stories'
+      path: '/success-stories'
+      fullPath: '/success-stories'
+      preLoaderRoute: typeof SuccessStoriesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/terms-and-conditions': {
@@ -1951,6 +2287,90 @@ declare module '@tanstack/react-router' {
       path: '/campaign/$campaignSlug'
       fullPath: '/campaign/$campaignSlug'
       preLoaderRoute: typeof CampaignCampaignSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media/': {
+      id: '/media/'
+      path: '/media'
+      fullPath: '/media/'
+      preLoaderRoute: typeof MediaIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media/annual-reports': {
+      id: '/media/annual-reports'
+      path: '/media/annual-reports'
+      fullPath: '/media/annual-reports'
+      preLoaderRoute: typeof MediaAnnualReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media/brand-assets': {
+      id: '/media/brand-assets'
+      path: '/media/brand-assets'
+      fullPath: '/media/brand-assets'
+      preLoaderRoute: typeof MediaBrandAssetsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media/gallery': {
+      id: '/media/gallery'
+      path: '/media/gallery'
+      fullPath: '/media/gallery'
+      preLoaderRoute: typeof MediaGalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media/impact-statistics': {
+      id: '/media/impact-statistics'
+      path: '/media/impact-statistics'
+      fullPath: '/media/impact-statistics'
+      preLoaderRoute: typeof MediaImpactStatisticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media/latest-updates': {
+      id: '/media/latest-updates'
+      path: '/media/latest-updates'
+      fullPath: '/media/latest-updates'
+      preLoaderRoute: typeof MediaLatestUpdatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media/news-and-events': {
+      id: '/media/news-and-events'
+      path: '/media/news-and-events'
+      fullPath: '/media/news-and-events'
+      preLoaderRoute: typeof MediaNewsAndEventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media/newsletters': {
+      id: '/media/newsletters'
+      path: '/media/newsletters'
+      fullPath: '/media/newsletters'
+      preLoaderRoute: typeof MediaNewslettersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media/outcomes': {
+      id: '/media/outcomes'
+      path: '/media/outcomes'
+      fullPath: '/media/outcomes'
+      preLoaderRoute: typeof MediaOutcomesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media/press-releases': {
+      id: '/media/press-releases'
+      path: '/media/press-releases'
+      fullPath: '/media/press-releases'
+      preLoaderRoute: typeof MediaPressReleasesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media/publications': {
+      id: '/media/publications'
+      path: '/media/publications'
+      fullPath: '/media/publications'
+      preLoaderRoute: typeof MediaPublicationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media/success-stories': {
+      id: '/media/success-stories'
+      path: '/media/success-stories'
+      fullPath: '/media/success-stories'
+      preLoaderRoute: typeof MediaSuccessStoriesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/patients/$patientSlug': {
@@ -2491,7 +2911,9 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AnnualReportsRoute: AnnualReportsRoute,
   AntiFraudPolicyRoute: AntiFraudPolicyRoute,
+  BrandAssetsRoute: BrandAssetsRoute,
   CareersRoute: CareersRoute,
   ChildProtectionPolicyRoute: ChildProtectionPolicyRoute,
   CodeOfConductRoute: CodeOfConductRoute,
@@ -2506,6 +2928,8 @@ const rootRouteChildren: RootRouteChildren = {
   GetInvolvedRoute: GetInvolvedRoute,
   GovernancePolicyRoute: GovernancePolicyRoute,
   GrievancePolicyRoute: GrievancePolicyRoute,
+  ImpactStatisticsRoute: ImpactStatisticsRoute,
+  LatestUpdatesRoute: LatestUpdatesRoute,
   MedicalTreatmentPolicyRoute: MedicalTreatmentPolicyRoute,
   MembersAndDonorsRoute: MembersAndDonorsRoute,
   MembershipRoute: MembershipRoute,
@@ -2513,13 +2937,18 @@ const rootRouteChildren: RootRouteChildren = {
   MentorRoute: MentorRoute,
   MentorshipPolicyRoute: MentorshipPolicyRoute,
   NewsAndEventsRoute: NewsAndEventsRoute,
+  NewslettersRoute: NewslettersRoute,
+  OutcomesRoute: OutcomesRoute,
   PartnerRoute: PartnerRoute,
   PartnershipPolicyRoute: PartnershipPolicyRoute,
   PoliciesRoute: PoliciesRoute,
+  PressReleasesRoute: PressReleasesRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
+  PublicationsRoute: PublicationsRoute,
   RefundPolicyRoute: RefundPolicyRoute,
   SponsorRoute: SponsorRoute,
   SponsorshipPolicyRoute: SponsorshipPolicyRoute,
+  SuccessStoriesRoute: SuccessStoriesRoute,
   TermsAndConditionsRoute: TermsAndConditionsRoute,
   VolunteerRoute: VolunteerRoute,
   VolunteerPolicyRoute: VolunteerPolicyRoute,
@@ -2531,9 +2960,21 @@ const rootRouteChildren: RootRouteChildren = {
   AboutPartnersRoute: AboutPartnersRoute,
   AboutVision2047Route: AboutVision2047Route,
   CampaignCampaignSlugRoute: CampaignCampaignSlugRoute,
+  MediaAnnualReportsRoute: MediaAnnualReportsRoute,
+  MediaBrandAssetsRoute: MediaBrandAssetsRoute,
+  MediaGalleryRoute: MediaGalleryRoute,
+  MediaImpactStatisticsRoute: MediaImpactStatisticsRoute,
+  MediaLatestUpdatesRoute: MediaLatestUpdatesRoute,
+  MediaNewsAndEventsRoute: MediaNewsAndEventsRoute,
+  MediaNewslettersRoute: MediaNewslettersRoute,
+  MediaOutcomesRoute: MediaOutcomesRoute,
+  MediaPressReleasesRoute: MediaPressReleasesRoute,
+  MediaPublicationsRoute: MediaPublicationsRoute,
+  MediaSuccessStoriesRoute: MediaSuccessStoriesRoute,
   PatientsPatientSlugRoute: PatientsPatientSlugRoute,
   ProgramsEntrepreneurDevelopmentRoute: ProgramsEntrepreneurDevelopmentRoute,
   CampaignIndexRoute: CampaignIndexRoute,
+  MediaIndexRoute: MediaIndexRoute,
   ProgramsIndexRoute: ProgramsIndexRoute,
   ProgramsAgricultureFarmerLivelihoodRoute:
     ProgramsAgricultureFarmerLivelihoodRoute,

@@ -32,7 +32,7 @@ export default function BePartOfChange({ onOpenModal }: BePartOfChangeProps) {
             DONATE NOW
           </button>
           <a
-            href="#"
+            href="/get-involved"
             className="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold px-8 py-3.5 rounded uppercase tracking-wider transition-all hover:scale-[1.02] active:scale-95"
           >
             GET INVOLVED

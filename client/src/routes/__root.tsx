@@ -58,8 +58,8 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
-  console.error(error);
+function ErrorComponent({ error, reset }: { error: any; reset: () => void }) {
+  console.error("Root router error:", error);
   const router = useRouter();
 
   return (

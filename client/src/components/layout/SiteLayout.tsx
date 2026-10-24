@@ -92,7 +92,20 @@ export const MEGA_DATA: Record<string, MegaSection> = {
   },
   Media: {
     cols: 3,
-    items: ["News & Events", "Latest Updates", "Impact", "Publications", "Press Release", "Gallery"],
+    items: [
+      "Media Hub",
+      "Our Outcomes",
+      "Success Stories",
+      "Impact Statistics",
+      "Annual Reports",
+      "News & Events",
+      "Latest Updates",
+      "Newsletters",
+      "Publications",
+      "Press Releases",
+      "Photo & Video Gallery",
+      "Brand Assets",
+    ],
   },
   "Get Involved": {
     cols: 3,
@@ -114,9 +127,9 @@ function getTopNavHref(item: string) {
   if (item === "What We Do") return "/programs";
   if (item === "Our Campaigns" || item === "Campaigns") return "/campaign";
   if (item === "Programs") return "/programs";
-  if (item === "Impact") return "/#impact-stats";
+  if (item === "Impact") return "/media/impact-statistics";
   if (item === "Become a Member" || item === "Membership" || item === "ISLAH Community") return "/about/community";
-  if (item === "Media") return "/news-and-events";
+  if (item === "Media") return "/media";
   if (item === "Get Involved") return "/get-involved";
   if (item === "Contact Us") return "/contact";
   return "#";
@@ -155,16 +168,18 @@ function getMegaHref(menu: string, item: string) {
   // Programs
   if (menu === "Programs" && item === "View All Programs") return "/programs";
   // Media & Updates
-  if (menu === "Media" && (item === "Impact" || item === "Our Impact")) return "/#impact-stats";
-  if (menu === "Media" && item === "News & Events") return "/news-and-events";
-  if (menu === "Media" && item === "Latest Updates") return "/news-and-events";
-  if (menu === "Media" && item === "Gallery") return "/gallery";
-  if (menu === "Media" && item === "Publications") return "/news-and-events";
-  if (menu === "Media" && item === "Press Release") return "/news-and-events";
-  if (menu === "Media" && item === "Press Releases") return "/news-and-events";
-  if (menu === "Media" && item === "Annual Reports") return "/news-and-events";
-  if (menu === "Media" && item === "Success Stories") return "/news-and-events";
-  if (menu === "Media" && item === "Newsletters") return "/news-and-events";
+  if (menu === "Media" && (item === "Media Hub" || item === "Overview" || item === "Media")) return "/media";
+  if (menu === "Media" && (item === "Our Outcomes" || item === "Outcomes")) return "/media/outcomes";
+  if (menu === "Media" && item === "Success Stories") return "/media/success-stories";
+  if (menu === "Media" && (item === "Impact Statistics" || item === "Impact" || item === "Our Impact")) return "/media/impact-statistics";
+  if (menu === "Media" && item === "Annual Reports") return "/media/annual-reports";
+  if (menu === "Media" && item === "News & Events") return "/media/news-and-events";
+  if (menu === "Media" && item === "Latest Updates") return "/media/latest-updates";
+  if (menu === "Media" && item === "Newsletters") return "/media/newsletters";
+  if (menu === "Media" && (item === "Publications" || item === "Publication")) return "/media/publications";
+  if (menu === "Media" && (item === "Press Releases" || item === "Press Release")) return "/media/press-releases";
+  if (menu === "Media" && (item === "Photo & Video Gallery" || item === "Gallery" || item === "Photo Gallery")) return "/media/gallery";
+  if (menu === "Media" && (item === "Brand Assets" || item === "Brand Kit")) return "/media/brand-assets";
   // Get Involved
   if (menu === "Get Involved" && item === "Careers & Opportunities") return "/careers";
   if (menu === "Get Involved" && item === "Donate & Support") return "/donate";
@@ -254,7 +269,7 @@ export function Header() {
     (item === "About Us" && pathname.startsWith("/about")) ||
     (item === "Our Campaigns" && pathname.startsWith("/campaign")) ||
     (item === "Become a Member" && pathname.startsWith("/membership")) ||
-    (item === "Media" && (pathname.startsWith("/news-and-events") || pathname.startsWith("/gallery"))) ||
+    (item === "Media" && (pathname.startsWith("/media") || pathname.startsWith("/news-and-events") || pathname.startsWith("/gallery"))) ||
     (item === "Get Involved" && (pathname.startsWith("/get-involved") || pathname.startsWith("/volunteer"))) ||
     (item === "Contact Us" && pathname.startsWith("/contact")) ||
     (item === "What We Do" && pathname.startsWith("/programs"));
@@ -521,8 +536,8 @@ export function Footer({ onOpenModal }: { onOpenModal?: (type: RoleType) => void
     ["Home", "/"],
     ["About Us", "/about"],
     ["What We Do", "/programs"],
-    ["Our Impact", "/#impact-stats"],
-    ["Media & News", "/news-and-events"],
+    ["Our Impact", "/media/impact-statistics"],
+    ["Media & News", "/media"],
     ["Contact Us", "/contact"],
     ["Donate Now", "/donate"],
   ];

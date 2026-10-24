@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import g1 from "@/assets/gallery-1.jpg";
 import g2 from "@/assets/gallery-2.jpg";
 import g3 from "@/assets/gallery-3.jpg";
@@ -27,16 +28,17 @@ export function EventsGallery() {
                   <h4 className="font-bold text-sm">{e.title}</h4>
                   <p className="text-xs text-slate-600">{e.desc}</p>
                 </div>
-                <a href="#" className="text-xs font-semibold text-brand-green whitespace-nowrap">View Details →</a>
+                <Link to="/media/news-and-events" className="text-xs font-semibold text-brand-green whitespace-nowrap hover:underline">View Details →</Link>
               </div>
             ))}
-            <button className="w-full bg-brand-green hover:bg-brand-green-dark text-white font-semibold text-sm py-2.5 rounded">VIEW ALL EVENTS</button>
+            <Link to="/media/news-and-events" className="block text-center w-full bg-brand-green hover:bg-brand-green-dark text-white font-semibold text-sm py-2.5 rounded transition shadow-sm">VIEW ALL EVENTS</Link>
           </div>
         </div>
 
         <div>
           <div className="flex items-center justify-between mb-2">
             <SectionTitle>Gallery</SectionTitle>
+            <Link to="/media/gallery" className="text-xs font-semibold text-brand-green hover:underline">View All →</Link>
           </div>
           <div className="grid grid-cols-3 gap-3">
             {[g1, g2, g3, g4, g5, g6].map((src, i) => (
