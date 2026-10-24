@@ -317,7 +317,7 @@ function ContactForm() {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-200/90 overflow-hidden">
+    <div className="bg-white rounded-2xl shadow-sm border border-slate-200/90 overflow-hidden notranslate form-container" translate="no" dir="ltr">
       {/* Header bar styled with Deep Navy #071527 */}
       <div className="bg-[#071527] px-6 py-5 border-b border-slate-800">
         <h3 className="text-white font-black text-lg md:text-xl flex items-center gap-2.5 uppercase tracking-wide">
@@ -780,7 +780,9 @@ export default function ContactPage() {
               {OFFICES.map((office) => (
                 <div
                   key={office.number}
-                  className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5 flex flex-col justify-between hover:shadow-md hover:-translate-y-0.5 transition-all"
+                  className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5 flex flex-col justify-between hover:shadow-md hover:-translate-y-0.5 transition-all notranslate address-fixed"
+                  translate="no"
+                  dir="ltr"
                 >
                   <div>
                     {/* Number Badge & Type */}
@@ -935,7 +937,7 @@ export default function ContactPage() {
               {/* Sidebar Column */}
               <div className="space-y-4">
                 {/* 1. Quick Contact */}
-                <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5">
+                <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5 notranslate address-fixed" translate="no" dir="ltr">
                   <h4 className="text-[11px] font-black uppercase tracking-wider text-slate-500 mb-3">
                     QUICK CONTACT
                   </h4>

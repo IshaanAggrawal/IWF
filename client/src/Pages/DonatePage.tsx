@@ -588,8 +588,8 @@ export default function DonatePage() {
               <div className="grid lg:grid-cols-12 gap-8 items-start">
               {/* ── LEFT COLUMN: Donation Form ── */}
               <div className="lg:col-span-7">
-                <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xl space-y-8">
-                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 text-left notranslate" translate="no">
+                <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xl space-y-8 notranslate form-container" translate="no" dir="ltr">
+                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 text-left notranslate" translate="no" dir="ltr">
                     {/* Part 1: Choose Donation Type */}
                     <div>
                       <div className="flex items-center gap-2.5 pb-2 mb-4 border-b border-slate-100">

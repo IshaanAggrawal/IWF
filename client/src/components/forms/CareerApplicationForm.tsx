@@ -258,7 +258,7 @@ export function CareerApplicationForm({ onSuccess, isModal = false }: CareerAppl
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 text-left notranslate" translate="no">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 text-left notranslate" translate="no" dir="ltr">
       <div className="mb-2">
         <p className="text-xs text-slate-500">
           Please fill in your details and upload your CV. Our team will review your profile and contact you for suitable opportunities.

@@ -252,7 +252,7 @@ function RootComponent() {
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end select-none">
         {/* Floating Message Card */}
         {msgOpen && (
-          <div className="mb-4 w-84 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden transition-all duration-300 animate-in slide-in-from-bottom-5 fade-in">
+          <div className="mb-4 w-84 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden transition-all duration-300 animate-in slide-in-from-bottom-5 fade-in notranslate form-container" translate="no" dir="ltr">
             {/* Header */}
             <div className="bg-[#0b1f3b] text-white p-4 flex items-center justify-between">
               <div>

@@ -274,21 +274,21 @@ export function Header() {
         <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-center relative">
           <a href="/" className="flex flex-col md:flex-row items-center gap-4 md:gap-6 group text-center md:text-left" aria-label="Islah Home">
             <img src={newLogo} alt="Islah Logo" className="h-16 md:h-20 w-auto object-contain transition-transform group-hover:scale-105 shrink-0" />
-            <div className="flex flex-col items-center md:items-start">
-              <span className="text-xl md:text-3xl font-extrabold text-[#0b1f3b] tracking-wide font-sans leading-tight text-center md:text-left">
+            <div className="flex flex-col items-center md:items-start notranslate brand-fixed" translate="no" dir="ltr">
+              <span className="text-xl md:text-3xl font-extrabold text-[#0b1f3b] tracking-wide font-sans leading-tight text-center md:text-left notranslate" translate="no" dir="ltr">
                 ISLAH
               </span>
-              <span className="text-xs md:text-sm font-semibold italic text-brand-orange mt-1.5 leading-none text-center md:text-left">
+              <span className="text-xs md:text-sm font-semibold italic text-brand-orange mt-1.5 leading-none text-center md:text-left notranslate" translate="no" dir="ltr">
                 Knowledge, Opportunity, A Better Future.
               </span>
-              <span className="text-[10px] md:text-xs text-gray-500 font-medium mt-1.5 leading-none text-center md:text-left notranslate" dir="ltr" translate="no">
-                {localizedAddress}
+              <span className="text-[10px] md:text-xs text-gray-500 font-medium mt-1.5 leading-none text-center md:text-left notranslate address-fixed" dir="ltr" translate="no">
+                B-144, Abul Fazal Enclave-II, Okhla, New Delhi - 110025, India
               </span>
             </div>
           </a>
 
           {/* Top-Right Language Dropdown as shown in Screenshot 1 */}
-          <div className="hidden md:flex items-center absolute right-4 md:right-6 top-1/2 -translate-y-1/2 z-30">
+          <div className="hidden md:flex items-center absolute right-4 md:right-6 top-1/2 -translate-y-1/2 z-30 notranslate" translate="no">
             <TranslateButton />
           </div>
         </div>
@@ -304,7 +304,7 @@ export function Header() {
               const isActive = activeMenu === item;
               const label = item === "Home" ? (
                 <span className="flex items-center gap-1.5 font-bold">
-                  <Home className="w-4 h-4 text-[#f97316]" /> Islah
+                  <Home className="w-4 h-4 text-[#f97316]" /> <span className="notranslate" translate="no" dir="ltr">Islah</span>
                 </span>
               ) : (
                 item
@@ -605,13 +605,13 @@ export function Footer({ onOpenModal }: { onOpenModal?: (type: RoleType) => void
       <div className="bg-[#0b1f3b] text-white py-12 px-4 md:px-10">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           <div className="space-y-4">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 notranslate brand-fixed" translate="no" dir="ltr">
               <div className="bg-white rounded-xl p-1.5 shrink-0">
                 <img src={newLogo} alt="ISLAH Logo" className="h-10 w-auto object-contain" />
               </div>
               <div className="flex flex-col">
-                <span className="font-extrabold text-2xl tracking-widest text-white leading-none">ISLAH</span>
-                <span className="font-medium text-[11px] tracking-wide text-white/70 mt-0.5">Knowledge, Opportunity, A Better Future.</span>
+                <span className="font-extrabold text-2xl tracking-widest text-white leading-none notranslate" translate="no" dir="ltr">ISLAH</span>
+                <span className="font-medium text-[11px] tracking-wide text-white/70 mt-0.5 notranslate" translate="no" dir="ltr">Knowledge, Opportunity, A Better Future.</span>
               </div>
             </div>
             <div className="text-brand-orange font-medium text-sm">Care | Empower | Uplift</div>
@@ -708,14 +708,14 @@ export function Footer({ onOpenModal }: { onOpenModal?: (type: RoleType) => void
           </div>
 
           {/* Contact Column */}
-          <div className="space-y-4">
-            <h4 className="flex items-center gap-2 text-white font-semibold text-sm uppercase border-l-2 border-brand-orange pl-2 tracking-wide">
+          <div className="space-y-4 notranslate address-fixed" translate="no" dir="ltr">
+            <h4 className="flex items-center gap-2 text-white font-semibold text-sm uppercase border-l-2 border-brand-orange pl-2 tracking-wide notranslate" translate="no" dir="ltr">
               <Phone className="w-4 h-4 text-brand-orange" /> Contact Us
             </h4>
-            <div className="space-y-3 text-white text-sm">
+            <div className="space-y-3 text-white text-sm notranslate" translate="no" dir="ltr">
               <div className="flex gap-2 items-start">
                 <MapPin className="w-4 h-4 mt-0.5 text-brand-orange shrink-0" />
-                <span className="notranslate" dir="ltr" translate="no">{localizedAddress}</span>
+                <span className="notranslate" dir="ltr" translate="no">B-144, Abul Fazal Enclave-II, Okhla, New Delhi - 110025, India</span>
               </div>
               <div className="flex gap-2 items-center">
                 <Phone className="w-4 h-4 text-brand-orange shrink-0" />
@@ -723,11 +723,11 @@ export function Footer({ onOpenModal }: { onOpenModal?: (type: RoleType) => void
               </div>
               <div className="flex gap-2 items-center">
                 <Mail className="w-4 h-4 text-brand-orange shrink-0" />
-                <span>{CONTACT_DETAILS.email}</span>
+                <span className="notranslate" dir="ltr" translate="no">{CONTACT_DETAILS.email}</span>
               </div>
               <div className="flex gap-2 items-center">
                 <Globe className="w-4 h-4 text-brand-orange shrink-0" />
-                <a href="https://www.iwfindia.org" target="_blank" rel="noopener noreferrer" className="hover:text-brand-orange transition-colors">www.iwfindia.org</a>
+                <a href="https://www.iwfindia.org" target="_blank" rel="noopener noreferrer" className="hover:text-brand-orange transition-colors notranslate" translate="no" dir="ltr">www.iwfindia.org</a>
               </div>
             </div>
             <a
@@ -743,7 +743,7 @@ export function Footer({ onOpenModal }: { onOpenModal?: (type: RoleType) => void
       {/* Small Bottom Strip Footer with Legal & Policies */}
       <div className="bg-[#091f12] py-4 px-4 md:px-10">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white">
-          <div>© 2026 Islah. All Rights Reserved.</div>
+          <div className="notranslate" translate="no" dir="ltr">© 2026 Islah Welfare Foundation. All Rights Reserved.</div>
           <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-[11px] sm:text-xs">
             <span className="text-brand-orange font-bold">Legal &amp; Policies:</span>
             <a href="/policies" className="hover:text-brand-orange transition-colors">All Policies</a>

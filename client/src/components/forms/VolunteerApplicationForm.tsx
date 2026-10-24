@@ -302,7 +302,7 @@ export function VolunteerApplicationForm({ onSuccess, isModal = false }: Volunte
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 text-left notranslate" translate="no">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 text-left notranslate" translate="no" dir="ltr">
       {/* ── Personal Information ── */}
       <div>
         <div className="border-b border-slate-200 pb-2 mb-4">
