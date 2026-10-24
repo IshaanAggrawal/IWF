@@ -173,6 +173,14 @@ const ALL_POLICIES: PolicyItem[] = [
     href: "/mentorship-policy",
     icon: Users,
   },
+  {
+    id: "membership-policy",
+    title: "Membership Policy",
+    category: "Supporters & Engagement",
+    desc: "Principles, rights, categories, responsibilities, fees, duration, and conduct for Islah members.",
+    href: "/membership-policy",
+    icon: Award,
+  },
 ];
 
 const CATEGORIES = [

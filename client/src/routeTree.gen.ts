@@ -29,6 +29,7 @@ import { Route as GrievancePolicyRouteImport } from './routes/grievance-policy'
 import { Route as MedicalTreatmentPolicyRouteImport } from './routes/medical-treatment-policy'
 import { Route as MembersAndDonorsRouteImport } from './routes/members-and-donors'
 import { Route as MembershipRouteImport } from './routes/membership'
+import { Route as MembershipPolicyRouteImport } from './routes/membership-policy'
 import { Route as MentorRouteImport } from './routes/mentor'
 import { Route as MentorshipPolicyRouteImport } from './routes/mentorship-policy'
 import { Route as NewsAndEventsRouteImport } from './routes/news-and-events'
@@ -227,6 +228,11 @@ const MembersAndDonorsRoute = MembersAndDonorsRouteImport.update({
 const MembershipRoute = MembershipRouteImport.update({
   id: '/membership',
   path: '/membership',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MembershipPolicyRoute = MembershipPolicyRouteImport.update({
+  id: '/membership-policy',
+  path: '/membership-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MentorRoute = MentorRouteImport.update({
@@ -813,6 +819,7 @@ export interface FileRoutesByFullPath {
   '/medical-treatment-policy': typeof MedicalTreatmentPolicyRoute
   '/members-and-donors': typeof MembersAndDonorsRoute
   '/membership': typeof MembershipRoute
+  '/membership-policy': typeof MembershipPolicyRoute
   '/mentor': typeof MentorRoute
   '/mentorship-policy': typeof MentorshipPolicyRoute
   '/news-and-events': typeof NewsAndEventsRoute
@@ -933,6 +940,7 @@ export interface FileRoutesByTo {
   '/medical-treatment-policy': typeof MedicalTreatmentPolicyRoute
   '/members-and-donors': typeof MembersAndDonorsRoute
   '/membership': typeof MembershipRoute
+  '/membership-policy': typeof MembershipPolicyRoute
   '/mentor': typeof MentorRoute
   '/mentorship-policy': typeof MentorshipPolicyRoute
   '/news-and-events': typeof NewsAndEventsRoute
@@ -1054,6 +1062,7 @@ export interface FileRoutesById {
   '/medical-treatment-policy': typeof MedicalTreatmentPolicyRoute
   '/members-and-donors': typeof MembersAndDonorsRoute
   '/membership': typeof MembershipRoute
+  '/membership-policy': typeof MembershipPolicyRoute
   '/mentor': typeof MentorRoute
   '/mentorship-policy': typeof MentorshipPolicyRoute
   '/news-and-events': typeof NewsAndEventsRoute
@@ -1176,6 +1185,7 @@ export interface FileRouteTypes {
     | '/medical-treatment-policy'
     | '/members-and-donors'
     | '/membership'
+    | '/membership-policy'
     | '/mentor'
     | '/mentorship-policy'
     | '/news-and-events'
@@ -1296,6 +1306,7 @@ export interface FileRouteTypes {
     | '/medical-treatment-policy'
     | '/members-and-donors'
     | '/membership'
+    | '/membership-policy'
     | '/mentor'
     | '/mentorship-policy'
     | '/news-and-events'
@@ -1416,6 +1427,7 @@ export interface FileRouteTypes {
     | '/medical-treatment-policy'
     | '/members-and-donors'
     | '/membership'
+    | '/membership-policy'
     | '/mentor'
     | '/mentorship-policy'
     | '/news-and-events'
@@ -1537,6 +1549,7 @@ export interface RootRouteChildren {
   MedicalTreatmentPolicyRoute: typeof MedicalTreatmentPolicyRoute
   MembersAndDonorsRoute: typeof MembersAndDonorsRoute
   MembershipRoute: typeof MembershipRoute
+  MembershipPolicyRoute: typeof MembershipPolicyRoute
   MentorRoute: typeof MentorRoute
   MentorshipPolicyRoute: typeof MentorshipPolicyRoute
   NewsAndEventsRoute: typeof NewsAndEventsRoute
@@ -1777,6 +1790,13 @@ declare module '@tanstack/react-router' {
       path: '/membership'
       fullPath: '/membership'
       preLoaderRoute: typeof MembershipRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/membership-policy': {
+      id: '/membership-policy'
+      path: '/membership-policy'
+      fullPath: '/membership-policy'
+      preLoaderRoute: typeof MembershipPolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mentor': {
@@ -2489,6 +2509,7 @@ const rootRouteChildren: RootRouteChildren = {
   MedicalTreatmentPolicyRoute: MedicalTreatmentPolicyRoute,
   MembersAndDonorsRoute: MembersAndDonorsRoute,
   MembershipRoute: MembershipRoute,
+  MembershipPolicyRoute: MembershipPolicyRoute,
   MentorRoute: MentorRoute,
   MentorshipPolicyRoute: MentorshipPolicyRoute,
   NewsAndEventsRoute: NewsAndEventsRoute,
