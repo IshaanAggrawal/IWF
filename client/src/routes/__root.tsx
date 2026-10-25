@@ -9,7 +9,7 @@ import {
   useRouterState,
 } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { initGoogleTranslate } from "@/components/TranslateButton";
+import { initGoogleTranslate, getCookieLang } from "@/components/TranslateButton";
 import {
   Facebook,
   Twitter,
@@ -138,7 +138,10 @@ function RootComponent() {
   const [msgOpen, setMsgOpen] = useState(false);
 
   useEffect(() => {
-    initGoogleTranslate();
+    const initialLang = typeof document !== "undefined" ? getCookieLang() : "en";
+    if (initialLang && initialLang !== "en") {
+      initGoogleTranslate();
+    }
   }, []);
   const [formData, setFormData] = useState({
     name: "",
