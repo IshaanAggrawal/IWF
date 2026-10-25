@@ -73,19 +73,27 @@ export function NewsEventsPage() {
             <div className="flex flex-wrap gap-2.5">
               <button
                 onClick={() => setSelectedCategory("News & Updates")}
-                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition cursor-pointer shadow-sm"
+                className={`px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition cursor-pointer shadow-sm ${
+                  selectedCategory === "News & Updates"
+                    ? "bg-brand-orange text-white"
+                    : "bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-sm"
+                }`}
               >
                 News & Updates
               </button>
               <button
                 onClick={() => setSelectedCategory("Press Releases")}
-                className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase tracking-wider border border-white/20 transition cursor-pointer backdrop-blur-sm"
+                className={`px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition cursor-pointer shadow-sm ${
+                  selectedCategory === "Press Releases"
+                    ? "bg-brand-orange text-white"
+                    : "bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-sm"
+                }`}
               >
                 Press Releases
               </button>
               <Link
                 to="/media/gallery"
-                className="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs uppercase tracking-wider transition shadow-sm"
+                className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase tracking-wider border border-white/20 transition backdrop-blur-sm"
               >
                 Photo Gallery
               </Link>

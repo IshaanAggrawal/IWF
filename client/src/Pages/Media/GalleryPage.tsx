@@ -56,21 +56,33 @@ export function GalleryPage() {
           <div className="flex flex-wrap gap-2.5">
             <button
               onClick={() => setSelectedFilter("Photos")}
-              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition cursor-pointer shadow-sm flex items-center gap-1.5"
+              className={`px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition cursor-pointer shadow-sm flex items-center gap-1.5 ${
+                selectedFilter === "Photos"
+                  ? "bg-brand-orange text-white"
+                  : "bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-sm"
+              }`}
             >
               <ImageIcon className="w-3.5 h-3.5" />
               <span>Photos</span>
             </button>
             <button
               onClick={() => setSelectedFilter("Videos")}
-              className="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs uppercase tracking-wider transition cursor-pointer shadow-sm flex items-center gap-1.5"
+              className={`px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition cursor-pointer shadow-sm flex items-center gap-1.5 ${
+                selectedFilter === "Videos"
+                  ? "bg-brand-orange text-white"
+                  : "bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-sm"
+              }`}
             >
               <Video className="w-3.5 h-3.5" />
               <span>Videos</span>
             </button>
             <button
               onClick={() => setSelectedFilter("All Media")}
-              className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase tracking-wider border border-white/20 transition cursor-pointer backdrop-blur-sm"
+              className={`px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition cursor-pointer shadow-sm ${
+                selectedFilter === "All Media"
+                  ? "bg-brand-orange text-white"
+                  : "bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-sm"
+              }`}
             >
               All Media
             </button>

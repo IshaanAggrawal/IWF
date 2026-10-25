@@ -43,11 +43,11 @@ export function SuccessStoriesPage() {
             onClick={() => setVideoOpen(true)}
             className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-black/60 hover:bg-black/80 backdrop-blur-md text-white text-xs font-bold transition border border-white/20 cursor-pointer shadow-lg"
           >
-            <div className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center shrink-0">
+            <div className="w-8 h-8 rounded-full bg-brand-orange flex items-center justify-center shrink-0">
               <Play className="w-4 h-4 fill-white ml-0.5" />
             </div>
             <div className="text-left">
-              <div className="text-[11px] text-emerald-300 uppercase tracking-wider">Watch Our Story</div>
+              <div className="text-[11px] text-sky-300 uppercase tracking-wider">Watch Our Story</div>
               <div className="text-xs font-semibold">See how we change lives</div>
             </div>
           </button>
