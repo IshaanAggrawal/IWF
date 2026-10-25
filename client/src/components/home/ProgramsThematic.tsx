@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { BookOpen, HeartPulse, Users, Sprout, ArrowRight } from "lucide-react";
 import thEnv from "@/assets/thematic-environment.jpg";
 import thEnt from "@/assets/thematic-entrepreneur.jpg";
@@ -14,10 +15,10 @@ export function ProgramsThematic() {
           <SectionTitle>Our Programs</SectionTitle>
           <div className="grid sm:grid-cols-2 gap-4">
             {[
-              { icon: BookOpen, title: "Education Support", desc: "We run Community Learning Centres and 'Shiksha Na Ruke' scholarships to keep underprivileged children in school, providing materials and academic support." },
-              { icon: HeartPulse, title: "Healthcare Camps", desc: "Through 'Health Cannot Wait', we organise free medical check-up camps, distribute medicines, and spread awareness on health, hygiene, and nutrition." },
-              { icon: Users, title: "Women Empowerment", desc: "We form Self-Help Groups (SHGs), provide vocational training, promote financial literacy, and support leadership development for rural women." },
-              { icon: Sprout, title: "Rural Development", desc: "We work on sanitation, safe housing, clean water access, and community infrastructure under our 'Model Village' initiative for self-reliant communities." },
+              { icon: BookOpen, title: "Education Support", href: "/programs/education", desc: "We run Community Learning Centres and 'Shiksha Na Ruke' scholarships to keep underprivileged children in school, providing materials and academic support." },
+              { icon: HeartPulse, title: "Healthcare Camps", href: "/programs/healthcare", desc: "Through 'Health Cannot Wait', we organise free medical check-up camps, distribute medicines, and spread awareness on health, hygiene, and nutrition." },
+              { icon: Users, title: "Women Empowerment", href: "/programs/women-empowerment", desc: "We form Self-Help Groups (SHGs), provide vocational training, promote financial literacy, and support leadership development for rural women." },
+              { icon: Sprout, title: "Rural Development", href: "/programs/agriculture", desc: "We work on sanitation, safe housing, clean water access, and community infrastructure under our 'Model Village' initiative for self-reliant communities." },
             ].map((p) => (
               <div key={p.title} className="bg-white rounded-md p-5 border border-slate-100 shadow-sm">
                 <div className="w-10 h-10 rounded-md bg-brand-orange/15 flex items-center justify-center mb-3">
@@ -25,7 +26,7 @@ export function ProgramsThematic() {
                 </div>
                 <h3 className="font-bold text-sm mb-1">{p.title}</h3>
                 <p className="text-xs text-slate-600 mb-2">{p.desc}</p>
-                <a href="#" className="text-xs font-semibold text-brand-green inline-flex items-center gap-1">Read More <ArrowRight className="w-3 h-3" /></a>
+                <Link to={p.href} className="text-xs font-semibold text-brand-green inline-flex items-center gap-1 hover:underline">Read More <ArrowRight className="w-3 h-3" /></Link>
               </div>
             ))}
           </div>

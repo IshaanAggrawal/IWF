@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import NewsEventsPage from "@/Pages/NewsEventsPage";
+import NewsEventsPage from "@/Pages/Media/NewsEventsPage";
 
 export const Route = createFileRoute("/news-and-events")({
   head: () => ({

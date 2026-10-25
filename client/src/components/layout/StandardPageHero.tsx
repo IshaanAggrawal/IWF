@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import type { ReactNode } from "react";
+import { Link } from "@tanstack/react-router";
 import { Home, ChevronRight, ChevronLeft, Pause, Play } from "lucide-react";
 import defaultHeroImg from "@/assets/contact-hands-hero.jpg";
 import aboutHero from "@/assets/about-hero.jpg";
@@ -113,14 +114,14 @@ export function StandardPageHero({
 
   return (
     <section
-      className="bg-[#071527] text-white min-h-[300px] sm:min-h-[330px] md:min-h-[360px] lg:min-h-[390px] flex flex-col justify-center py-6 sm:py-8 md:py-10 relative overflow-hidden select-none"
+      className="bg-[#071527] text-white min-h-[280px] sm:min-h-[300px] md:min-h-[320px] lg:min-h-[340px] flex flex-col justify-center py-5 sm:py-6 md:py-7 relative overflow-hidden select-none"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         {/* Top Breadcrumb */}
         {breadcrumb.length > 0 && (
-          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-white/70 mb-4 flex-wrap select-none">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-white/70 mb-2 sm:mb-2.5 flex-wrap select-none">
             <Link to="/" className="hover:text-white transition-colors flex items-center gap-1">
               <Home className="w-3.5 h-3.5 text-brand-orange" />
               <span>Home</span>
@@ -133,9 +134,9 @@ export function StandardPageHero({
                   {isLast || !b.href ? (
                     <span className="text-brand-orange font-bold">{b.label}</span>
                   ) : (
-                    <a href={b.href} className="hover:text-white transition-colors">
+                    <Link to={b.href as any} className="hover:text-white transition-colors">
                       {b.label}
-                    </a>
+                    </Link>
                   )}
                 </div>
               );
@@ -144,11 +145,11 @@ export function StandardPageHero({
         )}
 
         {/* Main Hero Grid: Left Content + Right Organic Composition */}
-        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-12 items-center">
+        <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-4 sm:gap-6 lg:gap-8 items-center">
           {/* Left Column: Heading, Copy & Cards */}
-          <div className="space-y-4 sm:space-y-5 text-left">
+          <div className="space-y-2 sm:space-y-2.5 text-left">
             {badge && (
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-widest text-brand-orange mb-1">
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-3 py-0.5 rounded-full text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest text-brand-orange mb-0.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse" />
                 {badge}
               </div>
@@ -275,8 +276,8 @@ export function StandardPageHero({
           </div>
 
           {/* Right Column: Native Organic Composition with Smooth Slider */}
-          <div className="relative flex items-center justify-center lg:justify-end">
-            <div className="relative w-full max-w-[440px] sm:max-w-[480px] aspect-[1.15/1]">
+          <div className="relative flex items-center justify-center lg:justify-end lg:-translate-x-[100px]">
+            <div className="relative w-full max-w-[280px] sm:max-w-[310px] md:max-w-[340px] aspect-[1.15/1]">
               {/* Background Soft Blue Organic Backdrop Layer */}
               <div
                 className="absolute inset-2 bg-[#122e54] -rotate-3 scale-105 opacity-90 transition-transform pointer-events-none"
@@ -383,7 +384,7 @@ export function StandardPageHero({
       </div>
 
       {/* ── Curved Bottom Wave Divider ── */}
-      <div className="relative w-full overflow-hidden leading-none z-10 mt-3 md:mt-4">
+      <div className="relative w-full overflow-hidden leading-none z-10 mt-1 md:mt-2">
         <svg
           viewBox="0 0 1440 90"
           fill="none"

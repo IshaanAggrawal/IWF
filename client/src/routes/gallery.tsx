@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import GalleryPage from "@/Pages/GalleryPage";
+import GalleryPage from "@/Pages/Media/GalleryPage";
 
 export const Route = createFileRoute("/gallery")({
   head: () => ({

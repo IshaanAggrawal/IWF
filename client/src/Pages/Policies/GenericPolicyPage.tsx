@@ -58,14 +58,30 @@ export default function GenericPolicyPage({ slug }: { slug: ExtendedPolicySlug }
                       {sec.heading}
                     </h2>
                     {Array.isArray(sec.body) ? (
-                      <ul className="space-y-2 pl-2">
-                        {sec.body.map((item, itemIdx) => (
-                          <li key={itemIdx} className="flex items-start gap-2.5 text-sm text-slate-600 leading-relaxed">
-                            <CheckCircle2 className="w-4 h-4 text-brand-green shrink-0 mt-0.5" />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
+                      <div className="space-y-3">
+                        {sec.body.map((item, itemIdx) => {
+                          if (item.endsWith(":") && !item.startsWith("•")) {
+                            return (
+                              <p key={itemIdx} className="font-semibold text-slate-800 text-sm md:text-base pt-1">
+                                {item}
+                              </p>
+                            );
+                          }
+                          if (item.startsWith("• ")) {
+                            return (
+                              <div key={itemIdx} className="flex items-start gap-2.5 pl-2 text-sm text-slate-600 leading-relaxed">
+                                <CheckCircle2 className="w-4 h-4 text-brand-green shrink-0 mt-0.5" />
+                                <span>{item.slice(2)}</span>
+                              </div>
+                            );
+                          }
+                          return (
+                            <p key={itemIdx} className="text-sm md:text-base text-slate-600 leading-relaxed">
+                              {item}
+                            </p>
+                          );
+                        })}
+                      </div>
                     ) : (
                       <p className="text-sm md:text-base text-slate-600 leading-relaxed">
                         {sec.body}
@@ -83,7 +99,7 @@ export default function GenericPolicyPage({ slug }: { slug: ExtendedPolicySlug }
                   <FileText className="w-4 h-4 text-brand-orange" /> Policy Information
                 </h3>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  This document forms an integral part of Islah Welfare Foundation's governance standards and administrative policies.
+                  This document forms an integral part of Islah Welfare Foundation's governance standards, legal compliance, and operational policies.
                 </p>
                 <div className="space-y-3 pt-2 text-xs">
                   <div className="flex items-center justify-between p-2.5 rounded bg-slate-50 border border-slate-100">
@@ -91,9 +107,27 @@ export default function GenericPolicyPage({ slug }: { slug: ExtendedPolicySlug }
                     <span className="font-bold text-[#0b1f3b]">Islah India</span>
                   </div>
                   <div className="flex items-center justify-between p-2.5 rounded bg-slate-50 border border-slate-100">
+                    <span className="font-semibold text-slate-600">Category:</span>
+                    <span className="font-bold text-brand-orange">{content.category}</span>
+                  </div>
+                  <div className="flex items-center justify-between p-2.5 rounded bg-slate-50 border border-slate-100">
+                    <span className="font-semibold text-slate-600">Effective Date:</span>
+                    <span className="font-bold text-slate-800">{content.effectiveDate || "01/04/2026"}</span>
+                  </div>
+                  <div className="flex items-center justify-between p-2.5 rounded bg-slate-50 border border-slate-100">
                     <span className="font-semibold text-slate-600">Compliance:</span>
                     <span className="font-bold text-brand-green">Statutory Standard</span>
                   </div>
+                </div>
+
+                <div className="pt-2">
+                  <a
+                    href="/policies"
+                    className="inline-flex items-center justify-center gap-1.5 w-full py-2.5 px-3 bg-slate-100 hover:bg-slate-200 text-[#0b1f3b] font-bold text-xs rounded-lg transition-colors border border-slate-200"
+                  >
+                    <span>View All 19 Policies</span>
+                    <ChevronRight className="w-3.5 h-3.5 text-brand-orange" />
+                  </a>
                 </div>
               </div>
 
@@ -104,11 +138,11 @@ export default function GenericPolicyPage({ slug }: { slug: ExtendedPolicySlug }
                 </p>
                 <div className="space-y-2 text-xs pt-1">
                   <div className="flex items-center gap-2">
-                    <Mail className="w-4 h-4 text-brand-orange" />
+                    <Mail className="w-4 h-4 text-brand-orange shrink-0" />
                     <span>{CONTACT_DETAILS.email}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Phone className="w-4 h-4 text-brand-orange" />
+                    <Phone className="w-4 h-4 text-brand-orange shrink-0" />
                     <span>{CONTACT_DETAILS.phone}</span>
                   </div>
                 </div>

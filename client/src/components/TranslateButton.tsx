@@ -41,16 +41,12 @@ const LANGUAGES = [
 ];
 
 export const FOUNDATION_ADDRESSES: Record<string, string> = {
-  en: "B-144, Abul Fazal Enclave-II, Okhla, New Delhi-110025, India",
-  ur: "بی-144، ابوالفضل انکلیو-II، اوکھلا، نئی دہلی، پن کوڈ: \u200E110025\u200E، ہندوستان",
-  ar: "بي-144، مجمع أبو الفضل الثاني، أوكلا، نيو دلهي، الرمز البريدي: \u200E110025\u200E، الهند",
-  hi: "बी-144, अबुल फज़ल एन्क्लेव-II, ओखला, नई दिल्ली-110025, भारत",
-  bn: "বি-১৪৪, আবুল ফজল এনক্লেভ-২, ওখলা, নতুন দিল্লি-১১০0২৫, ভারত",
+  en: "B-144, Abul Fazal Enclave-II, Okhla, New Delhi - 110025, India",
 };
 
-export function getLocalizedAddress(langCode?: string): string {
-  const code = langCode || (typeof document !== "undefined" ? getCookieLang() : "en");
-  return FOUNDATION_ADDRESSES[code] || FOUNDATION_ADDRESSES.en;
+export function getLocalizedAddress(_langCode?: string): string {
+  // Always keep canonical English address fixed irrespective of language selection
+  return "B-144, Abul Fazal Enclave-II, Okhla, New Delhi - 110025, India";
 }
 
 export function useCurrentLanguage(): string {
@@ -116,13 +112,33 @@ const SUPPRESSION_CSS = `
     pointer-events: none !important;
   }
 
-  /* Ensure form controls and notranslate elements stay LTR without making text editable */
-  .notranslate, [translate="no"] {
+  /* Ensure form controls, brand, addresses, and notranslate elements stay strictly LTR */
+  .notranslate, [translate="no"],
+  .notranslate *, [translate="no"] * {
+    direction: ltr !important;
+    unicode-bidi: isolate !important;
+  }
+
+  form, form *, input, textarea, select, label, .form-container, [role="dialog"], .brand-fixed, .address-fixed {
     direction: ltr !important;
   }
 
-  input, textarea, select {
+  /* When page is translated to RTL (Urdu, Arabic, etc.), protect English-fixed zones from flipping or breaking */
+  html.translated-rtl .notranslate,
+  body.translated-rtl .notranslate,
+  html.translated-rtl [translate="no"],
+  body.translated-rtl [translate="no"],
+  html.translated-rtl form,
+  body.translated-rtl form,
+  html.translated-rtl .brand-fixed,
+  body.translated-rtl .brand-fixed,
+  html.translated-rtl .address-fixed,
+  body.translated-rtl .address-fixed,
+  html.translated-rtl .form-container,
+  body.translated-rtl .form-container {
     direction: ltr !important;
+    text-align: left !important;
+    unicode-bidi: isolate !important;
   }
 
   /* Prevent any unintentional content editing on text, labels, forms, or links throughout the site */
@@ -139,9 +155,12 @@ const SUPPRESSION_CSS = `
 function initFormProtection() {
   if (typeof document === "undefined") return;
   const protect = () => {
-    document.querySelectorAll("form, input, textarea, select, .form-container").forEach((el) => {
+    document.querySelectorAll(
+      "form, input, textarea, select, .form-container, [role='dialog'], address, .notranslate-address, .address-fixed, .brand-fixed, .islah-brand, [data-notranslate]"
+    ).forEach((el) => {
       el.setAttribute("translate", "no");
       el.classList.add("notranslate");
+      (el as HTMLElement).dir = "ltr";
     });
   };
   protect();
@@ -154,12 +173,12 @@ function initFormProtection() {
 
 function injectSuppressionStyle() {
   if (typeof document === "undefined") return;
+  initFormProtection();
   if (document.getElementById(SUPPRESSION_STYLE_ID)) return;
   const style = document.createElement("style");
   style.id = SUPPRESSION_STYLE_ID;
   style.textContent = SUPPRESSION_CSS;
   document.head.appendChild(style);
-  initFormProtection();
 }
 
 function injectTranslateContainer() {
@@ -239,6 +258,8 @@ export function initGoogleTranslate(): Promise<void> {
   if (typeof window === "undefined" || typeof document === "undefined") {
     return Promise.resolve();
   }
+
+  injectSuppressionStyle();
 
   if (window._iwfTranslateReady && document.querySelector(".goog-te-combo")) {
     return Promise.resolve();
@@ -579,4 +600,8 @@ export function TranslateButton({ className = "" }: { className?: string }) {
       }
     </div>
   );
+}
+
+if (typeof document !== "undefined") {
+  injectSuppressionStyle();
 }

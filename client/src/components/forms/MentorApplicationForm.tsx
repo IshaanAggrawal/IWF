@@ -296,7 +296,7 @@ export function MentorApplicationForm({ onSuccess, isModal = false }: MentorAppl
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 text-left notranslate" translate="no">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 text-left notranslate" translate="no" dir="ltr">
       {/* ── 1. BASIC INFORMATION ── */}
       <div>
         <div className="border-b border-slate-200 pb-2 mb-4">

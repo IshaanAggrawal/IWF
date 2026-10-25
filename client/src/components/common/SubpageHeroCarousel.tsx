@@ -28,7 +28,7 @@ export default function SubpageHeroCarousel({
   subtitle,
   breadcrumbs = [{ label: "About Us", href: "/about" }],
   images = DEFAULT_SLIDES,
-  heightClass = "min-h-[300px] sm:min-h-[330px] md:min-h-[360px] lg:min-h-[390px]",
+  heightClass = "min-h-[280px] sm:min-h-[300px] md:min-h-[320px] lg:min-h-[340px]",
 }: SubpageHeroCarouselProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isManualPaused, setIsManualPaused] = useState(false);
@@ -82,14 +82,14 @@ export default function SubpageHeroCarousel({
 
   return (
     <section
-      className={`bg-[#071527] text-white flex flex-col justify-center py-6 sm:py-8 md:py-10 relative overflow-hidden select-none group ${heightClass}`}
+      className={`bg-[#071527] text-white flex flex-col justify-center py-5 sm:py-6 md:py-7 relative overflow-hidden select-none group ${heightClass}`}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         {/* Top Breadcrumb */}
         {breadcrumbs.length > 0 && (
-          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-white/70 mb-3 sm:mb-4 flex-wrap select-none">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-white/70 mb-2 sm:mb-2.5 flex-wrap select-none">
             <a href="/" className="hover:text-white transition-colors flex items-center gap-1">
               <Home className="w-3.5 h-3.5 text-brand-orange" />
               <span>Home</span>
@@ -113,11 +113,11 @@ export default function SubpageHeroCarousel({
         )}
 
         {/* Main Grid: Left Content + Right Organic Composition Slider */}
-        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-6 lg:gap-10 items-center">
+        <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-4 sm:gap-6 lg:gap-8 items-center">
           {/* Left Column: Heading & Subtitle */}
-          <div className="space-y-3 sm:space-y-4 text-left">
+          <div className="space-y-2 sm:space-y-2.5 text-left">
             {tag && (
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-widest text-brand-orange mb-1">
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-3 py-0.5 rounded-full text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest text-brand-orange mb-0.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse" />
                 {tag}
               </div>
@@ -190,8 +190,8 @@ export default function SubpageHeroCarousel({
           </div>
 
           {/* Right Column: Native Organic Composition with Smooth Slider */}
-          <div className="relative flex items-center justify-center lg:justify-end">
-            <div className="relative w-full max-w-[340px] sm:max-w-[380px] md:max-w-[420px] aspect-[1.15/1]">
+          <div className="relative flex items-center justify-center lg:justify-end lg:-translate-x-[100px]">
+            <div className="relative w-full max-w-[280px] sm:max-w-[310px] md:max-w-[340px] aspect-[1.15/1]">
               {/* Background Soft Blue Organic Backdrop Layer */}
               <div
                 className="absolute inset-2 bg-[#122e54] -rotate-3 scale-105 opacity-90 transition-transform pointer-events-none"
@@ -299,7 +299,7 @@ export default function SubpageHeroCarousel({
       </div>
 
       {/* Curved Bottom Wave Divider */}
-      <div className="relative w-full overflow-hidden leading-none z-10 mt-3 md:mt-4">
+      <div className="relative w-full overflow-hidden leading-none z-10 mt-1 md:mt-2">
         <svg
           viewBox="0 0 1440 90"
           fill="none"
