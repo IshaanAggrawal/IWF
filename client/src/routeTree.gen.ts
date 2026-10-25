@@ -13,7 +13,6 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AnnualReportsRouteImport } from './routes/annual-reports'
 import { Route as AntiFraudPolicyRouteImport } from './routes/anti-fraud-policy'
-import { Route as BrandAssetsRouteImport } from './routes/brand-assets'
 import { Route as CareersRouteImport } from './routes/careers'
 import { Route as ChildProtectionPolicyRouteImport } from './routes/child-protection-policy'
 import { Route as CodeOfConductRouteImport } from './routes/code-of-conduct'
@@ -63,7 +62,6 @@ import { Route as CampaignIndexRouteImport } from './routes/campaign/index'
 import { Route as CampaignCampaignSlugRouteImport } from './routes/campaign/$campaignSlug'
 import { Route as MediaIndexRouteImport } from './routes/media/index'
 import { Route as MediaAnnualReportsRouteImport } from './routes/media/annual-reports'
-import { Route as MediaBrandAssetsRouteImport } from './routes/media/brand-assets'
 import { Route as MediaGalleryRouteImport } from './routes/media/gallery'
 import { Route as MediaImpactStatisticsRouteImport } from './routes/media/impact-statistics'
 import { Route as MediaLatestUpdatesRouteImport } from './routes/media/latest-updates'
@@ -168,11 +166,6 @@ const AnnualReportsRoute = AnnualReportsRouteImport.update({
 const AntiFraudPolicyRoute = AntiFraudPolicyRouteImport.update({
   id: '/anti-fraud-policy',
   path: '/anti-fraud-policy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BrandAssetsRoute = BrandAssetsRouteImport.update({
-  id: '/brand-assets',
-  path: '/brand-assets',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CareersRoute = CareersRouteImport.update({
@@ -419,11 +412,6 @@ const MediaIndexRoute = MediaIndexRouteImport.update({
 const MediaAnnualReportsRoute = MediaAnnualReportsRouteImport.update({
   id: '/media/annual-reports',
   path: '/media/annual-reports',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MediaBrandAssetsRoute = MediaBrandAssetsRouteImport.update({
-  id: '/media/brand-assets',
-  path: '/media/brand-assets',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MediaGalleryRoute = MediaGalleryRouteImport.update({
@@ -929,7 +917,6 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/annual-reports': typeof AnnualReportsRoute
   '/anti-fraud-policy': typeof AntiFraudPolicyRoute
-  '/brand-assets': typeof BrandAssetsRoute
   '/careers': typeof CareersRoute
   '/child-protection-policy': typeof ChildProtectionPolicyRoute
   '/code-of-conduct': typeof CodeOfConductRoute
@@ -977,7 +964,6 @@ export interface FileRoutesByFullPath {
   '/about/vision-2047': typeof AboutVision2047Route
   '/campaign/$campaignSlug': typeof CampaignCampaignSlugRoute
   '/media/annual-reports': typeof MediaAnnualReportsRoute
-  '/media/brand-assets': typeof MediaBrandAssetsRoute
   '/media/gallery': typeof MediaGalleryRoute
   '/media/impact-statistics': typeof MediaImpactStatisticsRoute
   '/media/latest-updates': typeof MediaLatestUpdatesRoute
@@ -1071,7 +1057,6 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/annual-reports': typeof AnnualReportsRoute
   '/anti-fraud-policy': typeof AntiFraudPolicyRoute
-  '/brand-assets': typeof BrandAssetsRoute
   '/careers': typeof CareersRoute
   '/child-protection-policy': typeof ChildProtectionPolicyRoute
   '/code-of-conduct': typeof CodeOfConductRoute
@@ -1119,7 +1104,6 @@ export interface FileRoutesByTo {
   '/about/vision-2047': typeof AboutVision2047Route
   '/campaign/$campaignSlug': typeof CampaignCampaignSlugRoute
   '/media/annual-reports': typeof MediaAnnualReportsRoute
-  '/media/brand-assets': typeof MediaBrandAssetsRoute
   '/media/gallery': typeof MediaGalleryRoute
   '/media/impact-statistics': typeof MediaImpactStatisticsRoute
   '/media/latest-updates': typeof MediaLatestUpdatesRoute
@@ -1214,7 +1198,6 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/annual-reports': typeof AnnualReportsRoute
   '/anti-fraud-policy': typeof AntiFraudPolicyRoute
-  '/brand-assets': typeof BrandAssetsRoute
   '/careers': typeof CareersRoute
   '/child-protection-policy': typeof ChildProtectionPolicyRoute
   '/code-of-conduct': typeof CodeOfConductRoute
@@ -1262,7 +1245,6 @@ export interface FileRoutesById {
   '/about_/vision-2047': typeof AboutVision2047Route
   '/campaign/$campaignSlug': typeof CampaignCampaignSlugRoute
   '/media/annual-reports': typeof MediaAnnualReportsRoute
-  '/media/brand-assets': typeof MediaBrandAssetsRoute
   '/media/gallery': typeof MediaGalleryRoute
   '/media/impact-statistics': typeof MediaImpactStatisticsRoute
   '/media/latest-updates': typeof MediaLatestUpdatesRoute
@@ -1358,7 +1340,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/annual-reports'
     | '/anti-fraud-policy'
-    | '/brand-assets'
     | '/careers'
     | '/child-protection-policy'
     | '/code-of-conduct'
@@ -1406,7 +1387,6 @@ export interface FileRouteTypes {
     | '/about/vision-2047'
     | '/campaign/$campaignSlug'
     | '/media/annual-reports'
-    | '/media/brand-assets'
     | '/media/gallery'
     | '/media/impact-statistics'
     | '/media/latest-updates'
@@ -1500,7 +1480,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/annual-reports'
     | '/anti-fraud-policy'
-    | '/brand-assets'
     | '/careers'
     | '/child-protection-policy'
     | '/code-of-conduct'
@@ -1548,7 +1527,6 @@ export interface FileRouteTypes {
     | '/about/vision-2047'
     | '/campaign/$campaignSlug'
     | '/media/annual-reports'
-    | '/media/brand-assets'
     | '/media/gallery'
     | '/media/impact-statistics'
     | '/media/latest-updates'
@@ -1642,7 +1620,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/annual-reports'
     | '/anti-fraud-policy'
-    | '/brand-assets'
     | '/careers'
     | '/child-protection-policy'
     | '/code-of-conduct'
@@ -1690,7 +1667,6 @@ export interface FileRouteTypes {
     | '/about_/vision-2047'
     | '/campaign/$campaignSlug'
     | '/media/annual-reports'
-    | '/media/brand-assets'
     | '/media/gallery'
     | '/media/impact-statistics'
     | '/media/latest-updates'
@@ -1785,7 +1761,6 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AnnualReportsRoute: typeof AnnualReportsRoute
   AntiFraudPolicyRoute: typeof AntiFraudPolicyRoute
-  BrandAssetsRoute: typeof BrandAssetsRoute
   CareersRoute: typeof CareersRoute
   ChildProtectionPolicyRoute: typeof ChildProtectionPolicyRoute
   CodeOfConductRoute: typeof CodeOfConductRoute
@@ -1833,7 +1808,6 @@ export interface RootRouteChildren {
   AboutVision2047Route: typeof AboutVision2047Route
   CampaignCampaignSlugRoute: typeof CampaignCampaignSlugRoute
   MediaAnnualReportsRoute: typeof MediaAnnualReportsRoute
-  MediaBrandAssetsRoute: typeof MediaBrandAssetsRoute
   MediaGalleryRoute: typeof MediaGalleryRoute
   MediaImpactStatisticsRoute: typeof MediaImpactStatisticsRoute
   MediaLatestUpdatesRoute: typeof MediaLatestUpdatesRoute
@@ -1951,13 +1925,6 @@ declare module '@tanstack/react-router' {
       path: '/anti-fraud-policy'
       fullPath: '/anti-fraud-policy'
       preLoaderRoute: typeof AntiFraudPolicyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/brand-assets': {
-      id: '/brand-assets'
-      path: '/brand-assets'
-      fullPath: '/brand-assets'
-      preLoaderRoute: typeof BrandAssetsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/careers': {
@@ -2301,13 +2268,6 @@ declare module '@tanstack/react-router' {
       path: '/media/annual-reports'
       fullPath: '/media/annual-reports'
       preLoaderRoute: typeof MediaAnnualReportsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/media/brand-assets': {
-      id: '/media/brand-assets'
-      path: '/media/brand-assets'
-      fullPath: '/media/brand-assets'
-      preLoaderRoute: typeof MediaBrandAssetsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/media/gallery': {
@@ -2913,7 +2873,6 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AnnualReportsRoute: AnnualReportsRoute,
   AntiFraudPolicyRoute: AntiFraudPolicyRoute,
-  BrandAssetsRoute: BrandAssetsRoute,
   CareersRoute: CareersRoute,
   ChildProtectionPolicyRoute: ChildProtectionPolicyRoute,
   CodeOfConductRoute: CodeOfConductRoute,
@@ -2961,7 +2920,6 @@ const rootRouteChildren: RootRouteChildren = {
   AboutVision2047Route: AboutVision2047Route,
   CampaignCampaignSlugRoute: CampaignCampaignSlugRoute,
   MediaAnnualReportsRoute: MediaAnnualReportsRoute,
-  MediaBrandAssetsRoute: MediaBrandAssetsRoute,
   MediaGalleryRoute: MediaGalleryRoute,
   MediaImpactStatisticsRoute: MediaImpactStatisticsRoute,
   MediaLatestUpdatesRoute: MediaLatestUpdatesRoute,

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import PressReleasesPage from "@/Pages/Media/PressReleasesPage";
+import { NewsEventsPage } from "@/Pages/Media/NewsEventsPage";
 
 export const Route = createFileRoute("/press-releases")({
   head: () => ({
@@ -12,5 +12,5 @@ export const Route = createFileRoute("/press-releases")({
       },
     ],
   }),
-  component: PressReleasesPage,
+  component: NewsEventsPage,
 });

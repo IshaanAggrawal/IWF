@@ -9,8 +9,6 @@ import newslettersHero from "@/assets/media/newsletters_hero.jpg";
 import publicationsHero from "@/assets/media/publications_hero.jpg";
 import pressReleasesHero from "@/assets/media/press_releases_hero.jpg";
 import galleryHero from "@/assets/media/gallery_hero.jpg";
-import newLogo from "@/assets/new logo.png";
-import mainLogo from "@/assets/logo.png";
 
 import outcomeSectorEdu from "@/assets/media/outcome_sector_education.jpg";
 import outcomeSectorHealth from "@/assets/media/outcome_sector_healthcare.jpg";
@@ -84,8 +82,8 @@ export const MEDIA_HERO_IMAGES = {
 // -------------------------------------------------------------
 export const OUTCOMES_DATA = {
   hero: {
-    badge: "OUR OUTCOMES",
-    title: "REAL CHANGE. STRONGER COMMUNITIES.",
+    badge: "OUTCOMES & IMPACT",
+    title: "REAL CHANGE. MEASURABLE COMMUNITY OUTCOMES.",
     description:
       "Our outcomes reflect the impact of our community-driven initiatives across education, health, empowerment, livelihoods, environment, and sustainable development.",
     subtext: "Together, we are building a better and brighter tomorrow.",
@@ -163,6 +161,47 @@ export const OUTCOMES_DATA = {
         "Stronger, United Communities",
       ],
     },
+  ],
+  themes: [
+    { name: "Education & Child Development", count: "8,000+", percentage: 16, color: "#2563eb" },
+    { name: "Healthcare & Wellness", count: "6,000+", percentage: 12, color: "#059669" },
+    { name: "Livelihood & Skill Development", count: "5,500+", percentage: 11, color: "#d97706" },
+    { name: "Women Empowerment", count: "4,000+", percentage: 8, color: "#db2777" },
+    { name: "Agriculture & Livelihood", count: "2,500+", percentage: 5, color: "#16a34a" },
+    { name: "Environment & Sustainability", count: "15,000+", percentage: 30, color: "#0d9488" },
+    { name: "Community Development", count: "35,000+", percentage: 18, color: "#7c3aed" },
+  ],
+  totalCumulativeImpact: "71,000+",
+  growthHistory: [
+    { year: "2016-17", value: "8K", num: 8, heightPct: 18 },
+    { year: "2017-18", value: "12K", num: 12, heightPct: 26 },
+    { year: "2018-19", value: "16K", num: 16, heightPct: 34 },
+    { year: "2019-20", value: "26K", num: 26, heightPct: 48 },
+    { year: "2020-21", value: "34K", num: 34, heightPct: 60 },
+    { year: "2021-22", value: "42K", num: 42, heightPct: 70 },
+    { year: "2022-23", value: "55K", num: 55, heightPct: 84 },
+    { year: "2023-24", value: "71K", num: 71, heightPct: 100 },
+  ],
+  growthNote: "Consistent growth, deeper reach, greater impact. Every year, we reach more lives and build stronger communities.",
+  reach: {
+    villages: "300+",
+    districts: "15+",
+    states: "5 States",
+    stateList: ["Bihar (Darbhanga, Madhubani, Samastipur)", "Delhi NCR", "Uttar Pradesh", "Jharkhand", "West Bengal"],
+  },
+  beneficiaries: [
+    { count: "28,000+", label: "Children", desc: "Enrolled in schools and remedial learning centres" },
+    { count: "21,000+", label: "Women", desc: "Empowered through SHGs and health education" },
+    { count: "15,000+", label: "Youth", desc: "Trained in vocational and employment skills" },
+    { count: "7,000+", label: "Senior Citizens", desc: "Provided free medical diagnostics and relief" },
+  ],
+  beneficiaryQuote: "These numbers are not just statistics; they represent real people, real stories, and real change. Together, we can create an even greater impact in the years to come.",
+  principles: [
+    { title: "Data Driven", desc: "Decisions", icon: "PieChart" },
+    { title: "Transparent", desc: "Reporting", icon: "FileText" },
+    { title: "Measurable", desc: "Outcomes", icon: "Target" },
+    { title: "Sustainable", desc: "Change", icon: "Leaf" },
+    { title: "Community", desc: "Focused", icon: "Users" },
   ],
   communityMetrics: [
     { value: "300+", label: "Villages Reached" },
@@ -343,67 +382,9 @@ export const SUCCESS_STORIES_DATA = {
 };
 
 // -------------------------------------------------------------
-// 3. IMPACT STATISTICS DATA (Page 5)
+// 3. IMPACT STATISTICS DATA (Consolidated into Outcomes & Impact)
 // -------------------------------------------------------------
-export const IMPACT_STATISTICS_DATA = {
-  hero: {
-    badge: "IMPACT STATISTICS",
-    title: "Real Impact. Measurable Change.",
-    description:
-      "Our numbers reflect the change we create together. Explore our impact across communities and see how we are building a stronger, better, and more sustainable tomorrow.",
-    image: impactHero,
-    quote: "Together, we are creating lasting change and empowering communities.",
-  },
-  statsRibbon: [
-    { value: "50,000+", label: "Lives Impacted", desc: "Across rural & underserved communities" },
-    { value: "300+", label: "Villages Reached", desc: "Creating sustainable development" },
-    { value: "25+", label: "Ongoing Programs", desc: "Addressing key social development needs" },
-    { value: "500+", label: "Community Volunteers", desc: "United in the mission of positive change" },
-    { value: "100+", label: "Partners & Supporters", desc: "Collaborating for greater impact" },
-    { value: "10+", label: "Years of Impact", desc: "Dedicated to building stronger communities" },
-  ],
-  themes: [
-    { name: "Education & Child Development", count: "8,000+", percentage: 16, color: "#2563eb" },
-    { name: "Healthcare & Wellness", count: "6,000+", percentage: 12, color: "#059669" },
-    { name: "Livelihood & Skill Development", count: "5,500+", percentage: 11, color: "#d97706" },
-    { name: "Women Empowerment", count: "4,000+", percentage: 8, color: "#db2777" },
-    { name: "Agriculture & Livelihood", count: "2,500+", percentage: 5, color: "#16a34a" },
-    { name: "Environment & Sustainability", count: "15,000+", percentage: 30, color: "#0d9488" },
-    { name: "Community Development", count: "35,000+", percentage: 18, color: "#7c3aed" },
-  ],
-  totalCumulativeImpact: "71,000+",
-  growthHistory: [
-    { year: "2016-17", value: "8K", num: 8, heightPct: 18 },
-    { year: "2017-18", value: "12K", num: 12, heightPct: 26 },
-    { year: "2018-19", value: "16K", num: 16, heightPct: 34 },
-    { year: "2019-20", value: "26K", num: 26, heightPct: 48 },
-    { year: "2020-21", value: "34K", num: 34, heightPct: 60 },
-    { year: "2021-22", value: "42K", num: 42, heightPct: 70 },
-    { year: "2022-23", value: "55K", num: 55, heightPct: 84 },
-    { year: "2023-24", value: "71K", num: 71, heightPct: 100 },
-  ],
-  growthNote: "Consistent growth, deeper reach, greater impact. Every year, we reach more lives and build stronger communities.",
-  reach: {
-    villages: "300+",
-    districts: "15+",
-    states: "5 States",
-    stateList: ["Bihar (Darbhanga, Madhubani, Samastipur)", "Delhi NCR", "Uttar Pradesh", "Jharkhand", "West Bengal"],
-  },
-  beneficiaries: [
-    { count: "28,000+", label: "Children", desc: "Enrolled in schools and remedial learning centres" },
-    { count: "21,000+", label: "Women", desc: "Empowered through SHGs and health education" },
-    { count: "15,000+", label: "Youth", desc: "Trained in vocational and employment skills" },
-    { count: "7,000+", label: "Senior Citizens", desc: "Provided free medical diagnostics and relief" },
-  ],
-  beneficiaryQuote: "These numbers are not just statistics; they represent real people, real stories, and real change. Together, we can create an even greater impact in the years to come.",
-  principles: [
-    { title: "Data Driven", desc: "Decisions", icon: "PieChart" },
-    { title: "Transparent", desc: "Reporting", icon: "FileText" },
-    { title: "Measurable", desc: "Outcomes", icon: "Target" },
-    { title: "Sustainable", desc: "Change", icon: "Leaf" },
-    { title: "Community", desc: "Focused", icon: "Users" },
-  ],
-};
+export const IMPACT_STATISTICS_DATA = OUTCOMES_DATA;
 
 // -------------------------------------------------------------
 // 4. ANNUAL REPORTS DATA (Page 6)
@@ -524,8 +505,8 @@ export const MEDIA_HUB_DATA = {
   ],
   sections: [
     {
-      title: "Our Outcomes",
-      desc: "Comprehensive review of systemic transformations across healthcare, education, livelihoods, and rural sustainability.",
+      title: "Outcomes & Impact",
+      desc: "Comprehensive review of systemic transformations, verified metrics, and interactive district-level distribution data across our ongoing missions.",
       image: outcomeSectorEdu,
       link: "/media/outcomes",
       actionText: "Explore Outcomes",
@@ -538,11 +519,11 @@ export const MEDIA_HUB_DATA = {
       actionText: "Read Stories",
     },
     {
-      title: "Impact Statistics",
-      desc: "Transparent numbers, verified metrics, and interactive district-level distribution data across our ongoing missions.",
-      image: outcomeSectorComm,
-      link: "/media/impact-statistics",
-      actionText: "View Statistics",
+      title: "News & Events",
+      desc: "Live field dispatches, official press releases, community health camps, and upcoming initiatives driving grassroots change.",
+      image: outcomeSectorHealth,
+      link: "/media/news-and-events",
+      actionText: "View News & Events",
     },
     {
       title: "Annual Reports",
@@ -552,11 +533,11 @@ export const MEDIA_HUB_DATA = {
       actionText: "Download Reports",
     },
     {
-      title: "News & Events",
-      desc: "Community health camps, scholarship distribution ceremonies, skill development workshops, and youth leadership summits.",
-      image: outcomeSectorHealth,
-      link: "/media/news-and-events",
-      actionText: "View All Events",
+      title: "Publications & Research",
+      desc: "Explore our research briefs, quarterly newsletters, longitudinal impact studies, and open-access policy papers.",
+      image: pubCover1,
+      link: "/media/publications",
+      actionText: "Explore Research",
     },
     {
       title: "Photo & Video Gallery",
@@ -588,37 +569,37 @@ export const MEDIA_HUB_DATA = {
   ],
   subsections: [
     {
+      title: "Outcomes & Impact",
+      desc: "Measurable grassroots outcomes and verified field statistics.",
+      href: "/media/outcomes",
+      icon: "TrendingUp",
+    },
+    {
+      title: "Success Stories",
+      desc: "Inspiring first-person narratives of personal transformation.",
+      href: "/media/success-stories",
+      icon: "Heart",
+    },
+    {
       title: "News & Events",
-      desc: "Discover our recent news, events and happenings.",
+      desc: "Field news, press statements, and upcoming events.",
       href: "/media/news-and-events",
       icon: "FileText",
     },
     {
-      title: "Latest Updates",
-      desc: "Get the most recent updates and announcements.",
-      href: "/media/latest-updates",
-      icon: "Bell",
+      title: "Annual Reports",
+      desc: "Audited financial reports and transparent disclosures.",
+      href: "/media/annual-reports",
+      icon: "Download",
     },
     {
-      title: "Newsletters",
-      desc: "Read our newsletters and stay connected with our journey.",
-      href: "/media/newsletters",
-      icon: "Mail",
-    },
-    {
-      title: "Publications",
-      desc: "Explore our reports, books, briefs and knowledge resources.",
+      title: "Publications & Research",
+      desc: "Research briefs, quarterly newsletters and policy papers.",
       href: "/media/publications",
       icon: "BookOpen",
     },
     {
-      title: "Press Releases",
-      desc: "Official statements and press releases from IWF.",
-      href: "/media/press-releases",
-      icon: "Megaphone",
-    },
-    {
-      title: "Gallery",
+      title: "Photo & Video Gallery",
       desc: "Moments captured from our programs and events.",
       href: "/media/gallery",
       icon: "Image",
@@ -633,25 +614,57 @@ export const MEDIA_HUB_DATA = {
 };
 
 // -------------------------------------------------------------
-// 6. NEWS & EVENTS DATA (Page 8)
+// 6. NEWS & EVENTS DATA (Consolidated News, Dispatches & Events)
 // -------------------------------------------------------------
 export const NEWS_EVENTS_DATA = {
   hero: {
     badge: "NEWS & EVENTS",
     breadcrumb: "Home > Media & Updates > News & Events",
     title: "News & Events",
-    description: "Stay informed about our latest activities, events, programs and initiatives that are creating positive change in communities.",
+    description: "Stay informed about our latest activities, field dispatches, official press releases and community initiatives creating positive change.",
     image: newsEventsHero,
   },
   categories: [
     "All",
-    "Programs",
+    "News & Updates",
+    "Events",
+    "Press Releases",
     "Community Activities",
+    "Programs",
     "Campaigns",
-    "Partnerships",
-    "Celebrations",
   ],
   items: [
+    {
+      id: "up-mega-health-camp",
+      date: "25 May 2024",
+      day: "25",
+      month: "May 2024",
+      category: "News & Updates",
+      title: "Successful Mega Health Camp in Darbhanga",
+      excerpt: "Over 600+ rural residents benefited from our free comprehensive health check-up camp organized in partnership with specialist doctors and local pharmacists.",
+      image: outcomeSectorHealth,
+    },
+    {
+      id: "up-learning-center",
+      date: "20 May 2024",
+      day: "20",
+      month: "May 2024",
+      category: "News & Updates",
+      title: "New Community Learning Center Inaugurated in Bihar",
+      excerpt: "A new solar-powered digital learning center was inaugurated to support 250+ rural children with after-school remedial tutoring and foundational STEM tools.",
+      image: outcomeSectorEdu,
+    },
+    {
+      id: "pr-partner-greenfuture",
+      date: "12 May 2024",
+      day: "12",
+      month: "May 2024",
+      category: "Press Releases",
+      title: "IWF Partners with GreenFuture Pvt. Ltd. to Promote Sustainable Rural Development",
+      excerpt: "Islah Welfare Foundation (IWF) has signed a strategic partnership with GreenFuture Pvt. Ltd. to implement environmental and livelihood programs in rural communities.",
+      image: outcomeSectorAgri,
+      pdfUrl: "/docs/islah_brochure.pdf",
+    },
     {
       id: "tree-plantation-world-environment-day",
       date: "12 May 2024",
@@ -663,6 +676,16 @@ export const NEWS_EVENTS_DATA = {
       image: outcomeSectorEnv,
     },
     {
+      id: "up-shg-empowerment",
+      date: "15 May 2024",
+      day: "15",
+      month: "May 2024",
+      category: "News & Updates",
+      title: "SHG Training Program Empowers 120+ Rural Women",
+      excerpt: "Our livelihood program helped rural women develop tailoring, handicraft, and micro-savings skills to launch independent home enterprises and self-help groups.",
+      image: outcomeSectorWomen,
+    },
+    {
       id: "women-empowerment-5-villages",
       date: "08 May 2024",
       day: "08",
@@ -671,6 +694,17 @@ export const NEWS_EVENTS_DATA = {
       title: "Women Empowerment Program Launched in 5 New Villages",
       excerpt: "The program will provide skill training, financial literacy and livelihood support to rural women.",
       image: outcomeSectorWomen,
+    },
+    {
+      id: "pr-women-empowerment",
+      date: "28 April 2024",
+      day: "28",
+      month: "Apr 2024",
+      category: "Press Releases",
+      title: "IWF Launches Women Empowerment Program in 5 New Villages",
+      excerpt: "The initiative will provide skill training, financial literacy and livelihood support to empower women and promote self-reliance.",
+      image: outcomeSectorWomen,
+      pdfUrl: "/docs/islah_brochure.pdf",
     },
     {
       id: "education-support-500-students",
@@ -693,14 +727,15 @@ export const NEWS_EVENTS_DATA = {
       image: outcomeSectorHealth,
     },
     {
-      id: "csr-partnership-greenfuture",
-      date: "18 Apr 2024",
-      day: "18",
+      id: "pr-scholarship-expand",
+      date: "15 April 2024",
+      day: "15",
       month: "Apr 2024",
-      category: "Partnerships",
-      title: "IWF Partners with ABC Pvt. Ltd. for Rural Development",
-      excerpt: "The partnership will focus on skill development, women empowerment and sustainable livelihood initiatives.",
-      image: outcomeSectorSkills,
+      category: "Press Releases",
+      title: "Education for Every Child: IWF Expands Scholarship Program",
+      excerpt: "IWF has expanded its scholarship program to support more deserving students from underprivileged families in pursuing their education.",
+      image: outcomeSectorEdu,
+      pdfUrl: "/docs/islah_brochure.pdf",
     },
     {
       id: "clean-water-sanitation-awareness",
@@ -713,11 +748,22 @@ export const NEWS_EVENTS_DATA = {
       image: outcomeSectorComm,
     },
     {
+      id: "pr-tree-plantation",
+      date: "05 April 2024",
+      day: "05",
+      month: "Apr 2024",
+      category: "Press Releases",
+      title: "IWF Organizes Mega Tree Plantation Drive on World Environment Day",
+      excerpt: "Hundreds of volunteers came together to plant over 10,000 saplings across 20 villages to promote a greener and healthier future.",
+      image: outcomeSectorEnv,
+      pdfUrl: "/docs/islah_brochure.pdf",
+    },
+    {
       id: "international-womens-day-celebration",
       date: "07 Apr 2024",
       day: "07",
       month: "Apr 2024",
-      category: "Celebrations",
+      category: "Events",
       title: "International Women's Day Celebrated with Rural Women",
       excerpt: "We celebrated the strength and achievements of rural women with interactive sessions, games and health check-ups.",
       image: storyWomenImg,
@@ -750,215 +796,46 @@ export const NEWS_EVENTS_DATA = {
     { month: "SEP", day: "10", title: "Community Drinking Water Tap Inauguration", location: "Katihar, Bihar" },
   ],
   categoryCounts: [
-    { name: "All", count: 36 },
-    { name: "Programs", count: 10 },
-    { name: "Community Activities", count: 8 },
-    { name: "Campaigns", count: 7 },
-    { name: "Partnerships", count: 6 },
-    { name: "Celebrations", count: 5 },
+    { name: "All", count: 15 },
+    { name: "News & Updates", count: 3 },
+    { name: "Events", count: 1 },
+    { name: "Press Releases", count: 4 },
+    { name: "Community Activities", count: 3 },
+    { name: "Programs", count: 3 },
+    { name: "Campaigns", count: 1 },
   ],
-};
-
-// -------------------------------------------------------------
-// 7. LATEST UPDATES DATA (Page 9)
-// -------------------------------------------------------------
-export const LATEST_UPDATES_DATA = {
-  hero: {
-    badge: "LIVE FIELD DISPATCHES",
-    title: "LATEST UPDATES & FIELD NEWS",
-    description: "Real-time updates, programmatic progress, volunteer mobilizations, and emergency response operations directly from our ground teams.",
-    image: latestUpdatesHero,
+  sidebarContact: {
+    email: "media@islahwelfare.org",
+    phone: "+91 93102 96911",
+    locations: "New Delhi & Darbhanga, Bihar",
+    boilerplate: "Islah Welfare Foundation (IWF) is a registered non-profit organization dedicated to empowering underprivileged rural and semi-urban communities through sustainable initiatives in education, healthcare, women empowerment, environmental stewardship, and emergency relief.",
   },
-  statsRibbon: [
-    { value: "600+", label: "Health Camp Beneficiaries", desc: "Free medical diagnostics & medicine" },
-    { value: "8,000+", label: "Students Enrolled", desc: "Scholarship kits & remedial learning" },
-    { value: "120+", label: "Women Empowered", desc: "SHG vocational training & enterprise" },
-    { value: "2,000+", label: "Trees Planted", desc: "World Environment Day sustainability" },
-  ],
-  categories: [
-    "All Updates",
-    "Health",
-    "Education",
-    "Women Empowerment",
-    "Environment",
-    "Relief",
-    "Skill Development",
-  ],
-  items: [
-    {
-      id: "up-1",
-      category: "Health",
-      badge: "Healthcare",
-      timeAgo: "2 days ago",
-      date: "25 May 2024",
-      title: "Successful Mega Health Camp in Darbhanga",
-      summary: "Over 600+ rural residents benefited from our free comprehensive health check-up camp organized in partnership with specialist doctors and local pharmacists.",
-      author: "Dr. A. K. Rahman (Medical Director)",
-      image: outcomeSectorHealth,
-    },
-    {
-      id: "up-2",
-      category: "Education",
-      badge: "Education",
-      timeAgo: "1 week ago",
-      date: "20 May 2024",
-      title: "New Community Learning Center Inaugurated in Bihar",
-      summary: "A new solar-powered digital learning center was inaugurated to support 250+ rural children with after-school remedial tutoring and foundational STEM tools.",
-      author: "Tariq Anwer (Education Lead)",
-      image: outcomeSectorEdu,
-    },
-    {
-      id: "up-3",
-      category: "Women Empowerment",
-      badge: "Empowerment",
-      timeAgo: "2 weeks ago",
-      date: "15 May 2024",
-      title: "SHG Training Program Empowers 120+ Rural Women",
-      summary: "Our livelihood program helped rural women develop tailoring, handicraft, and micro-savings skills to launch independent home enterprises and self-help groups.",
-      author: "Shabana Parveen (Field Coordinator)",
-      image: outcomeSectorWomen,
-    },
-    {
-      id: "up-4",
-      category: "Environment",
-      badge: "Environment",
-      timeAgo: "3 weeks ago",
-      date: "10 May 2024",
-      title: "Tree Plantation Drive for a Greener Tomorrow",
-      summary: "Over 2,000 saplings were planted across 15 village panchayats by community volunteers, school students, and village elders to restore local green cover.",
-      author: "Praveen Kumar (Ecology Officer)",
-      image: outcomeSectorEnv,
-    },
-    {
-      id: "up-5",
-      category: "Relief",
-      badge: "Emergency Relief",
-      timeAgo: "1 month ago",
-      date: "05 May 2024",
-      title: "Relief Materials Distributed in Flood-Affected Areas",
-      summary: "Essential dry ration kits, water purification tablets, and tarpaulins were distributed to 300+ vulnerable families impacted by seasonal river overflow.",
-      author: "Mohammad Irfan (Disaster Response)",
-      image: outcomeSectorComm,
-    },
-    {
-      id: "up-6",
-      category: "Skill Development",
-      badge: "Livelihoods",
-      timeAgo: "1 month ago",
-      date: "30 Apr 2024",
-      title: "Vocational Skills Cohort Successfully Graduates 45 Youth",
-      summary: "45 youth completed a certified technical skills course covering electrical repairs, mobile maintenance, and digital data entry, with 80% already placed.",
-      author: "Sunil Verma (Skills Mentor)",
-      image: outcomeSectorSkills,
-    },
-  ],
 };
 
 // -------------------------------------------------------------
-// 8. NEWSLETTERS DATA (Page 10)
+// 7. LATEST UPDATES DATA (Consolidated alias into News & Events)
 // -------------------------------------------------------------
-export const NEWSLETTERS_DATA = {
-  hero: {
-    badge: "NEWSLETTERS & IMPACT DIGESTS",
-    title: "ISLAH QUARTERLY NEWSLETTERS",
-    description: "Stay informed about our latest initiatives, verified success stories, and the measurable social impact we are creating together across rural India.",
-    image: newslettersHero,
-  },
-  statsRibbon: [
-    { value: "25+", label: "Newsletters Published", desc: "Consistent quarterly reporting" },
-    { value: "50,000+", label: "Active Subscribers", desc: "Donors, partners & community readers" },
-    { value: "12+", label: "Years of Field Impact", desc: "Archived development milestones" },
-    { value: "100%", label: "Open Access", desc: "Freely downloadable by all stakeholders" },
-  ],
-  years: ["All Issues", "2024", "2023", "2022"],
-  issues: [
-    {
-      id: "nl-2024-q2",
-      title: "Q2 2024 Newsletter — Spring of Progress",
-      issue: "Issue 28 • Q2 2024",
-      year: "2024",
-      summary: "Highlights of our expanding initiatives in primary education, solar learning centres, rural health camps, and women micro-entrepreneurship.",
-      cover: nlCover1,
-      fileSize: "5.4 MB",
-      pdfUrl: "/docs/islah_report.pdf",
-    },
-    {
-      id: "nl-2024-q1",
-      title: "Q1 2024 Newsletter — Winter Relief & Education",
-      issue: "Issue 27 • Q1 2024",
-      year: "2024",
-      summary: "Quarterly review of winter blanket distributions, scholarship kit disbursements, new healthcare partnerships, and community training sessions.",
-      cover: nlCover2,
-      fileSize: "4.8 MB",
-      pdfUrl: "/docs/islah_report.pdf",
-    },
-    {
-      id: "nl-2023-q4",
-      title: "Q4 2023 Newsletter — Year-End Milestones",
-      issue: "Issue 26 • Q4 2023",
-      year: "2023",
-      summary: "Annual impact roundup, community volunteer felicitation, financial stewardship notes, and our strategic goals for Vision 2024.",
-      cover: nlCover3,
-      fileSize: "4.2 MB",
-      pdfUrl: "/docs/islah_report.pdf",
-    },
-    {
-      id: "nl-2023-q3",
-      title: "Q3 2023 Newsletter — Monsoon Resilience",
-      issue: "Issue 25 • Q3 2023",
-      year: "2023",
-      summary: "Flood relief logistics in North Bihar, clean water chlorination campaigns, mobile diagnostic clinics, and adolescent hygiene awareness workshops.",
-      cover: nlCover4,
-      fileSize: "4.6 MB",
-      pdfUrl: "/docs/islah_report.pdf",
-    },
-    {
-      id: "nl-2023-q2",
-      title: "Q2 2023 Newsletter — Green Roots & Growth",
-      issue: "Issue 24 • Q2 2023",
-      year: "2023",
-      summary: "Celebrating World Environment Day with 10,000 saplings, farmers' organic crop techniques, and youth vocational certification ceremonies.",
-      cover: nlCover5,
-      fileSize: "4.1 MB",
-      pdfUrl: "/docs/islah_report.pdf",
-    },
-    {
-      id: "nl-2023-q1",
-      title: "Q1 2023 Newsletter — Foundations for Hope",
-      issue: "Issue 23 • Q1 2023",
-      year: "2023",
-      summary: "Inaugurating three new cluster learning centres, vocational sewing training batches for rural mothers, and maternal healthcare camps.",
-      cover: nlCover6,
-      fileSize: "3.9 MB",
-      pdfUrl: "/docs/islah_report.pdf",
-    },
-  ],
-  sidebarInside: [
-    { title: "Program Progress Updates", desc: "Verified milestone reviews across education, healthcare, and livelihood clusters." },
-    { title: "Grassroots Success Narratives", desc: "Inspiring first-person stories told directly by rural community members." },
-    { title: "Financial & Governance Transparency", desc: "Audited summaries of resource deployment and donor accountability." },
-    { title: "Upcoming Events & Campaigns", desc: "Advance schedules for free health camps, vocational batches, and drives." },
-  ],
-};
+export const LATEST_UPDATES_DATA = NEWS_EVENTS_DATA;
 
 // -------------------------------------------------------------
-// 9. PUBLICATIONS DATA (Page 11)
+// 8. NEWSLETTERS & PUBLICATIONS DATA (Consolidated Knowledge & Research)
 // -------------------------------------------------------------
 export const PUBLICATIONS_DATA = {
   hero: {
     badge: "RESEARCH & POLICY",
     title: "PUBLICATIONS & POLICY PAPERS",
-    description: "Explore our peer-informed reports, longitudinal impact studies, policy briefs, and open-access research documenting grassroots socio-economic transformation.",
+    description: "Explore our peer-informed reports, quarterly newsletters, longitudinal impact studies, policy briefs, and open-access research documenting grassroots socio-economic transformation.",
     image: publicationsHero,
   },
   statsRibbon: [
-    { value: "24+", label: "Research Publications", desc: "Empirical evaluations & policy briefs" },
+    { value: "30+", label: "Publications & Issues", desc: "Empirical evaluations, briefs & newsletters" },
     { value: "100%", label: "Open Access (CC-BY)", desc: "Free for civil society, researchers & partners" },
     { value: "15+", label: "Survey Districts", desc: "Primary household data from rural Bihar & UP" },
     { value: "6+", label: "Policy Frameworks", desc: "Actionable blueprints for scalable social change" },
   ],
   types: [
     "All Publications",
+    "Newsletters",
     "Research Papers",
     "Policy Briefs",
     "Project Reports",
@@ -978,6 +855,17 @@ export const PUBLICATIONS_DATA = {
       pdfUrl: "/docs/islah_report.pdf",
     },
     {
+      id: "nl-2024-q2",
+      type: "Newsletters",
+      title: "Q2 2024 Newsletter — Spring of Progress",
+      authors: "Islah Editorial Desk",
+      date: "June 30, 2024",
+      summary: "Highlights of our expanding initiatives in primary education, solar learning centres, rural health camps, and women micro-entrepreneurship.",
+      cover: nlCover1,
+      fileSize: "5.4 MB",
+      pdfUrl: "/docs/islah_report.pdf",
+    },
+    {
       id: "pub-2",
       type: "Project Reports",
       title: "Education Program Longitudinal Impact Evaluation",
@@ -986,6 +874,17 @@ export const PUBLICATIONS_DATA = {
       summary: "Systematic assessment of remedial learning centres and secondary scholarship distributions in rural clusters.",
       cover: pubCover2,
       fileSize: "3.2 MB",
+      pdfUrl: "/docs/islah_report.pdf",
+    },
+    {
+      id: "nl-2024-q1",
+      type: "Newsletters",
+      title: "Q1 2024 Newsletter — Winter Relief & Education",
+      authors: "Islah Editorial Desk",
+      date: "March 31, 2024",
+      summary: "Quarterly review of winter blanket distributions, scholarship kit disbursements, new healthcare partnerships, and community training sessions.",
+      cover: nlCover2,
+      fileSize: "4.8 MB",
       pdfUrl: "/docs/islah_report.pdf",
     },
     {
@@ -1000,6 +899,17 @@ export const PUBLICATIONS_DATA = {
       pdfUrl: "/docs/islah_report.pdf",
     },
     {
+      id: "nl-2023-q4",
+      type: "Newsletters",
+      title: "Q4 2023 Newsletter — Year-End Milestones",
+      authors: "Islah Editorial Desk",
+      date: "December 31, 2023",
+      summary: "Annual impact roundup, community volunteer felicitation, financial stewardship notes, and our strategic goals for Vision 2024.",
+      cover: nlCover3,
+      fileSize: "4.2 MB",
+      pdfUrl: "/docs/islah_report.pdf",
+    },
+    {
       id: "pub-4",
       type: "Policy Briefs",
       title: "Policy Blueprint: Scalable Rural Sanitation & Water Security",
@@ -1009,6 +919,17 @@ export const PUBLICATIONS_DATA = {
       cover: pubCover4,
       fileSize: "1.9 MB",
       pdfUrl: "/docs/islah_brochure.pdf",
+    },
+    {
+      id: "nl-2023-q3",
+      type: "Newsletters",
+      title: "Q3 2023 Newsletter — Monsoon Resilience",
+      authors: "Islah Editorial Desk",
+      date: "September 30, 2023",
+      summary: "Flood relief logistics in North Bihar, clean water chlorination campaigns, mobile diagnostic clinics, and adolescent hygiene awareness workshops.",
+      cover: nlCover4,
+      fileSize: "4.6 MB",
+      pdfUrl: "/docs/islah_report.pdf",
     },
     {
       id: "pub-5",
@@ -1022,6 +943,17 @@ export const PUBLICATIONS_DATA = {
       pdfUrl: "/docs/islah_report.pdf",
     },
     {
+      id: "nl-2023-q2",
+      type: "Newsletters",
+      title: "Q2 2023 Newsletter — Green Roots & Growth",
+      authors: "Islah Editorial Desk",
+      date: "June 30, 2023",
+      summary: "Celebrating World Environment Day with 10,000 saplings, farmers' organic crop techniques, and youth vocational certification ceremonies.",
+      cover: nlCover5,
+      fileSize: "4.1 MB",
+      pdfUrl: "/docs/islah_report.pdf",
+    },
+    {
       id: "pub-6",
       type: "Brochures",
       title: "Comprehensive Organization & Program Profile",
@@ -1032,6 +964,17 @@ export const PUBLICATIONS_DATA = {
       fileSize: "1.6 MB",
       pdfUrl: "/docs/islah_brochure.pdf",
     },
+    {
+      id: "nl-2023-q1",
+      type: "Newsletters",
+      title: "Q1 2023 Newsletter — Foundations for Hope",
+      authors: "Islah Editorial Desk",
+      date: "March 31, 2023",
+      summary: "Inaugurating three new cluster learning centres, vocational sewing training batches for rural mothers, and maternal healthcare camps.",
+      cover: nlCover6,
+      fileSize: "3.9 MB",
+      pdfUrl: "/docs/islah_report.pdf",
+    },
   ],
   sidebarThemes: [
     { title: "Rural Educational Equity", desc: "Overcoming dropout rates and building digital literacy in flood-prone districts." },
@@ -1039,84 +982,17 @@ export const PUBLICATIONS_DATA = {
     { title: "Preventative Rural Healthcare", desc: "Grassroots diagnostic models and maternal wellness indicators." },
     { title: "Community Climate Resilience", desc: "Afforestation, water-table regeneration, and emergency flood preparedness." },
   ],
+  sidebarInside: [
+    { title: "Program Progress Updates", desc: "Verified milestone reviews across education, healthcare, and livelihood clusters." },
+    { title: "Grassroots Success Narratives", desc: "Inspiring first-person stories told directly by rural community members." },
+    { title: "Financial & Governance Transparency", desc: "Audited summaries of resource deployment and donor accountability." },
+    { title: "Upcoming Events & Campaigns", desc: "Advance schedules for free health camps, vocational batches, and drives." },
+  ],
 };
 
-// -------------------------------------------------------------
-// 10. PRESS RELEASES DATA (Page 12)
-// -------------------------------------------------------------
-export const PRESS_RELEASES_DATA = {
-  hero: {
-    badge: "OFFICIAL PRESS ROOM",
-    title: "OFFICIAL PRESS RELEASES",
-    description: "Authoritative statements, programmatic announcements, strategic partnership declarations, and organizational briefings from the Islah Media Desk.",
-    image: pressReleasesHero,
-  },
-  statsRibbon: [
-    { value: "24+", label: "Press Releases", desc: "Verified organizational dispatches" },
-    { value: "40+", label: "Media Highlights", desc: "Print, digital, and broadcast mentions" },
-    { value: "100%", label: "Fact-Checked", desc: "Authorized leadership statements" },
-    { value: "24/7", label: "Media Relations", desc: "Dedicated desk for accredited journalists" },
-  ],
-  years: ["All Releases", "2024", "2023", "2022"],
-  releases: [
-    {
-      id: "pr-1",
-      year: "2024",
-      date: "12 May 2024",
-      title: "IWF Partners with GreenFuture Pvt. Ltd. to Promote Sustainable Rural Development",
-      summary: "Islah Welfare Foundation (IWF) has signed a strategic partnership with GreenFuture Pvt. Ltd. to implement environmental and livelihood programs in rural communities.",
-      image: outcomeSectorAgri,
-      fileSize: "1.2 MB",
-      pdfUrl: "/docs/islah_brochure.pdf",
-    },
-    {
-      id: "pr-2",
-      year: "2024",
-      date: "28 April 2024",
-      title: "IWF Launches Women Empowerment Program in 5 New Villages",
-      summary: "The initiative will provide skill training, financial literacy and livelihood support to empower women and promote self-reliance.",
-      image: outcomeSectorWomen,
-      fileSize: "1.1 MB",
-      pdfUrl: "/docs/islah_brochure.pdf",
-    },
-    {
-      id: "pr-3",
-      year: "2024",
-      date: "15 April 2024",
-      title: "Education for Every Child: IWF Expands Scholarship Program",
-      summary: "IWF has expanded its scholarship program to support more deserving students from underprivileged families in pursuing their education.",
-      image: outcomeSectorEdu,
-      fileSize: "1.4 MB",
-      pdfUrl: "/docs/islah_brochure.pdf",
-    },
-    {
-      id: "pr-4",
-      year: "2024",
-      date: "05 April 2024",
-      title: "IWF Organizes Mega Tree Plantation Drive on World Environment Day",
-      summary: "Hundreds of volunteers came together to plant over 10,000 saplings across 20 villages to promote a greener and healthier future.",
-      image: outcomeSectorEnv,
-      fileSize: "1.0 MB",
-      pdfUrl: "/docs/islah_brochure.pdf",
-    },
-    {
-      id: "pr-5",
-      year: "2023",
-      date: "22 March 2023",
-      title: "IWF Extends Relief Support to Flood-Affected Families in Bihar",
-      summary: "Emergency relief materials including food packets, clean water and essential items were distributed to affected families.",
-      image: outcomeSectorComm,
-      fileSize: "1.3 MB",
-      pdfUrl: "/docs/islah_brochure.pdf",
-    },
-  ],
-  sidebarContact: {
-    email: "media@islahwelfare.org",
-    phone: "+91 93102 96911",
-    locations: "New Delhi & Darbhanga, Bihar",
-    boilerplate: "Islah Welfare Foundation (IWF) is a registered non-profit organization dedicated to empowering underprivileged rural and semi-urban communities through sustainable initiatives in education, healthcare, women empowerment, environmental stewardship, and emergency relief.",
-  },
-};
+// Consolidated aliases for backwards compatibility
+export const NEWSLETTERS_DATA = PUBLICATIONS_DATA;
+export const PRESS_RELEASES_DATA = NEWS_EVENTS_DATA;
 
 // -------------------------------------------------------------
 // 11. GALLERY DATA (Page 13)
@@ -1310,64 +1186,3 @@ export const GALLERY_DATA = {
   ],
 };
 
-// -------------------------------------------------------------
-// 12. BRAND ASSETS DATA
-// -------------------------------------------------------------
-export const BRAND_ASSETS_DATA = {
-  hero: {
-    badge: "BRAND ASSETS",
-    title: "OFFICIAL BRAND ASSETS & GUIDELINES",
-    description: "Download official logos, colour specifications, fonts and visual identity assets for press, partners, and media collaborators.",
-    image: mediaHero,
-  },
-  statsRibbon: [
-    { value: "100%", label: "Vector Quality", desc: "Crisp SVGs & high-res PNGs" },
-    { value: "4", label: "Logo Variations", desc: "Horizontal, vertical, light & dark" },
-    { value: "4", label: "Core Palette Colors", desc: "Pantone, CMYK & HEX values" },
-    { value: "Free", label: "Partner Usage", desc: "Subject to official brand guidelines" },
-  ],
-  logos: [
-    {
-      id: "primary-color",
-      name: "Primary Emblem Logo",
-      usage: "For light backgrounds, official print stationery, and websites.",
-      preview: newLogo,
-      darkBg: false,
-      pngUrl: newLogo,
-      svgUrl: newLogo,
-    },
-    {
-      id: "primary-dark",
-      name: "Reversed Dark Background Logo",
-      usage: "For navy and dark green backgrounds, video overlays, and dark print.",
-      preview: newLogo,
-      darkBg: true,
-      pngUrl: newLogo,
-      svgUrl: newLogo,
-    },
-    {
-      id: "horizontal-mark",
-      name: "Full Horizontal Brandmark",
-      usage: "For headers, sponsor displays, banners, and partnership co-branding.",
-      preview: mainLogo,
-      darkBg: false,
-      pngUrl: mainLogo,
-      svgUrl: mainLogo,
-    },
-    {
-      id: "monochrome",
-      name: "Monochrome & Single Color",
-      usage: "For newspaper prints, single-color stamps, and fabric embroidery.",
-      preview: mainLogo,
-      darkBg: false,
-      pngUrl: mainLogo,
-      svgUrl: mainLogo,
-    },
-  ],
-  colors: [
-    { name: "Islah Forest Green", role: "Primary Brand Color", hex: "#063319", cmyk: "C88 M43 Y84 K53" },
-    { name: "Emerald Growth", role: "Secondary Action", hex: "#059669", cmyk: "C80 M10 Y70 K0" },
-    { name: "Radiant Orange", role: "Call to Action", hex: "#ea580c", cmyk: "C0 M75 Y100 K0" },
-    { name: "Deep Navy Blue", role: "Corporate Trust", hex: "#0b1f3b", cmyk: "C90 M70 Y40 K40" },
-  ],
-};

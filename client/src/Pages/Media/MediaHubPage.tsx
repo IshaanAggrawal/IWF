@@ -36,16 +36,22 @@ export function MediaHubPage() {
         actions={
           <div className="flex flex-wrap gap-2.5">
             <Link
-              to="/media/latest-updates"
+              to="/media/outcomes"
               className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition shadow-sm"
             >
-              Latest Updates
+              Outcomes & Impact
             </Link>
             <Link
-              to="/media/press-releases"
+              to="/media/news-and-events"
               className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase tracking-wider border border-white/20 transition backdrop-blur-sm"
             >
-              Press Releases
+              News & Events
+            </Link>
+            <Link
+              to="/media/publications"
+              className="px-4 py-2 rounded-xl bg-emerald-800/80 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider border border-emerald-600/30 transition backdrop-blur-sm"
+            >
+              Publications & Research
             </Link>
             <Link
               to="/media/gallery"

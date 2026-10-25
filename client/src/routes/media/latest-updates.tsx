@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import LatestUpdatesPage from "@/Pages/Media/LatestUpdatesPage";
+import { NewsEventsPage } from "@/Pages/Media/NewsEventsPage";
 
 export const Route = createFileRoute("/media/latest-updates")({
   head: () => ({
@@ -12,5 +12,5 @@ export const Route = createFileRoute("/media/latest-updates")({
       },
     ],
   }),
-  component: LatestUpdatesPage,
+  component: NewsEventsPage,
 });

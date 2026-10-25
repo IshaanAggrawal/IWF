@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import ImpactStatisticsPage from "@/Pages/Media/ImpactStatisticsPage";
+import { OutcomesPage } from "@/Pages/Media/OutcomesPage";
 
 export const Route = createFileRoute("/impact-statistics")({
   head: () => ({
     meta: [
-      { title: "Impact Statistics & Reach — Islah Welfare Foundation" },
+      { title: "Outcomes & Impact — Islah Welfare Foundation" },
       {
         name: "description",
         content:
@@ -12,5 +12,5 @@ export const Route = createFileRoute("/impact-statistics")({
       },
     ],
   }),
-  component: ImpactStatisticsPage,
+  component: OutcomesPage,
 });

@@ -94,17 +94,12 @@ export const MEGA_DATA: Record<string, MegaSection> = {
     cols: 3,
     items: [
       "Media Hub",
-      "Our Outcomes",
+      "Outcomes & Impact",
       "Success Stories",
-      "Impact Statistics",
-      "Annual Reports",
       "News & Events",
-      "Latest Updates",
-      "Newsletters",
-      "Publications",
-      "Press Releases",
+      "Annual Reports",
+      "Publications & Research",
       "Photo & Video Gallery",
-      "Brand Assets",
     ],
   },
   "Get Involved": {
@@ -127,7 +122,7 @@ function getTopNavHref(item: string) {
   if (item === "What We Do") return "/programs";
   if (item === "Our Campaigns" || item === "Campaigns") return "/campaign";
   if (item === "Programs") return "/programs";
-  if (item === "Impact") return "/media/impact-statistics";
+  if (item === "Impact" || item === "Outcomes") return "/media/outcomes";
   if (item === "Become a Member" || item === "Membership" || item === "ISLAH Community") return "/about/community";
   if (item === "Media") return "/media";
   if (item === "Get Involved") return "/get-involved";
@@ -167,19 +162,14 @@ function getMegaHref(menu: string, item: string) {
   if (menu === "Our Campaigns" && item === "View All Campaigns") return "/campaign";
   // Programs
   if (menu === "Programs" && item === "View All Programs") return "/programs";
-  // Media & Updates
+  // Media & Updates (Consolidated Canonical Destinations)
   if (menu === "Media" && (item === "Media Hub" || item === "Overview" || item === "Media")) return "/media";
-  if (menu === "Media" && (item === "Our Outcomes" || item === "Outcomes")) return "/media/outcomes";
+  if (menu === "Media" && (item === "Outcomes & Impact" || item === "Our Outcomes" || item === "Outcomes" || item === "Impact Statistics" || item === "Impact" || item === "Our Impact")) return "/media/outcomes";
   if (menu === "Media" && item === "Success Stories") return "/media/success-stories";
-  if (menu === "Media" && (item === "Impact Statistics" || item === "Impact" || item === "Our Impact")) return "/media/impact-statistics";
+  if (menu === "Media" && (item === "News & Events" || item === "Latest Updates" || item === "Press Releases" || item === "Press Release")) return "/media/news-and-events";
   if (menu === "Media" && item === "Annual Reports") return "/media/annual-reports";
-  if (menu === "Media" && item === "News & Events") return "/media/news-and-events";
-  if (menu === "Media" && item === "Latest Updates") return "/media/latest-updates";
-  if (menu === "Media" && item === "Newsletters") return "/media/newsletters";
-  if (menu === "Media" && (item === "Publications" || item === "Publication")) return "/media/publications";
-  if (menu === "Media" && (item === "Press Releases" || item === "Press Release")) return "/media/press-releases";
+  if (menu === "Media" && (item === "Publications & Research" || item === "Publications" || item === "Publication" || item === "Newsletters")) return "/media/publications";
   if (menu === "Media" && (item === "Photo & Video Gallery" || item === "Gallery" || item === "Photo Gallery")) return "/media/gallery";
-  if (menu === "Media" && (item === "Brand Assets" || item === "Brand Kit")) return "/media/brand-assets";
   // Get Involved
   if (menu === "Get Involved" && item === "Careers & Opportunities") return "/careers";
   if (menu === "Get Involved" && item === "Donate & Support") return "/donate";
@@ -536,7 +526,7 @@ export function Footer({ onOpenModal }: { onOpenModal?: (type: RoleType) => void
     ["Home", "/"],
     ["About Us", "/about"],
     ["What We Do", "/programs"],
-    ["Our Impact", "/media/impact-statistics"],
+    ["Outcomes & Impact", "/media/outcomes"],
     ["Media & News", "/media"],
     ["Contact Us", "/contact"],
     ["Donate Now", "/donate"],
