@@ -37,7 +37,7 @@ export function MediaHubPage() {
           <div className="flex flex-wrap gap-2.5">
             <Link
               to="/media/outcomes"
-              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition shadow-sm"
+              className="px-4 py-2 rounded-xl bg-brand-orange hover:bg-orange-600 text-white font-bold text-xs uppercase tracking-wider transition shadow-sm"
             >
               Outcomes & Impact
             </Link>
@@ -49,13 +49,13 @@ export function MediaHubPage() {
             </Link>
             <Link
               to="/media/publications"
-              className="px-4 py-2 rounded-xl bg-emerald-800/80 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider border border-emerald-600/30 transition backdrop-blur-sm"
+              className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase tracking-wider border border-white/20 transition backdrop-blur-sm"
             >
               Publications & Research
             </Link>
             <Link
               to="/media/gallery"
-              className="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs uppercase tracking-wider transition shadow-sm"
+              className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase tracking-wider border border-white/20 transition backdrop-blur-sm"
             >
               Photo & Video Gallery
             </Link>
@@ -66,11 +66,11 @@ export function MediaHubPage() {
             onClick={() => setVideoOpen(true)}
             className="flex items-center gap-3 px-3.5 py-2 rounded-xl bg-black/60 hover:bg-black/80 backdrop-blur-md text-white text-xs font-bold transition border border-white/20 cursor-pointer shadow-lg w-full"
           >
-            <div className="w-7 h-7 rounded-full bg-emerald-500 flex items-center justify-center shrink-0">
+            <div className="w-7 h-7 rounded-full bg-brand-orange flex items-center justify-center shrink-0">
               <Play className="w-3.5 h-3.5 fill-white ml-0.5" />
             </div>
             <div className="text-left">
-              <div className="text-[10px] text-emerald-300 uppercase tracking-wider">Watch Video</div>
+              <div className="text-[10px] text-sky-300 uppercase tracking-wider">Watch Video</div>
               <div className="text-[11px] font-semibold line-clamp-1">{MEDIA_HUB_DATA.hero.videoBadge}</div>
             </div>
           </button>

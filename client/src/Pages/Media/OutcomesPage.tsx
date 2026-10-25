@@ -51,13 +51,13 @@ export function OutcomesPage() {
             <div className="flex flex-wrap gap-2.5">
               <a
                 href="#key-areas"
-                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition shadow-sm"
+                className="px-4 py-2 rounded-xl bg-brand-orange hover:bg-orange-600 text-white font-bold text-xs uppercase tracking-wider transition shadow-sm"
               >
                 Focus Areas
               </a>
               <a
                 href="#impact-charts"
-                className="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs uppercase tracking-wider transition shadow-sm"
+                className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase tracking-wider border border-white/20 transition backdrop-blur-sm"
               >
                 Impact Charts
               </a>

@@ -67,19 +67,31 @@ export function PublicationsPage() {
             <div className="flex flex-wrap gap-2.5">
               <button
                 onClick={() => setSelectedType("All Publications")}
-                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition cursor-pointer shadow-sm"
+                className={`px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition cursor-pointer shadow-sm ${
+                  selectedType === "All Publications"
+                    ? "bg-brand-orange text-white"
+                    : "bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-sm"
+                }`}
               >
                 Browse All
               </button>
               <button
                 onClick={() => setSelectedType("Newsletters")}
-                className="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs uppercase tracking-wider transition cursor-pointer shadow-sm"
+                className={`px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition cursor-pointer shadow-sm ${
+                  selectedType === "Newsletters"
+                    ? "bg-brand-orange text-white"
+                    : "bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-sm"
+                }`}
               >
                 Newsletters
               </button>
               <button
                 onClick={() => setSelectedType("Research Papers")}
-                className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase tracking-wider border border-white/20 transition cursor-pointer backdrop-blur-sm"
+                className={`px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition cursor-pointer shadow-sm ${
+                  selectedType === "Research Papers"
+                    ? "bg-brand-orange text-white"
+                    : "bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-sm"
+                }`}
               >
                 Research Papers
               </button>
