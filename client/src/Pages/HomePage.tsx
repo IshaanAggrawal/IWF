@@ -1118,7 +1118,7 @@ function HeroCarouselSection() {
   return (
     <section
       id="hero-carousel"
-      className={`relative w-full select-none scroll-mt-20 overflow-hidden bg-slate-950 group ${
+      className={`relative w-full select-none scroll-mt-20 overflow-hidden bg-slate-950 group h-[280px] sm:h-[360px] md:h-[420px] lg:h-[460px] xl:h-[490px] max-h-[calc(100vh-200px)] ${
         isPressed ? "cursor-grabbing" : "cursor-default"
       }`}
       onMouseDown={() => setIsPressed(true)}
@@ -1149,20 +1149,12 @@ function HeroCarouselSection() {
           <img
             src={slide.img}
             alt={slide.alt}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-[center_35%]"
             draggable={false}
             loading="eager"
           />
         </div>
       ))}
-
-      {/* Spacer to hold height (first image defines aspect ratio) */}
-      <img
-        src={slides[0].img}
-        alt=""
-        className="w-full h-auto block invisible"
-        aria-hidden="true"
-      />
 
       {/* Subtle vignette overlay */}
       <div className="absolute inset-0 z-[3] pointer-events-none bg-gradient-to-t from-black/20 via-transparent to-black/10" />
