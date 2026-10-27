@@ -149,7 +149,7 @@ export function MentorApplicationForm({ onSuccess, isModal = false }: MentorAppl
     reset,
     formState: { errors, isSubmitting },
   } = useForm<MentorFormData>({
-    resolver: zodResolver(mentorSchema),
+    resolver: zodResolver(mentorSchema) as any,
     defaultValues: {
       countryCode: "+91",
       gender: "Male",
@@ -182,7 +182,7 @@ export function MentorApplicationForm({ onSuccess, isModal = false }: MentorAppl
     }
   };
 
-  const onSubmit = async (data: MentorFormData) => {
+  const onSubmit = async (data: any) => {
     try {
       const { submitApplication } = await import("@/services/applicationService");
       const json = await submitApplication({
@@ -290,7 +290,7 @@ export function MentorApplicationForm({ onSuccess, isModal = false }: MentorAppl
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 text-left notranslate" translate="no" dir="ltr">
+    <form onSubmit={handleSubmit(onSubmit as any)} className="space-y-8 text-left notranslate" translate="no" dir="ltr">
       {/* ── 1. BASIC INFORMATION ── */}
       <div>
         <div className="border-b border-slate-200 pb-2 mb-4">

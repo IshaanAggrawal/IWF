@@ -138,7 +138,7 @@ export function VolunteerApplicationForm({ onSuccess, isModal = false }: Volunte
     reset,
     formState: { errors, isSubmitting },
   } = useForm<VolunteerFormData>({
-    resolver: zodResolver(volunteerSchema),
+    resolver: zodResolver(volunteerSchema) as any,
     defaultValues: {
       countryCode: "+91",
       state: "Bihar",
@@ -176,7 +176,7 @@ export function VolunteerApplicationForm({ onSuccess, isModal = false }: Volunte
 
   const [apiError, setApiError] = useState<string | null>(null);
 
-  const onSubmit = async (data: VolunteerFormData) => {
+  const onSubmit = async (data: any) => {
     if (selectedSectors.length === 0 && otherText.trim().length === 0) {
       setSectorError("Please select at least one sector or area of interest.");
       return;
@@ -294,7 +294,7 @@ export function VolunteerApplicationForm({ onSuccess, isModal = false }: Volunte
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 text-left notranslate" translate="no" dir="ltr">
+    <form onSubmit={handleSubmit(onSubmit as any)} className="space-y-8 text-left notranslate" translate="no" dir="ltr">
       {/* ── Personal Information ── */}
       <div>
         <div className="border-b border-slate-200 pb-2 mb-4">

@@ -244,7 +244,7 @@ function ContactForm() {
     reset,
     formState: { errors, isSubmitting },
   } = useForm<ContactFormData>({
-    resolver: zodResolver(contactSchema),
+    resolver: zodResolver(contactSchema) as any,
     defaultValues: {
       fullName: "",
       email: "",
@@ -287,7 +287,14 @@ function ContactForm() {
         phone: data.phone,
         countryCode: data.countryCode || "+91",
         subject: data.enquiryType + (data.regionalOfficeTarget ? ` - ${data.regionalOfficeTarget}` : ""),
-        message: `${data.message}\n\n[Enquiry Type: ${data.enquiryType}${officeDetails}]\n[Address: ${addressLine || "Not specified"}]\n[Preferred Contact Method: ${data.preferredContactMethod || "Email"}]\n[Ref: ${generatedRef}]`,
+        message: data.message.trim(),
+        enquiryType: data.enquiryType,
+        cityDistrict: data.cityDistrict,
+        state: data.state,
+        pinCode: data.pinCode,
+        preferredContactMethod: data.preferredContactMethod || "Email",
+        regionalOfficeTarget: data.regionalOfficeTarget,
+        referenceNumber: generatedRef,
         source: "Contact Page",
       });
 

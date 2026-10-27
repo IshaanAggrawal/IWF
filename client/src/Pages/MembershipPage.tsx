@@ -3070,13 +3070,21 @@ function ApplicationFormSection({ preSelectedCategory, onViewMembership }: { pre
       const formData = form.getValues();
       const { registerMember } = await import("@/services/memberService");
       const json = await registerMember({
-        name: formData.fullName,
+        fullName: formData.fullName,
+        fatherName: formData.fatherName,
         category: formData.category,
         email: formData.email,
-        phone: formData.mobile,
+        mobile: formData.mobile,
+        countryCode: formData.countryCode,
         state: formData.state,
         district: formData.district,
         address: formData.address,
+        pincode: formData.pincode,
+        membershipPeriod: formData.membershipPeriod,
+        paymentMode: formData.paymentMode,
+        transactionId: formData.transactionId,
+        paymentDate: formData.paymentDate,
+        consentDisplay: formData.consentDisplay,
       });
       if (json && json.success && json.member) {
         if (json.member.memberNo) setCurrentMemberId(json.member.memberNo);

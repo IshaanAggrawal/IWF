@@ -1,13 +1,25 @@
 import { apiRequest } from "./apiClient";
 
 export interface RegisterMemberPayload {
-  name: string;
+  name?: string;
+  fullName?: string;
+  fatherName?: string;
   category: string;
   email: string;
-  phone: string;
+  phone?: string;
+  mobile?: string;
+  countryCode?: string;
   state: string;
   district: string;
   address?: string;
+  pincode?: string;
+  membershipPeriod?: number | string;
+  paymentMode?: string;
+  transactionId?: string;
+  paymentDate?: string;
+  consentDisplay?: string;
+  photoUrl?: string;
+  metadata?: Record<string, any>;
 }
 
 export interface MemberRecord {

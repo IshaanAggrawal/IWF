@@ -108,6 +108,12 @@ export async function verifyPaymentController(req: Request, res: Response): Prom
         paymentMode: "Online",
         paymentStatus: "Success",
         transactionId: razorpay_payment_id,
+        razorpayOrderId: razorpay_order_id,
+        razorpayPaymentId: razorpay_payment_id,
+        razorpaySignature: razorpay_signature,
+        websiteConsent: donationData.websiteConsent,
+        recurringPledge: donationData.recurringPledge,
+        pledgeMonths: donationData.pledgeMonths,
         notes: `Razorpay Order: ${razorpay_order_id}`,
       });
 

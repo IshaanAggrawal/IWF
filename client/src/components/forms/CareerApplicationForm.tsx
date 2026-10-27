@@ -139,7 +139,7 @@ export function CareerApplicationForm({ onSuccess, isModal = false }: CareerAppl
     reset,
     formState: { errors, isSubmitting },
   } = useForm<CareerFormData>({
-    resolver: zodResolver(careerSchema),
+    resolver: zodResolver(careerSchema) as any,
     defaultValues: {
       countryCode: "+91",
       preferredLocation: "New Delhi (Administrative HQ)",
@@ -163,7 +163,7 @@ export function CareerApplicationForm({ onSuccess, isModal = false }: CareerAppl
     }
   };
 
-  const onSubmit = async (data: CareerFormData) => {
+  const onSubmit = async (data: any) => {
     try {
       let uploadedUrl = "";
       let uploadedPublicId = "";
@@ -276,7 +276,7 @@ export function CareerApplicationForm({ onSuccess, isModal = false }: CareerAppl
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 text-left notranslate" translate="no" dir="ltr">
+    <form onSubmit={handleSubmit(onSubmit as any)} className="space-y-8 text-left notranslate" translate="no" dir="ltr">
       <div className="mb-2">
         <p className="text-xs text-slate-500">
           Please fill in your details and upload your CV. Our team will review your profile and contact you for suitable opportunities.

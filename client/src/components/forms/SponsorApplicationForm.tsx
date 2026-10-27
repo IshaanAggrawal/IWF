@@ -137,7 +137,7 @@ export function SponsorApplicationForm({ onSuccess, isModal = false }: SponsorAp
     reset,
     formState: { errors, isSubmitting },
   } = useForm<SponsorFormData>({
-    resolver: zodResolver(sponsorSchema),
+    resolver: zodResolver(sponsorSchema) as any,
     defaultValues: {
       countryCode: "+91",
       supportType: "Financial Support",
@@ -161,7 +161,7 @@ export function SponsorApplicationForm({ onSuccess, isModal = false }: SponsorAp
     }
   };
 
-  const onSubmit = async (data: SponsorFormData) => {
+  const onSubmit = async (data: any) => {
     try {
       const { submitApplication } = await import("@/services/applicationService");
       const json = await submitApplication({
@@ -251,7 +251,7 @@ export function SponsorApplicationForm({ onSuccess, isModal = false }: SponsorAp
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 text-left notranslate" translate="no" dir="ltr">
+    <form onSubmit={handleSubmit(onSubmit as any)} className="space-y-8 text-left notranslate" translate="no" dir="ltr">
       {/* ── 1. SPONSOR / ORGANIZATION DETAILS ── */}
       <div>
         <div className="border-b border-slate-200 pb-2 mb-4">

@@ -23,7 +23,13 @@ export async function submitApplication(req: Request, res: Response): Promise<vo
       return;
     }
 
+    const count = await Application.countDocuments({ type });
+    const formattedAppId =
+      req.body.applicationId ||
+      `ISLAH-${type.toUpperCase().slice(0, 3)}-${new Date().getFullYear()}-${String(count + 1).padStart(4, "0")}`;
+
     const application = new Application({
+      applicationId: formattedAppId,
       type,
       fullName,
       email,
@@ -39,9 +45,6 @@ export async function submitApplication(req: Request, res: Response): Promise<vo
     });
 
     await application.save();
-
-    const shortId = application._id.toString().slice(-6).toUpperCase();
-    const formattedAppId = `ISLAH-${type.toUpperCase().slice(0, 3)}-${new Date().getFullYear()}-${shortId}`;
 
     res.status(201).json({
       success: true,

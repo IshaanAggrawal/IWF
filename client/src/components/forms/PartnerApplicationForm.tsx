@@ -144,7 +144,7 @@ export function PartnerApplicationForm({ onSuccess, isModal = false }: PartnerAp
     reset,
     formState: { errors, isSubmitting },
   } = useForm<PartnerFormData>({
-    resolver: zodResolver(partnerSchema),
+    resolver: zodResolver(partnerSchema) as any,
     defaultValues: {
       countryCode: "+91",
       areasOfInterest: [],
@@ -166,7 +166,7 @@ export function PartnerApplicationForm({ onSuccess, isModal = false }: PartnerAp
     }
   };
 
-  const onSubmit = async (data: PartnerFormData) => {
+  const onSubmit = async (data: any) => {
     try {
       const { submitApplication } = await import("@/services/applicationService");
       const json = await submitApplication({
@@ -256,7 +256,7 @@ export function PartnerApplicationForm({ onSuccess, isModal = false }: PartnerAp
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 text-left notranslate" translate="no" dir="ltr">
+    <form onSubmit={handleSubmit(onSubmit as any)} className="space-y-8 text-left notranslate" translate="no" dir="ltr">
       {/* ── 1. ORGANIZATION / APPLICANT DETAILS ── */}
       <div>
         <div className="border-b border-slate-200 pb-2 mb-4">

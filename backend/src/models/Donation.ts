@@ -20,7 +20,14 @@ export interface IDonation extends Document {
   paymentMode: "Online" | "Bank Transfer" | "Cheque" | "Cash";
   paymentStatus: "Pending" | "Success" | "Failed";
   transactionId?: string;
+  razorpayOrderId?: string;
+  razorpayPaymentId?: string;
+  razorpaySignature?: string;
+  websiteConsent?: string;
+  recurringPledge?: boolean;
+  pledgeMonths?: string;
   notes?: string;
+  metadata?: Record<string, any>;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -46,7 +53,14 @@ const DonationSchema = new Schema<IDonation>(
     paymentMode: { type: String, enum: ["Online", "Bank Transfer", "Cheque", "Cash"], default: "Online" },
     paymentStatus: { type: String, enum: ["Pending", "Success", "Failed"], default: "Pending" },
     transactionId: { type: String },
+    razorpayOrderId: { type: String },
+    razorpayPaymentId: { type: String },
+    razorpaySignature: { type: String },
+    websiteConsent: { type: String },
+    recurringPledge: { type: Boolean },
+    pledgeMonths: { type: String },
     notes: { type: String },
+    metadata: { type: Schema.Types.Mixed, default: {} },
   },
   { timestamps: true }
 );

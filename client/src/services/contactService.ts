@@ -7,13 +7,22 @@ export interface ContactPayload {
   countryCode?: string;
   subject?: string;
   message: string;
+  enquiryType?: string;
+  cityDistrict?: string;
+  state?: string;
+  pinCode?: string;
+  preferredContactMethod?: string;
+  regionalOfficeTarget?: string;
+  referenceNumber?: string;
   source?: string;
+  metadata?: Record<string, any>;
 }
 
 export interface ContactResponse {
   success: boolean;
   message: string;
   contactId?: string;
+  referenceNumber?: string;
 }
 
 export async function submitContact(

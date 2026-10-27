@@ -353,6 +353,9 @@ export default function DonatePage() {
           taxExemption: data.taxExemption,
           pan: data.pan,
           patientSlug: contextPatient?.slug,
+          websiteConsent: data.websiteConsent,
+          recurringPledge: data.recurringPledge,
+          pledgeMonths: data.pledgeMonths,
         },
       });
 

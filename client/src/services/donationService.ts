@@ -35,6 +35,9 @@ export interface VerifyPaymentParams {
     taxExemption?: boolean;
     pan?: string;
     patientSlug?: string;
+    websiteConsent?: string;
+    recurringPledge?: boolean;
+    pledgeMonths?: string;
   };
   memberData?: {
     name: string;
