@@ -206,3 +206,84 @@ export async function verifyPaymentController(req: Request, res: Response): Prom
     });
   }
 }
+
+export async function handleWebhookController(req: Request, res: Response): Promise<void> {
+  try {
+    const signature = req.headers["x-razorpay-signature"] as string;
+    if (!signature) {
+      res.status(400).json({ success: false, message: "Missing x-razorpay-signature header" });
+      return;
+    }
+
+    const { verifyWebhookSignature } = await import("../services/razorpayService.js");
+    const isValid = verifyWebhookSignature({ body: req.body, signature });
+    if (!isValid) {
+      res.status(400).json({ success: false, message: "Invalid webhook signature" });
+      return;
+    }
+
+    const event = req.body.event;
+    const payload = req.body.payload;
+
+    // Idempotent processing of payment.captured
+    if (event === "payment.captured") {
+      const payment = payload?.payment?.entity;
+      if (payment) {
+        const paymentId = payment.id;
+        const existingDonation = await Donation.findOne({ transactionId: paymentId });
+        if (!existingDonation) {
+          const notes = payment.notes || {};
+          const count = await Donation.countDocuments();
+          const receiptNo = generateReceiptNumber(count + 1);
+          const amountInRupees = payment.amount / 100;
+
+          const donation = new Donation({
+            receiptNo,
+            donorName: notes.donorName || "Supporter",
+            donorType: "Individual",
+            email: payment.email || notes.email || "support@iwfindia.org",
+            phone: payment.contact || notes.phone || "N/A",
+            financialType: notes.financialType || "General Donation",
+            frequency: "One Time",
+            amount: amountInRupees,
+            paymentMode: "Online",
+            paymentStatus: "Success",
+            transactionId: paymentId,
+            patientSlug: notes.patientSlug,
+            notes: `Webhook Captured. Order ID: ${payment.order_id}`,
+          });
+
+          await donation.save();
+
+          if (notes.patientSlug) {
+            await Patient.findOneAndUpdate(
+              { slug: notes.patientSlug },
+              { $inc: { raisedAmount: amountInRupees, donorsCount: 1 } }
+            );
+          }
+
+          await Verification.create({
+            documentNo: receiptNo,
+            documentType: "donation_receipt",
+            title: `80G Donation Receipt - ${notes.financialType || "General"}`,
+            issuedTo: notes.donorName || "Supporter",
+            issueDate: new Date(),
+            status: "Verified",
+            details: {
+              receiptNo,
+              amount: amountInRupees,
+              transactionId: paymentId,
+              orderId: payment.order_id,
+            },
+          });
+        }
+      }
+    }
+
+    res.status(200).json({ status: "ok" });
+  } catch (error: any) {
+    console.error("handleWebhookController error:", error);
+    res.status(500).json({ success: false, message: "Webhook processing error" });
+  }
+}
+

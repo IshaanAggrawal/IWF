@@ -3067,23 +3067,18 @@ function ApplicationFormSection({ preSelectedCategory, onViewMembership }: { pre
   const handleBack = () => { setStep(s => s - 1); scrollToForm(); };
   const handleSubmit = async () => {
     try {
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
       const formData = form.getValues();
-      const res = await fetch(`${API_URL}/members`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.fullName,
-          category: formData.category,
-          email: formData.email,
-          phone: formData.mobile,
-          state: formData.state,
-          district: formData.district,
-          address: formData.address,
-        }),
+      const { registerMember } = await import("@/services/memberService");
+      const json = await registerMember({
+        name: formData.fullName,
+        category: formData.category,
+        email: formData.email,
+        phone: formData.mobile,
+        state: formData.state,
+        district: formData.district,
+        address: formData.address,
       });
-      const json = await res.json();
-      if (res.ok && json.success && json.member) {
+      if (json && json.success && json.member) {
         if (json.member.memberNo) setCurrentMemberId(json.member.memberNo);
         if (json.member.receiptNo) setReceiptNo(json.member.receiptNo);
       }
@@ -3515,10 +3510,9 @@ function RenewalSection({
   const handleSearch = async () => {
     const q = query.trim();
     try {
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-      const res = await fetch(`${API_URL}/members/status/${encodeURIComponent(q)}`);
-      const json = await res.json();
-      if (res.ok && json.success && json.member) {
+      const { checkMemberStatus } = await import("@/services/memberService");
+      const json = await checkMemberStatus(q);
+      if (json && json.success && json.member) {
         setResult({
           id: json.member.id,
           name: json.member.name,

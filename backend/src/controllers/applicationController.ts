@@ -69,3 +69,52 @@ export async function listApplications(req: Request, res: Response): Promise<voi
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 }
+
+export async function updateApplicationStatus(req: Request, res: Response): Promise<void> {
+  try {
+    const { id } = req.params;
+    const { status, reviewNotes } = req.body;
+
+    const validStatuses = [
+      "Submitted",
+      "Under Review",
+      "More Information Required",
+      "Interview Scheduled",
+      "Approved",
+      "Rejected",
+      "Withdrawn",
+    ];
+
+    if (!status || !validStatuses.includes(status)) {
+      res.status(400).json({
+        success: false,
+        message: `Invalid status. Must be one of: ${validStatuses.join(", ")}`,
+      });
+      return;
+    }
+
+    const application = await Application.findByIdAndUpdate(
+      id,
+      {
+        status,
+        ...(reviewNotes ? { "formData.reviewNotes": reviewNotes } : {}),
+      },
+      { new: true }
+    );
+
+    if (!application) {
+      res.status(404).json({ success: false, message: "Application not found" });
+      return;
+    }
+
+    res.json({
+      success: true,
+      message: `Application status updated to ${status}`,
+      application,
+    });
+  } catch (error) {
+    console.error("updateApplicationStatus error:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+}
+

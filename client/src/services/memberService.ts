@@ -1,0 +1,64 @@
+import { apiRequest } from "./apiClient";
+
+export interface RegisterMemberPayload {
+  name: string;
+  category: string;
+  email: string;
+  phone: string;
+  state: string;
+  district: string;
+  address?: string;
+}
+
+export interface MemberRecord {
+  memberNo: string;
+  name: string;
+  category: string;
+  annualFee: number;
+  email: string;
+  phone: string;
+  state: string;
+  district: string;
+  address?: string;
+  status: "Active" | "Expired" | "Pending";
+  validFrom: string;
+  validTill: string;
+  receiptNo: string;
+}
+
+export interface RegisterMemberResponse {
+  success: boolean;
+  message: string;
+  member: MemberRecord;
+}
+
+export interface MemberStatusResponse {
+  success: boolean;
+  member: {
+    id: string;
+    name: string;
+    category: string;
+    state: string;
+    district: string;
+    status: string;
+    validTill: string;
+    joined: string;
+  };
+}
+
+export async function registerMember(
+  payload: RegisterMemberPayload
+): Promise<RegisterMemberResponse> {
+  return apiRequest<RegisterMemberResponse>("/members", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function checkMemberStatus(
+  memberNo: string
+): Promise<MemberStatusResponse> {
+  return apiRequest<MemberStatusResponse>(
+    `/members/status/${encodeURIComponent(memberNo)}`
+  );
+}

@@ -53,13 +53,33 @@ function conditionStyles(c: PatientCondition) {
         : { bg: "bg-green-100", text: "text-green-700", dot: "bg-green-500", border: "border-green-200" };
 }
 
+import { usePatient, usePatients } from "@/services/patientService";
+
 export default function PatientProfilePage() {
   const { patientSlug } = useParams({ from: "/patients/$patientSlug" });
   const [activeModal, setActiveModal] = useState<
     "volunteer" | "partner" | "sponsor" | "mentor" | "employee" | null
   >(null);
 
-  const patient = URGENT_PATIENTS.find((p) => p.slug === patientSlug);
+  const { patient, loading } = usePatient(patientSlug);
+  const { patients: allPatients } = usePatients(true);
+
+  if (loading && !patient) {
+    return (
+      <div className="min-h-screen bg-white font-sans flex flex-col">
+        <NotificationTicker />
+        <UtilityBar />
+        <Header />
+        <main className="flex-1 flex items-center justify-center py-24">
+          <div className="text-center">
+            <div className="w-12 h-12 border-4 border-[#0b1f3b] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+            <p className="text-slate-600 font-medium">Loading patient case details...</p>
+          </div>
+        </main>
+        <Footer onOpenModal={setActiveModal} />
+      </div>
+    );
+  }
 
   if (!patient) {
     return (
@@ -104,7 +124,9 @@ export default function PatientProfilePage() {
     }
   };
 
-  const otherPatients = URGENT_PATIENTS.filter((p) => p.slug !== patient.slug).slice(0, 3);
+  const otherPatients = (allPatients && allPatients.length > 0 ? allPatients : URGENT_PATIENTS)
+    .filter((p) => p.slug !== patient.slug)
+    .slice(0, 3);
 
   return (
     <div className="min-h-screen bg-[#f8fafc] font-sans text-slate-800">

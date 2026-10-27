@@ -60,11 +60,10 @@ export default function LegalStatusPage() {
     const q = docQuery.trim().toUpperCase();
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-      const res = await fetch(`${API_URL}/verify/${encodeURIComponent(q)}`);
-      const json = await res.json();
+      const { verifyDocument } = await import("@/services/verificationService");
+      const json = await verifyDocument(q);
 
-      if (res.ok && json.success && json.verified && json.data) {
+      if (json && json.success && json.verified && json.data) {
         setVerificationResult({
           status: "verified",
           docType: json.data.title || json.data.documentType,

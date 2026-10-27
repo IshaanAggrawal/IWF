@@ -11,6 +11,7 @@ import { mediaRouter } from "./mediaRoutes.js";
 import {
   createOrderController,
   verifyPaymentController,
+  handleWebhookController,
 } from "../controllers/paymentController.js";
 
 export const apiRouter = Router();
@@ -37,3 +38,5 @@ apiRouter.use("/media", mediaRouter);
 // Razorpay Direct Route Aliases
 apiRouter.post("/create-order", createOrderController);
 apiRouter.post("/verify-payment", verifyPaymentController);
+apiRouter.post("/webhook/razorpay", handleWebhookController);
+

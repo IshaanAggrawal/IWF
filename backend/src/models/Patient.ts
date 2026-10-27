@@ -5,6 +5,26 @@ export interface ICostBreakdown {
   amount: number;
 }
 
+export interface IPatientDocument {
+  label: string;
+  type: "admission" | "income" | "identity" | "medical" | "prescription";
+  verified: boolean;
+}
+
+export interface IPatientUpdate {
+  date: string;
+  title: string;
+  text: string;
+  type: "admission" | "surgery" | "treatment" | "progress" | "discharge" | "funding";
+}
+
+export interface IDonationHistory {
+  donor: string;
+  amount: number;
+  date: string;
+  message?: string;
+}
+
 export interface IPatient extends Document {
   slug: string;
   name: string;
@@ -26,6 +46,11 @@ export interface IPatient extends Document {
   verificationId: string;
   verifiedBy: string;
   verificationDate: string;
+  story?: string[];
+  familyBackground?: string;
+  documents?: IPatientDocument[];
+  updates?: IPatientUpdate[];
+  donationHistory?: IDonationHistory[];
   status: "Active" | "Completed" | "Closed";
   createdAt: Date;
   updatedAt: Date;
@@ -62,6 +87,31 @@ const PatientSchema = new Schema<IPatient>(
     verificationId: { type: String, required: true },
     verifiedBy: { type: String, default: "ISLAH Medical Welfare Board" },
     verificationDate: { type: String, required: true },
+    story: [{ type: String }],
+    familyBackground: { type: String },
+    documents: [
+      {
+        label: { type: String },
+        type: { type: String },
+        verified: { type: Boolean, default: true },
+      },
+    ],
+    updates: [
+      {
+        date: { type: String },
+        title: { type: String },
+        text: { type: String },
+        type: { type: String },
+      },
+    ],
+    donationHistory: [
+      {
+        donor: { type: String },
+        amount: { type: Number },
+        date: { type: String },
+        message: { type: String },
+      },
+    ],
     status: { type: String, enum: ["Active", "Completed", "Closed"], default: "Active" },
   },
   { timestamps: true }

@@ -76,3 +76,32 @@ export function verifyRazorpaySignature({
     return expectedSignature === signature;
   }
 }
+
+export function verifyWebhookSignature({
+  body,
+  signature,
+}: {
+  body: string | Record<string, any>;
+  signature: string;
+}): boolean {
+  if (!body || !signature) return false;
+
+  const secret = process.env.RAZORPAY_WEBHOOK_SECRET || RAZORPAY_CONFIG.key_secret;
+  if (!secret) return false;
+
+  const payload = typeof body === "string" ? body : JSON.stringify(body);
+  const expectedSignature = crypto
+    .createHmac("sha256", secret)
+    .update(payload)
+    .digest("hex");
+
+  try {
+    const expectedBuf = Buffer.from(expectedSignature, "utf8");
+    const signatureBuf = Buffer.from(signature, "utf8");
+    if (expectedBuf.length !== signatureBuf.length) return false;
+    return crypto.timingSafeEqual(expectedBuf, signatureBuf);
+  } catch {
+    return expectedSignature === signature;
+  }
+}
+

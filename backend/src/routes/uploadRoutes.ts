@@ -14,5 +14,7 @@ uploadRouter.post("/single", uploadMiddleware.single("file"), uploadSingleFile);
 // Multiple files upload (field: "files", max 10 files)
 uploadRouter.post("/multiple", uploadMiddleware.array("files", 10), uploadMultipleFiles);
 
-// Delete file by Cloudinary publicId (supports wildcard for folder paths)
-uploadRouter.delete("/:publicId(*)", deleteFile);
+// Delete file by Cloudinary publicId (supports query ?publicId=..., body { publicId }, or /:publicId)
+uploadRouter.delete("/", deleteFile);
+uploadRouter.delete("/:publicId", deleteFile);
+
