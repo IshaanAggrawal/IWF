@@ -163,32 +163,26 @@ export function SponsorApplicationForm({ onSuccess, isModal = false }: SponsorAp
 
   const onSubmit = async (data: SponsorFormData) => {
     try {
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-      const res = await fetch(`${API_URL}/applications`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          type: "sponsor",
-          fullName: data.contactPerson,
-          email: data.email,
-          phone: data.phone,
-          countryCode: data.countryCode || "+91",
-          organization: data.sponsorName,
-          selectedSectors: selectedAreas,
-          message: data.contributionDetails || data.motivation || "",
-          formData: {
-            sponsorType: data.sponsorType,
-            designation: data.designation,
-            address: data.address,
-            preferredProgram: data.preferredProgram,
-            supportType: data.supportType,
-            website: data.website,
-            yearOfEstablishment: data.yearOfEstablishment,
-          },
-        }),
+      const { submitApplication } = await import("@/services/applicationService");
+      const json = await submitApplication({
+        type: "sponsor",
+        fullName: data.contactPerson,
+        email: data.email,
+        phone: data.phone,
+        countryCode: data.countryCode || "+91",
+        organization: data.sponsorName,
+        selectedSectors: selectedAreas,
+        message: data.contributionDetails || data.motivation || "",
+        formData: {
+          sponsorType: data.sponsorType,
+          designation: data.designation,
+          address: data.address,
+          preferredProgram: data.preferredProgram,
+          supportType: data.supportType,
+          website: data.website,
+          yearOfEstablishment: data.yearOfEstablishment,
+        },
       });
-
-      const json = await res.json();
       const generatedId = json.applicationId || `ISLAH-SPN-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
       setAppId(generatedId);
       setSubmitted(true);

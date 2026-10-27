@@ -31,10 +31,19 @@ export async function apiRequest<T = any>(
     headers.set("Content-Type", "application/json");
   }
 
-  const response = await fetch(url, {
-    ...options,
-    headers,
-  });
+  let response: Response;
+  try {
+    response = await fetch(url, {
+      ...options,
+      headers,
+    });
+  } catch (netErr: any) {
+    throw new ApiError(
+      `Could not connect to ISLAH backend at ${API_BASE_URL}. Please ensure the backend server is running on port 5000.`,
+      0,
+      netErr
+    );
+  }
 
   let data: any;
   const contentType = response.headers.get("content-type");

@@ -194,40 +194,32 @@ export function VolunteerApplicationForm({ onSuccess, isModal = false }: Volunte
         subclassFlat.push(`Other: ${otherText.trim()}`);
       }
 
-      const res = await fetch(`${API_URL}/applications`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          type: "volunteer",
-          fullName: data.fullName,
-          email: data.email,
-          phone: data.phone,
-          countryCode: data.countryCode || "+91",
-          city: data.district,
-          state: data.state,
-          organization: data.organization || "",
-          selectedSectors: combinedSectors,
-          subclassifications: subclassFlat,
-          message: data.motivation || data.skills || "",
-          formData: {
-            dob: data.dob,
-            gender: data.gender,
-            address: data.address,
-            pincode: data.pincode,
-            qualification: data.qualification,
-            occupation: data.occupation,
-            availability: data.availability,
-            skills: data.skills,
-            previousExperience: data.previousExperience,
-            motivation: data.motivation,
-          },
-        }),
+      const { submitApplication } = await import("@/services/applicationService");
+      const json = await submitApplication({
+        type: "volunteer",
+        fullName: data.fullName,
+        email: data.email,
+        phone: data.phone,
+        countryCode: data.countryCode || "+91",
+        city: data.district,
+        state: data.state,
+        organization: data.organization || "",
+        selectedSectors: combinedSectors,
+        subclassifications: subclassFlat,
+        message: data.motivation || data.skills || "",
+        formData: {
+          dob: data.dob,
+          gender: data.gender,
+          address: data.address,
+          pincode: data.pincode,
+          qualification: data.qualification,
+          occupation: data.occupation,
+          availability: data.availability,
+          skills: data.skills,
+          previousExperience: data.previousExperience,
+          motivation: data.motivation,
+        },
       });
-
-      const json = await res.json();
-      if (!res.ok || !json.success) {
-        throw new Error(json.message || "Failed to submit application");
-      }
 
       const newAppId = json.applicationId || `ISLAH-VOL-${new Date().getFullYear()}-${Date.now().toString().slice(-4)}`;
       setAppId(newAppId);
