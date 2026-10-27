@@ -44,15 +44,17 @@ export interface RegisterMemberResponse {
   member: MemberRecord;
 }
 
+export type MemberCategory = "Community" | "Contributing" | "Patron" | "Blue" | "Yellow" | "Green";
+
 export interface MemberStatusResponse {
   success: boolean;
   member: {
     id: string;
     name: string;
-    category: string;
+    category: MemberCategory | string;
     state: string;
     district: string;
-    status: string;
+    status: "Active" | "Expired" | "Pending" | string;
     validTill: string;
     joined: string;
   };

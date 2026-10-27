@@ -3524,10 +3524,10 @@ function RenewalSection({
         setResult({
           id: json.member.id,
           name: json.member.name,
-          category: json.member.category,
+          category: json.member.category as MemberCategory,
           state: json.member.state,
           district: json.member.district,
-          status: json.member.status,
+          status: (json.member.status === "Expired" ? "Expired" : "Active") as "Active" | "Expired",
           validTill: json.member.validTill,
           joined: json.member.joined,
           phone: "9811861633",
