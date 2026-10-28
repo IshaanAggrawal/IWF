@@ -295,28 +295,23 @@ export default function DonatePage() {
       setPaymentError(null);
       setIsPaymentProcessing(true);
 
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+      const { createPaymentOrder, verifyPayment } = await import("@/services/donationService");
 
       // STEP 1: Create Razorpay Order with backend
-      const orderRes = await fetch(`${API_URL}/create-order`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          amount: Number(data.amount),
-          receipt: `rcpt_${Date.now()}`,
-          notes: {
-            donorName: data.fullName,
-            email: data.email,
-            phone: data.phone,
-            cause: data.financialType,
-            patientSlug: contextPatient?.slug || "",
-          },
-        }),
+      const orderData = await createPaymentOrder({
+        amount: Number(data.amount),
+        receipt: `rcpt_${Date.now()}`,
+        notes: {
+          donorName: data.fullName,
+          email: data.email,
+          phone: data.phone,
+          cause: data.financialType,
+          patientSlug: contextPatient?.slug || "",
+        },
       });
 
-      const orderData = await orderRes.json();
-      if (!orderData.success) {
-        throw new Error(orderData.message || "Failed to create payment order. Please try again.");
+      if (!orderData || !orderData.order_id) {
+        throw new Error(orderData?.message || "Failed to create payment order. Please try again.");
       }
 
       // STEP 2: Open Razorpay Standard Checkout Modal
@@ -338,34 +333,32 @@ export default function DonatePage() {
       });
 
       // STEP 3: Verify Payment Signature with backend
-      const verifyRes = await fetch(`${API_URL}/verify-payment`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          razorpay_order_id: paymentResult.razorpay_order_id,
-          razorpay_payment_id: paymentResult.razorpay_payment_id,
-          razorpay_signature: paymentResult.razorpay_signature,
-          donationData: {
-            donorName: data.fullName,
-            donorType: data.donorType,
-            email: data.email,
-            phone: data.phone,
-            countryCode: data.countryCode,
-            address: data.address,
-            city: data.city,
-            state: data.state,
-            pincode: data.pincode,
-            financialType: data.financialType,
-            frequency: data.frequency,
-            amount: data.amount,
-            taxExemption: data.taxExemption,
-            pan: data.pan,
-            patientSlug: contextPatient?.slug,
-          },
-        }),
+      const verifyData = await verifyPayment({
+        razorpay_order_id: paymentResult.razorpay_order_id,
+        razorpay_payment_id: paymentResult.razorpay_payment_id,
+        razorpay_signature: paymentResult.razorpay_signature,
+        donationData: {
+          donorName: data.fullName,
+          donorType: data.donorType,
+          email: data.email,
+          phone: data.phone,
+          countryCode: data.countryCode,
+          address: data.address,
+          city: data.city,
+          state: data.state,
+          pincode: data.pincode,
+          financialType: data.financialType,
+          frequency: data.frequency,
+          amount: data.amount,
+          taxExemption: data.taxExemption,
+          pan: data.pan,
+          patientSlug: contextPatient?.slug,
+          websiteConsent: data.websiteConsent,
+          recurringPledge: data.recurringPledge,
+          pledgeMonths: data.pledgeMonths,
+        },
       });
 
-      const verifyData = await verifyRes.json();
       if (!verifyData.success) {
         throw new Error(verifyData.message || "Payment signature verification failed. Please contact support.");
       }

@@ -129,6 +129,8 @@ export function CareerApplicationForm({ onSuccess, isModal = false }: CareerAppl
   const [submitted, setSubmitted] = useState(false);
   const [appId, setAppId] = useState("");
   const [cvName, setCvName] = useState<string | null>(null);
+  const [selectedCvFile, setSelectedCvFile] = useState<File | null>(null);
+  const [uploadingCv, setUploadingCv] = useState(false);
 
   const {
     register,
@@ -137,7 +139,7 @@ export function CareerApplicationForm({ onSuccess, isModal = false }: CareerAppl
     reset,
     formState: { errors, isSubmitting },
   } = useForm<CareerFormData>({
-    resolver: zodResolver(careerSchema),
+    resolver: zodResolver(careerSchema) as any,
     defaultValues: {
       countryCode: "+91",
       preferredLocation: "New Delhi (Administrative HQ)",
@@ -155,41 +157,57 @@ export function CareerApplicationForm({ onSuccess, isModal = false }: CareerAppl
         alert("File size exceeds 5MB limit. Please upload a smaller file.");
         return;
       }
+      setSelectedCvFile(file);
       setCvName(file.name);
       setValue("cvFileName", file.name, { shouldValidate: true });
     }
   };
 
-  const onSubmit = async (data: CareerFormData) => {
+  const onSubmit = async (data: any) => {
     try {
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-      const res = await fetch(`${API_URL}/applications`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          type: "career",
-          fullName: data.fullName,
-          email: data.email,
-          phone: data.phone,
-          countryCode: data.countryCode || "+91",
-          city: data.currentLocation,
-          message: data.aboutYourself || data.skillHighlights || "",
-          formData: {
-            linkedInProfile: data.linkedInProfile,
-            currentDesignation: data.currentDesignation,
-            totalExperience: data.totalExperience,
-            functionalArea: data.functionalArea,
-            preferredLocation: data.preferredLocation,
-            expectedRoleType: data.expectedRoleType,
-            expectedEmploymentType: data.expectedEmploymentType,
-            cvFileName: data.cvFileName,
-            skillHighlights: data.skillHighlights,
-          },
-        }),
+      let uploadedUrl = "";
+      let uploadedPublicId = "";
+
+      // Upload CV/resume file to Cloudinary if user selected a file
+      if (selectedCvFile) {
+        setUploadingCv(true);
+        try {
+          const { uploadSingleFile } = await import("@/services/uploadService");
+          const uploadRes = await uploadSingleFile(selectedCvFile, "islah/careers");
+          uploadedUrl = uploadRes.url;
+          uploadedPublicId = uploadRes.publicId;
+        } catch (uploadErr) {
+          console.warn("Cloudinary CV upload fallback (backend offline or unconfigured):", uploadErr);
+        } finally {
+          setUploadingCv(false);
+        }
+      }
+
+      const { submitApplication } = await import("@/services/applicationService");
+      const res = await submitApplication({
+        type: "career",
+        fullName: data.fullName,
+        email: data.email,
+        phone: data.phone,
+        countryCode: data.countryCode || "+91",
+        city: data.currentLocation,
+        message: data.aboutYourself || data.skillHighlights || "",
+        formData: {
+          linkedInProfile: data.linkedInProfile,
+          currentDesignation: data.currentDesignation,
+          totalExperience: data.totalExperience,
+          functionalArea: data.functionalArea,
+          preferredLocation: data.preferredLocation,
+          expectedRoleType: data.expectedRoleType,
+          expectedEmploymentType: data.expectedEmploymentType,
+          cvFileName: data.cvFileName,
+          cvFileUrl: uploadedUrl || undefined,
+          cvPublicId: uploadedPublicId || undefined,
+          skillHighlights: data.skillHighlights,
+        },
       });
 
-      const json = await res.json();
-      const generatedId = json.applicationId || `ISLAH-CAR-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+      const generatedId = res.applicationId || `ISLAH-CAR-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
       setAppId(generatedId);
       setSubmitted(true);
       onSuccess?.(generatedId);
@@ -258,7 +276,7 @@ export function CareerApplicationForm({ onSuccess, isModal = false }: CareerAppl
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 text-left notranslate" translate="no" dir="ltr">
+    <form onSubmit={handleSubmit(onSubmit as any)} className="space-y-8 text-left notranslate" translate="no" dir="ltr">
       <div className="mb-2">
         <p className="text-xs text-slate-500">
           Please fill in your details and upload your CV. Our team will review your profile and contact you for suitable opportunities.

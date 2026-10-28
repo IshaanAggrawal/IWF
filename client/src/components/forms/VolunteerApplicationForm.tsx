@@ -138,7 +138,7 @@ export function VolunteerApplicationForm({ onSuccess, isModal = false }: Volunte
     reset,
     formState: { errors, isSubmitting },
   } = useForm<VolunteerFormData>({
-    resolver: zodResolver(volunteerSchema),
+    resolver: zodResolver(volunteerSchema) as any,
     defaultValues: {
       countryCode: "+91",
       state: "Bihar",
@@ -176,7 +176,7 @@ export function VolunteerApplicationForm({ onSuccess, isModal = false }: Volunte
 
   const [apiError, setApiError] = useState<string | null>(null);
 
-  const onSubmit = async (data: VolunteerFormData) => {
+  const onSubmit = async (data: any) => {
     if (selectedSectors.length === 0 && otherText.trim().length === 0) {
       setSectorError("Please select at least one sector or area of interest.");
       return;
@@ -194,40 +194,32 @@ export function VolunteerApplicationForm({ onSuccess, isModal = false }: Volunte
         subclassFlat.push(`Other: ${otherText.trim()}`);
       }
 
-      const res = await fetch(`${API_URL}/applications`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          type: "volunteer",
-          fullName: data.fullName,
-          email: data.email,
-          phone: data.phone,
-          countryCode: data.countryCode || "+91",
-          city: data.district,
-          state: data.state,
-          organization: data.organization || "",
-          selectedSectors: combinedSectors,
-          subclassifications: subclassFlat,
-          message: data.motivation || data.skills || "",
-          formData: {
-            dob: data.dob,
-            gender: data.gender,
-            address: data.address,
-            pincode: data.pincode,
-            qualification: data.qualification,
-            occupation: data.occupation,
-            availability: data.availability,
-            skills: data.skills,
-            previousExperience: data.previousExperience,
-            motivation: data.motivation,
-          },
-        }),
+      const { submitApplication } = await import("@/services/applicationService");
+      const json = await submitApplication({
+        type: "volunteer",
+        fullName: data.fullName,
+        email: data.email,
+        phone: data.phone,
+        countryCode: data.countryCode || "+91",
+        city: data.district,
+        state: data.state,
+        organization: data.organization || "",
+        selectedSectors: combinedSectors,
+        subclassifications: subclassFlat,
+        message: data.motivation || data.skills || "",
+        formData: {
+          dob: data.dob,
+          gender: data.gender,
+          address: data.address,
+          pincode: data.pincode,
+          qualification: data.qualification,
+          occupation: data.occupation,
+          availability: data.availability,
+          skills: data.skills,
+          previousExperience: data.previousExperience,
+          motivation: data.motivation,
+        },
       });
-
-      const json = await res.json();
-      if (!res.ok || !json.success) {
-        throw new Error(json.message || "Failed to submit application");
-      }
 
       const newAppId = json.applicationId || `ISLAH-VOL-${new Date().getFullYear()}-${Date.now().toString().slice(-4)}`;
       setAppId(newAppId);
@@ -302,7 +294,7 @@ export function VolunteerApplicationForm({ onSuccess, isModal = false }: Volunte
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 text-left notranslate" translate="no" dir="ltr">
+    <form onSubmit={handleSubmit(onSubmit as any)} className="space-y-8 text-left notranslate" translate="no" dir="ltr">
       {/* ── Personal Information ── */}
       <div>
         <div className="border-b border-slate-200 pb-2 mb-4">

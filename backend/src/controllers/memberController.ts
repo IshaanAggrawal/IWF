@@ -24,15 +24,40 @@ const CATEGORY_CODE_MAP: Record<MemberCategory, string> = {
 
 export async function registerMember(req: Request, res: Response): Promise<void> {
   try {
-    const { name, category, email, phone, state, district, address } = req.body;
+    const {
+      name,
+      fullName,
+      fatherName,
+      category,
+      email,
+      phone,
+      mobile,
+      countryCode,
+      state,
+      district,
+      address,
+      pincode,
+      membershipPeriod,
+      paymentMode,
+      transactionId,
+      paymentDate,
+      consentDisplay,
+      photoUrl,
+      metadata,
+    } = req.body;
 
-    if (!name || !category || !email || !phone || !state || !district) {
+    const memberName = (fullName || name || "").trim();
+    const memberPhone = (mobile || phone || "").trim();
+
+    if (!memberName || !category || !email || !memberPhone || !state || !district) {
       res.status(400).json({ success: false, message: "Missing required membership fields" });
       return;
     }
 
     const catKey = category as MemberCategory;
-    const annualFee = CATEGORY_FEE_MAP[catKey] || 2500;
+    const baseFee = CATEGORY_FEE_MAP[catKey] || 2500;
+    const periodMultiplier = Number(membershipPeriod) === 2 ? 2 : 1;
+    const annualFee = baseFee * periodMultiplier;
     const catCode = CATEGORY_CODE_MAP[catKey] || "MEM";
 
     const count = await Member.countDocuments({ category });
@@ -43,22 +68,32 @@ export async function registerMember(req: Request, res: Response): Promise<void>
 
     const validFrom = new Date();
     const validTill = new Date();
-    validTill.setFullYear(validTill.getFullYear() + 1);
+    validTill.setFullYear(validTill.getFullYear() + periodMultiplier);
 
     const member = new Member({
       memberNo,
-      name,
+      name: memberName,
+      fatherName,
       category,
       annualFee,
-      email,
-      phone,
+      membershipPeriod: periodMultiplier,
+      email: email.trim(),
+      phone: memberPhone,
+      countryCode: countryCode || "+91",
       state,
       district,
       address,
+      pincode,
+      paymentMode: paymentMode || "UPI",
+      transactionId,
+      paymentDate,
+      consentDisplay,
+      photoUrl,
       status: "Active",
       validFrom,
       validTill,
       receiptNo,
+      metadata: metadata || {},
     });
 
     await member.save();

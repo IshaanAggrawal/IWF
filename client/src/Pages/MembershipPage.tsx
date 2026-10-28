@@ -3067,23 +3067,26 @@ function ApplicationFormSection({ preSelectedCategory, onViewMembership }: { pre
   const handleBack = () => { setStep(s => s - 1); scrollToForm(); };
   const handleSubmit = async () => {
     try {
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
       const formData = form.getValues();
-      const res = await fetch(`${API_URL}/members`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.fullName,
-          category: formData.category,
-          email: formData.email,
-          phone: formData.mobile,
-          state: formData.state,
-          district: formData.district,
-          address: formData.address,
-        }),
+      const { registerMember } = await import("@/services/memberService");
+      const json = await registerMember({
+        fullName: formData.fullName,
+        fatherName: formData.fatherName,
+        category: formData.category,
+        email: formData.email,
+        mobile: formData.mobile,
+        countryCode: formData.countryCode,
+        state: formData.state,
+        district: formData.district,
+        address: formData.address,
+        pincode: formData.pincode,
+        membershipPeriod: formData.membershipPeriod,
+        paymentMode: formData.paymentMode,
+        transactionId: formData.transactionId,
+        paymentDate: formData.paymentDate,
+        consentDisplay: formData.consentDisplay,
       });
-      const json = await res.json();
-      if (res.ok && json.success && json.member) {
+      if (json && json.success && json.member) {
         if (json.member.memberNo) setCurrentMemberId(json.member.memberNo);
         if (json.member.receiptNo) setReceiptNo(json.member.receiptNo);
       }
@@ -3515,17 +3518,16 @@ function RenewalSection({
   const handleSearch = async () => {
     const q = query.trim();
     try {
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-      const res = await fetch(`${API_URL}/members/status/${encodeURIComponent(q)}`);
-      const json = await res.json();
-      if (res.ok && json.success && json.member) {
+      const { checkMemberStatus } = await import("@/services/memberService");
+      const json = await checkMemberStatus(q);
+      if (json && json.success && json.member) {
         setResult({
           id: json.member.id,
           name: json.member.name,
-          category: json.member.category,
+          category: json.member.category as MemberCategory,
           state: json.member.state,
           district: json.member.district,
-          status: json.member.status,
+          status: (json.member.status === "Expired" ? "Expired" : "Active") as "Active" | "Expired",
           validTill: json.member.validTill,
           joined: json.member.joined,
           phone: "9811861633",

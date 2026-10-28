@@ -23,7 +23,13 @@ export async function submitApplication(req: Request, res: Response): Promise<vo
       return;
     }
 
+    const count = await Application.countDocuments({ type });
+    const formattedAppId =
+      req.body.applicationId ||
+      `ISLAH-${type.toUpperCase().slice(0, 3)}-${new Date().getFullYear()}-${String(count + 1).padStart(4, "0")}`;
+
     const application = new Application({
+      applicationId: formattedAppId,
       type,
       fullName,
       email,
@@ -39,9 +45,6 @@ export async function submitApplication(req: Request, res: Response): Promise<vo
     });
 
     await application.save();
-
-    const shortId = application._id.toString().slice(-6).toUpperCase();
-    const formattedAppId = `ISLAH-${type.toUpperCase().slice(0, 3)}-${new Date().getFullYear()}-${shortId}`;
 
     res.status(201).json({
       success: true,
@@ -69,3 +72,52 @@ export async function listApplications(req: Request, res: Response): Promise<voi
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 }
+
+export async function updateApplicationStatus(req: Request, res: Response): Promise<void> {
+  try {
+    const { id } = req.params;
+    const { status, reviewNotes } = req.body;
+
+    const validStatuses = [
+      "Submitted",
+      "Under Review",
+      "More Information Required",
+      "Interview Scheduled",
+      "Approved",
+      "Rejected",
+      "Withdrawn",
+    ];
+
+    if (!status || !validStatuses.includes(status)) {
+      res.status(400).json({
+        success: false,
+        message: `Invalid status. Must be one of: ${validStatuses.join(", ")}`,
+      });
+      return;
+    }
+
+    const application = await Application.findByIdAndUpdate(
+      id,
+      {
+        status,
+        ...(reviewNotes ? { "formData.reviewNotes": reviewNotes } : {}),
+      },
+      { new: true }
+    );
+
+    if (!application) {
+      res.status(404).json({ success: false, message: "Application not found" });
+      return;
+    }
+
+    res.json({
+      success: true,
+      message: `Application status updated to ${status}`,
+      application,
+    });
+  } catch (error) {
+    console.error("updateApplicationStatus error:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+}
+

@@ -149,7 +149,7 @@ export function MentorApplicationForm({ onSuccess, isModal = false }: MentorAppl
     reset,
     formState: { errors, isSubmitting },
   } = useForm<MentorFormData>({
-    resolver: zodResolver(mentorSchema),
+    resolver: zodResolver(mentorSchema) as any,
     defaultValues: {
       countryCode: "+91",
       gender: "Male",
@@ -182,40 +182,34 @@ export function MentorApplicationForm({ onSuccess, isModal = false }: MentorAppl
     }
   };
 
-  const onSubmit = async (data: MentorFormData) => {
+  const onSubmit = async (data: any) => {
     try {
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-      const res = await fetch(`${API_URL}/applications`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          type: "mentor",
-          fullName: data.fullName,
-          email: data.email,
-          phone: data.mobile,
-          countryCode: data.countryCode || "+91",
-          city: data.city,
-          state: data.state,
-          organization: data.organizationName,
-          selectedSectors: selectedAreas,
-          message: data.motivation || data.contribution || "",
-          formData: {
-            dob: data.dob,
-            gender: data.gender,
-            address: data.address,
-            pincode: data.pincode,
-            fieldOfExpertise: data.fieldOfExpertise,
-            currentOccupation: data.currentOccupation,
-            highestQualification: data.highestQualification,
-            totalExperience: data.totalExperience,
-            modeOfMentorship: data.modeOfMentorship,
-            availability: data.availability,
-            mentorshipType: data.mentorshipType,
-          },
-        }),
+      const { submitApplication } = await import("@/services/applicationService");
+      const json = await submitApplication({
+        type: "mentor",
+        fullName: data.fullName,
+        email: data.email,
+        phone: data.mobile,
+        countryCode: data.countryCode || "+91",
+        city: data.city,
+        state: data.state,
+        organization: data.organizationName,
+        selectedSectors: selectedAreas,
+        message: data.motivation || data.contribution || "",
+        formData: {
+          dob: data.dob,
+          gender: data.gender,
+          address: data.address,
+          pincode: data.pincode,
+          fieldOfExpertise: data.fieldOfExpertise,
+          currentOccupation: data.currentOccupation,
+          highestQualification: data.highestQualification,
+          totalExperience: data.totalExperience,
+          modeOfMentorship: data.modeOfMentorship,
+          availability: data.availability,
+          mentorshipType: data.mentorshipType,
+        },
       });
-
-      const json = await res.json();
       const generatedId = json.applicationId || `ISLAH-MNT-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
       setAppId(generatedId);
       setSubmitted(true);
@@ -296,7 +290,7 @@ export function MentorApplicationForm({ onSuccess, isModal = false }: MentorAppl
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 text-left notranslate" translate="no" dir="ltr">
+    <form onSubmit={handleSubmit(onSubmit as any)} className="space-y-8 text-left notranslate" translate="no" dir="ltr">
       {/* ── 1. BASIC INFORMATION ── */}
       <div>
         <div className="border-b border-slate-200 pb-2 mb-4">

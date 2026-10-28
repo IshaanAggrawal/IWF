@@ -179,25 +179,16 @@ function RootComponent() {
     setFormStatus("loading");
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-      const res = await fetch(`${API_URL}/contact`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name.trim(),
-          email: formData.email.trim(),
-          phone: formData.mobile.trim(),
-          countryCode: formData.countryCode || "+91",
-          subject: "Quick Float Message",
-          message: formData.message.trim(),
-          source: "Quick Float Modal",
-        }),
+      const { submitContact } = await import("@/services/contactService");
+      const json = await submitContact({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.mobile.trim(),
+        countryCode: formData.countryCode || "+91",
+        subject: "Quick Float Message",
+        message: formData.message.trim(),
+        source: "Quick Float Modal",
       });
-
-      const json = await res.json();
-      if (!res.ok || !json.success) {
-        throw new Error(json.message || "Failed to submit message");
-      }
 
       setFormStatus("success");
       setFormData({ name: "", email: "", countryCode: "+91", mobile: "", message: "" });

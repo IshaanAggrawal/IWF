@@ -244,7 +244,7 @@ function ContactForm() {
     reset,
     formState: { errors, isSubmitting },
   } = useForm<ContactFormData>({
-    resolver: zodResolver(contactSchema),
+    resolver: zodResolver(contactSchema) as any,
     defaultValues: {
       fullName: "",
       email: "",
@@ -280,24 +280,23 @@ function ContactForm() {
           ? `\nOffice Target: ${data.regionalOfficeTarget}`
           : "";
 
-      const res = await fetch(`${API_URL}/contact`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: data.fullName.trim(),
-          email: data.email,
-          phone: data.phone,
-          countryCode: data.countryCode || "+91",
-          subject: data.enquiryType + (data.regionalOfficeTarget ? ` - ${data.regionalOfficeTarget}` : ""),
-          message: `${data.message}\n\n[Enquiry Type: ${data.enquiryType}${officeDetails}]\n[Address: ${addressLine || "Not specified"}]\n[Preferred Contact Method: ${data.preferredContactMethod || "Email"}]\n[Ref: ${generatedRef}]`,
-          source: "Contact Page",
-        }),
+      const { submitContact } = await import("@/services/contactService");
+      const json = await submitContact({
+        name: data.fullName.trim(),
+        email: data.email,
+        phone: data.phone,
+        countryCode: data.countryCode || "+91",
+        subject: data.enquiryType + (data.regionalOfficeTarget ? ` - ${data.regionalOfficeTarget}` : ""),
+        message: data.message.trim(),
+        enquiryType: data.enquiryType,
+        cityDistrict: data.cityDistrict,
+        state: data.state,
+        pinCode: data.pinCode,
+        preferredContactMethod: data.preferredContactMethod || "Email",
+        regionalOfficeTarget: data.regionalOfficeTarget,
+        referenceNumber: generatedRef,
+        source: "Contact Page",
       });
-
-      const json = await res.json();
-      if (!res.ok || !json.success) {
-        throw new Error(json.message || "We couldn't submit your enquiry. Please check your details and try again.");
-      }
 
       setSubmissionReference(generatedRef);
       setSubmitted(true);

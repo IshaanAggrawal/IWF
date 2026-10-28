@@ -3,6 +3,7 @@ import mongoose, { Schema, Document } from "mongoose";
 export type ApplicationType = "volunteer" | "mentor" | "partner" | "sponsor" | "career";
 
 export interface IApplication extends Document {
+  applicationId: string;
   type: ApplicationType;
   fullName: string;
   email: string;
@@ -23,6 +24,7 @@ export interface IApplication extends Document {
 
 const ApplicationSchema = new Schema<IApplication>(
   {
+    applicationId: { type: String, required: true, unique: true, index: true },
     type: {
       type: String,
       enum: ["volunteer", "mentor", "partner", "sponsor", "career"],

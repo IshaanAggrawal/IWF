@@ -38,6 +38,7 @@ import {
 import ScrollReveal from "@/components/healthcare/ScrollReveal";
 import { PatientCard } from "@/components/healthcare/PatientCard";
 import { URGENT_PATIENTS } from "@/content/patients";
+import { usePatients } from "@/services/patientService";
 import criticalLifeSupportImg from "@/assets/critical_life_support.png";
 import MedicalEmergencyWorkflow from "@/components/healthcare/MedicalEmergencyWorkflow";
 
@@ -255,6 +256,15 @@ function FeatureStripSection() {
 }
 
 function PatientCardsSection() {
+  const { patients } = usePatients(true);
+  const [sortOption, setSortOption] = useState<"most-urgent" | "highest-need" | "recently-added">("most-urgent");
+
+  const displayPatients = [...(patients && patients.length > 0 ? patients : URGENT_PATIENTS)].sort((a, b) => {
+    if (sortOption === "highest-need") return (b.neededAmount - b.raisedAmount) - (a.neededAmount - a.raisedAmount);
+    if (sortOption === "recently-added") return new Date(b.admissionDate).getTime() - new Date(a.admissionDate).getTime();
+    return (b.urgent ? 1 : 0) - (a.urgent ? 1 : 0);
+  });
+
   const sidebarReasons = [
     {
       icon: HeartPulse,
@@ -289,7 +299,8 @@ function PatientCardsSection() {
             </div>
             <select
               className="text-xs border border-gray-200 rounded-lg px-3 py-2 text-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-200 w-full sm:w-auto"
-              defaultValue="most-urgent"
+              value={sortOption}
+              onChange={(e) => setSortOption(e.target.value as any)}
             >
               <option value="most-urgent">Sort by: Most Urgent</option>
               <option value="highest-need">Sort by: Highest Need</option>
@@ -297,11 +308,12 @@ function PatientCardsSection() {
             </select>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {URGENT_PATIENTS.map((patient) => (
+            {displayPatients.map((patient) => (
               <PatientCard key={patient.id} {...patient} />
             ))}
           </div>
         </div>
+
 
         <aside className="w-full lg:w-72 shrink-0 lg:sticky lg:top-24">
           <h3 className="text-sm font-black text-[#0b1f3b] uppercase tracking-wide mb-5">

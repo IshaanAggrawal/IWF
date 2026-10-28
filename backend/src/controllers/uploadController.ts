@@ -75,12 +75,16 @@ export async function uploadMultipleFiles(req: Request, res: Response): Promise<
 
 export async function deleteFile(req: Request, res: Response): Promise<void> {
   try {
-    const rawPublicId = req.params.publicId;
-    const publicId = Array.isArray(rawPublicId) ? rawPublicId.join("/") : rawPublicId;
+    const rawPublicId =
+      (req.body && req.body.publicId) ||
+      (req.query && req.query.publicId) ||
+      req.params.publicId ||
+      req.params[0];
+    const publicId = Array.isArray(rawPublicId) ? rawPublicId.join("/") : (rawPublicId as string);
     const resourceType = (req.query.resourceType as "image" | "raw" | "video") || "image";
 
     if (!publicId) {
-      res.status(400).json({ success: false, message: "Public ID is required" });
+      res.status(400).json({ success: false, message: "Public ID is required in body, query or URL param" });
       return;
     }
 

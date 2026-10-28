@@ -9,11 +9,30 @@ export function createApp() {
   const app = express();
 
   // Security headers & CORS
-  app.use(helmet());
+  app.use(
+    helmet({
+      crossOriginResourcePolicy: { policy: "cross-origin" },
+    })
+  );
+
   app.use(
     cors({
-      origin: process.env.CLIENT_URL || "*",
+      origin: (origin, callback) => {
+        // Allow mobile apps, curl, postman, and local dev ports
+        if (
+          !origin ||
+          /^http:\/\/localhost(:\d+)?$/.test(origin) ||
+          /^http:\/\/127\.0\.0\.1(:\d+)?$/.test(origin) ||
+          (process.env.CLIENT_URL && origin === process.env.CLIENT_URL)
+        ) {
+          callback(null, true);
+        } else {
+          callback(null, true); // Permissive during preview/dev
+        }
+      },
       credentials: true,
+      methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+      allowedHeaders: ["Content-Type", "Authorization", "x-razorpay-signature"],
     })
   );
 

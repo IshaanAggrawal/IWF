@@ -137,7 +137,7 @@ export function SponsorApplicationForm({ onSuccess, isModal = false }: SponsorAp
     reset,
     formState: { errors, isSubmitting },
   } = useForm<SponsorFormData>({
-    resolver: zodResolver(sponsorSchema),
+    resolver: zodResolver(sponsorSchema) as any,
     defaultValues: {
       countryCode: "+91",
       supportType: "Financial Support",
@@ -161,34 +161,28 @@ export function SponsorApplicationForm({ onSuccess, isModal = false }: SponsorAp
     }
   };
 
-  const onSubmit = async (data: SponsorFormData) => {
+  const onSubmit = async (data: any) => {
     try {
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-      const res = await fetch(`${API_URL}/applications`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          type: "sponsor",
-          fullName: data.contactPerson,
-          email: data.email,
-          phone: data.phone,
-          countryCode: data.countryCode || "+91",
-          organization: data.sponsorName,
-          selectedSectors: selectedAreas,
-          message: data.contributionDetails || data.motivation || "",
-          formData: {
-            sponsorType: data.sponsorType,
-            designation: data.designation,
-            address: data.address,
-            preferredProgram: data.preferredProgram,
-            supportType: data.supportType,
-            website: data.website,
-            yearOfEstablishment: data.yearOfEstablishment,
-          },
-        }),
+      const { submitApplication } = await import("@/services/applicationService");
+      const json = await submitApplication({
+        type: "sponsor",
+        fullName: data.contactPerson,
+        email: data.email,
+        phone: data.phone,
+        countryCode: data.countryCode || "+91",
+        organization: data.sponsorName,
+        selectedSectors: selectedAreas,
+        message: data.contributionDetails || data.motivation || "",
+        formData: {
+          sponsorType: data.sponsorType,
+          designation: data.designation,
+          address: data.address,
+          preferredProgram: data.preferredProgram,
+          supportType: data.supportType,
+          website: data.website,
+          yearOfEstablishment: data.yearOfEstablishment,
+        },
       });
-
-      const json = await res.json();
       const generatedId = json.applicationId || `ISLAH-SPN-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
       setAppId(generatedId);
       setSubmitted(true);
@@ -257,7 +251,7 @@ export function SponsorApplicationForm({ onSuccess, isModal = false }: SponsorAp
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 text-left notranslate" translate="no" dir="ltr">
+    <form onSubmit={handleSubmit(onSubmit as any)} className="space-y-8 text-left notranslate" translate="no" dir="ltr">
       {/* ── 1. SPONSOR / ORGANIZATION DETAILS ── */}
       <div>
         <div className="border-b border-slate-200 pb-2 mb-4">
