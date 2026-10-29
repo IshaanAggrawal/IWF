@@ -269,7 +269,6 @@ function ContactForm() {
       const randomCode = Math.floor(10000 + Math.random() * 90000);
       const generatedRef = `ISLAH-ENQ-2026-${randomCode}`;
 
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
       const addressLine = [data.cityDistrict, data.state, data.pinCode ? `PIN: ${data.pinCode}` : ""]
         .filter(Boolean)

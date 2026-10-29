@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { API_BASE_URL } from "./apiClient";
 
 export interface MediaItem {
   _id: string;
@@ -38,9 +39,7 @@ export async function fetchAllMedia(): Promise<MediaResponse> {
     return pendingPromise;
   }
 
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-
-  pendingPromise = fetch(`${API_URL}/media`)
+  pendingPromise = fetch(`${API_BASE_URL}/media`)
     .then(async (res) => {
       if (!res.ok) {
         throw new Error(`Media fetch failed with status ${res.status}`);

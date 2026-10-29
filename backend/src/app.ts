@@ -54,20 +54,8 @@ export function createApp() {
   // Logging
   app.use(morgan("dev"));
 
-  // Root welcome / health check
-  app.get("/", (_req, res) => {
-    res.json({
-      status: "ok",
-      service: "ISLAH Backend API",
-      message: "Server is running. Endpoints are available with or without /api prefix.",
-      health: "/health",
-    });
-  });
-
-  // API Routes - mount at both '/api' and root '/'
-  // This allows callers requesting '/create-order' and '/api/create-order' to both succeed
+  // API Routes - strictly mounted at /api
   app.use("/api", apiRouter);
-  app.use(apiRouter);
 
   // Fallback handlers
   app.use(notFoundHandler);

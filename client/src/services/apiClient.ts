@@ -1,5 +1,11 @@
-export const API_BASE_URL =
-  (import.meta.env.VITE_API_URL as string) || "http://localhost:5000/api";
+function getApiBaseUrl(): string {
+  const envUrl = (import.meta.env.VITE_API_URL as string)?.trim() || "http://localhost:5000/api";
+  const cleanUrl = envUrl.replace(/\/+$/, "");
+  // Ensure the base URL always includes the /api prefix
+  return cleanUrl.endsWith("/api") ? cleanUrl : `${cleanUrl}/api`;
+}
+
+export const API_BASE_URL = getApiBaseUrl();
 
 export interface ApiResponse<T = any> {
   success: boolean;
@@ -39,7 +45,7 @@ export async function apiRequest<T = any>(
     });
   } catch (netErr: any) {
     throw new ApiError(
-      `Could not connect to ISLAH backend at ${API_BASE_URL}. Please ensure the backend server is running on port 5000.`,
+      `Could not connect to ISLAH backend at ${API_BASE_URL}. Please ensure the backend server is running.`,
       0,
       netErr
     );
