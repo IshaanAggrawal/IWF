@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 export async function connectDB(): Promise<void> {
+  if (mongoose.connection.readyState >= 1) {
+    return;
+  }
+
   const uri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/islah_db";
 
   try {
@@ -16,4 +20,3 @@ export async function connectDB(): Promise<void> {
     console.warn("[MongoDB] Please ensure MongoDB is running or configure MONGODB_URI in .env");
   }
 }
-

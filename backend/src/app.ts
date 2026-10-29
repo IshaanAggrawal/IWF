@@ -4,9 +4,20 @@ import helmet from "helmet";
 import morgan from "morgan";
 import { apiRouter } from "./routes/index.js";
 import { notFoundHandler, globalErrorHandler } from "./middlewares/errorHandler.js";
+import { connectDB } from "./config/db.js";
 
 export function createApp() {
   const app = express();
+
+  // Lazy DB connection middleware for serverless environments (e.g. Vercel)
+  app.use(async (_req, _res, next) => {
+    try {
+      await connectDB();
+    } catch (err) {
+      console.error("[DB Middleware] Connection error:", err);
+    }
+    next();
+  });
 
   // Security headers & CORS
   app.use(
@@ -52,3 +63,6 @@ export function createApp() {
 
   return app;
 }
+
+const app = createApp();
+export default app;
